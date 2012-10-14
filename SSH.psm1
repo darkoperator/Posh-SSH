@@ -26,17 +26,14 @@ function New-SSHSession
         ParameterSetName = "Proxy")]
         [Int32]$ProxyPort,
 
-        [Parameter(Mandatory=$false,
-        ParameterSetName = "Proxy")]
-        [String]$ProxyUser,
+        [Parameter(Mandatory=$False)]
+        [System.Management.Automation.PSCredential]
+        [System.Management.Automation.Credential()]$ProxyCredential,
 
         [Parameter(Mandatory=$false,
         ParameterSetName = "Proxy")]
-        [String]$ProxyPassword,
-
-        [Parameter(Mandatory=$false,
-        ParameterSetName = "Proxy")]
-        [String]$ProxyType = 'http'
+        [ValidateSet("HTTP","Socks4","Socks5")]
+        [String]$ProxyType = 'HTTP'
 
     )
 
@@ -66,7 +63,7 @@ function New-SSHSession
                     }
 
                     # Check if credentials are needed or not for the proxy
-                    if($ProxyUser)
+                    if($ProxyCredential)
                     {
                         Write-Verbose "Credentials for proxy server have been provided."
                         if ($Keyfile)
@@ -96,8 +93,8 @@ function New-SSHSession
                                 $ptype,
                                 $ProxyServer,
                                 $ProxyPort,
-                                $ProxyUser,
-                                $ProxyPassword
+                                $ProxyCredential.GetNetworkCredential().UserName,
+                                $ProxyCredential.GetNetworkCredential().Password
                              )
 
                         }
@@ -113,8 +110,8 @@ function New-SSHSession
                                 $ptype,
                                 $ProxyServer,
                                 $ProxyPort,
-                                $ProxyUser,
-                                $ProxyPassword
+                                $ProxyCredential.GetNetworkCredential().UserName,
+                                $ProxyCredential.GetNetworkCredential().Password
                             )
                         }
                     }
@@ -153,7 +150,8 @@ function New-SSHSession
                         else
                         {
                             # Create SSH Client object that uses Proxy Creds and User Credentials
-                            Write-Verbose "Using Username and Password Combination"
+                            Write-Verbose "Using Username and Password Combination."
+                            Write-Verbose "Generating Connection info."
                             $SshConnInfo = New-Object Renci.SshNet.PasswordConnectionInfo(
                                 $Computer, 
                                 $Port, 
@@ -172,7 +170,7 @@ function New-SSHSession
                     Write-Verbose "$Keyfile"
                     if ($Keyfile)
                     {
-                        Write-Verbose "Using Key $Keyfile"
+                        Write-Verbose "Using Key $Keyfile ."
                         # Generate Key object from Key File
                         # Will use Passphrase if provides with credentials
                         if ($Credential.GetNetworkCredential().password)
@@ -200,6 +198,7 @@ function New-SSHSession
                     {
                         # Create SSH Client object that uses Proxy Creds and User Credentials
                         Write-Verbose "Using Username and Password Combination"
+                        Write-Verbose "Generating Connection info."
                         $SshConnInfo = New-Object Renci.SshNet.PasswordConnectionInfo(
                             $Computer, 
                             $Port, 
@@ -218,7 +217,6 @@ function New-SSHSession
                 $SshClient.Connect()
                 if ($SshClient -and $SshClient.IsConnected) 
                 {
-
                     Write-Verbose "Successfully connected to $Computer"
                     $global:SshSessions.add((New-Object psobject -Property @{Index = ($global:SshSessions.count) ;ComputerName = $Computer; Session = $SshClient}))
                 }
@@ -227,9 +225,7 @@ function New-SSHSession
             {
                 write-error "Error Connecting to ${Computer}: $_"
                 continue
-
             }
-
         }
     }
 
@@ -381,6 +377,23 @@ function Invoke-SSHCommand
         [int32]$Port=22,
 
         [Parameter(Mandatory=$false,
+        ParameterSetName = "Proxy")]
+        [String]$ProxyServer,
+
+        [Parameter(Mandatory=$false,
+        ParameterSetName = "Proxy")]
+        [Int32]$ProxyPort,
+
+        [Parameter(Mandatory=$False)]
+        [System.Management.Automation.PSCredential]
+        $ProxyCredential,
+
+        [Parameter(Mandatory=$false,
+        ParameterSetName = "Proxy")]
+        [ValidateSet("HTTP","Socks4","Socks5")]
+        [String]$ProxyType = 'HTTP',
+
+        [Parameter(Mandatory=$false,
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Name")]
@@ -401,21 +414,178 @@ function Invoke-SSHCommand
             {
                 try
                 {
-                    if ($Keyfile)
+                    # Build connection info depending on the settings
+                    if ($ProxyServer)
                     {
-                        $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile)
-                        $SshClient = New-Object Renci.SshNet.SshClient($Computer, $Port, $Credential.GetNetworkCredential().UserName, $Key)
-                
+                        Write-Verbose "Using $ProxyServer $($ProxyType.ToUpper()) Proxy"
+                        # Set the proper proxy type
+                        $ptype = [Renci.SshNet.ProxyTypes]::None
+                        switch ($ProxyType)
+                        {
+                            http  {$ptype = [Renci.SshNet.ProxyTypes]::Http}
+
+                            sock4 {$ptype = [Renci.SshNet.ProxyTypes]::Socks4}
+
+                            sock5 {$ptype = [Renci.SshNet.ProxyTypes]::Socks5}
+                        }
+
+                        # Check if credentials are needed or not for the proxy
+                        if($ProxyCredential)
+                        {
+                            Write-Verbose "Credentials for proxy server have been provided."
+                            if ($Keyfile)
+                            {
+                                Write-Verbose "Using Key $Keyfile"
+                                # Generate Key object from Key File
+                                # Will use Passphrase if provides with credentials
+                                if ($Credential.GetNetworkCredential().password)
+                                {
+                                    Write-Verbose "Passphrase provided for key."
+                                    $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile, $Credential.GetNetworkCredential().password)
+                                }
+                                else
+                                {
+                                    # This is bad but there are people who use keys with no passphrases
+                                    Write-Verbose "Using Key with no passphrase provided."
+                                    $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile)
+                                }
+
+                                # Create SSH Client object that uses Key file, Proxy Creds and User Credentials
+                                Write-Verbose "Generating Connection info."
+                                $SshConnInfo = New-Object Renci.SshNet.PrivateKeyConnectionInfo(
+                                    $Computer, 
+                                    $Port, 
+                                    $Credential.GetNetworkCredential().UserName, 
+                                    $Key,
+                                    $ptype,
+                                    $ProxyServer,
+                                    $ProxyPort,
+                                    $ProxyCredential.GetNetworkCredential().UserName,
+                                    $ProxyCredential.GetNetworkCredential().Password
+                                 )
+
+                            }
+                            else
+                            {
+                                # Create SSH Client object that uses Proxy Creds and User Credentials
+                                Write-Verbose "Using Username and Password Combination"
+                                $SshConnInfo = New-Object Renci.SshNet.PasswordConnectionInfo(
+                                    $Computer, 
+                                    $Port, 
+                                    $Credential.GetNetworkCredential().UserName, 
+                                    $Credential.GetNetworkCredential().password,
+                                    $ptype,
+                                    $ProxyServer,
+                                    $ProxyPort,
+                                    $ProxyCredential.GetNetworkCredential().UserName,
+                                    $ProxyCredential.GetNetworkCredential().Password
+                                )
+                            }
+                        }
+                        else
+                        {
+                            if ($Keyfile)
+                            {
+                                Write-Verbose "Using Key $Keyfile"
+                                # Generate Key object from Key File
+                                # Will use Passphrase if provides with credentials
+                                if ($Credential.GetNetworkCredential().password)
+                                {
+                                    Write-Verbose "Passphrase provided for key."
+                                    $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile, $Credential.GetNetworkCredential().password)
+                                }
+                                else
+                                {
+                                    Write-Verbose "Using Key with no passphrase provided."
+                                    # This is bad but there are people who use keys with no passphrases
+                                    $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile)
+                                }
+
+                                Write-Verbose "Generating Connection info."
+                                # Create SSH Client object that uses Key file, Proxy Creds and User Credentials
+                                $SshConnInfo = New-Object Renci.SshNet.PrivateKeyConnectionInfo(
+                                    $Computer, 
+                                    $Port, 
+                                    $Credential.GetNetworkCredential().UserName, 
+                                    $Key,
+                                    $ptype,
+                                    $ProxyServer,
+                                    $ProxyPort
+                                )
+
+                            }
+                            else
+                            {
+                                # Create SSH Client object that uses Proxy Creds and User Credentials
+                                Write-Verbose "Using Username and Password Combination."
+                                Write-Verbose "Generating Connection info."
+                                $SshConnInfo = New-Object Renci.SshNet.PasswordConnectionInfo(
+                                    $Computer, 
+                                    $Port, 
+                                    $Credential.GetNetworkCredential().UserName, 
+                                    $Credential.GetNetworkCredential().password,
+                                    $ptype,
+                                    $ProxyServer,
+                                    $ProxyPort
+                                )
+                            }
+
+                        }
                     }
                     else
                     {
-                        $SShConStrPass = New-Object Renci.SshNet.PasswordConnectionInfo($Computer, $Port, $Credential.GetNetworkCredential().UserName, $Credential.GetNetworkCredential().password)
-                        $SshClient = New-Object Renci.SshNet.SshClient($SShConStrPass)
-                    } 
+                        Write-Verbose "$Keyfile"
+                        if ($Keyfile)
+                        {
+                            Write-Verbose "Using Key $Keyfile ."
+                            # Generate Key object from Key File
+                            # Will use Passphrase if provides with credentials
+                            if ($Credential.GetNetworkCredential().password)
+                            {
+                                Write-Verbose "Passphrase provided for key."
+                                $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile, $Credential.GetNetworkCredential().password)
+                            }
+                            else
+                            {
+                                Write-Verbose "Using Key with no passphrase provided."
+                                # This is bad but there are people who use keys with no passphrases
+                                $Key = New-Object Renci.SshNet.PrivateKeyFile($Keyfile)
+                            }
+
+                            # Create SSH Client object that uses Key file, Proxy Creds and User Credentials
+                            $SshConnInfo = New-Object Renci.SshNet.PrivateKeyConnectionInfo(
+                                $Computer, 
+                                $Port, 
+                                $Credential.GetNetworkCredential().UserName, 
+                                $Key
+                            )
+
+                        }
+                        else
+                        {
+                            # Create SSH Client object that uses Proxy Creds and User Credentials
+                            Write-Verbose "Using Username and Password Combination"
+                            Write-Verbose "Generating Connection info."
+                            $SshConnInfo = New-Object Renci.SshNet.PasswordConnectionInfo(
+                                $Computer, 
+                                $Port, 
+                                $Credential.GetNetworkCredential().UserName, 
+                                $Credential.GetNetworkCredential().password
+                            )
+                        }
+                    }
+
                 
+                    # Create an instance of the SSH Client
+                    Write-Verbose "Instanciating SSH Client."
+                    $SshClient = New-Object Renci.SshNet.SshClient($SshConnInfo)
+
+                    # Connect using connection info
+                    Write-Verbose "Connecting to $ComputerName"
                     $SshClient.Connect()
                     if ($SshClient -and $SshClient.IsConnected) 
                     {
+                        Write-Verbose "Successfully connected to $Computer"
                         $SshClient.RunCommand($Command)
                     }
                 }

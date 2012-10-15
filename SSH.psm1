@@ -1,16 +1,73 @@
 ﻿##############################################################################################
 # SSH Function
 
+<#
+.Synopsis
+   Creates a new SSH Session
+.DESCRIPTION
+   Creates a SSH Session against a SSH Server. The sessions are saved in a global variable called
+   $global:SshSessions.
+.EXAMPLE
+   PS C:\> $sshcreds = Get-Credential
+   PS C:\> New-SSHSession -ComputerName 192.168.1.174,192.168.1.156 -Credential $sshcreds
+
+   ComputerName         Session                         Index
+   ------------         -------                         -----
+   192.168.1.174        Renci.SshNet.SshClient          0
+   192.168.1.156        Renci.SshNet.SshClient          1
+
+   Using stored credentials in a variable
+
+.EXAMPLE
+   PS C:\> New-SSHSession -ComputerName 192.168.1.174 -Credential (get-credential) -Keyfile C:\Users\user\.ssh\id_rsa
+
+   ComputerName         Session                         Index
+   ------------         -------                         -----
+   192.168.1.174        Renci.SshNet.SshClient          0
+
+   Connecting to a host using a RSA key. When connecting with a Key file the credentials provided
+   are used as user and key passphrase for the authentication.
+
+.PARAMETER ComputerName
+    Single computer or list of computer names or addresses to connect to establish a SSH session against.
+
+.PARAMETER Credential
+    PowerShell Credential object for use in authentication. For password authentication the username and
+    password combination will be used for authentication. When a Key file is used the given user is used
+    to specify the user the key belong to and the password will be used as the passphrase for the key.
+
+.PARAMETER Port
+    Port number in use by the SSH service on the target system you are connecting to.
+
+.PARAMETER ProxyServer
+    Proxy server name or IP Adress to use for connection.
+
+.PARAMETER ProxyPort
+    Port to connect to on proxy server to route connection.
+
+.PARAMETER ProxyCredential
+    PowerShell Credential Object with the credetials for use to connect to proxy server if required.
+
+.PARAMTER  ProxyType
+    Type of Proxy being used (HTTP, Socks4 or Socks5).
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
 function New-SSHSession
 {
     [CmdletBinding()]
     param(
+
         [Parameter(Mandatory=$true)]
         [string[]] $ComputerName,
 
         [Parameter(Mandatory=$False)]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]$Credential,
+        $Credential,
 
         [Parameter(Mandatory=$false)]
         [ValidateScript({Test-Path $_})]$Keyfile,
@@ -28,7 +85,7 @@ function New-SSHSession
 
         [Parameter(Mandatory=$False)]
         [System.Management.Automation.PSCredential]
-        [System.Management.Automation.Credential()]$ProxyCredential,
+        $ProxyCredential,
 
         [Parameter(Mandatory=$false,
         ParameterSetName = "Proxy")]
@@ -353,6 +410,51 @@ function Remove-SSHSession
     
 }
 
+<#
+.Synopsis
+   Executes a given command on a remote SSH host.
+.DESCRIPTION
+   Executes a given command on a remote SSH hosst given credentials to the host or using an existing
+   SSH Session.
+
+.EXAMPLE
+
+
+.EXAMPLE
+
+
+.PARAMETER Command
+    Command to execute in remote host.
+
+.PARAMETER ComputerName
+    Single computer or list of computer names or addresses to connect to run command against.
+
+.PARAMETER Credential
+    PowerShell Credential object for use in authentication. For password authentication the username and
+    password combination will be used for authentication. When a Key file is used the given user is used
+    to specify the user the key belong to and the password will be used as the passphrase for the key.
+
+.PARAMETER Port
+    Port number in use by the SSH service on the target system you are connecting to.
+
+.PARAMETER ProxyServer
+    Proxy server name or IP Adress to use for connection.
+
+.PARAMETER ProxyPort
+    Port to connect to on proxy server to route connection.
+
+.PARAMETER ProxyCredential
+    PowerShell Credential Object with the credetials for use to connect to proxy server if required.
+
+.PARAMTER  ProxyType
+    Type of Proxy being used (HTTP, Socks4 or Socks5).
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
 function Invoke-SSHCommand
 {
     [CmdletBinding()]

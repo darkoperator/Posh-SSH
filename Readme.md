@@ -8,7 +8,6 @@ Powershell module that leverages the SSH.NET Library (http://sshnet.codeplex.com
 * Add update function using GIT.
 
 # Know Issues
-* If SSH server is configured with only Keyboard-Interactive Authentication the Module will fail to authenticate (ESXi 5.x, OSX).
 * AES-128 Passphrased keys are not supported by the library at this moment.
 * No Compression support at the moment.
 * No interactives SSH and SFTP Shells at the moment.

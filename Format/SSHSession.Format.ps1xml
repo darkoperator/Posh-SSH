@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<Configuration>
+<ViewDefinitions>
+<View>
+    <Name>SSHSessionTable</Name>
+    <ViewSelectedBy>
+        <TypeName>SSH.SSHSession</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+        <TableHeaders>
+            <TableColumnHeader>
+                <Width>5</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+                <Width>16</Width>
+            </TableColumnHeader>
+            <TableColumnHeader/>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>Index</PropertyName>
+                        <Alignment>Center</Alignment>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Host</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Connected</PropertyName>
+                        <Alignment>Center</Alignment>
+                    </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+         </TableRowEntries>
+    </TableControl>
+</View>
+</ViewDefinitions>
+</Configuration>

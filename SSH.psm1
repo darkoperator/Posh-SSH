@@ -50,7 +50,7 @@ function Remove-SSHSession
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Name")]
-        [PSCustomObject[]]$SSHSession
+        [SSH.SSHSession[]]$SSHSession
         )
 
         Begin{}
@@ -173,7 +173,7 @@ function Invoke-SSHCommand
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Name")]
-        [PSCustomObject[]]$SSHSession,
+        [SSH.SSHSession[]]$SSHSession,
 
         [Parameter(Mandatory=$false,
         ParameterSetName = "Index")]
@@ -201,7 +201,8 @@ function Invoke-SSHCommand
                 }
                 if ($result)
                     {
-                        New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
+                        $result
+                        #New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
 
                     }
             }
@@ -224,7 +225,8 @@ function Invoke-SSHCommand
                     }
                     if ($result)
                     {
-                        New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
+                        $result
+                        #New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
 
                     }
                 }
@@ -262,7 +264,7 @@ function New-SSHPortForward
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
     [Alias("Session")]
-    [PSCustomObject]$SSHSession,
+    [SSH.SSHSession]$SSHSession,
 
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
@@ -331,7 +333,7 @@ function New-SSHDynamicPortForward
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
     [Alias("Session")]
-    [PSCustomObject]$SSHSession,
+    [SSH.SSHSession]$SSHSession,
 
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
@@ -392,7 +394,7 @@ function Get-SSHPortForward
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
     [Alias("Session")]
-    [PSCustomObject]$SSHSession,
+    [SSH.SSHSession]$SSHSession,
 
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
@@ -441,7 +443,7 @@ function Stop-SSHPortForward
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
     [Alias("Session")]
-    [PSCustomObject]$SSHSession,
+    [SSH.SSHSession]$SSHSession,
 
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
@@ -509,7 +511,7 @@ function Start-SSHPortForward
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
     [Alias("Session")]
-    [PSCustomObject]$SSHSession,
+    [SSH.SSHSession]$SSHSession,
 
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
@@ -620,7 +622,7 @@ function Remove-SFTPSession
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession
+        [SSH.SFTPSession[]]$SFTPSession
         )
 
         Begin{}
@@ -699,7 +701,7 @@ function Get-SFTPDirectoryList
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
         [string]$Path
@@ -755,7 +757,7 @@ function New-SFTPDirectory
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
         [string]$Path
@@ -811,7 +813,7 @@ function Remove-SFTPDirectory
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
         [string]$Path
@@ -867,7 +869,7 @@ function Set-SFTPDirectoryPath
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
         [string]$Path
@@ -923,7 +925,7 @@ function Get-SFTPCurrentDirectory
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession
+        [SSH.SFTPSession[]]$SFTPSession
      )
 
      Begin{}
@@ -976,7 +978,7 @@ function Get-SFTPFile
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of file on remote system.
         [Parameter(Mandatory=$true)]
@@ -1063,7 +1065,7 @@ function Set-SFTPFile
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of where to upload file on remote system.
         [Parameter(Mandatory=$true)]
@@ -1139,7 +1141,7 @@ function Remove-SFTPFile
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of where to upload file on remote system.
         [Parameter(Mandatory=$true)]
@@ -1202,7 +1204,7 @@ function Move-SFTPFile
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Session")]
-        [PSCustomObject[]]$SFTPSession,
+        [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
         [string]$OriginalPath,

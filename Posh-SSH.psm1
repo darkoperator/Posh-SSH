@@ -1,12 +1,39 @@
 ﻿##############################################################################################
 # SSH Function
 
+<#
+.Synopsis
+   Get current SSH Session that are available for interaction.
+.DESCRIPTION
+   Get current SSH Session that are available for interaction.
+
+.EXAMPLE
+    Get list of current sessions available.
+
+    PS C:\> Get-SSHSession
+
+    Index Host                                                                                Connected                                                                   
+    ----- ----                                                                                ---------                                                                   
+      0   192.168.1.163                                                                         True                                                                      
+      1   192.168.1.154                                                                         False                                                                     
+      2   192.168.1.155                                                                         True                                                                      
+      3   192.168.1.234                                                                         True  
+
+.PARAMETER Index
+    Index number of Session to retrive.
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
 function Get-SSHSession 
 {
     [CmdletBinding()]
     param( 
         [Parameter(Mandatory=$false)]
-        [Int32[]] $Index
+        [Int32] $Index
     )
 
     Begin{}
@@ -37,6 +64,32 @@ function Get-SSHSession
     End{}
 }
 
+
+<#
+.Synopsis
+   Removes and Closes an existing SSH Session.
+.DESCRIPTION
+    Removes and Closes an existing SSH Session. The session can be a SSH Session object
+    or they can be specified by Index.
+
+.EXAMPLE
+    Remove a SSH Session specified by Index
+
+    PS C:\> Remove-SSHSession -Index 0
+    True
+
+.PARAMETER Index
+    Index number of Session to close and remove.
+
+.PARAMETER Session
+    SSH Session to close and remove.
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
 function Remove-SSHSession
 {
     [CmdletBinding()]
@@ -116,6 +169,7 @@ function Remove-SSHSession
     
 }
 
+
 <#
 .Synopsis
    Executes a given command on a remote SSH host.
@@ -124,36 +178,34 @@ function Remove-SSHSession
    SSH Session.
 
 .EXAMPLE
+    Executes the "uname -a" command against several sessions
+
+    PS C:\> Invoke-SSHCommand -Command "uname -a" -Index 0,2,3
 
 
-.EXAMPLE
+    Host       : 192.168.1.163
+    Output     : Linux debian6 2.6.32-5-amd64 #1 SMP Sun Sep 23 10:07:46 UTC 2012 x86_64 GNU/Linux
+             
+    ExitStatus : 0
 
+    Host       : 192.168.1.155
+    Output     : Linux ole6 2.6.39-300.17.1.el6uek.x86_64 #1 SMP Fri Oct 19 11:29:17 PDT 2012 x86_64 x86_64 x86_64 GNU/Linux
+             
+    ExitStatus : 0
+
+    Host       : 192.168.1.234
+    Output     : Linux ubuntusrv 3.2.0-29-generic #46-Ubuntu SMP Fri Jul 27 17:03:23 UTC 2012 x86_64 x86_64 x86_64 GNU/Linux
+             
+    ExitStatus : 0
 
 .PARAMETER Command
     Command to execute in remote host.
 
-.PARAMETER ComputerName
-    Single computer or list of computer names or addresses to connect to run command against.
+.PARAMETER Index
+    Index number of Session to execute command against.
 
-.PARAMETER Credential
-    PowerShell Credential object for use in authentication. For password authentication the username and
-    password combination will be used for authentication. When a Key file is used the given user is used
-    to specify the user the key belong to and the password will be used as the passphrase for the key.
-
-.PARAMETER Port
-    Port number in use by the SSH service on the target system you are connecting to.
-
-.PARAMETER ProxyServer
-    Proxy server name or IP Adress to use for connection.
-
-.PARAMETER ProxyPort
-    Port to connect to on proxy server to route connection.
-
-.PARAMETER ProxyCredential
-    PowerShell Credential Object with the credetials for use to connect to proxy server if required.
-
-.PARAMTER  ProxyType
-    Type of Proxy being used (HTTP, Socks4 or Socks5).
+.PARAMETER Session
+    SSH Session to execute command against.
 
 .NOTES
     AUTHOR: Carlos Perez carlos_perez@darkoprator.com
@@ -187,7 +239,6 @@ function Invoke-SSHCommand
         
         if ($SSHSession)
         {
-            write "running as session"
             foreach($s in $SshSession)
             {
                 if ($s.session.isconnected)
@@ -201,9 +252,9 @@ function Invoke-SSHCommand
                 }
                 if ($result)
                     {
-                        $result
-                        #New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
-
+                        $ResultObj = New-Object psobject -Property @{Output = $result.Result; ExitStatus = $result.ExitStatus; Host = $s.Host}
+                        $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
+                        $ResultObj
                     }
             }
         }
@@ -225,14 +276,10 @@ function Invoke-SSHCommand
                     }
                     if ($result)
                     {
-                        $result
-                        #New-Object psobject -Property @{Result = $result.Result; Error = $result; ExitStatus = $result.ExitStatus; Host = $s.Host}
-
+                        $ResultObj = New-Object psobject -Property @{Output = $result.Result; ExitStatus = $result.ExitStatus; Host = $s.Host}
+                        $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
+                        $ResultObj
                     }
-                }
-                else
-                {
-                    Write-Warning "Index specified was not found."
                 }
             }
         }
@@ -243,6 +290,7 @@ function Invoke-SSHCommand
 
 ##############################################################################################
 # SSH Port Forwarding
+
 
 function New-SSHPortForward
 {
@@ -319,6 +367,7 @@ function New-SSHPortForward
 
 }
 
+
 function New-SSHDynamicPortForward
 {
     [CmdletBinding()]
@@ -385,6 +434,7 @@ function New-SSHDynamicPortForward
     End{}
 }
 
+
 function Get-SSHPortForward
 {
     [CmdletBinding()]
@@ -433,6 +483,7 @@ function Get-SSHPortForward
     }
     End{}
 }
+
 
 function Stop-SSHPortForward
 {
@@ -501,6 +552,7 @@ function Stop-SSHPortForward
     }
     End{}
 }
+
 
 function Start-SSHPortForward
 {
@@ -573,6 +625,32 @@ function Start-SSHPortForward
 ########################################################################################
 # SFTP Functions
 
+
+<#
+.Synopsis
+   Get current SFTP Sessions that are available for interaction.
+.DESCRIPTION
+   Get current SFTP Sessions that are available for interaction.
+
+.EXAMPLE
+    Get list of current sessions available.
+
+    PS C:\> Get-SFTPSession
+
+    Index Host                                                                                Connected                                                                   
+    ----- ----                                                                                ---------                                                                   
+      0   192.168.1.155                                                                         True  
+
+.PARAMETER Index
+    Index number of Session to retrive.
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
+
 function Get-SFTPSession 
 {
     [CmdletBinding()]
@@ -608,6 +686,22 @@ function Get-SFTPSession
     }
     End{}
 }
+
+
+<#
+.Synopsis
+   Close and Remove a SFTP Session
+.DESCRIPTION
+   Close and Remove a SFTP Session specified by Index or SFTP Session Object.
+.EXAMPLE
+   Close a SFTP Session
+
+    PS C:\> Remove-SFTPSession -Index 0 -Verbose
+    VERBOSE: 0
+    VERBOSE: Removing session 0
+    True
+    VERBOSE: Session 0 Removed
+#>
 
 function Remove-SFTPSession
 {
@@ -688,6 +782,67 @@ function Remove-SFTPSession
     
 }
 
+
+<#
+.Synopsis
+   Get a List of Files for SFTP Session.
+.DESCRIPTION
+   Get a collection of objection representing files on a given path on a SFTP Session.
+.EXAMPLE
+   List files in the /tmp path on a remote SFTP Session
+
+   C:\Users\Carlos> Get-SFTPDirectoryList -Index 0 -Path "/tmp"
+
+
+    FullName       : /tmp/vmware-root
+    LastAccessTime : 4/13/2013 5:44:56 PM
+    LastWriteTime  : 4/13/2013 5:44:56 PM
+    Length         : 4096
+    UserId         : 0
+
+    FullName       : /tmp/..
+    LastAccessTime : 4/13/2013 5:31:46 PM
+    LastWriteTime  : 4/13/2013 7:11:05 PM
+    Length         : 4096
+    UserId         : 0
+
+    FullName       : /tmp/vmware-config1
+    LastAccessTime : 4/13/2013 5:44:23 PM
+    LastWriteTime  : 4/13/2013 5:44:23 PM
+    Length         : 4096
+    UserId         : 0
+
+    FullName       : /tmp/.
+    LastAccessTime : 4/13/2013 8:11:43 PM
+    LastWriteTime  : 4/13/2013 8:11:41 PM
+    Length         : 4096
+    UserId         : 0
+
+    FullName       : /tmp/yum.conf.security
+    LastAccessTime : 4/13/2013 6:19:22 PM
+    LastWriteTime  : 4/13/2013 6:19:21 PM
+    Length         : 865
+    UserId         : 0
+
+    FullName       : /tmp/.ICE-unix
+    LastAccessTime : 4/13/2013 5:27:15 PM
+    LastWriteTime  : 4/13/2013 5:27:15 PM
+    Length         : 4096
+    UserId         : 0
+
+.PARAMETER Index
+    Index number of Session to interact with.
+
+.PARAMETER Path
+    Remote path to list.
+
+.NOTES
+    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
+.LINK
+    http://sshnet.codeplex.com/
+    http://www.darkoperator.com/
+#>
+
 function Get-SFTPDirectoryList
 {
     [CmdletBinding()]
@@ -743,6 +898,18 @@ function Get-SFTPDirectoryList
      }
      End{}
 }
+
+
+<#
+.Synopsis
+   Create Directory on Remote Server via SFTP
+.DESCRIPTION
+   Create Directory on Remote Server via SFTP specified by Index or SFTP Session Object.
+.EXAMPLE
+   Create a folder in the /tmp directory on servia via a SFTP Session
+
+   PS C:\> New-SFTPDirectory -Index 0 -Path "/tmp/temporaryfolder"
+#>
 
 function New-SFTPDirectory
 {
@@ -800,6 +967,18 @@ function New-SFTPDirectory
      End{}
 }
 
+
+<#
+.Synopsis
+   Remove Directory on Remote Server via SFTP
+.DESCRIPTION
+   Remove Directory on Remote Server via SFTP specified by Index or SFTP Session Object.
+.EXAMPLE
+   Remove a folder in the /tmp directory on servia via a SFTP Session
+
+   PS C:\> Remove-SFTPDirectory -Index 0 -Path "/tmp/temporaryfolder"
+#>
+
 function Remove-SFTPDirectory
 {
     [CmdletBinding()]
@@ -855,6 +1034,24 @@ function Remove-SFTPDirectory
      }
      End{}
 }
+
+
+<#
+.Synopsis
+   Change the current folder location of a SFTP Session
+.DESCRIPTION
+   Change the current folder location of a SFTP Session specified by Index or SFTP Session Object.
+.EXAMPLE
+   Change a SFTP Session current folder
+
+   PS C:\> Get-SFTPCurrentDirectory -Index 0
+    /root
+
+    PS C:\> Set-SFTPDirectoryPath -Index 0 -Path "/tmp"
+
+    PS C:\> Get-SFTPCurrentDirectory -Index 0
+    /tmp
+#>
 
 function Set-SFTPDirectoryPath
 {
@@ -912,6 +1109,19 @@ function Set-SFTPDirectoryPath
      End{}
 }
 
+
+<#
+.Synopsis
+   Get the current location of a SFTP Session
+.DESCRIPTION
+   Get the current location of a SFTP Session specified by Index or SFTP Session Object.
+.EXAMPLE
+   Get current folder location of a SFTP Session
+
+   PS C:\> Get-SFTPCurrentDirectory -Index 0
+    /root
+#>
+
 function Get-SFTPCurrentDirectory
 {
     [CmdletBinding()]
@@ -964,7 +1174,28 @@ function Get-SFTPCurrentDirectory
     End{}
 }
 
-# Download File
+
+<#
+.Synopsis
+   Download remote file from a SFTP Session
+.DESCRIPTION
+   Download remote file from a SFTP Session specified by Index or SFTP Session Object
+.EXAMPLE
+   Download the anaconda configuration file of a remote Red Hat Session via a SFTP Session
+
+   PS C:\> Get-SFTPFile -Index 0 -RemoteFile "/root/anaconda-ks.cfg" -LocalPath $env:homepath\Desktop
+
+    PS C:\> ls $env:homepath\Desktop -Filter *.cfg
+
+
+        Directory: C:\Users\Carlos\Desktop
+
+
+    Mode                LastWriteTime     Length Name                                                                                                           
+    ----                -------------     ------ ----                                                                                                           
+    -a---         4/13/2013   8:40 PM       1337 anaconda-ks.cfg  
+#>
+
 function Get-SFTPFile
 {
     [CmdletBinding()]
@@ -1051,7 +1282,22 @@ function Get-SFTPFile
     End{}
 }
 
-# Upload File
+
+<#
+.Synopsis
+   Upload local file using a SFTP Session to remote system 
+.DESCRIPTION
+   Upload local file using a SFTP Session to remote system given the local file
+   and remote path to place the file. The session can be specified by session index or
+   a SFTP Session object.
+.EXAMPLE
+    Upload local file in to remote system /tmp directory
+
+    PS C:\> Set-SFTPFile -Index 0 -RemotePath "/tmp" -LocalFile $env:homepath\Desktop\anaconda-ks.cfg  -Verbose
+    VERBOSE: Uploading \Users\Carlos\Desktop\anaconda-ks.cfg as /tmp/anaconda-ks.cfg
+    VERBOSE: Successfully Uploaded file to /tmp/anaconda-ks.cfg
+#>
+
 function Set-SFTPFile
 {
     [CmdletBinding()]
@@ -1128,6 +1374,20 @@ function Set-SFTPFile
     End{}
 }
 
+
+<#
+.Synopsis
+   Deletes a file on a remote system via a SFTP Session
+.DESCRIPTION
+   Deletes a file on a remote system via a SFTP Session specified by index or SFTP Session object.
+.EXAMPLE
+   Deleting file on /tmp directory.
+    
+    PS C:\> Remove-SFTPFile -Index 0 -RemoteFile "/tmp/anaconda-ks.cfg" -Verbose
+    VERBOSE: Deleting /tmp/anaconda-ks.cfg
+    VERBOSE: Deleted /tmp/anaconda-ks.cfg
+#>
+
 function Remove-SFTPFile
 {
     [CmdletBinding()]
@@ -1190,6 +1450,20 @@ function Remove-SFTPFile
      }
     End{}
 }
+
+
+<#
+.Synopsis
+   Move or Rename remote file via a SFTP Session
+.DESCRIPTION
+   Move or Rename remote file via a SFTP Session  specified by index or SFTP Session object.
+.EXAMPLE
+   Rename file by moving it
+
+    PS C:\> Move-SFTPFile -Index 0 -OriginalPath /tmp/anaconda-ks.cfg -NewPath /tmp/anaconda-ks.cfg.old -Verbose
+    VERBOSE: Renaming /tmp/anaconda-ks.cfg to /tmp/anaconda-ks.cfg.old
+    VERBOSE: File renamed
+#>
 
 function Move-SFTPFile
 {

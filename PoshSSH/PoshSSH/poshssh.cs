@@ -124,7 +124,7 @@ namespace SSH
                     var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
                     foreach (var computer in computername)
                     {
-                        WriteVerbose("Connecting to " + computer + " with user" + credential.GetNetworkCredential().UserName);
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
                         var connectInfo = new ConnectionInfo(computer,
                             port,
                             credential.GetNetworkCredential().UserName,
@@ -170,7 +170,7 @@ namespace SSH
 
                     foreach (var computer in computername)
                     {
-                        WriteVerbose("Connecting to " + computer + " with user" + credential.GetNetworkCredential().UserName);
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
                         var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
                                     PassconnectInfo,
                                     KIconnectInfo);
@@ -432,7 +432,7 @@ namespace SSH
                     var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
                     foreach (var computer in computername)
                     {
-                        WriteVerbose("Connecting to " + computer + " with user" + credential.GetNetworkCredential().UserName);
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
                         var connectInfo = new ConnectionInfo(computer,
                             port,
                             credential.GetNetworkCredential().UserName,
@@ -478,7 +478,7 @@ namespace SSH
 
                     foreach (var computer in computername)
                     {
-                        WriteVerbose("Connecting to " + computer + " with user" + credential.GetNetworkCredential().UserName);
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
                         var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
                                     PassconnectInfo,
                                     KIconnectInfo);

@@ -292,6 +292,52 @@ function Invoke-SSHCommand
 # SSH Port Forwarding
 
 
+<#
+.Synopsis
+   Redirects traffic from a local port to a remote host and port via a SSH Session.
+.DESCRIPTION
+   Redirects TCP traffic from a local port to a remote host and port via a SSH Session.
+.EXAMPLE
+   Forward traffic from 0.0.0.0:8081 to 10.10.10.1:80 thru a SSH Session
+
+    PS C:\> New-SSHPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 -RemoteAddress 10.10.10.1 -RemotePort 80 -Verbose
+    VERBOSE: Finding session with Index 0
+    VERBOSE: 0
+    VERBOSE: Adding Forward Port Configuration to session 0
+    VERBOSE: Starting the Port Forward.
+    VERBOSE: Forwarding has been started.
+
+    PS C:\> Invoke-WebRequest -Uri http://localhost:8081
+
+
+    StatusCode        : 200
+    StatusDescription : OK
+    Content           : 
+                        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                        <html>
+                            <head>
+                                <script type="text/javascript" src="/javascript/scri...
+    RawContent        : HTTP/1.1 200 OK
+                        Expires: Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT
+                        Cache-Control: max-age=180000,no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+                        Set-Cookie: PHPSESS...
+    Forms             : {iform}
+    Headers           : {[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT], [Cache-Control, max-age=180000,no-store, no-cache, 
+                        must-revalidate, post-check=0, pre-check=0], [Set-Cookie, PHPSESSID=d53d3dc62ffac241112bcfd16af36bb8; path=/], [Pragma, no-cache]...}
+    Images            : {}
+    InputFields       : {@{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user" 
+                        name=usernamefld>; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld 
+                        user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=2 
+                        id=passwordfld class="formfld pwd" type=password value="" name=passwordfld>; outerText=; tagName=INPUT; onchange=clearError();; 
+                        onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=; 
+                        innerText=; outerHTML=<INPUT tabIndex=3 class=formbtn type=submit value=Login name=login>; outerText=; tagName=INPUT; tabIndex=3; 
+                        class=formbtn; type=submit; value=Login; name=login}}
+    Links             : {}
+    ParsedHtml        : mshtml.HTMLDocumentClass
+    RawContentLength  : 5932
+#>
+
 function New-SSHPortForward
 {
     [CmdletBinding()]
@@ -435,6 +481,24 @@ function New-SSHDynamicPortForward
 }
 
 
+<#
+.Synopsis
+   Get a list of forwarded TCP Ports for a SSH Session
+.DESCRIPTION
+   Get a list of forwarded TCP Ports for a SSH Session
+.EXAMPLE
+   Get list of configured forwarded ports
+
+    PS C:\> Get-SSHPortForward -Index 0
+
+
+    BoundHost : 0.0.0.0
+    BoundPort : 8081
+    Host      : 10.10.10.1
+    Port      : 80
+    IsStarted : True
+#>
+
 function Get-SSHPortForward
 {
     [CmdletBinding()]
@@ -484,6 +548,35 @@ function Get-SSHPortForward
     End{}
 }
 
+
+<#
+.Synopsis
+   Stops a configured port forward configured for a SSH Session
+.DESCRIPTION
+   Stops a configured port forward configured for  a SSH Session given the session and port number
+.EXAMPLE
+   Stop a currently working port forward thru a SSH Session
+
+   C:\Users\Carlos> Get-SSHPortForward -Index 0
+
+
+    BoundHost : 192.168.1.158
+    BoundPort : 8081
+    Host      : 10.10.10.1
+    Port      : 80
+    IsStarted : True
+
+
+
+    C:\Users\Carlos> Stop-SSHPortForward -Index 0 -BoundPort 8081
+
+
+    BoundHost : 192.168.1.158
+    BoundPort : 8081
+    Host      : 10.10.10.1
+    Port      : 80
+    IsStarted : False
+#>
 
 function Stop-SSHPortForward
 {
@@ -554,6 +647,34 @@ function Stop-SSHPortForward
 }
 
 
+<#
+.Synopsis
+   Start a configured port forward configured for a SSH Session
+.DESCRIPTION
+   Stops a configured port forward configured for a SSH Session given the session and port number
+.EXAMPLE
+   Stop a currently working port forward thru a SSH Session
+
+   C:\Users\Carlos> Get-SSHPortForward -Index 0
+
+
+    BoundHost : 192.168.1.158
+    BoundPort : 8081
+    Host      : 10.10.10.1
+    Port      : 80
+    IsStarted : False
+
+
+
+    C:\Users\Carlos> Start-SSHPortForward -Index 0 -BoundPort 8081
+
+
+    BoundHost : 192.168.1.158
+    BoundPort : 8081
+    Host      : 10.10.10.1
+    Port      : 80
+    IsStarted : True
+#>
 function Start-SSHPortForward
 {
     [CmdletBinding()]

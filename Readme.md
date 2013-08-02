@@ -2,7 +2,7 @@
 Powershell module that leverages a custom version of the SSH.NET Library (http://sshnet.codeplex.com/) to provide basic SSH functionalyty in Powershell.
 
 # ToDo
-* Add SCP functions. (Waiting for a fix to the lib for a upload problem)
+* Add progress for SCP/SFTP upload and Download
 
 
 # Know Issues

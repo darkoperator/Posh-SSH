@@ -13,13 +13,20 @@ using System.Text;
 namespace SSH
 {
 
-    [Cmdlet(VerbsCommon.New, "SSHSession")]
+    [Cmdlet(VerbsCommon.New, "SSHSession", DefaultParameterSetName = "NoKey")]
     public class New_SSHSession : PSCmdlet
     {
         // Hosts tp conect to
-        [Parameter(Position = 0,
-            Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
         public string[] ComputerName
         {
             get { return computername; }
@@ -28,9 +35,15 @@ namespace SSH
         private string[] computername;
 
         // Credentials for Connection
-        [Parameter(Position = 1,
-            Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
         public PSCredential Credential
         {
             get { return credential; }
@@ -39,7 +52,12 @@ namespace SSH
         private PSCredential credential;
 
         // Port for SSH
-        [Parameter()]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public Int32 Port
         {
             get { return port; }
@@ -48,7 +66,12 @@ namespace SSH
         private Int32 port = 22;
 
         //Proxy Server to use
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public String ProxyServer
         {
             get { return proxyserver; }
@@ -57,7 +80,12 @@ namespace SSH
         private String proxyserver = "";
 
         // Proxy Port
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public Int32 ProxyPort
         {
             get { return proxyport; }
@@ -66,7 +94,12 @@ namespace SSH
         private Int32 proxyport = 8080;
 
         // Proxy Credentials
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         [ValidateNotNullOrEmpty]
         public PSCredential ProxyCredential
         {
@@ -77,7 +110,12 @@ namespace SSH
 
         // Proxy Type
         [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
         public string ProxyType
         {
             get { return proxytype; }
@@ -86,8 +124,9 @@ namespace SSH
         private string proxytype = "HTTP";
 
         //SSH Key File
-        [Parameter(ParameterSetName = "Proxy")]
-        [Parameter(ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public String KeyFile
         {
             get { return keyfile; }
@@ -324,13 +363,20 @@ namespace SSH
     //###################################################
 
 
-    [Cmdlet(VerbsCommon.New, "SFTPSession")]
+    [Cmdlet(VerbsCommon.New, "SFTPSession", DefaultParameterSetName = "NoKey")]
     public class New_SFTPSession : PSCmdlet
     {
         // Hosts tp conect to
-        [Parameter(Position = 0,
-            Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
         public string[] ComputerName
         {
             get { return computername; }
@@ -339,9 +385,15 @@ namespace SSH
         private string[] computername;
 
         // Credentials for Connection
-        [Parameter(Position = 1,
-            Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
         public PSCredential Credential
         {
             get { return credential; }
@@ -350,7 +402,12 @@ namespace SSH
         private PSCredential credential;
 
         // Port for SSH
-        [Parameter()]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public Int32 Port
         {
             get { return port; }
@@ -359,7 +416,12 @@ namespace SSH
         private Int32 port = 22;
 
         //Proxy Server to use
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public String ProxyServer
         {
             get { return proxyserver; }
@@ -368,7 +430,12 @@ namespace SSH
         private String proxyserver = "";
 
         // Proxy Port
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public Int32 ProxyPort
         {
             get { return proxyport; }
@@ -377,7 +444,12 @@ namespace SSH
         private Int32 proxyport = 8080;
 
         // Proxy Credentials
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         [ValidateNotNullOrEmpty]
         public PSCredential ProxyCredential
         {
@@ -388,7 +460,12 @@ namespace SSH
 
         // Proxy Type
         [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-        [Parameter(ParameterSetName = "Proxy")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
         public string ProxyType
         {
             get { return proxytype; }
@@ -397,8 +474,9 @@ namespace SSH
         private string proxytype = "HTTP";
 
         //SSH Key File
-        [Parameter(ParameterSetName = "Proxy")]
-        [Parameter(ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
         public String KeyFile
         {
             get { return keyfile; }
@@ -636,1418 +714,1618 @@ namespace SSH
     //###################################################
 
 
-    //[Cmdlet(VerbsCommon.Set, "SCPFile")]
-    //public class Set_SCPFile : PSCmdlet
-    //{
-    //    // Hosts tp conect to
-    //    [Parameter(Position = 0,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string[] ComputerName
-    //    {
-    //        get { return computername; }
-    //        set { computername = value; }
-    //    }
-    //    private string[] computername;
+    [Cmdlet(VerbsCommon.Set, "SCPFile", DefaultParameterSetName = "NoKey")]
+    public class Set_SCPFile : PSCmdlet
+    {
+        // Hosts tp conect to
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
+        public string[] ComputerName
+        {
+            get { return computername; }
+            set { computername = value; }
+        }
+        private string[] computername;
 
-    //    // Credentials for Connection
-    //    [Parameter(Position = 1,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential Credential
-    //    {
-    //        get { return credential; }
-    //        set { credential = value; }
-    //    }
-    //    private PSCredential credential;
+        // Credentials for Connection
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
+        public PSCredential Credential
+        {
+            get { return credential; }
+            set { credential = value; }
+        }
+        private PSCredential credential;
 
-    //    // Port for SSH
-    //    [Parameter()]
-    //    public Int32 Port
-    //    {
-    //        get { return port; }
-    //        set { port = value; }
-    //    }
-    //    private Int32 port = 22;
+        // Port for SSH
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+        private Int32 port = 22;
 
-    //    //Proxy Server to use
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public String ProxyServer
-    //    {
-    //        get { return proxyserver; }
-    //        set { proxyserver = value; }
-    //    }
-    //    private String proxyserver = "";
+        //Proxy Server to use
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String ProxyServer
+        {
+            get { return proxyserver; }
+            set { proxyserver = value; }
+        }
+        private String proxyserver = "";
 
-    //    // Proxy Port
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public Int32 ProxyPort
-    //    {
-    //        get { return proxyport; }
-    //        set { proxyport = value; }
-    //    }
-    //    private Int32 proxyport = 8080;
+        // Proxy Port
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 ProxyPort
+        {
+            get { return proxyport; }
+            set { proxyport = value; }
+        }
+        private Int32 proxyport = 8080;
 
-    //    // Proxy Credentials
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential ProxyCredential
-    //    {
-    //        get { return proxycredential; }
-    //        set { proxycredential = value; }
-    //    }
-    //    private PSCredential proxycredential;
+        // Proxy Credentials
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [ValidateNotNullOrEmpty]
+        public PSCredential ProxyCredential
+        {
+            get { return proxycredential; }
+            set { proxycredential = value; }
+        }
+        private PSCredential proxycredential;
 
-    //    // Proxy Type
-    //    [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public string ProxyType
-    //    {
-    //        get { return proxytype; }
-    //        set { proxytype = value; }
-    //    }
-    //    private string proxytype = "HTTP";
+        // Proxy Type
+        [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public string ProxyType
+        {
+            get { return proxytype; }
+            set { proxytype = value; }
+        }
+        private string proxytype = "HTTP";
 
-    //    //SSH Key File
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [Parameter(ParameterSetName = "Key")]
-    //    public String KeyFile
-    //    {
-    //        get { return keyfile; }
-    //        set { keyfile = value; }
-    //    }
-    //    private String keyfile = "";
+        //SSH Key File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String KeyFile
+        {
+            get { return keyfile; }
+            set { keyfile = value; }
+        }
+        private String keyfile = "";
 
-    //    //Local File
-    //    [Parameter()]
-    //    public String LocalFile
-    //    {
-    //        get { return localfile; }
-    //        set { localfile = value; }
-    //    }
-    //    private String localfile = "";
+        //Local File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 2,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 2,
+            ParameterSetName = "Key")]
+        public String LocalFile
+        {
+            get { return localfile; }
+            set { localfile = value; }
+        }
+        private String localfile = "";
 
-    //    //Remote File
-    //    [Parameter()]
-    //    public String RemoteFile
-    //    {
-    //        get { return remotefile; }
-    //        set { remotefile = value; }
-    //    }
-    //    private String remotefile = "";
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (keyfile.Equals(""))
-    //        {
-    //            //###########################################
-    //            //### Connect using Username and Password ###
-    //            //###########################################
+        //Remote File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 3,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 3,
+            ParameterSetName = "Key")]
+        public String RemoteFile
+        {
+            get { return remotefile; }
+            set { remotefile = value; }
+        }
+        private String remotefile = "";
+        protected override void ProcessRecord()
+        {
+            if (keyfile.Equals(""))
+            {
+                //###########################################
+                //### Connect using Username and Password ###
+                //###########################################
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new ConnectionInfo(computer,
-    //                        port,
-    //                        credential.GetNetworkCredential().UserName,
-    //                        ptype,
-    //                        proxyserver,
-    //                        proxyport,
-    //                        proxycredential.GetNetworkCredential().UserName,
-    //                        proxycredential.GetNetworkCredential().Password,
-    //                        KIconnectInfo,
-    //                        PassconnectInfo);
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new ConnectionInfo(computer,
+                            port,
+                            credential.GetNetworkCredential().UserName,
+                            ptype,
+                            proxyserver,
+                            proxyport,
+                            proxycredential.GetNetworkCredential().UserName,
+                            proxycredential.GetNetworkCredential().Password,
+                            KIconnectInfo,
+                            PassconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
+                            // Connect to  host using Connection info
+                            Client.Connect();
 
-    //                        var localfullPath = Path.GetFullPath(localfile);
-    //                        if (File.Exists(localfullPath))
-    //                        {
-    //                            FileInfo fil = new FileInfo(@localfullPath);
-    //                            Client.Upload(fil, remotefile);
-    //                            Client.Disconnect();
-    //                        }
+                            var localfullPath = Path.GetFullPath(localfile);
+                            if (File.Exists(localfullPath))
+                            {
+                                FileInfo fil = new FileInfo(@localfullPath);
+                                Client.Upload_2(fil, remotefile);
+                                Client.Disconnect();
+                            }
 
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //            else
-    //            {
-    //                WriteVerbose("Using Username and Password authentication for connection.");
-    //                // Connection info for Keyboard Interactive
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+                else
+                {
+                    WriteVerbose("Using Username and Password authentication for connection.");
+                    // Connection info for Keyboard Interactive
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
 
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
-    //                                PassconnectInfo,
-    //                                KIconnectInfo);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                                    PassconnectInfo,
+                                    KIconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
-    //                        WriteVerbose("Connection succesfull");
-    //                        var localfullPath = Path.GetFullPath(localfile);
-    //                        if (File.Exists(localfullPath))
-    //                        {
-    //                            WriteVerbose("Uploading "+localfullPath);
-    //                            FileInfo fil = new FileInfo(@localfullPath);
-    //                            Client.Upload(File.OpenRead(@localfullPath),remotefile);
+                            // Connect to  host using Connection info
+                            Client.Connect();
+                            WriteVerbose("Connection succesfull");
+                            var localfullPath = Path.GetFullPath(localfile);
+                            if (File.Exists(localfullPath))
+                            {
+                                WriteVerbose("Uploading " + localfullPath);
+                                FileInfo fil = new FileInfo(@localfullPath);
+                                Client.Upload_2(fil, remotefile);
 
-    //                            Client.Disconnect();
-    //                        }
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //##########################
-    //            //### Connect using Keys ###
-    //            //##########################
+                                Client.Disconnect();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+            }
+            else
+            {
+                //##########################
+                //### Connect using Keys ###
+                //##########################
 
-    //            WriteVerbose("Using SSH Key authentication for connection.");
-    //            var fullPath = Path.GetFullPath(keyfile);
+                WriteVerbose("Using SSH Key authentication for connection.");
+                var fullPath = Path.GetFullPath(keyfile);
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
 
-    //                            if (proxycredential.UserName == "")
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    sshkey);
-    //                            }
-    //                            else
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    proxycredential.GetNetworkCredential().UserName,
-    //                                    proxycredential.GetNetworkCredential().Password,
-    //                                    sshkey);
-    //                            }
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                if (proxycredential.UserName == "")
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        sshkey);
+                                }
+                                else
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        proxycredential.GetNetworkCredential().UserName,
+                                        proxycredential.GetNetworkCredential().Password,
+                                        sshkey);
+                                }
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
-    //                            var localfullPath = Path.GetFullPath(localfile);
-    //                            if (File.Exists(localfullPath))
-    //                            {
-    //                                FileInfo fil = new FileInfo(@localfullPath);
-    //                                Client.Upload(fil, remotefile);
-    //                                Client.Disconnect();
-    //                            }
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
+                                var localfullPath = Path.GetFullPath(localfile);
+                                if (File.Exists(localfullPath))
+                                {
+                                    FileInfo fil = new FileInfo(@localfullPath);
+                                    Client.Upload(fil, remotefile);
+                                    Client.Disconnect();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
-    //                            var localfullPath = Path.GetFullPath(localfile);
-    //                            if (File.Exists(localfullPath))
-    //                            {
-    //                                FileInfo fil = new FileInfo(@localfullPath);
-    //                                Client.Upload(fil, remotefile);
-    //                                Client.Disconnect();
-    //                            }
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
+                                var localfullPath = Path.GetFullPath(localfile);
+                                if (File.Exists(localfullPath))
+                                {
+                                    FileInfo fil = new FileInfo(@localfullPath);
+                                    Client.Upload_2(fil, remotefile);
+                                    Client.Disconnect();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
 
-    //                }
-    //            }
+                    }
+                }
 
-    //        } // End process record
-    //    }
+            } // End process record
+        }
 
-    //} //end of the class for the Set-SCPFile
+    } //end of the class for the Set-SCPFile
     ////###################################################
 
 
-    //[Cmdlet(VerbsCommon.Get, "SCPFile")]
-    //public class Get_SCPFile : PSCmdlet
-    //{
-    //    // Hosts tp conect to
-    //    [Parameter(Position = 0,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string[] ComputerName
-    //    {
-    //        get { return computername; }
-    //        set { computername = value; }
-    //    }
-    //    private string[] computername;
+    [Cmdlet(VerbsCommon.Get, "SCPFile", DefaultParameterSetName = "NoKey")]
+    public class Get_SCPFile : PSCmdlet
+    {
+        // Hosts tp conect to
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
+        public string[] ComputerName
+        {
+            get { return computername; }
+            set { computername = value; }
+        }
+        private string[] computername;
 
-    //    // Credentials for Connection
-    //    [Parameter(Position = 1,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential Credential
-    //    {
-    //        get { return credential; }
-    //        set { credential = value; }
-    //    }
-    //    private PSCredential credential;
+        // Credentials for Connection
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
+        public PSCredential Credential
+        {
+            get { return credential; }
+            set { credential = value; }
+        }
+        private PSCredential credential;
 
-    //    // Port for SSH
-    //    [Parameter()]
-    //    public Int32 Port
-    //    {
-    //        get { return port; }
-    //        set { port = value; }
-    //    }
-    //    private Int32 port = 22;
+        // Port for SSH
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+        private Int32 port = 22;
 
-    //    //Proxy Server to use
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public String ProxyServer
-    //    {
-    //        get { return proxyserver; }
-    //        set { proxyserver = value; }
-    //    }
-    //    private String proxyserver = "";
+        //Proxy Server to use
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String ProxyServer
+        {
+            get { return proxyserver; }
+            set { proxyserver = value; }
+        }
+        private String proxyserver = "";
 
-    //    // Proxy Port
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public Int32 ProxyPort
-    //    {
-    //        get { return proxyport; }
-    //        set { proxyport = value; }
-    //    }
-    //    private Int32 proxyport = 8080;
+        // Proxy Port
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 ProxyPort
+        {
+            get { return proxyport; }
+            set { proxyport = value; }
+        }
+        private Int32 proxyport = 8080;
 
-    //    // Proxy Credentials
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential ProxyCredential
-    //    {
-    //        get { return proxycredential; }
-    //        set { proxycredential = value; }
-    //    }
-    //    private PSCredential proxycredential;
+        // Proxy Credentials
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [ValidateNotNullOrEmpty]
+        public PSCredential ProxyCredential
+        {
+            get { return proxycredential; }
+            set { proxycredential = value; }
+        }
+        private PSCredential proxycredential;
 
-    //    // Proxy Type
-    //    [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public string ProxyType
-    //    {
-    //        get { return proxytype; }
-    //        set { proxytype = value; }
-    //    }
-    //    private string proxytype = "HTTP";
+        // Proxy Type
+        [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public string ProxyType
+        {
+            get { return proxytype; }
+            set { proxytype = value; }
+        }
+        private string proxytype = "HTTP";
 
-    //    //SSH Key File
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [Parameter(ParameterSetName = "Key")]
-    //    public String KeyFile
-    //    {
-    //        get { return keyfile; }
-    //        set { keyfile = value; }
-    //    }
-    //    private String keyfile = "";
+        //SSH Key File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String KeyFile
+        {
+            get { return keyfile; }
+            set { keyfile = value; }
+        }
+        private String keyfile = "";
 
-    //    //Local File
-    //    [Parameter()]
-    //    public String LocalFile
-    //    {
-    //        get { return localfile; }
-    //        set { localfile = value; }
-    //    }
-    //    private String localfile = "";
+        //Local File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String LocalFile
+        {
+            get { return localfile; }
+            set { localfile = value; }
+        }
+        private String localfile = "";
 
-    //    //Remote File
-    //    [Parameter()]
-    //    public String RemoteFile
-    //    {
-    //        get { return remotefile; }
-    //        set { remotefile = value; }
-    //    }
-    //    private String remotefile = "";
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (keyfile.Equals(""))
-    //        {
-    //            //###########################################
-    //            //### Connect using Username and Password ###
-    //            //###########################################
+        //Remote File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String RemoteFile
+        {
+            get { return remotefile; }
+            set { remotefile = value; }
+        }
+        private String remotefile = "";
+        protected override void ProcessRecord()
+        {
+            if (keyfile.Equals(""))
+            {
+                //###########################################
+                //### Connect using Username and Password ###
+                //###########################################
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new ConnectionInfo(computer,
-    //                        port,
-    //                        credential.GetNetworkCredential().UserName,
-    //                        ptype,
-    //                        proxyserver,
-    //                        proxyport,
-    //                        proxycredential.GetNetworkCredential().UserName,
-    //                        proxycredential.GetNetworkCredential().Password,
-    //                        KIconnectInfo,
-    //                        PassconnectInfo);
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new ConnectionInfo(computer,
+                            port,
+                            credential.GetNetworkCredential().UserName,
+                            ptype,
+                            proxyserver,
+                            proxyport,
+                            proxycredential.GetNetworkCredential().UserName,
+                            proxycredential.GetNetworkCredential().Password,
+                            KIconnectInfo,
+                            PassconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
+                            // Connect to  host using Connection info
+                            Client.Connect();
 
-    //                        var localfullPath = Path.GetFullPath(localfile);
-    //                        //if (File.Exists(localfullPath))
-    //                        //{
-    //                            WriteVerbose("Downloading " + remotefile);
-    //                            FileInfo fil = new FileInfo(@localfullPath);
-    //                            Client.Download(remotefile,fil);
-    //                            Client.Disconnect();
-    //                        //}
+                            var localfullPath = Path.GetFullPath(localfile);
+                            //if (File.Exists(localfullPath))
+                            //{
+                            WriteVerbose("Downloading " + remotefile);
+                            FileInfo fil = new FileInfo(@localfullPath);
+                            Client.Download(remotefile, fil);
+                            Client.Disconnect();
+                            //}
 
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //            else
-    //            {
-    //                WriteVerbose("Using Username and Password authentication for connection.");
-    //                // Connection info for Keyboard Interactive
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+                else
+                {
+                    WriteVerbose("Using Username and Password authentication for connection.");
+                    // Connection info for Keyboard Interactive
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
 
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
-    //                                PassconnectInfo,
-    //                                KIconnectInfo);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                                    PassconnectInfo,
+                                    KIconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
-    //                        WriteVerbose("Connection succesfull");
-    //                        var localfullPath = Path.GetFullPath(localfile);
-    //                        WriteVerbose("Downloading " + remotefile);
-    //                        FileInfo fil = new FileInfo(@localfullPath);
-    //                        Client.Download(remotefile, fil);
-    //                        Client.Disconnect();
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //##########################
-    //            //### Connect using Keys ###
-    //            //##########################
+                            // Connect to  host using Connection info
+                            Client.Connect();
+                            WriteVerbose("Connection succesfull");
+                            var localfullPath = Path.GetFullPath(localfile);
+                            WriteVerbose("Downloading " + remotefile);
+                            FileInfo fil = new FileInfo(@localfullPath);
+                            Client.Download(remotefile, fil);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+            }
+            else
+            {
+                //##########################
+                //### Connect using Keys ###
+                //##########################
 
-    //            WriteVerbose("Using SSH Key authentication for connection.");
-    //            var fullPath = Path.GetFullPath(keyfile);
+                WriteVerbose("Using SSH Key authentication for connection.");
+                var fullPath = Path.GetFullPath(keyfile);
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
 
-    //                            if (proxycredential.UserName == "")
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    sshkey);
-    //                            }
-    //                            else
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    proxycredential.GetNetworkCredential().UserName,
-    //                                    proxycredential.GetNetworkCredential().Password,
-    //                                    sshkey);
-    //                            }
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                if (proxycredential.UserName == "")
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        sshkey);
+                                }
+                                else
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        proxycredential.GetNetworkCredential().UserName,
+                                        proxycredential.GetNetworkCredential().Password,
+                                        sshkey);
+                                }
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
-    //                            var localfullPath = Path.GetFullPath(localfile);
-    //                            WriteVerbose("Downloading " + remotefile);
-    //                            FileInfo fil = new FileInfo(@localfullPath);
-    //                            Client.Download(remotefile, fil);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
+                                var localfullPath = Path.GetFullPath(localfile);
+                                WriteVerbose("Downloading " + remotefile);
+                                FileInfo fil = new FileInfo(@localfullPath);
+                                Client.Download(remotefile, fil);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
-    //                            var localfullPath = Path.GetFullPath(localfile);
-    //                            WriteVerbose("Downloading " + remotefile);
-    //                            FileInfo fil = new FileInfo(@localfullPath);
-    //                            Client.Download(remotefile, fil);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
+                                var localfullPath = Path.GetFullPath(localfile);
+                                WriteVerbose("Downloading " + remotefile);
+                                FileInfo fil = new FileInfo(@localfullPath);
+                                Client.Download(remotefile, fil);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
 
-    //                }
-    //            }
+                    }
+                }
 
-    //        } // End process record
-    //    }
+            } // End process record
+        }
 
-    //} //end of the class for the Get-SCPFile
+    } //end of the class for the Get-SCPFile
     ////###################################################
 
 
-    //[Cmdlet(VerbsCommon.Get, "SCPFolder")]
-    //public class Get_SCPFolder : PSCmdlet
-    //{
-    //    // Hosts tp conect to
-    //    [Parameter(Position = 0,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string[] ComputerName
-    //    {
-    //        get { return computername; }
-    //        set { computername = value; }
-    //    }
-    //    private string[] computername;
+    [Cmdlet(VerbsCommon.Get, "SCPFolder", DefaultParameterSetName = "NoKey")]
+    public class Get_SCPFolder : PSCmdlet
+    {
+        // Hosts tp conect to
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
+        public string[] ComputerName
+        {
+            get { return computername; }
+            set { computername = value; }
+        }
+        private string[] computername;
 
-    //    // Credentials for Connection
-    //    [Parameter(Position = 1,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential Credential
-    //    {
-    //        get { return credential; }
-    //        set { credential = value; }
-    //    }
-    //    private PSCredential credential;
+        // Credentials for Connection
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
+        public PSCredential Credential
+        {
+            get { return credential; }
+            set { credential = value; }
+        }
+        private PSCredential credential;
 
-    //    // Port for SSH
-    //    [Parameter()]
-    //    public Int32 Port
-    //    {
-    //        get { return port; }
-    //        set { port = value; }
-    //    }
-    //    private Int32 port = 22;
+        // Port for SSH
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+        private Int32 port = 22;
 
-    //    //Proxy Server to use
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public String ProxyServer
-    //    {
-    //        get { return proxyserver; }
-    //        set { proxyserver = value; }
-    //    }
-    //    private String proxyserver = "";
+        //Proxy Server to use
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String ProxyServer
+        {
+            get { return proxyserver; }
+            set { proxyserver = value; }
+        }
+        private String proxyserver = "";
 
-    //    // Proxy Port
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public Int32 ProxyPort
-    //    {
-    //        get { return proxyport; }
-    //        set { proxyport = value; }
-    //    }
-    //    private Int32 proxyport = 8080;
+        // Proxy Port
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 ProxyPort
+        {
+            get { return proxyport; }
+            set { proxyport = value; }
+        }
+        private Int32 proxyport = 8080;
 
-    //    // Proxy Credentials
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential ProxyCredential
-    //    {
-    //        get { return proxycredential; }
-    //        set { proxycredential = value; }
-    //    }
-    //    private PSCredential proxycredential;
+        // Proxy Credentials
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [ValidateNotNullOrEmpty]
+        public PSCredential ProxyCredential
+        {
+            get { return proxycredential; }
+            set { proxycredential = value; }
+        }
+        private PSCredential proxycredential;
 
-    //    // Proxy Type
-    //    [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public string ProxyType
-    //    {
-    //        get { return proxytype; }
-    //        set { proxytype = value; }
-    //    }
-    //    private string proxytype = "HTTP";
+        // Proxy Type
+        [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public string ProxyType
+        {
+            get { return proxytype; }
+            set { proxytype = value; }
+        }
+        private string proxytype = "HTTP";
 
-    //    //SSH Key File
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [Parameter(ParameterSetName = "Key")]
-    //    public String KeyFile
-    //    {
-    //        get { return keyfile; }
-    //        set { keyfile = value; }
-    //    }
-    //    private String keyfile = "";
+        //SSH Key File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String KeyFile
+        {
+            get { return keyfile; }
+            set { keyfile = value; }
+        }
+        private String keyfile = "";
 
-    //    //Local Folder
-    //    [Parameter()]
-    //    public String LocalFolder
-    //    {
-    //        get { return localfolder; }
-    //        set { localfolder = value; }
-    //    }
-    //    private String localfolder = "";
+        //Local Folder
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String LocalFolder
+        {
+            get { return localfolder; }
+            set { localfolder = value; }
+        }
+        private String localfolder = "";
 
-    //    //Remote Folder
-    //    [Parameter()]
-    //    public String RemoteFolder
-    //    {
-    //        get { return remotefolder; }
-    //        set { remotefolder = value; }
-    //    }
-    //    private String remotefolder = "";
+        //Remote Folder
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String RemoteFolder
+        {
+            get { return remotefolder; }
+            set { remotefolder = value; }
+        }
+        private String remotefolder = "";
 
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (keyfile.Equals(""))
-    //        {
-    //            //###########################################
-    //            //### Connect using Username and Password ###
-    //            //###########################################
+        protected override void ProcessRecord()
+        {
+            if (keyfile.Equals(""))
+            {
+                //###########################################
+                //### Connect using Username and Password ###
+                //###########################################
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new ConnectionInfo(computer,
-    //                        port,
-    //                        credential.GetNetworkCredential().UserName,
-    //                        ptype,
-    //                        proxyserver,
-    //                        proxyport,
-    //                        proxycredential.GetNetworkCredential().UserName,
-    //                        proxycredential.GetNetworkCredential().Password,
-    //                        KIconnectInfo,
-    //                        PassconnectInfo);
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new ConnectionInfo(computer,
+                            port,
+                            credential.GetNetworkCredential().UserName,
+                            ptype,
+                            proxyserver,
+                            proxyport,
+                            proxycredential.GetNetworkCredential().UserName,
+                            proxycredential.GetNetworkCredential().Password,
+                            KIconnectInfo,
+                            PassconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
+                            // Connect to  host using Connection info
+                            Client.Connect();
 
-    //                        var localfullPath = Path.GetFullPath(localfolder);
-    //                        WriteVerbose("Downloading " + remotefolder);
-    //                        DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                        Client.Download(remotefolder, dirinfo);
-    //                        Client.Disconnect();
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //            else
-    //            {
-    //                WriteVerbose("Using Username and Password authentication for connection.");
-    //                // Connection info for Keyboard Interactive
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            WriteVerbose("Downloading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Download(remotefolder, dirinfo);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+                else
+                {
+                    WriteVerbose("Using Username and Password authentication for connection.");
+                    // Connection info for Keyboard Interactive
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
 
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
-    //                                PassconnectInfo,
-    //                                KIconnectInfo);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                                    PassconnectInfo,
+                                    KIconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
-    //                        WriteVerbose("Connection succesfull");
+                            // Connect to  host using Connection info
+                            Client.Connect();
+                            WriteVerbose("Connection succesfull");
 
-    //                        var localfullPath = Path.GetFullPath(localfolder);
-    //                        WriteVerbose("Downloading " + remotefolder);
-    //                        DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                        Client.Download(remotefolder, dirinfo);
-    //                        Client.Disconnect();
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //##########################
-    //            //### Connect using Keys ###
-    //            //##########################
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            WriteVerbose("Downloading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Download(remotefolder, dirinfo);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+            }
+            else
+            {
+                //##########################
+                //### Connect using Keys ###
+                //##########################
 
-    //            WriteVerbose("Using SSH Key authentication for connection.");
-    //            var fullPath = Path.GetFullPath(keyfile);
+                WriteVerbose("Using SSH Key authentication for connection.");
+                var fullPath = Path.GetFullPath(keyfile);
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
 
-    //                            if (proxycredential.UserName == "")
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    sshkey);
-    //                            }
-    //                            else
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    proxycredential.GetNetworkCredential().UserName,
-    //                                    proxycredential.GetNetworkCredential().Password,
-    //                                    sshkey);
-    //                            }
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                if (proxycredential.UserName == "")
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        sshkey);
+                                }
+                                else
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        proxycredential.GetNetworkCredential().UserName,
+                                        proxycredential.GetNetworkCredential().Password,
+                                        sshkey);
+                                }
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
 
-    //                            var localfullPath = Path.GetFullPath(localfolder);
-    //                            WriteVerbose("Downloading " + remotefolder);
-    //                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                            Client.Download(remotefolder, dirinfo);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                var localfullPath = Path.GetFullPath(localfolder);
+                                WriteVerbose("Downloading " + remotefolder);
+                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                                Client.Download(remotefolder, dirinfo);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
 
-    //                            var localfullPath = Path.GetFullPath(localfolder);
-    //                            WriteVerbose("Downloading " + remotefolder);
-    //                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                            Client.Download(remotefolder, dirinfo);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
+                                var localfullPath = Path.GetFullPath(localfolder);
+                                WriteVerbose("Downloading " + remotefolder);
+                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                                Client.Download(remotefolder, dirinfo);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
 
-    //                }
-    //            }
+                    }
+                }
 
-    //        } // End process record
-    //    }
+            } // End process record
+        }
 
-    //} //end of the class for the Get-SCPFile
+    } //end of the class for the Get-SCPFile
     ////###################################################
 
 
-    //[Cmdlet(VerbsCommon.Set, "SCPFolder")]
-    //public class Set_SCPFolder : PSCmdlet
-    //{
-    //    // Hosts tp conect to
-    //    [Parameter(Position = 0,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public string[] ComputerName
-    //    {
-    //        get { return computername; }
-    //        set { computername = value; }
-    //    }
-    //    private string[] computername;
+    [Cmdlet(VerbsCommon.Set, "SCPFolder", DefaultParameterSetName = "NoKey")]
+    public class Set_SCPFolder : PSCmdlet
+    {
+        // Hosts tp conect to
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            ParameterSetName = "Key")]
+        [Alias("HostName", "Computer", "IPAddress", "Host")]
+        public string[] ComputerName
+        {
+            get { return computername; }
+            set { computername = value; }
+        }
+        private string[] computername;
 
-    //    // Credentials for Connection
-    //    [Parameter(Position = 1,
-    //        Mandatory = true)]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential Credential
-    //    {
-    //        get { return credential; }
-    //        set { credential = value; }
-    //    }
-    //    private PSCredential credential;
+        // Credentials for Connection
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "Key")]
+        public PSCredential Credential
+        {
+            get { return credential; }
+            set { credential = value; }
+        }
+        private PSCredential credential;
 
-    //    // Port for SSH
-    //    [Parameter()]
-    //    public Int32 Port
-    //    {
-    //        get { return port; }
-    //        set { port = value; }
-    //    }
-    //    private Int32 port = 22;
+        // Port for SSH
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 Port
+        {
+            get { return port; }
+            set { port = value; }
+        }
+        private Int32 port = 22;
 
-    //    //Proxy Server to use
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public String ProxyServer
-    //    {
-    //        get { return proxyserver; }
-    //        set { proxyserver = value; }
-    //    }
-    //    private String proxyserver = "";
+        //Proxy Server to use
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String ProxyServer
+        {
+            get { return proxyserver; }
+            set { proxyserver = value; }
+        }
+        private String proxyserver = "";
 
-    //    // Proxy Port
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public Int32 ProxyPort
-    //    {
-    //        get { return proxyport; }
-    //        set { proxyport = value; }
-    //    }
-    //    private Int32 proxyport = 8080;
+        // Proxy Port
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public Int32 ProxyPort
+        {
+            get { return proxyport; }
+            set { proxyport = value; }
+        }
+        private Int32 proxyport = 8080;
 
-    //    // Proxy Credentials
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [ValidateNotNullOrEmpty]
-    //    public PSCredential ProxyCredential
-    //    {
-    //        get { return proxycredential; }
-    //        set { proxycredential = value; }
-    //    }
-    //    private PSCredential proxycredential;
+        // Proxy Credentials
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [ValidateNotNullOrEmpty]
+        public PSCredential ProxyCredential
+        {
+            get { return proxycredential; }
+            set { proxycredential = value; }
+        }
+        private PSCredential proxycredential;
 
-    //    // Proxy Type
-    //    [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    public string ProxyType
-    //    {
-    //        get { return proxytype; }
-    //        set { proxytype = value; }
-    //    }
-    //    private string proxytype = "HTTP";
+        // Proxy Type
+        [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public string ProxyType
+        {
+            get { return proxytype; }
+            set { proxytype = value; }
+        }
+        private string proxytype = "HTTP";
 
-    //    //SSH Key File
-    //    [Parameter(ParameterSetName = "Proxy")]
-    //    [Parameter(ParameterSetName = "Key")]
-    //    public String KeyFile
-    //    {
-    //        get { return keyfile; }
-    //        set { keyfile = value; }
-    //    }
-    //    private String keyfile = "";
+        //SSH Key File
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public String KeyFile
+        {
+            get { return keyfile; }
+            set { keyfile = value; }
+        }
+        private String keyfile = "";
 
-    //    //Local Folder
-    //    [Parameter()]
-    //    public String LocalFolder
-    //    {
-    //        get { return localfolder; }
-    //        set { localfolder = value; }
-    //    }
-    //    private String localfolder = "";
+        //Local Folder
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String LocalFolder
+        {
+            get { return localfolder; }
+            set { localfolder = value; }
+        }
+        private String localfolder = "";
 
-    //    //Remote Folder
-    //    [Parameter()]
-    //    public String RemoteFolder
-    //    {
-    //        get { return remotefolder; }
-    //        set { remotefolder = value; }
-    //    }
-    //    private String remotefolder = "";
+        //Remote Folder
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public String RemoteFolder
+        {
+            get { return remotefolder; }
+            set { remotefolder = value; }
+        }
+        private String remotefolder = "";
 
-    //    protected override void ProcessRecord()
-    //    {
-    //        if (keyfile.Equals(""))
-    //        {
-    //            //###########################################
-    //            //### Connect using Username and Password ###
-    //            //###########################################
+        protected override void ProcessRecord()
+        {
+            if (keyfile.Equals(""))
+            {
+                //###########################################
+                //### Connect using Username and Password ###
+                //###########################################
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new ConnectionInfo(computer,
-    //                        port,
-    //                        credential.GetNetworkCredential().UserName,
-    //                        ptype,
-    //                        proxyserver,
-    //                        proxyport,
-    //                        proxycredential.GetNetworkCredential().UserName,
-    //                        proxycredential.GetNetworkCredential().Password,
-    //                        KIconnectInfo,
-    //                        PassconnectInfo);
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new ConnectionInfo(computer,
+                            port,
+                            credential.GetNetworkCredential().UserName,
+                            ptype,
+                            proxyserver,
+                            proxyport,
+                            proxycredential.GetNetworkCredential().UserName,
+                            proxycredential.GetNetworkCredential().Password,
+                            KIconnectInfo,
+                            PassconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
+                            // Connect to  host using Connection info
+                            Client.Connect();
 
-    //                        var localfullPath = Path.GetFullPath(localfolder);
-    //                        WriteVerbose("Uploading " + remotefolder);
-    //                        DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                        Client.Upload(dirinfo,remotefolder);
-    //                        Client.Disconnect();
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //            else
-    //            {
-    //                WriteVerbose("Using Username and Password authentication for connection.");
-    //                // Connection info for Keyboard Interactive
-    //                var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-    //                var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            WriteVerbose("Uploading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Upload(dirinfo, remotefolder);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+                else
+                {
+                    WriteVerbose("Using Username and Password authentication for connection.");
+                    // Connection info for Keyboard Interactive
+                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
 
-    //                foreach (var computer in computername)
-    //                {
-    //                    WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-    //                    var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
-    //                                PassconnectInfo,
-    //                                KIconnectInfo);
+                    foreach (var computer in computername)
+                    {
+                        WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
+                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                                    PassconnectInfo,
+                                    KIconnectInfo);
 
-    //                    // Event Handler for interactive Authentication
-    //                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-    //                    {
-    //                        foreach (var prompt in e.Prompts)
-    //                        {
-    //                            if (prompt.Request.Contains("Password"))
-    //                                prompt.Response = credential.GetNetworkCredential().Password;
-    //                        }
-    //                    };
-    //                    try
-    //                    {
-    //                        //Ceate instance of SCP Client with connection info
-    //                        var Client = new ScpClient(connectInfo);
+                        // Event Handler for interactive Authentication
+                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        {
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectInfo);
 
-    //                        // Connect to  host using Connection info
-    //                        Client.Connect();
-    //                        WriteVerbose("Connection succesfull");
+                            // Connect to  host using Connection info
+                            Client.Connect();
+                            WriteVerbose("Connection succesfull");
 
-    //                        var localfullPath = Path.GetFullPath(localfolder);
-    //                        WriteVerbose("Uploading " + remotefolder);
-    //                        DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                        Client.Upload(dirinfo, remotefolder);
-    //                        Client.Disconnect();
-    //                    }
-    //                    catch (Exception ex)
-    //                    {
-    //                        throw ex;
-    //                    }
-    //                } // End foroeach computer
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //##########################
-    //            //### Connect using Keys ###
-    //            //##########################
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            WriteVerbose("Uploading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Upload(dirinfo, remotefolder);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    } // End foroeach computer
+                }
+            }
+            else
+            {
+                //##########################
+                //### Connect using Keys ###
+                //##########################
 
-    //            WriteVerbose("Using SSH Key authentication for connection.");
-    //            var fullPath = Path.GetFullPath(keyfile);
+                WriteVerbose("Using SSH Key authentication for connection.");
+                var fullPath = Path.GetFullPath(keyfile);
 
-    //            if (proxyserver != "")
-    //            {
-    //                // Set the proper proxy type
-    //                var ptype = Renci.SshNet.ProxyTypes.Http;
-    //                WriteVerbose("A Proxy Server has been specified");
-    //                switch (proxytype)
-    //                {
-    //                    case "HTTP":
-    //                        ptype = Renci.SshNet.ProxyTypes.Http;
-    //                        break;
-    //                    case "Socks4":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks4;
-    //                        break;
-    //                    case "Socks5":
-    //                        ptype = Renci.SshNet.ProxyTypes.Socks5;
-    //                        break;
-    //                }
+                if (proxyserver != "")
+                {
+                    // Set the proper proxy type
+                    var ptype = Renci.SshNet.ProxyTypes.Http;
+                    WriteVerbose("A Proxy Server has been specified");
+                    switch (proxytype)
+                    {
+                        case "HTTP":
+                            ptype = Renci.SshNet.ProxyTypes.Http;
+                            break;
+                        case "Socks4":
+                            ptype = Renci.SshNet.ProxyTypes.Socks4;
+                            break;
+                        case "Socks5":
+                            ptype = Renci.SshNet.ProxyTypes.Socks5;
+                            break;
+                    }
 
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
 
-    //                            if (proxycredential.UserName == "")
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    sshkey);
-    //                            }
-    //                            else
-    //                            {
-    //                                connectionInfo = new PrivateKeyConnectionInfo(computer,
-    //                                    credential.GetNetworkCredential().UserName,
-    //                                    ptype,
-    //                                    proxyserver,
-    //                                    proxyport,
-    //                                    proxycredential.GetNetworkCredential().UserName,
-    //                                    proxycredential.GetNetworkCredential().Password,
-    //                                    sshkey);
-    //                            }
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                if (proxycredential.UserName == "")
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        sshkey);
+                                }
+                                else
+                                {
+                                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                                        credential.GetNetworkCredential().UserName,
+                                        ptype,
+                                        proxyserver,
+                                        proxyport,
+                                        proxycredential.GetNetworkCredential().UserName,
+                                        proxycredential.GetNetworkCredential().Password,
+                                        sshkey);
+                                }
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
 
-    //                            var localfullPath = Path.GetFullPath(localfolder);
-    //                            WriteVerbose("Uploading " + remotefolder);
-    //                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                            Client.Upload(dirinfo, remotefolder);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if (File.Exists(fullPath))
-    //                {
-    //                    foreach (var computer in computername)
-    //                    {
-    //                        PrivateKeyConnectionInfo connectionInfo;
-    //                        if (credential.GetNetworkCredential().Password == "")
-    //                        {
-    //                            WriteVerbose("Using key with no passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        else
-    //                        {
-    //                            WriteVerbose("Using key with passphrase.");
-    //                            var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
-    //                            connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
-    //                        }
-    //                        try
-    //                        {
-    //                            //Ceate instance of SCP Client with connection info
-    //                            var Client = new ScpClient(connectionInfo);
+                                var localfullPath = Path.GetFullPath(localfolder);
+                                WriteVerbose("Uploading " + remotefolder);
+                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                                Client.Upload(dirinfo, remotefolder);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (File.Exists(fullPath))
+                    {
+                        foreach (var computer in computername)
+                        {
+                            PrivateKeyConnectionInfo connectionInfo;
+                            if (credential.GetNetworkCredential().Password == "")
+                            {
+                                WriteVerbose("Using key with no passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            else
+                            {
+                                WriteVerbose("Using key with passphrase.");
+                                var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
+                                connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                            }
+                            try
+                            {
+                                //Ceate instance of SCP Client with connection info
+                                var Client = new ScpClient(connectionInfo);
 
-    //                            // Connect to  host using Connection info
-    //                            Client.Connect();
-    //                            WriteVerbose("Connection succesfull");
+                                // Connect to  host using Connection info
+                                Client.Connect();
+                                WriteVerbose("Connection succesfull");
 
-    //                            var localfullPath = Path.GetFullPath(localfolder);
-    //                            WriteVerbose("Uploading " + remotefolder);
-    //                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-    //                            Client.Upload(dirinfo, remotefolder);
-    //                            Client.Disconnect();
-    //                        }
-    //                        catch (Exception ex)
-    //                        {
-    //                            throw ex;
-    //                        }
-    //                    }
+                                var localfullPath = Path.GetFullPath(localfolder);
+                                WriteVerbose("Uploading " + remotefolder);
+                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                                Client.Upload(dirinfo, remotefolder);
+                                Client.Disconnect();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
 
-    //                }
-    //            }
+                    }
+                }
 
-    //        } // End process record
-    //    }
+            } // End process record
+        }
 
-    //} //end of the class for the Set-SCPFile
+    } //end of the class for the Set-SCPFile
     ////###################################################
 
 

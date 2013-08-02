@@ -1,0 +1,40 @@
+﻿<Project DefaultTargets="Generate" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+	<!-- Sandcastle Help File Builder Tasks.  http://SHFB.CodePlex.com -->
+	<UsingTask TaskName="SandcastleBuilder.Utils.MSBuild.XslTransform"
+		AssemblyFile="$(SHFBROOT)\SandcastleBuilder.Utils.dll" />
+
+	<!-- Task properties -->
+	<PropertyGroup>
+		<SandcastlePath>C:\Program Files (x86)\Sandcastle\</SandcastlePath>
+		<WorkingFolder>H:\Projects\Renci\SshNet\Renci.SshNet\Documentation\Working\</WorkingFolder>
+		<TocTransformation>C:\Program Files (x86)\Sandcastle\\ProductionTransforms\CreateVSToc.xsl</TocTransformation>
+		<TocTransformParameters></TocTransformParameters>
+	</PropertyGroup>
+
+	<!-- This defines the dependencies for the Generate target -->
+	<PropertyGroup>
+		<GenerateDependsOn>
+			BeforeGenerateIntermediateTOC;
+			GenerateIntermediateTOC;
+			AfterGenerateIntermediateTOC
+		</GenerateDependsOn>
+	</PropertyGroup>
+
+	<Target Name="Generate" DependsOnTargets="$(GenerateDependsOn)" />
+
+	<!-- The Generate Intermediate TOC target -->
+	<Target Name="GenerateIntermediateTOC">
+		<!-- Transform the reflection output based on the presentation style -->
+		<SandcastleBuilder.Utils.MSBuild.XslTransform
+			SandcastlePath="$(SandcastlePath)"
+			WorkingFolder="$(WorkingFolder)"
+			Transformations="$(TocTransformation)"
+			Arguments="$(TocTransformParameters)"
+			InputFile="reflection.xml"
+			OutputFile="toc.xml" />
+	</Target>
+
+	<!-- The following targets may be overridden or replaced to perform additional processing. -->
+	<Target Name="BeforeGenerateIntermediateTOC" />
+	<Target Name="AfterGenerateIntermediateTOC" />
+</Project>

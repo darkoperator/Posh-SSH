@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Generate" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <!-- Sandcastle Help File Builder Tasks.  http://SHFB.CodePlex.com -->
+  <UsingTask TaskName="SandcastleBuilder.Utils.MSBuild.MRefBuilder" AssemblyFile="$(SHFBROOT)\SandcastleBuilder.Utils.dll" />
+  <UsingTask TaskName="SandcastleBuilder.Utils.MSBuild.XslTransform" AssemblyFile="$(SHFBROOT)\SandcastleBuilder.Utils.dll" />
+  <!-- Task properties -->
+  <PropertyGroup>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <DocInternals>false</DocInternals>
+    <AddXamlSyntaxData>
+    </AddXamlSyntaxData>
+    <SandcastlePath>C:\Program Files (x86)\Sandcastle\</SandcastlePath>
+    <WorkingFolder>H:\Projects\Renci\SshNet\Renci.SshNet\Documentation\Working\</WorkingFolder>
+    <ReferencePath Condition=" '$(ReferencePath)' == '' ">
+    </ReferencePath>
+  </PropertyGroup>
+  <!-- The common targets require OutputPath to be valid -->
+  <PropertyGroup>
+    <OutputPath>.\</OutputPath>
+  </PropertyGroup>
+  <!-- Import the common targets -->
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <!-- This defines the dependencies for the Generate target -->
+  <PropertyGroup>
+    <GenerateDependsOn>
+			ResolveReferences;
+			BeforeGenerateRefInfo;
+			GenerateRefInfo;
+			AfterGenerateRefInfo
+		</GenerateDependsOn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Assembly Include="H:\Projects\Renci\SshNet\Renci.SshNet\bin\Debug\Renci.SshNet.dll" />
+  </ItemGroup>
+  <Target Name="Generate" DependsOnTargets="$(GenerateDependsOn)" />
+  <!-- The Generate Ref Info target -->
+  <Target Name="GenerateRefInfo">
+    <!-- Run MRefBuilder.  Reference build items are added to this template by
+         the build process.  The ResolveReferences dependency target will
+         resolve them to absolute paths that can be passed to MRefBuilder
+         using the /dep command line option.  Assembly build items are added
+         by the build process to define the assemblies to reflect. -->
+    <SandcastleBuilder.Utils.MSBuild.MRefBuilder DocumentInternals="$(DocInternals)" SandcastlePath="$(SandcastlePath)" WorkingFolder="$(WorkingFolder)" Assemblies="@(Assembly)" References="@(ReferencePath)" />
+    <!-- Merge duplicate topics (if any) and add XAML syntax data if needed -->
+    <Copy SourceFiles="reflection.org" DestinationFiles="reflection.all" />
+    <SandcastleBuilder.Utils.MSBuild.XslTransform SandcastlePath="$(SandcastlePath)" WorkingFolder="$(WorkingFolder)" Transformations="ProductionTransforms\MergeDuplicates.xsl$(AddXamlSyntaxData)" InputFile="reflection.all" OutputFile="reflection.org" />
+  </Target>
+  <!-- The following targets may be overridden or replaced to perform
+       additional processing. -->
+  <Target Name="BeforeGenerateRefInfo" />
+  <Target Name="AfterGenerateRefInfo" />
+</Project>

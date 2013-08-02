@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<content xml:space="preserve">
+	<!-- NOTE: This file must appear LAST in the list of content files
+              so that these items override the matching items in the
+              stock content files! -->
+
+	<!-- Note that the copyright item in the shared content is not used. The following items are used instead. -->
+	<item id="copyright_info">http://sshnet.codeplex.com</item>
+	<item id="copyright_link">http://sshnet.codeplex.com</item>
+	<item id="copyright_text"></item>
+
+	<item id="header"><span class="introStyle"></span> <include item="preliminary"/></item>
+	<item id="footer_text"></item>
+
+	<item id="fb_alias"></item>
+  <item id="fb_product">SSH .NET Client Library Documentation</item>
+  <item id="fb_topic">{0}</item>
+	<item id="fb_text">Send Feedback</item>
+  <item id="fb_footer_to"></item>
+  <item id="fb_footer_text">on this topic.</item>
+  <item id="fb_footer_text_to">on this topic to .</item>
+	<item id="fb_body">Your feedback is used to improve the documentation and the product. Your e-mail address will not be used for any other purpose and is disposed of after the issue you report is resolved. While working to resolve the issue that you report, you may be contacted via e-mail to get further details or clarification on the feedback you sent. After the issue you report has been addressed, you may receive an e-mail to let you know that your feedback has been addressed.</item>
+
+</content>

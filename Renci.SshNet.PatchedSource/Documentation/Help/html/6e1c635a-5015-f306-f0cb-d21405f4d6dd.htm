@@ -1,0 +1,108 @@
+﻿<html xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:mshelp="http://msdn.microsoft.com/mshelp"><head><link rel="SHORTCUT ICON" href="./../icons/favicon.ico" /><style type="text/css">.OH_CodeSnippetContainerTabLeftActive, .OH_CodeSnippetContainerTabLeft,.OH_CodeSnippetContainerTabLeftDisabled { backgroundImageName: tabLeftBG.gif; }.OH_CodeSnippetContainerTabRightActive, .OH_CodeSnippetContainerTabRight,.OH_CodeSnippetContainerTabRightDisabled { backgroundImageName: tabRightBG.gif; }.OH_footer { backgroundImageName: footer_slice.gif; background-position: top; background-repeat: repeat-x; }</style><link rel="stylesheet" type="text/css" href="./../styles/branding.css" /><link rel="stylesheet" type="text/css" href="./../styles/branding-en-US.css" /><style type="text/css">
+			body
+			{
+			border-left:5px solid #e6e6e6;
+			overflow-x:scroll;
+			overflow-y:scroll;
+			}
+		</style><script src="./../scripts/branding.js" type="text/javascript"><!----></script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>ConnectionInfo Constructor (String, Int32, String, ProxyTypes, String, Int32, String, String, AuthenticationMethod[])</title><meta name="Language" content="en-us" /><meta name="Microsoft.Help.Id" content="M:Renci.SshNet.ConnectionInfo.#ctor(System.String,System.Int32,System.String,Renci.SshNet.ProxyTypes,System.String,System.Int32,System.String,System.String,Renci.SshNet.AuthenticationMethod[])" /><meta name="Description" content="Initializes a new instance of the class." /><meta name="Microsoft.Help.ContentType" content="Reference" /><meta name="BrandingAware" content="'true'" /><meta name="container" content="Renci.SshNet" /><meta name="file" content="6e1c635a-5015-f306-f0cb-d21405f4d6dd" /><meta name="guid" content="6e1c635a-5015-f306-f0cb-d21405f4d6dd" /><meta name="SelfBranded" content="true" /></head><body onload="onLoad()" class="primary-mtps-offline-document"><div class="OH_outerDiv"><div class="OH_outerContent"><table class="TitleTable"><tr><td class="OH_tdTitleColumn">ConnectionInfo Constructor (String, Int32, String, ProxyTypes, String, Int32, String, String, <span id="ID0EDBABAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EDBABAAA?vb=|cpp=array&lt;|cs=|fs=|nu=");
+				</script>AuthenticationMethod<span id="ID0EBBABAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBBABAAA?vb=()|cpp=&gt;|cs=[]|fs=[]|nu=[]");
+				</script>)</td><td class="OH_tdRunningTitleColumn">SSH .NET Client Library Documentation</td></tr></table><div id="mainSection"><div id="mainBody"><span class="introStyle"></span><div class="summary">
+            Initializes a new instance of the <a href="eea229e6-5ded-2e7d-f851-33e48c521d0d.htm" target="">ConnectionInfo</a> class.
+            </div><p></p><b>Namespace:</b> <a href="379fc93d-55b9-e3c8-673c-e8f71ad64ca3.htm" target="">Renci.SshNet</a><br /><b>Assembly:</b> <span sdata="assembly">Renci.SshNet</span> (in Renci.SshNet.dll) Version: 0.1.0.0 (1.0.0.0)<div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">Syntax</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"></div><div id="snippetGroup_Syntax" class="code"><div id="ID0ECBDAAAAA" class="OH_CodeSnippetContainer"><div class="OH_CodeSnippetContainerTabs" id="ID0ECBDAAAAA_tabs"><div class="OH_CodeSnippetContainerTabLeftActive" id="ID0ECBDAAAAA_tabimgleft"></div><div id="ID0ECBDAAAAA_tab1" class="OH_CodeSnippetContainerTabActive" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBDAAAAA','C#','1','4');return false;">C#</a></div><div id="ID0ECBDAAAAA_tab2" class="OH_CodeSnippetContainerTab" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBDAAAAA','Visual Basic','2','4');return false;">VB</a></div><div id="ID0ECBDAAAAA_tab3" class="OH_CodeSnippetContainerTab" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBDAAAAA','Visual C++','3','4');return false;">C++</a></div><div id="ID0ECBDAAAAA_tab4" class="OH_CodeSnippetContainerTabDisabledNotFirst" EnableCopyCode="true" disabled="true"><a>F#</a></div><div class="OH_CodeSnippetContainerTabRight" id="ID0ECBDAAAAA_tabimgright"></div></div><div id="ID0ECBDAAAAA_codecollection" class="OH_CodeSnippetContainerCodeCollection"><div class="OH_CodeSnippetToolBar"><div class="OH_CodeSnippetToolBarText"><a id="ID0ECBDAAAAA_ViewColorized" href="#" onclick="javascript:ExchangeTitleContent('ID0ECBDAAAAA','4')" title="View Colorized" style="display: none">View Colorized</a><a id="ID0ECBDAAAAA_copycode" href="#" onclick="javascript:CopyToClipboard('ID0ECBDAAAAA','4')" title="Copy to Clipboard">Copy to Clipboard</a><a id="ID0ECBDAAAAA_PrintText" class="OH_PrintText" href="#" onclick="javascript:Print('ID0ECBDAAAAA','4')" title="Print">Print</a></div></div><div id="ID0ECBDAAAAA_code_Div1" class="OH_CodeSnippetContainerCode" style="display: block"><pre><span class="keyword">public</span> <span class="identifier">ConnectionInfo</span>(
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">string</a> <span class="parameter">host</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">port</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">string</a> <span class="parameter">username</span>,
+	<a href="ceb3e92f-184a-f5d3-0849-3c722f4fa163.htm">ProxyTypes</a> <span class="parameter">proxyType</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">string</a> <span class="parameter">proxyHost</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">proxyPort</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">string</a> <span class="parameter">proxyUsername</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">string</a> <span class="parameter">proxyPassword</span>,
+	<span class="keyword">params</span> <a href="21fbc6a9-8e60-c94e-0978-3a03c81cd79d.htm">AuthenticationMethod</a>[] <span class="parameter">authenticationMethods</span>
+)</pre></div><div id="ID0ECBDAAAAA_code_Plain_Div1" class="OH_CodeSnippetContainerCode" style="display: none"><pre>public ConnectionInfo(
+	string host,
+	int port,
+	string username,
+	ProxyTypes proxyType,
+	string proxyHost,
+	int proxyPort,
+	string proxyUsername,
+	string proxyPassword,
+	params AuthenticationMethod[] authenticationMethods
+)</pre></div><div id="ID0ECBDAAAAA_code_Div2" class="OH_CodeSnippetContainerCode" style="display: none"><pre><span class="keyword">Public</span> <span class="keyword">Sub</span> <span class="identifier">New</span> ( _
+	<span class="parameter">host</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>, _
+	<span class="parameter">port</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Integer</a>, _
+	<span class="parameter">username</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>, _
+	<span class="parameter">proxyType</span> <span class="keyword">As</span> <a href="ceb3e92f-184a-f5d3-0849-3c722f4fa163.htm">ProxyTypes</a>, _
+	<span class="parameter">proxyHost</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>, _
+	<span class="parameter">proxyPort</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Integer</a>, _
+	<span class="parameter">proxyUsername</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>, _
+	<span class="parameter">proxyPassword</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>, _
+	<span class="keyword">ParamArray</span> <span class="parameter">authenticationMethods</span> <span class="keyword">As</span> <a href="21fbc6a9-8e60-c94e-0978-3a03c81cd79d.htm">AuthenticationMethod</a>() _
+)</pre></div><div id="ID0ECBDAAAAA_code_Plain_Div2" class="OH_CodeSnippetContainerCode" style="display: none"><pre>Public Sub New ( _
+	host As String, _
+	port As Integer, _
+	username As String, _
+	proxyType As ProxyTypes, _
+	proxyHost As String, _
+	proxyPort As Integer, _
+	proxyUsername As String, _
+	proxyPassword As String, _
+	ParamArray authenticationMethods As AuthenticationMethod() _
+)</pre></div><div id="ID0ECBDAAAAA_code_Div3" class="OH_CodeSnippetContainerCode" style="display: none"><pre><span class="keyword">public</span>:
+<span class="identifier">ConnectionInfo</span>(
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>^ <span class="parameter">host</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">port</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>^ <span class="parameter">username</span>, 
+	<a href="ceb3e92f-184a-f5d3-0849-3c722f4fa163.htm">ProxyTypes</a> <span class="parameter">proxyType</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>^ <span class="parameter">proxyHost</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">proxyPort</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>^ <span class="parameter">proxyUsername</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">String</a>^ <span class="parameter">proxyPassword</span>, 
+	... <span class="keyword">array</span>&lt;<a href="21fbc6a9-8e60-c94e-0978-3a03c81cd79d.htm">AuthenticationMethod</a>^&gt;^ <span class="parameter">authenticationMethods</span>
+)</pre></div><div id="ID0ECBDAAAAA_code_Plain_Div3" class="OH_CodeSnippetContainerCode" style="display: none"><pre>public:
+ConnectionInfo(
+	String^ host, 
+	int port, 
+	String^ username, 
+	ProxyTypes proxyType, 
+	String^ proxyHost, 
+	int proxyPort, 
+	String^ proxyUsername, 
+	String^ proxyPassword, 
+	... array&lt;AuthenticationMethod^&gt;^ authenticationMethods
+)</pre></div><div id="ID0ECBDAAAAA_code_Div4" class="OH_CodeSnippetContainerCode" style="display: none"><pre /></div><div id="ID0ECBDAAAAA_code_Plain_Div4" class="OH_CodeSnippetContainerCode" style="display: none"><pre /></div></div></div><script>addSpecificTextLanguageTagSet('ID0ECBDAAAAA');</script></div><div id="parameters"><h4 class="subHeading">Parameters</h4><dl paramName="host"><dt><span class="parameter">host</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System<span id="ID0EBCAIADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAIADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>String</a><br /><span>Connection host.</span></dd></dl><dl paramName="port"><dt><span class="parameter">port</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System<span id="ID0EBCAHADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAHADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>Int32</a><br /><span>Connection port.</span></dd></dl><dl paramName="username"><dt><span class="parameter">username</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System<span id="ID0EBCAGADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAGADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>String</a><br /><span>Connection username.</span></dd></dl><dl paramName="proxyType"><dt><span class="parameter">proxyType</span></dt><dd>Type: <a href="ceb3e92f-184a-f5d3-0849-3c722f4fa163.htm" target="">Renci.SshNet<span id="ID0EBCAFADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAFADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ProxyTypes</a><br /><span>Type of the proxy.</span></dd></dl><dl paramName="proxyHost"><dt><span class="parameter">proxyHost</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System<span id="ID0EBCAEADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAEADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>String</a><br /><span>The proxy host.</span></dd></dl><dl paramName="proxyPort"><dt><span class="parameter">proxyPort</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System<span id="ID0EBCADADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCADADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>Int32</a><br /><span>The proxy port.</span></dd></dl><dl paramName="proxyUsername"><dt><span class="parameter">proxyUsername</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System<span id="ID0EBCACADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCACADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>String</a><br /><span>The proxy username.</span></dd></dl><dl paramName="proxyPassword"><dt><span class="parameter">proxyPassword</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System<span id="ID0EBCABADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCABADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>String</a><br /><span>The proxy password.</span></dd></dl><dl paramName="authenticationMethods"><dt><span class="parameter">authenticationMethods</span></dt><dd>Type: <span id="ID0EEAAADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EEAAADAAAAA?vb=|cpp=array&lt;|cs=|fs=|nu=");
+				</script><a href="21fbc6a9-8e60-c94e-0978-3a03c81cd79d.htm" target="">Renci.SshNet<span id="ID0EBDAAADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBDAAADAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>AuthenticationMethod</a><span id="ID0ECAAADAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0ECAAADAAAAA?vb=()|cpp=&gt;|cs=[]|fs=[]|nu=[]");
+				</script><br /><span>The authentication methods.</span></dd></dl></div><div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">Exceptions</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"></div><div class="tableSection"><table><tr><th class="ps_exceptionNameColumn">Exception</th><th class="ps_exceptionConditionColumn">Condition</th></tr><tr><td><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/3w1b3114" target="_blank">System<span id="ID0EBABEAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABEAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ArgumentException</a></td><td>host</td></tr><tr><td><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/8xt94y6e" target="_blank">System<span id="ID0EBABDAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABDAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ArgumentOutOfRangeException</a></td><td>proxyPort</td></tr><tr><td><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/3w1b3114" target="_blank">System<span id="ID0EBABCAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABCAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ArgumentException</a></td><td><span class="parameter">host</span> is invalid, or <span class="parameter">username</span> is null or contains whitespace characters.</td></tr><tr><td><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/8xt94y6e" target="_blank">System<span id="ID0EBABBAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABBAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ArgumentOutOfRangeException</a></td><td><span class="parameter">port</span> is not within <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/97k0fh41" target="_blank">MinPort</a> and <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/ez7zs1dh" target="_blank">MaxPort</a>.</td></tr><tr><td><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/3w1b3114" target="_blank">System<span id="ID0EBABAAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABAAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>ArgumentException</a></td><td><span class="parameter">host</span> is invalid, or <span class="parameter">username</span> is null or contains whitespace characters.</td></tr></table></div><a name="seeAlsoSection"><!----></a><div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">See Also</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"></div><div class="seeAlsoStyle"><a href="eea229e6-5ded-2e7d-f851-33e48c521d0d.htm" target="">ConnectionInfo Class</a></div><div class="seeAlsoStyle"><a href="fba30e5d-d001-0b5c-9395-1f31d8a7c106.htm" target="">ConnectionInfo Members</a></div><div class="seeAlsoStyle"><a href="8d7506df-6451-35ae-2634-7342e2d814c6.htm" target="">ConnectionInfo Overload</a></div><div class="seeAlsoStyle"><a href="379fc93d-55b9-e3c8-673c-e8f71ad64ca3.htm" target="">Renci.SshNet Namespace</a></div></div></div></div></div><div id="OH_footer" class="OH_footer"><p /><div class="OH_feedbacklink"><a href="mailto:?subject=SSH+.NET+Client+Library+Documentation+ConnectionInfo+Constructor+(String%2c+Int32%2c+String%2c+ProxyTypes%2c+String%2c+Int32%2c+String%2c+String%2c+AuthenticationMethod%5b%5d)+100+EN-US&amp;body=Your%20feedback%20is%20used%20to%20improve%20the%20documentation%20and%20the%20product.%20Your%20e-mail%20address%20will%20not%20be%20used%20for%20any%20other%20purpose%20and%20is%20disposed%20of%20after%20the%20issue%20you%20report%20is%20resolved.%20While%20working%20to%20resolve%20the%20issue%20that%20you%20report%2c%20you%20may%20be%20contacted%20via%20e-mail%20to%20get%20further%20details%20or%20clarification%20on%20the%20feedback%20you%20sent.%20After%20the%20issue%20you%20report%20has%20been%20addressed%2c%20you%20may%20receive%20an%20e-mail%20to%20let%20you%20know%20that%20your%20feedback%20has%20been%20addressed.">Send Feedback</a> on this topic.</div></div></body></html>

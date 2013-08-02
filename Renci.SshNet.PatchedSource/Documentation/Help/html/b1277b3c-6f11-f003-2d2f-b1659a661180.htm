@@ -1,0 +1,60 @@
+﻿<html xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:mshelp="http://msdn.microsoft.com/mshelp"><head><link rel="SHORTCUT ICON" href="./../icons/favicon.ico" /><style type="text/css">.OH_CodeSnippetContainerTabLeftActive, .OH_CodeSnippetContainerTabLeft,.OH_CodeSnippetContainerTabLeftDisabled { backgroundImageName: tabLeftBG.gif; }.OH_CodeSnippetContainerTabRightActive, .OH_CodeSnippetContainerTabRight,.OH_CodeSnippetContainerTabRightDisabled { backgroundImageName: tabRightBG.gif; }.OH_footer { backgroundImageName: footer_slice.gif; background-position: top; background-repeat: repeat-x; }</style><link rel="stylesheet" type="text/css" href="./../styles/branding.css" /><link rel="stylesheet" type="text/css" href="./../styles/branding-en-US.css" /><style type="text/css">
+			body
+			{
+			border-left:5px solid #e6e6e6;
+			overflow-x:scroll;
+			overflow-y:scroll;
+			}
+		</style><script src="./../scripts/branding.js" type="text/javascript"><!----></script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>HashCore Method </title><meta name="Language" content="en-us" /><meta name="System.Keywords" content="HashCore method" /><meta name="System.Keywords" content="HMac%3CT%3E.HashCore method" /><meta name="System.Keywords" content="HMac(Of T).HashCore method" /><meta name="Microsoft.Help.F1" content="Renci.SshNet.Security.Cryptography.HMac`1.HashCore" /><meta name="Microsoft.Help.Id" content="M:Renci.SshNet.Security.Cryptography.HMac`1.HashCore(System.Byte[],System.Int32,System.Int32)" /><meta name="Description" content="Hashes the core." /><meta name="Microsoft.Help.ContentType" content="Reference" /><meta name="BrandingAware" content="'true'" /><meta name="container" content="Renci.SshNet.Security.Cryptography" /><meta name="file" content="b1277b3c-6f11-f003-2d2f-b1659a661180" /><meta name="guid" content="b1277b3c-6f11-f003-2d2f-b1659a661180" /><meta name="SelfBranded" content="true" /></head><body onload="onLoad()" class="primary-mtps-offline-document"><div class="OH_outerDiv"><div class="OH_outerContent"><table class="TitleTable"><tr><td class="OH_tdTitleColumn">HMac<span id="ID0EEBABAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EEBABAAA?vb=(Of |cpp=&lt;|cs=&lt;|fs=&lt;'|nu=(");
+				</script><span class="typeparameter">T</span><span id="ID0ECBABAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0ECBABAAA?vb=)|cpp=&gt;|cs=&gt;|fs=&gt;|nu=)");
+				</script><span id="ID0EBBABAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBBABAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>HashCore Method </td><td class="OH_tdRunningTitleColumn">SSH .NET Client Library Documentation</td></tr></table><div id="mainSection"><div id="mainBody"><span class="introStyle"></span><div class="summary">
+            Hashes the core.
+            </div><p></p><b>Namespace:</b> <a href="591c823c-0504-4ab5-54c1-1f3d1f850221.htm" target="">Renci.SshNet.Security.Cryptography</a><br /><b>Assembly:</b> <span sdata="assembly">Renci.SshNet</span> (in Renci.SshNet.dll) Version: 0.1.0.0 (1.0.0.0)<div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">Syntax</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"></div><div id="snippetGroup_Syntax" class="code"><div id="ID0ECBCAAAAA" class="OH_CodeSnippetContainer"><div class="OH_CodeSnippetContainerTabs" id="ID0ECBCAAAAA_tabs"><div class="OH_CodeSnippetContainerTabLeftActive" id="ID0ECBCAAAAA_tabimgleft"></div><div id="ID0ECBCAAAAA_tab1" class="OH_CodeSnippetContainerTabActive" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBCAAAAA','C#','1','4');return false;">C#</a></div><div id="ID0ECBCAAAAA_tab2" class="OH_CodeSnippetContainerTab" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBCAAAAA','Visual Basic','2','4');return false;">VB</a></div><div id="ID0ECBCAAAAA_tab3" class="OH_CodeSnippetContainerTab" EnableCopyCode="true"><a href="#" onclick="javascript:ChangeTab('ID0ECBCAAAAA','Visual C++','3','4');return false;">C++</a></div><div id="ID0ECBCAAAAA_tab4" class="OH_CodeSnippetContainerTabDisabledNotFirst" EnableCopyCode="true" disabled="true"><a>F#</a></div><div class="OH_CodeSnippetContainerTabRight" id="ID0ECBCAAAAA_tabimgright"></div></div><div id="ID0ECBCAAAAA_codecollection" class="OH_CodeSnippetContainerCodeCollection"><div class="OH_CodeSnippetToolBar"><div class="OH_CodeSnippetToolBarText"><a id="ID0ECBCAAAAA_ViewColorized" href="#" onclick="javascript:ExchangeTitleContent('ID0ECBCAAAAA','4')" title="View Colorized" style="display: none">View Colorized</a><a id="ID0ECBCAAAAA_copycode" href="#" onclick="javascript:CopyToClipboard('ID0ECBCAAAAA','4')" title="Copy to Clipboard">Copy to Clipboard</a><a id="ID0ECBCAAAAA_PrintText" class="OH_PrintText" href="#" onclick="javascript:Print('ID0ECBCAAAAA','4')" title="Print">Print</a></div></div><div id="ID0ECBCAAAAA_code_Div1" class="OH_CodeSnippetContainerCode" style="display: block"><pre><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="identifier">HashCore</span>(
+	<a href="http://msdn2.microsoft.com/en-us/library/yyb1w04y" target="_blank">byte</a>[] <span class="parameter">rgb</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">ib</span>,
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">cb</span>
+)</pre></div><div id="ID0ECBCAAAAA_code_Plain_Div1" class="OH_CodeSnippetContainerCode" style="display: none"><pre>protected override void HashCore(
+	byte[] rgb,
+	int ib,
+	int cb
+)</pre></div><div id="ID0ECBCAAAAA_code_Div2" class="OH_CodeSnippetContainerCode" style="display: none"><pre><span class="keyword">Protected</span> <span class="keyword">Overrides</span> <span class="keyword">Sub</span> <span class="identifier">HashCore</span> ( _
+	<span class="parameter">rgb</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/yyb1w04y" target="_blank">Byte</a>(), _
+	<span class="parameter">ib</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Integer</a>, _
+	<span class="parameter">cb</span> <span class="keyword">As</span> <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">Integer</a> _
+)</pre></div><div id="ID0ECBCAAAAA_code_Plain_Div2" class="OH_CodeSnippetContainerCode" style="display: none"><pre>Protected Overrides Sub HashCore ( _
+	rgb As Byte(), _
+	ib As Integer, _
+	cb As Integer _
+)</pre></div><div id="ID0ECBCAAAAA_code_Div3" class="OH_CodeSnippetContainerCode" style="display: none"><pre><span class="keyword">protected</span>:
+<span class="keyword">virtual</span> <span class="keyword">void</span> <span class="identifier">HashCore</span>(
+	<span class="keyword">array</span>&lt;<a href="http://msdn2.microsoft.com/en-us/library/yyb1w04y" target="_blank">unsigned char</a>&gt;^ <span class="parameter">rgb</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">ib</span>, 
+	<a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">int</a> <span class="parameter">cb</span>
+) <span class="keyword">override</span></pre></div><div id="ID0ECBCAAAAA_code_Plain_Div3" class="OH_CodeSnippetContainerCode" style="display: none"><pre>protected:
+virtual void HashCore(
+	array&lt;unsigned char&gt;^ rgb, 
+	int ib, 
+	int cb
+) override</pre></div><div id="ID0ECBCAAAAA_code_Div4" class="OH_CodeSnippetContainerCode" style="display: none"><pre /></div><div id="ID0ECBCAAAAA_code_Plain_Div4" class="OH_CodeSnippetContainerCode" style="display: none"><pre /></div></div></div><script>addSpecificTextLanguageTagSet('ID0ECBCAAAAA');</script></div><div id="parameters"><h4 class="subHeading">Parameters</h4><dl paramName="rgb"><dt><span class="parameter">rgb</span></dt><dd>Type: <span id="ID0EEACACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EEACACAAAAA?vb=|cpp=array&lt;|cs=|fs=|nu=");
+				</script><img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/yyb1w04y" target="_blank">System<span id="ID0EBDACACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBDACACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>Byte</a><span id="ID0ECACACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0ECACACAAAAA?vb=()|cpp=&gt;|cs=[]|fs=[]|nu=[]");
+				</script><br /><span>The RGB.</span></dd></dl><dl paramName="ib"><dt><span class="parameter">ib</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System<span id="ID0EBCABACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCABACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>Int32</a><br /><span>The ib.</span></dd></dl><dl paramName="cb"><dt><span class="parameter">cb</span></dt><dd>Type: <img src="./../icons/online_icon.gif" class="OH_offlineIcon" alt="Online" title="Online" /><a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System<span id="ID0EBCAAACAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBCAAACAAAAA?vb=.|cpp=::|cs=.|fs=.|nu=.");
+				</script>Int32</a><br /><span>The cb.</span></dd></dl></div><a name="seeAlsoSection"><!----></a><div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">See Also</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"></div><div class="seeAlsoStyle"><a href="80a46d73-a8b3-5707-f8be-8b362e101810.htm" target="">HMac<span id="ID0EDACAAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EDACAAAAAA?vb=(Of |cpp=&lt;|cs=&lt;|fs=&lt;'|nu=(");
+				</script>T<span id="ID0EBACAAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBACAAAAAA?vb=)|cpp=&gt;|cs=&gt;|fs=&gt;|nu=)");
+				</script> Class</a></div><div class="seeAlsoStyle"><a href="9c5543e2-75da-5996-35d9-0c3a8b36828e.htm" target="">HMac<span id="ID0EDABAAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EDABAAAAAA?vb=(Of |cpp=&lt;|cs=&lt;|fs=&lt;'|nu=(");
+				</script>T<span id="ID0EBABAAAAAA"> </span><script type="text/javascript">
+					addToLanSpecTextIdSet("ID0EBABAAAAAA?vb=)|cpp=&gt;|cs=&gt;|fs=&gt;|nu=)");
+				</script> Members</a></div><div class="seeAlsoStyle"><a href="591c823c-0504-4ab5-54c1-1f3d1f850221.htm" target="">Renci.SshNet.Security.Cryptography Namespace</a></div></div></div></div></div><div id="OH_footer" class="OH_footer"><p /><div class="OH_feedbacklink"><a href="mailto:?subject=SSH+.NET+Client+Library+Documentation+HashCore+Method++100+EN-US&amp;body=Your%20feedback%20is%20used%20to%20improve%20the%20documentation%20and%20the%20product.%20Your%20e-mail%20address%20will%20not%20be%20used%20for%20any%20other%20purpose%20and%20is%20disposed%20of%20after%20the%20issue%20you%20report%20is%20resolved.%20While%20working%20to%20resolve%20the%20issue%20that%20you%20report%2c%20you%20may%20be%20contacted%20via%20e-mail%20to%20get%20further%20details%20or%20clarification%20on%20the%20feedback%20you%20sent.%20After%20the%20issue%20you%20report%20has%20been%20addressed%2c%20you%20may%20receive%20an%20e-mail%20to%20let%20you%20know%20that%20your%20feedback%20has%20been%20addressed.">Send Feedback</a> on this topic.</div></div></body></html>

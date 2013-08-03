@@ -134,6 +134,20 @@ namespace SSH
         }
         private String keyfile = "";
 
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -190,6 +204,10 @@ namespace SSH
                             //Ceate instance of SSH Client with connection info
                             var Client = new SshClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+
                             // Connect to  host using Connection info
                             Client.Connect();
                             WriteObject(SSHModHelper.AddToSSHSessionCollection(Client, this.SessionState), true);
@@ -228,6 +246,9 @@ namespace SSH
                         {
                             //Ceate instance of SSH Client with connection info
                             var Client = new SshClient(connectInfo);
+
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
                             // Connect to  host using Connection info
                             Client.Connect();
@@ -309,6 +330,9 @@ namespace SSH
                                 //Ceate instance of SSH Client with connection info
                                 var Client = new SshClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteObject(SSHModHelper.AddToSSHSessionCollection(Client, this.SessionState), true);
@@ -344,6 +368,9 @@ namespace SSH
                             {
                                 //Ceate instance of SSH Client with connection info
                                 var Client = new SshClient(connectionInfo);
+
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
                                 // Connect to  host using Connection info
                                 Client.Connect();
@@ -484,6 +511,34 @@ namespace SSH
         }
         private String keyfile = "";
 
+        // OperationTimeout Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int OperationTimeOut
+        {
+            get { return operationtimeout; }
+            set { operationtimeout = value; }
+        }
+        private int operationtimeout = 5;
+
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -540,6 +595,12 @@ namespace SSH
                             //Ceate instance of SFTP Client with connection info
                             var Client = new SftpClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                             // Connect to  host using Connection info
                             Client.Connect();
                             WriteObject(SSHModHelper.AddToSFTPSessionCollection(Client, this.SessionState), true);
@@ -578,6 +639,12 @@ namespace SSH
                         {
                             //Ceate instance of SFTP Client with connection info
                             var Client = new SftpClient(connectInfo);
+
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                             // Connect to  host using Connection info
                             Client.Connect();
@@ -659,6 +726,18 @@ namespace SSH
                                 //Ceate instance of SFTP Client with connection info
                                 var Client = new SftpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteObject(SSHModHelper.AddToSFTPSessionCollection(Client, this.SessionState), true);
@@ -693,6 +772,12 @@ namespace SSH
                             {
                                 //Ceate instance of SFTP Client with connection info
                                 var Client = new SftpClient(connectionInfo);
+
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                                 // Connect to  host using Connection info
                                 Client.Connect();
@@ -950,6 +1035,12 @@ namespace SSH
                         {
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
+
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                             // Connect to  host using Connection info
                             Client.Connect();

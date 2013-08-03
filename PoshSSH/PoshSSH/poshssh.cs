@@ -866,6 +866,35 @@ namespace SSH
             set { remotefile = value; }
         }
         private String remotefile = "";
+
+        // OperationTimeout Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int OperationTimeOut
+        {
+            get { return operationtimeout; }
+            set { operationtimeout = value; }
+        }
+        private int operationtimeout = 5;
+
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -929,7 +958,7 @@ namespace SSH
                             if (File.Exists(localfullPath))
                             {
                                 FileInfo fil = new FileInfo(@localfullPath);
-                                Client.Upload_2(fil, remotefile);
+                                Client.Upload2(fil, remotefile);
                                 Client.Disconnect();
                             }
 
@@ -968,6 +997,12 @@ namespace SSH
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                             // Connect to  host using Connection info
                             Client.Connect();
                             WriteVerbose("Connection succesfull");
@@ -976,7 +1011,7 @@ namespace SSH
                             {
                                 WriteVerbose("Uploading " + localfullPath);
                                 FileInfo fil = new FileInfo(@localfullPath);
-                                Client.Upload_2(fil, remotefile);
+                                Client.Upload2(fil, remotefile);
 
                                 Client.Disconnect();
                             }
@@ -1057,8 +1092,15 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
+
                                 WriteVerbose("Connection succesfull");
                                 var localfullPath = Path.GetFullPath(localfile);
                                 if (File.Exists(localfullPath))
@@ -1099,14 +1141,21 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
+
                                 WriteVerbose("Connection succesfull");
                                 var localfullPath = Path.GetFullPath(localfile);
                                 if (File.Exists(localfullPath))
                                 {
                                     FileInfo fil = new FileInfo(@localfullPath);
-                                    Client.Upload_2(fil, remotefile);
+                                    Client.Upload2(fil, remotefile);
                                     Client.Disconnect();
                                 }
                             }
@@ -1268,12 +1317,42 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
+
         public String RemoteFile
         {
             get { return remotefile; }
             set { remotefile = value; }
         }
         private String remotefile = "";
+
+        // OperationTimeout Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int OperationTimeOut
+        {
+            get { return operationtimeout; }
+            set { operationtimeout = value; }
+        }
+        private int operationtimeout = 5;
+
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -1330,15 +1409,23 @@ namespace SSH
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                             // Connect to  host using Connection info
                             Client.Connect();
 
                             var localfullPath = Path.GetFullPath(localfile);
-                            //if (File.Exists(localfullPath))
-                            //{
+                            
                             WriteVerbose("Downloading " + remotefile);
                             FileInfo fil = new FileInfo(@localfullPath);
+
+                            // Download the file
                             Client.Download(remotefile, fil);
+
                             Client.Disconnect();
                             //}
 
@@ -1377,12 +1464,19 @@ namespace SSH
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
                             // Connect to  host using Connection info
                             Client.Connect();
                             WriteVerbose("Connection succesfull");
                             var localfullPath = Path.GetFullPath(localfile);
                             WriteVerbose("Downloading " + remotefile);
                             FileInfo fil = new FileInfo(@localfullPath);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                             Client.Download(remotefile, fil);
                             Client.Disconnect();
                         }
@@ -1462,6 +1556,12 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteVerbose("Connection succesfull");
@@ -1502,13 +1602,21 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteVerbose("Connection succesfull");
                                 var localfullPath = Path.GetFullPath(localfile);
+
                                 WriteVerbose("Downloading " + remotefile);
                                 FileInfo fil = new FileInfo(@localfullPath);
                                 Client.Download(remotefile, fil);
+
                                 Client.Disconnect();
                             }
                             catch (Exception ex)
@@ -1676,6 +1784,34 @@ namespace SSH
         }
         private String remotefolder = "";
 
+        // OperationTimeout Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int OperationTimeOut
+        {
+            get { return operationtimeout; }
+            set { operationtimeout = value; }
+        }
+        private int operationtimeout = 5;
+
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -1732,6 +1868,12 @@ namespace SSH
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
 
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                             // Connect to  host using Connection info
                             Client.Connect();
 
@@ -1774,6 +1916,12 @@ namespace SSH
                         {
                             //Ceate instance of SCP Client with connection info
                             var Client = new ScpClient(connectInfo);
+
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                             // Connect to  host using Connection info
                             Client.Connect();
@@ -1861,6 +2009,12 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteVerbose("Connection succesfull");
@@ -1901,6 +2055,12 @@ namespace SSH
                             {
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
+
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                                 // Connect to  host using Connection info
                                 Client.Connect();
@@ -2077,6 +2237,34 @@ namespace SSH
         }
         private String remotefolder = "";
 
+        // OperationTimeout Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int OperationTimeOut
+        {
+            get { return operationtimeout; }
+            set { operationtimeout = value; }
+        }
+        private int operationtimeout = 5;
+
+        // ConnectionTimeOut Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int ConnectionTimeOut
+        {
+            get { return connectiontimeout; }
+            set { connectiontimeout = value; }
+        }
+        private int connectiontimeout = 5;
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
@@ -2084,7 +2272,6 @@ namespace SSH
                 //###########################################
                 //### Connect using Username and Password ###
                 //###########################################
-
                 if (proxyserver != "")
                 {
                     // Set the proper proxy type
@@ -2128,24 +2315,30 @@ namespace SSH
                                     prompt.Response = credential.GetNetworkCredential().Password;
                             }
                         };
-                        try
-                        {
-                            //Ceate instance of SCP Client with connection info
-                            var Client = new ScpClient(connectInfo);
+                         try
+                         {
+                             //Ceate instance of SCP Client with connection info
+                             var Client = new ScpClient(connectInfo);
 
-                            // Connect to  host using Connection info
-                            Client.Connect();
+                             // Set the connection timeout
+                             Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
-                            var localfullPath = Path.GetFullPath(localfolder);
-                            WriteVerbose("Uploading " + remotefolder);
-                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                            Client.Upload(dirinfo, remotefolder);
-                            Client.Disconnect();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                             // Set the Operation Timeout
+                             Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                             // Connect to  host using Connection info
+                             Client.Connect();
+
+                             var localfullPath = Path.GetFullPath(localfolder);
+                             WriteVerbose("Uploading " + remotefolder);
+                             DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                             Client.Upload(dirinfo, remotefolder);
+                             Client.Disconnect();
+                         }
+                         catch (Exception ex)
+                         {
+                             throw ex;
+                         }
                     } // End foroeach computer
                 }
                 else
@@ -2171,25 +2364,31 @@ namespace SSH
                                     prompt.Response = credential.GetNetworkCredential().Password;
                             }
                         };
-                        try
-                        {
-                            //Ceate instance of SCP Client with connection info
-                            var Client = new ScpClient(connectInfo);
+                         try
+                         {
+                             //Ceate instance of SCP Client with connection info
+                             var Client = new ScpClient(connectInfo);
 
-                            // Connect to  host using Connection info
-                            Client.Connect();
-                            WriteVerbose("Connection succesfull");
+                             // Set the connection timeout
+                             Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
-                            var localfullPath = Path.GetFullPath(localfolder);
-                            WriteVerbose("Uploading " + remotefolder);
-                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                            Client.Upload(dirinfo, remotefolder);
-                            Client.Disconnect();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
+                             // Set the Operation Timeout
+                             Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                             // Connect to  host using Connection info
+                             Client.Connect();
+                             WriteVerbose("Connection succesfull");
+
+                             var localfullPath = Path.GetFullPath(localfolder);
+                             WriteVerbose("Uploading " + remotefolder);
+                             DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                             Client.Upload(dirinfo, remotefolder);
+                             Client.Disconnect();
+                         }
+                         catch (Exception ex)
+                         {
+                             throw ex;
+                         }
                     } // End foroeach computer
                 }
             }
@@ -2262,6 +2461,12 @@ namespace SSH
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
 
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
                                 // Connect to  host using Connection info
                                 Client.Connect();
                                 WriteVerbose("Connection succesfull");
@@ -2278,6 +2483,7 @@ namespace SSH
                             }
                         }
                     }
+                    
                 }
                 else
                 {
@@ -2298,10 +2504,17 @@ namespace SSH
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
                                 connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
                             }
+
                             try
                             {
                                 //Ceate instance of SCP Client with connection info
                                 var Client = new ScpClient(connectionInfo);
+
+                                // Set the connection timeout
+                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                                // Set the Operation Timeout
+                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
                                 // Connect to  host using Connection info
                                 Client.Connect();
@@ -2317,11 +2530,12 @@ namespace SSH
                             {
                                 throw ex;
                             }
-                        }
 
+                        }
                     }
                 }
-
+				
+				
             } // End process record
         }
 

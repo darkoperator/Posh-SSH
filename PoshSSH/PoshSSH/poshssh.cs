@@ -1907,7 +1907,19 @@ namespace SSH
 
                             // Connect to  host using Connection info
                             Client.Connect();
+
                             Client.BufferSize = 1024;
+
+                            // Print progess of download.
+                            Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
+                            {
+                                var progressRecord = new ProgressRecord(1, "Downloading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
+
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            };
+
                             WriteVerbose("Connection succesfull");
                             var localfullPath = Path.GetFullPath(localfile);
 

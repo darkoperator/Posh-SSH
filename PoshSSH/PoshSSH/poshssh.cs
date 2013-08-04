@@ -1228,10 +1228,12 @@ namespace SSH
                         Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
                         {
                             var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+                            if (e.Size != 0)
+                            {
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
 
-                            progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
-
-                            this.Host.UI.WriteProgress(1, progressRecord);
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            }
                         };
 
                         WriteVerbose("Connection succesfull");
@@ -1402,9 +1404,12 @@ namespace SSH
                             {
                                 var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
 
-                                progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+                                if (e.Size != 0)
+                                {
+                                    progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
 
-                                this.Host.UI.WriteProgress(1, progressRecord);
+                                    this.Host.UI.WriteProgress(1, progressRecord);
+                                }
                             };
 
                             var localfullPath = Path.GetFullPath(localfile);
@@ -1767,10 +1772,13 @@ namespace SSH
                         Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                         {
                             var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
-                            
-                            progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
-                         
-                            this.Host.UI.WriteProgress(1, progressRecord);
+
+                            if (e.Size != 0)
+                            {
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            }
                         };
                         WriteVerbose("Connection succesfull");
                         var localfullPath = Path.GetFullPath(localfile);
@@ -1937,9 +1945,12 @@ namespace SSH
                             {
                                 var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
 
-                                progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+                                if (e.Size != 0)
+                                {
+                                    progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
 
-                                this.Host.UI.WriteProgress(1, progressRecord);
+                                    this.Host.UI.WriteProgress(1, progressRecord);
+                                }
                             };
 
                             WriteVerbose("Connection succesfull");

@@ -1227,7 +1227,7 @@ namespace SSH
                         // Print progess of download.
                         Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
                         {
-                            var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+                            var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
 
                             progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
 
@@ -1400,7 +1400,7 @@ namespace SSH
                             // Print progess of download.
                             Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
                             {
-                                var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+                                var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
 
                                 progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
 
@@ -1766,7 +1766,7 @@ namespace SSH
                         // Print progess of download.
                         Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                         {
-                            var progressRecord = new ProgressRecord(1, "Downloading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
+                            var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
                             
                             progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
                          
@@ -1935,7 +1935,7 @@ namespace SSH
                             // Print progess of download.
                             Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                             {
-                                var progressRecord = new ProgressRecord(1, "Downloading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
+                                var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
 
                                 progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
 
@@ -2149,38 +2149,54 @@ namespace SSH
         }
         private int connectiontimeout = 5;
 
+        // Variable to hold the host/fingerprint information
+        private Dictionary<string, string> SSHHostKeys;
+
+        protected override void BeginProcessing()
+        {
+            // Collect host/fingerprint information from the registry.
+            base.BeginProcessing();
+            var keymng = new TrustedKeyMng();
+            SSHHostKeys = keymng.GetKeys();
+        }
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
             {
-                //###########################################
-                //### Connect using Username and Password ###
-                //###########################################
-
-                if (proxyserver != "")
+                foreach (var computer in computername)
                 {
-                    // Set the proper proxy type
-                    var ptype = Renci.SshNet.ProxyTypes.Http;
-                    WriteVerbose("A Proxy Server has been specified");
-                    switch (proxytype)
-                    {
-                        case "HTTP":
-                            ptype = Renci.SshNet.ProxyTypes.Http;
-                            break;
-                        case "Socks4":
-                            ptype = Renci.SshNet.ProxyTypes.Socks4;
-                            break;
-                        case "Socks5":
-                            ptype = Renci.SshNet.ProxyTypes.Socks5;
-                            break;
-                    }
+                    #region AuthUserPass
+                    //###########################################
+                    //### Connect using Username and Password ###
+                    //###########################################
 
-                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-                    foreach (var computer in computername)
+                    ConnectionInfo connectInfo;
+                    KeyboardInteractiveAuthenticationMethod KIconnectInfo;
+                    if (proxyserver != "")
                     {
+                        #region Proxy
+                        // Set the proper proxy type
+                        var ptype = Renci.SshNet.ProxyTypes.Http;
+                        WriteVerbose("A Proxy Server has been specified");
+                        switch (proxytype)
+                        {
+                            case "HTTP":
+                                ptype = Renci.SshNet.ProxyTypes.Http;
+                                break;
+                            case "Socks4":
+                                ptype = Renci.SshNet.ProxyTypes.Socks4;
+                                break;
+                            case "Socks5":
+                                ptype = Renci.SshNet.ProxyTypes.Socks5;
+                                break;
+                        }
+
+                        KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                        var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+
                         WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-                        var connectInfo = new ConnectionInfo(computer,
+                        connectInfo = new ConnectionInfo(computer,
                             port,
                             credential.GetNetworkCredential().UserName,
                             ptype,
@@ -2191,92 +2207,118 @@ namespace SSH
                             KIconnectInfo,
                             PassconnectInfo);
 
-                        // Event Handler for interactive Authentication
-                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-                        {
-                            foreach (var prompt in e.Prompts)
-                            {
-                                if (prompt.Request.Contains("Password"))
-                                    prompt.Response = credential.GetNetworkCredential().Password;
-                            }
-                        };
-                        try
-                        {
-                            //Ceate instance of SCP Client with connection info
-                            var Client = new ScpClient(connectInfo);
-
-                            // Set the connection timeout
-                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
-
-                            // Set the Operation Timeout
-                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
-
-                            // Connect to  host using Connection info
-                            Client.Connect();
-
-                            var localfullPath = Path.GetFullPath(localfolder);
-                            WriteVerbose("Downloading " + remotefolder);
-                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                            Client.Download(remotefolder, dirinfo);
-                            Client.Disconnect();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                    } // End foroeach computer
-                }
-                else
-                {
-                    WriteVerbose("Using Username and Password authentication for connection.");
-                    // Connection info for Keyboard Interactive
-                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-
-                    foreach (var computer in computername)
+                        #endregion
+                    } // Proxy Server
+                    else
                     {
+                        #region No Proxy
+                        WriteVerbose("Using Username and Password authentication for connection.");
+                        // Connection info for Keyboard Interactive
+                        KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                        var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+
                         WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                        connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
                                     PassconnectInfo,
                                     KIconnectInfo);
 
-                        // Event Handler for interactive Authentication
-                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        #endregion
+                    }// No Proxy
+
+                    // Event Handler for interactive Authentication
+                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                    {
+                        foreach (var prompt in e.Prompts)
                         {
-                            foreach (var prompt in e.Prompts)
+                            if (prompt.Request.Contains("Password"))
+                                prompt.Response = credential.GetNetworkCredential().Password;
+                        }
+                    };
+                    try
+                    {
+                        //Ceate instance of SCP Client with connection info
+                        var Client = new ScpClient(connectInfo);
+
+                        // Handle host key
+                        Client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
+                        {
+                            var sb = new StringBuilder();
+                            foreach (var b in e.FingerPrint)
                             {
-                                if (prompt.Request.Contains("Password"))
-                                    prompt.Response = credential.GetNetworkCredential().Password;
+                                sb.AppendFormat("{0:x}:", b);
+                            }
+                            string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            if (SSHHostKeys.ContainsKey(computer))
+                            {
+                                if (SSHHostKeys[computer] == FingerPrint)
+                                {
+                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer);
+                                }
+                            }
+                            else
+                            {
+                                Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                choices.Add(new ChoiceDescription("Y"));
+                                choices.Add(new ChoiceDescription("N"));
+
+                                int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+
+                                if (choice == 0)
+                                {
+                                    var keymng = new TrustedKeyMng();
+                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    keymng.SetKey(computer, FingerPrint);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    e.CanTrust = false;
+                                }
                             }
                         };
-                        try
+
+                        // Set the connection timeout
+                        Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                        // Set the Operation Timeout
+                        Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                        // Connect to  host using Connection info
+                        Client.Connect();
+                        Client.BufferSize = 1024;
+
+                        // Print progess of download.
+                        Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                         {
-                            //Ceate instance of SCP Client with connection info
-                            var Client = new ScpClient(connectInfo);
+                            var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
 
-                            // Set the connection timeout
-                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+                            if (e.Size != 0)
+                            {
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
 
-                            // Set the Operation Timeout
-                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            }
+                        };
 
-                            // Connect to  host using Connection info
-                            Client.Connect();
-                            WriteVerbose("Connection succesfull");
-
-                            var localfullPath = Path.GetFullPath(localfolder);
-                            WriteVerbose("Downloading " + remotefolder);
-                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                            Client.Download(remotefolder, dirinfo);
-                            Client.Disconnect();
-                        }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-                    } // End foroeach computer
-                }
-            }
+                        var localfullPath = Path.GetFullPath(localfolder);
+                        WriteVerbose("Downloading " + remotefolder);
+                        DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                        Client.Download(remotefolder, dirinfo);
+                        Client.Disconnect();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                } //end foreach computer
+                    #endregion
+            } //Use/Password Auth
             else
             {
                 //##########################
@@ -2286,29 +2328,29 @@ namespace SSH
                 WriteVerbose("Using SSH Key authentication for connection.");
                 var fullPath = Path.GetFullPath(keyfile);
 
-                if (proxyserver != "")
+                if (File.Exists(fullPath))
                 {
-                    // Set the proper proxy type
-                    var ptype = Renci.SshNet.ProxyTypes.Http;
-                    WriteVerbose("A Proxy Server has been specified");
-                    switch (proxytype)
+                    foreach (var computer in computername)
                     {
-                        case "HTTP":
-                            ptype = Renci.SshNet.ProxyTypes.Http;
-                            break;
-                        case "Socks4":
-                            ptype = Renci.SshNet.ProxyTypes.Socks4;
-                            break;
-                        case "Socks5":
-                            ptype = Renci.SshNet.ProxyTypes.Socks5;
-                            break;
-                    }
-
-                    if (File.Exists(fullPath))
-                    {
-                        foreach (var computer in computername)
+                        PrivateKeyConnectionInfo connectionInfo;
+                        if (proxyserver != "")
                         {
-                            PrivateKeyConnectionInfo connectionInfo;
+                            // Set the proper proxy type
+                            var ptype = Renci.SshNet.ProxyTypes.Http;
+                            WriteVerbose("A Proxy Server has been specified");
+                            switch (proxytype)
+                            {
+                                case "HTTP":
+                                    ptype = Renci.SshNet.ProxyTypes.Http;
+                                    break;
+                                case "Socks4":
+                                    ptype = Renci.SshNet.ProxyTypes.Socks4;
+                                    break;
+                                case "Socks5":
+                                    ptype = Renci.SshNet.ProxyTypes.Socks5;
+                                    break;
+                            }
+
                             if (credential.GetNetworkCredential().Password == "")
                             {
                                 WriteVerbose("Using key with no passphrase.");
@@ -2341,41 +2383,10 @@ namespace SSH
                                         sshkey);
                                 }
                             }
-                            try
-                            {
-                                //Ceate instance of SCP Client with connection info
-                                var Client = new ScpClient(connectionInfo);
-
-                                // Set the connection timeout
-                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
-
-                                // Set the Operation Timeout
-                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
-
-                                // Connect to  host using Connection info
-                                Client.Connect();
-                                WriteVerbose("Connection succesfull");
-
-                                var localfullPath = Path.GetFullPath(localfolder);
-                                WriteVerbose("Downloading " + remotefolder);
-                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                                Client.Download(remotefolder, dirinfo);
-                                Client.Disconnect();
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
                         }
-                    }
-                }
-                else
-                {
-                    if (File.Exists(fullPath))
-                    {
-                        foreach (var computer in computername)
+                        else
                         {
-                            PrivateKeyConnectionInfo connectionInfo;
+
                             if (credential.GetNetworkCredential().Password == "")
                             {
                                 WriteVerbose("Using key with no passphrase.");
@@ -2388,38 +2399,101 @@ namespace SSH
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
                                 connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
                             }
-                            try
-                            {
-                                //Ceate instance of SCP Client with connection info
-                                var Client = new ScpClient(connectionInfo);
-
-                                // Set the connection timeout
-                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
-
-                                // Set the Operation Timeout
-                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
-
-                                // Connect to  host using Connection info
-                                Client.Connect();
-                                WriteVerbose("Connection succesfull");
-
-                                var localfullPath = Path.GetFullPath(localfolder);
-                                WriteVerbose("Downloading " + remotefolder);
-                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                                Client.Download(remotefolder, dirinfo);
-                                Client.Disconnect();
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
                         }
 
-                    }
-                }
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectionInfo);
 
-            } // End process record
-        }
+                            // Handle host key
+                            Client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
+                            {
+                                var sb = new StringBuilder();
+                                foreach (var b in e.FingerPrint)
+                                {
+                                    sb.AppendFormat("{0:x}:", b);
+                                }
+                                string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                if (SSHHostKeys.ContainsKey(computer))
+                                {
+                                    if (SSHHostKeys[computer] == FingerPrint)
+                                    {
+                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        e.CanTrust = true;
+                                    }
+                                    else
+                                    {
+                                        throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer);
+                                    }
+                                }
+                                else
+                                {
+                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                    choices.Add(new ChoiceDescription("Y"));
+                                    choices.Add(new ChoiceDescription("N"));
+
+                                    int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+
+                                    if (choice == 0)
+                                    {
+                                        var keymng = new TrustedKeyMng();
+                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        keymng.SetKey(computer, FingerPrint);
+                                        e.CanTrust = true;
+                                    }
+                                    else
+                                    {
+                                        e.CanTrust = false;
+                                    }
+                                }
+                            };
+
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                            // Connect to  host using Connection info
+                            Client.Connect();
+
+                            Client.BufferSize = 1024;
+
+                            // Print progess of download.
+                            Client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
+                            {
+                                var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
+
+                                if (e.Size != 0)
+                                {
+                                    progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+
+                                    this.Host.UI.WriteProgress(1, progressRecord);
+                                }
+                            };
+
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            WriteVerbose("Downloading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Download(remotefolder, dirinfo);
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                    }
+
+                }// file exist
+                else
+                {
+                    throw new System.IO.FileNotFoundException("Key file " + fullPath + " was not found.");
+                }
+            }
+
+        } // End process record
 
     } //end of the class for the Get-SCPFile
     ////###################################################
@@ -2602,37 +2676,54 @@ namespace SSH
         }
         private int connectiontimeout = 5;
 
+        // Variable to hold the host/fingerprint information
+        private Dictionary<string, string> SSHHostKeys;
+
+        protected override void BeginProcessing()
+        {
+            // Collect host/fingerprint information from the registry.
+            base.BeginProcessing();
+            var keymng = new TrustedKeyMng();
+            SSHHostKeys = keymng.GetKeys();
+        }
+
         protected override void ProcessRecord()
         {
             if (keyfile.Equals(""))
             {
-                //###########################################
-                //### Connect using Username and Password ###
-                //###########################################
-                if (proxyserver != "")
+                foreach (var computer in computername)
                 {
-                    // Set the proper proxy type
-                    var ptype = Renci.SshNet.ProxyTypes.Http;
-                    WriteVerbose("A Proxy Server has been specified");
-                    switch (proxytype)
-                    {
-                        case "HTTP":
-                            ptype = Renci.SshNet.ProxyTypes.Http;
-                            break;
-                        case "Socks4":
-                            ptype = Renci.SshNet.ProxyTypes.Socks4;
-                            break;
-                        case "Socks5":
-                            ptype = Renci.SshNet.ProxyTypes.Socks5;
-                            break;
-                    }
+                    #region AuthUserPass
+                    //###########################################
+                    //### Connect using Username and Password ###
+                    //###########################################
 
-                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-                    foreach (var computer in computername)
+                    ConnectionInfo connectInfo;
+                    KeyboardInteractiveAuthenticationMethod KIconnectInfo;
+                    if (proxyserver != "")
                     {
+                        #region Proxy
+                        // Set the proper proxy type
+                        var ptype = Renci.SshNet.ProxyTypes.Http;
+                        WriteVerbose("A Proxy Server has been specified");
+                        switch (proxytype)
+                        {
+                            case "HTTP":
+                                ptype = Renci.SshNet.ProxyTypes.Http;
+                                break;
+                            case "Socks4":
+                                ptype = Renci.SshNet.ProxyTypes.Socks4;
+                                break;
+                            case "Socks5":
+                                ptype = Renci.SshNet.ProxyTypes.Socks5;
+                                break;
+                        }
+
+                        KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                        var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+
                         WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-                        var connectInfo = new ConnectionInfo(computer,
+                        connectInfo = new ConnectionInfo(computer,
                             port,
                             credential.GetNetworkCredential().UserName,
                             ptype,
@@ -2643,92 +2734,124 @@ namespace SSH
                             KIconnectInfo,
                             PassconnectInfo);
 
-                        // Event Handler for interactive Authentication
-                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-                        {
-                            foreach (var prompt in e.Prompts)
-                            {
-                                if (prompt.Request.Contains("Password"))
-                                    prompt.Response = credential.GetNetworkCredential().Password;
-                            }
-                        };
-                         try
-                         {
-                             //Ceate instance of SCP Client with connection info
-                             var Client = new ScpClient(connectInfo);
-
-                             // Set the connection timeout
-                             Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
-
-                             // Set the Operation Timeout
-                             Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
-
-                             // Connect to  host using Connection info
-                             Client.Connect();
-
-                             var localfullPath = Path.GetFullPath(localfolder);
-                             WriteVerbose("Uploading " + remotefolder);
-                             DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                             Client.Upload(dirinfo, remotefolder);
-                             Client.Disconnect();
-                         }
-                         catch (Exception ex)
-                         {
-                             throw ex;
-                         }
-                    } // End foroeach computer
-                }
-                else
-                {
-                    WriteVerbose("Using Username and Password authentication for connection.");
-                    // Connection info for Keyboard Interactive
-                    var KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
-                    var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
-
-                    foreach (var computer in computername)
+                        #endregion
+                    } // Proxy Server
+                    else
                     {
+                        #region No Proxy
+                        WriteVerbose("Using Username and Password authentication for connection.");
+                        // Connection info for Keyboard Interactive
+                        KIconnectInfo = new KeyboardInteractiveAuthenticationMethod(credential.GetNetworkCredential().UserName);
+                        var PassconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, credential.GetNetworkCredential().Password);
+
                         WriteVerbose("Connecting to " + computer + " with user " + credential.GetNetworkCredential().UserName);
-                        var connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
+                        connectInfo = new Renci.SshNet.ConnectionInfo(computer, credential.GetNetworkCredential().UserName,
                                     PassconnectInfo,
                                     KIconnectInfo);
 
-                        // Event Handler for interactive Authentication
-                        KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                        #endregion
+                    }// No Proxy
+
+                    // Event Handler for interactive Authentication
+                    KIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                    {
+                        foreach (var prompt in e.Prompts)
                         {
-                            foreach (var prompt in e.Prompts)
+                            if (prompt.Request.Contains("Password"))
+                                prompt.Response = credential.GetNetworkCredential().Password;
+                        }
+                    };
+                    try
+                    {
+                        //Ceate instance of SCP Client with connection info
+                        var Client = new ScpClient(connectInfo);
+
+                        // Handle host key
+                        Client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
+                        {
+                            var sb = new StringBuilder();
+                            foreach (var b in e.FingerPrint)
                             {
-                                if (prompt.Request.Contains("Password"))
-                                    prompt.Response = credential.GetNetworkCredential().Password;
+                                sb.AppendFormat("{0:x}:", b);
+                            }
+                            string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            if (SSHHostKeys.ContainsKey(computer))
+                            {
+                                if (SSHHostKeys[computer] == FingerPrint)
+                                {
+                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer);
+                                }
+                            }
+                            else
+                            {
+                                Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                choices.Add(new ChoiceDescription("Y"));
+                                choices.Add(new ChoiceDescription("N"));
+
+                                int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+
+                                if (choice == 0)
+                                {
+                                    var keymng = new TrustedKeyMng();
+                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    keymng.SetKey(computer, FingerPrint);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    e.CanTrust = false;
+                                }
                             }
                         };
-                         try
-                         {
-                             //Ceate instance of SCP Client with connection info
-                             var Client = new ScpClient(connectInfo);
 
-                             // Set the connection timeout
-                             Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+                        // Set the connection timeout
+                        Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
-                             // Set the Operation Timeout
-                             Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+                        // Set the Operation Timeout
+                        Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
 
-                             // Connect to  host using Connection info
-                             Client.Connect();
-                             WriteVerbose("Connection succesfull");
+                        // Connect to  host using Connection info
+                        Client.Connect();
+                        Client.BufferSize = 1024;
 
-                             var localfullPath = Path.GetFullPath(localfolder);
-                             WriteVerbose("Uploading " + remotefolder);
-                             DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                             Client.Upload(dirinfo, remotefolder);
-                             Client.Disconnect();
-                         }
-                         catch (Exception ex)
-                         {
-                             throw ex;
-                         }
-                    } // End foroeach computer
-                }
-            }
+                        // Print progess of upload.
+                        Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
+                        {
+                            var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetDirectoryName(remotefolder), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+
+                            progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+
+                            this.Host.UI.WriteProgress(1, progressRecord);
+                        };
+
+                        var localfullPath = Path.GetFullPath(localfolder);
+                        if (Directory.Exists(localfullPath))
+                        {
+
+                            WriteVerbose("Uploading " + remotefolder);
+                            DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
+                            Client.Upload(dirinfo, remotefolder);
+
+                        }
+                        else
+                        {
+                            throw new System.IO.DirectoryNotFoundException("Directory " + localfullPath + " was not found.");
+                        }
+                        Client.Disconnect();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                } //end foreach computer
+                    #endregion
+            } //Use/Password Auth
             else
             {
                 //##########################
@@ -2738,29 +2861,29 @@ namespace SSH
                 WriteVerbose("Using SSH Key authentication for connection.");
                 var fullPath = Path.GetFullPath(keyfile);
 
-                if (proxyserver != "")
+                if (File.Exists(fullPath))
                 {
-                    // Set the proper proxy type
-                    var ptype = Renci.SshNet.ProxyTypes.Http;
-                    WriteVerbose("A Proxy Server has been specified");
-                    switch (proxytype)
+                    foreach (var computer in computername)
                     {
-                        case "HTTP":
-                            ptype = Renci.SshNet.ProxyTypes.Http;
-                            break;
-                        case "Socks4":
-                            ptype = Renci.SshNet.ProxyTypes.Socks4;
-                            break;
-                        case "Socks5":
-                            ptype = Renci.SshNet.ProxyTypes.Socks5;
-                            break;
-                    }
-
-                    if (File.Exists(fullPath))
-                    {
-                        foreach (var computer in computername)
+                        PrivateKeyConnectionInfo connectionInfo;
+                        if (proxyserver != "")
                         {
-                            PrivateKeyConnectionInfo connectionInfo;
+                            // Set the proper proxy type
+                            var ptype = Renci.SshNet.ProxyTypes.Http;
+                            WriteVerbose("A Proxy Server has been specified");
+                            switch (proxytype)
+                            {
+                                case "HTTP":
+                                    ptype = Renci.SshNet.ProxyTypes.Http;
+                                    break;
+                                case "Socks4":
+                                    ptype = Renci.SshNet.ProxyTypes.Socks4;
+                                    break;
+                                case "Socks5":
+                                    ptype = Renci.SshNet.ProxyTypes.Socks5;
+                                    break;
+                            }
+
                             if (credential.GetNetworkCredential().Password == "")
                             {
                                 WriteVerbose("Using key with no passphrase.");
@@ -2793,42 +2916,10 @@ namespace SSH
                                         sshkey);
                                 }
                             }
-                            try
-                            {
-                                //Ceate instance of SCP Client with connection info
-                                var Client = new ScpClient(connectionInfo);
-
-                                // Set the connection timeout
-                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
-
-                                // Set the Operation Timeout
-                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
-
-                                // Connect to  host using Connection info
-                                Client.Connect();
-                                WriteVerbose("Connection succesfull");
-
-                                var localfullPath = Path.GetFullPath(localfolder);
-                                WriteVerbose("Uploading " + remotefolder);
-                                DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
-                                Client.Upload(dirinfo, remotefolder);
-                                Client.Disconnect();
-                            }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
                         }
-                    }
-                    
-                }
-                else
-                {
-                    if (File.Exists(fullPath))
-                    {
-                        foreach (var computer in computername)
+                        else
                         {
-                            PrivateKeyConnectionInfo connectionInfo;
+
                             if (credential.GetNetworkCredential().Password == "")
                             {
                                 WriteVerbose("Using key with no passphrase.");
@@ -2841,44 +2932,112 @@ namespace SSH
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
                                 connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
                             }
+                        }
 
-                            try
+                        try
+                        {
+                            //Ceate instance of SCP Client with connection info
+                            var Client = new ScpClient(connectionInfo);
+
+                            // Handle host key
+                            Client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                             {
-                                //Ceate instance of SCP Client with connection info
-                                var Client = new ScpClient(connectionInfo);
+                                var sb = new StringBuilder();
+                                foreach (var b in e.FingerPrint)
+                                {
+                                    sb.AppendFormat("{0:x}:", b);
+                                }
+                                string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                if (SSHHostKeys.ContainsKey(computer))
+                                {
+                                    if (SSHHostKeys[computer] == FingerPrint)
+                                    {
+                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        e.CanTrust = true;
+                                    }
+                                    else
+                                    {
+                                        throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer);
+                                    }
+                                }
+                                else
+                                {
+                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                    choices.Add(new ChoiceDescription("Y"));
+                                    choices.Add(new ChoiceDescription("N"));
 
-                                // Set the connection timeout
-                                Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+                                    int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
 
-                                // Set the Operation Timeout
-                                Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+                                    if (choice == 0)
+                                    {
+                                        var keymng = new TrustedKeyMng();
+                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        keymng.SetKey(computer, FingerPrint);
+                                        e.CanTrust = true;
+                                    }
+                                    else
+                                    {
+                                        e.CanTrust = false;
+                                    }
+                                }
+                            };
 
-                                // Connect to  host using Connection info
-                                Client.Connect();
-                                WriteVerbose("Connection succesfull");
+                            // Set the connection timeout
+                            Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
 
-                                var localfullPath = Path.GetFullPath(localfolder);
+                            // Set the Operation Timeout
+                            Client.OperationTimeout = TimeSpan.FromSeconds(operationtimeout);
+
+                            // Connect to  host using Connection info
+                            Client.Connect();
+
+                            Client.BufferSize = 1024;
+
+                            // Print progess of upload.
+                            Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
+                            {
+                                var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetDirectoryName(remotefolder), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            };
+
+                            var localfullPath = Path.GetFullPath(localfolder);
+                            if (Directory.Exists(localfullPath))
+                            {
+
                                 WriteVerbose("Uploading " + remotefolder);
                                 DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
                                 Client.Upload(dirinfo, remotefolder);
-                                Client.Disconnect();
+                            
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                throw ex;
+                                throw new System.IO.DirectoryNotFoundException("Directory " + localfullPath + " was not found.");
                             }
-
+                            Client.Disconnect();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
                         }
                     }
+
+                }// file exist
+                else
+                {
+                    throw new System.IO.FileNotFoundException("Key file " + fullPath + " was not found.");
                 }
-				
-				
-            } // End process record
-        }
+            }
+
+        } // End process record
 
     } //end of the class for the Set-SCPFile
     ////###################################################
 
+    // Class for managing the keys 
     public class TrustedKeyMng
     {
         public Dictionary<string,string> GetKeys()
@@ -2919,6 +3078,7 @@ namespace SSH
             }
         }
     }
+    
     // Class for creating PS Custom Objects
     public class SSHModHelper
     {

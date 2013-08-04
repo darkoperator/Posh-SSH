@@ -1223,6 +1223,17 @@ namespace SSH
 
                         // Connect to  host using Connection info
                         Client.Connect();
+
+                        // Print progess of download.
+                        Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
+                        {
+                            var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+
+                            progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+
+                            this.Host.UI.WriteProgress(1, progressRecord);
+                        };
+
                         WriteVerbose("Connection succesfull");
                         var localfullPath = Path.GetFullPath(localfile);
                         if (File.Exists(localfullPath))
@@ -1385,6 +1396,17 @@ namespace SSH
                             // Connect to  host using Connection info
                             Client.Connect();
                             WriteVerbose("Connection succesfull");
+
+                            // Print progess of download.
+                            Client.Uploading += delegate(object sender, ScpUploadEventArgs e)
+                            {
+                                var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetFileName(remotefile), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
+
+                                progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+
+                                this.Host.UI.WriteProgress(1, progressRecord);
+                            };
+
                             var localfullPath = Path.GetFullPath(localfile);
                             if (File.Exists(localfullPath))
                             {

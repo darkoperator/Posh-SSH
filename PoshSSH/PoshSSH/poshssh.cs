@@ -1398,6 +1398,10 @@ namespace SSH
                     }
 
                 }// file exist
+                else
+                {
+                    throw new System.IO.FileNotFoundException("Key file " + fullPath + " was not found.");
+                }
             }
 
         } // End process record

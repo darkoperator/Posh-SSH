@@ -7,6 +7,7 @@ To install the module including all source code you can just run in a PowerShell
 <pre>
 iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkoperator/6152630/raw/c67de4f7cd780ba367cccbc2593f38d18ce6df89/instposhsshdev")
 </pre>
+
 #Support
 * Provides functionality for automating SSH, SFTP and SCP actions.
 * Supports diffie-hellman-group-exchange-sha256, diffie-hellman-group-exchange-sha1, diffie-hellman-group14-sha1 and diffie-hellman-group1-sha1 key exchange methods.
@@ -17,7 +18,9 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Supports DES-EDE3-CBC, DES-EDE3-CFB, DES-CBC, AES-128-CBC, AES-192-CBC and AES-256-CBC algorithms for private key encryption
 * Supports SOCKS4, SOCKS5 and HTTP Proxy
 * Remote, dynamic and local port forwarding
+
 #ChangeLog
+
 ##Version 1.1
 * Added functions for managing SSH Trusted Host list.
 * SCP, SSH Session and SFTP Session cmdlets now verify the SSH Host Fingerprint.

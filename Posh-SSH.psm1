@@ -300,7 +300,7 @@ function Invoke-SSHCommand
 .EXAMPLE
    Forward traffic from 0.0.0.0:8081 to 10.10.10.1:80 thru a SSH Session
 
-    PS C:\> New-SSHPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 -RemoteAddress 10.10.10.1 -RemotePort 80 -Verbose
+    PS C:\> New-SSHLocalPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 -RemoteAddress 10.10.10.1 -RemotePort 80 -Verbose
     VERBOSE: Finding session with Index 0
     VERBOSE: 0
     VERBOSE: Adding Forward Port Configuration to session 0
@@ -338,12 +338,12 @@ function Invoke-SSHCommand
     RawContentLength  : 5932
 #>
 
-function New-SSHPortForward
+function New-SSHLocalPortForward
 {
     [CmdletBinding()]
     param(
     [Parameter(Mandatory=$true)]
-    [String]$LocalAdress = 'localhost',
+    [String]$LocalAdress = '127.0.0.1',
 
     [Parameter(Mandatory=$true)]
     [Int32]$LocalPort,
@@ -414,6 +414,97 @@ function New-SSHPortForward
 }
 
 
+function New-SSHRemotePortForward
+{
+    [CmdletBinding()]
+    param(
+    [Parameter(Mandatory=$true)]
+    [String]$LocalAdress = '127.0.0.1',
+
+    [Parameter(Mandatory=$true)]
+    [Int32]$LocalPort,
+
+    [Parameter(Mandatory=$true)]
+    [String]$RemoteAddress,
+
+    [Parameter(Mandatory=$true)]
+    [Int32]$RemotePort,
+
+    [Parameter(Mandatory=$true,
+        ParameterSetName = "Session",
+        ValueFromPipeline=$true)]
+    [Alias("Session")]
+    [SSH.SSHSession]$SSHSession,
+
+    [Parameter(Mandatory=$true,
+        ParameterSetName = "Index",
+        ValueFromPipeline=$true)]
+    [Int32]$Index = $null
+    )
+
+    Begin
+    {
+        # Initialize the ForwardPort Object
+        $SSHFWP = New-Object Renci.SshNet.ForwardedPortRemote($LocalAdress, $LocalPort, $RemoteAddress, $RemotePort)
+    }
+    Process
+    {
+        if ($Index -ne $null)
+        {
+            Write-Verbose "Finding session with Index $Index"
+            foreach($session in $Global:SshSessions)
+            {
+                Write-Verbose $session.index
+                if ($session.index -eq $Index)
+                {
+                    # Add the forward port object to the session
+                    Write-Verbose "Adding Forward Port Configuration to session $Index"
+                    $session.session.AddForwardedPort($SSHFWP)
+                    Write-Verbose "Starting the Port Forward."
+                    $SSHFWP.start()
+                    Write-Verbose "Forwarding has been started."
+                }
+            }
+        }
+        elseif ($SSHSession)
+        {
+            if ($SSHSession -in $Global:SshSessions)
+            {
+                # Add the forward port object to the session
+                Write-Verbose "Adding Forward Port Configuration to session $($SSHSession.index)"
+                $SSHSession.session.AddForwardedPort($SSHFWP)
+                Write-Verbose "Starting the Port Forward."
+                $SSHFWP.start()
+                Write-Verbose "Forwarding has been started."
+            }
+            else
+            {
+                Write-Error "The Session does not appear in the list of created sessions."
+            }
+        }
+    
+    }
+    End{}
+
+
+}
+
+<#
+.Synopsis
+   Establishes a Dynamic Port Forward thru a stablished SSH Session.
+.DESCRIPTION
+   Dynamic port forwarding is a transparent mechanism available for applications, which 
+   support the SOCKS4 or SOCKS5 client protoco. In windows for best results the local address
+   to bind to should be the IP of the network interface. 
+.EXAMPLE
+    New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose
+VERBOSE: Finding session with Index 0
+VERBOSE: 0
+VERBOSE: Adding Forward Port Configuration to session 0
+VERBOSE: Starting the Port Forward.
+VERBOSE: Forwarding has been started.
+#>
+<#
 function New-SSHDynamicPortForward
 {
     [CmdletBinding()]
@@ -454,6 +545,8 @@ function New-SSHDynamicPortForward
                     # Add the forward port object to the session
                     Write-Verbose "Adding Forward Port Configuration to session $Index"
                     $session.session.AddForwardedPort($SSHFWP)
+                    $session.session.SendKeepAlive()
+                    [System.Threading.Thread]::Sleep(500)
                     Write-Verbose "Starting the Port Forward."
                     $SSHFWP.start()
                     Write-Verbose "Forwarding has been started."
@@ -479,7 +572,7 @@ function New-SSHDynamicPortForward
     }
     End{}
 }
-
+#>
 
 <#
 .Synopsis

@@ -249,7 +249,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -393,7 +395,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
@@ -696,7 +700,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -840,7 +846,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
@@ -1180,7 +1188,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -1354,7 +1364,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
@@ -1723,7 +1735,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -1894,7 +1908,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
@@ -2259,7 +2275,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -2426,7 +2444,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
@@ -2786,7 +2806,9 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
@@ -2959,7 +2981,9 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Host fingerprint: " + FingerPrint);
+                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)

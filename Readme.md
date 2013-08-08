@@ -3,7 +3,7 @@ Powershell module that leverages a custom version of the SSH.NET Library (http:/
 The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled servers.
 
 #Install
-To install the module including all source code you can just run in a PowerShell v2 or v3 the following command:
+To install the module including all source code you can just run in a PowerShell v3 the following command:
 <pre>
 iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkoperator/6152630/raw/c67de4f7cd780ba367cccbc2593f38d18ce6df89/instposhsshdev")
 </pre>
@@ -21,6 +21,10 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 #ChangeLog
 
+##Version 1.2
+* Added support for zlib compression.
+* Disabbled Dynamic Port Forward function, there seems to be problems with the library.
+
 ##Version 1.1
 * Added functions for managing SSH Trusted Host list.
 * SCP, SSH Session and SFTP Session cmdlets now verify the SSH Host Fingerprint.
@@ -28,10 +32,8 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Added Download and Upload Progress to SCP cmdlets.
 * Patched the Renci SSH .Net library to correct problems when uploading using SCP.
 
-
 # ToDo
 * Add progress for SFTP upload and Download
-
 
 # Know Issues
 * No Compression support at the moment.

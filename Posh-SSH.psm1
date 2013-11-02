@@ -229,7 +229,11 @@ function Invoke-SSHCommand
 
         [Parameter(Mandatory=$false,
         ParameterSetName = "Index")]
-        [int32[]]$Index = $null
+        [int32[]]$Index = $null,
+
+        # Ensures a connection is made by reconnecting before command. (For Cisco IOS)
+        [Parameter(Mandatory=$false)]
+        [switch]$EnsureConnection
 
     )
 
@@ -243,6 +247,10 @@ function Invoke-SSHCommand
             {
                 if ($s.session.isconnected)
                 {
+                    if ($EnsureConnection)
+                    {
+                        $s.session.connect()
+                    }
                     $result = $S.session.RunCommand($Command)
                 }
                 else
@@ -267,6 +275,10 @@ function Invoke-SSHCommand
                     Write-Verbose "Running command against $($s.Index)"
                     if ($s.session.isconnected)
                     {
+                        if ($EnsureConnection)
+                        {
+                            $s.session.connect()
+                        }
                         $result = $S.session.RunCommand($Command)
                     }
                     else

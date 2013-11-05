@@ -92,7 +92,7 @@ function Get-SSHSession
 #>
 function Remove-SSHSession
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -215,19 +215,19 @@ function Remove-SSHSession
 #>
 function Invoke-SSHCommand
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
         [Parameter(Mandatory=$true)]
         [string]$Command,
         
-        [Parameter(Mandatory=$false,
+        [Parameter(Mandatory=$true,
         ParameterSetName = "Session",
         ValueFromPipeline=$true)]
         [Alias("Name")]
         [SSH.SSHSession[]]$SSHSession,
 
-        [Parameter(Mandatory=$false,
+        [Parameter(Mandatory=$true,
         ParameterSetName = "Index")]
         [int32[]]$Index = $null,
 
@@ -352,7 +352,7 @@ function Invoke-SSHCommand
 
 function New-SSHLocalPortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
     [Parameter(Mandatory=$true)]
     [String]$LocalAdress = '127.0.0.1',
@@ -428,7 +428,7 @@ function New-SSHLocalPortForward
 
 function New-SSHRemotePortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
     [Parameter(Mandatory=$true)]
     [String]$LocalAdress = '127.0.0.1',
@@ -516,10 +516,10 @@ VERBOSE: Adding Forward Port Configuration to session 0
 VERBOSE: Starting the Port Forward.
 VERBOSE: Forwarding has been started.
 #>
-<#
+
 function New-SSHDynamicPortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
     [Parameter(Mandatory=$true)]
     [String]$LocalAdress = 'localhost',
@@ -584,7 +584,7 @@ function New-SSHDynamicPortForward
     }
     End{}
 }
-#>
+
 
 <#
 .Synopsis
@@ -606,7 +606,7 @@ function New-SSHDynamicPortForward
 
 function Get-SSHPortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
     [Parameter(Mandatory=$true,
@@ -685,7 +685,7 @@ function Get-SSHPortForward
 
 function Stop-SSHPortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
     [Parameter(Mandatory=$true,
@@ -782,7 +782,7 @@ function Stop-SSHPortForward
 #>
 function Start-SSHPortForward
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
     [Parameter(Mandatory=$true,
@@ -879,7 +879,7 @@ function Start-SSHPortForward
 
 function Get-SFTPSession 
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param( 
         [Parameter(Mandatory=$false)]
         [Int32[]] $Index
@@ -931,7 +931,7 @@ function Get-SFTPSession
 
 function Remove-SFTPSession
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1071,7 +1071,7 @@ function Remove-SFTPSession
 
 function Get-SFTPDirectoryList
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1139,7 +1139,7 @@ function Get-SFTPDirectoryList
 
 function New-SFTPDirectory
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1207,7 +1207,7 @@ function New-SFTPDirectory
 
 function Remove-SFTPDirectory
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1281,7 +1281,7 @@ function Remove-SFTPDirectory
 
 function Set-SFTPDirectoryPath
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1350,7 +1350,7 @@ function Set-SFTPDirectoryPath
 
 function Get-SFTPCurrentDirectory
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1424,7 +1424,7 @@ function Get-SFTPCurrentDirectory
 
 function Get-SFTPFile
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1526,7 +1526,7 @@ function Get-SFTPFile
 
 function Set-SFTPFile
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1616,7 +1616,7 @@ function Set-SFTPFile
 
 function Remove-SFTPFile
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1693,7 +1693,7 @@ function Remove-SFTPFile
 
 function Move-SFTPFile
 {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName="Index")]
     param(
         [Parameter(Mandatory=$true,
         ParameterSetName = "byname",
@@ -1772,7 +1772,7 @@ InstalledVersion                                                                
  #>
  function Get-PoshSSHModVersion
  {
-     [CmdletBinding()]
+     [CmdletBinding(DefaultParameterSetName="Index")]
      [OutputType([pscustomobject])]
      Param
      ()
@@ -1834,7 +1834,7 @@ SSHHost                                                     Fingerprint
  #>
  function Get-SSHTrustedHosts
  {
-     [CmdletBinding()]
+     [CmdletBinding(DefaultParameterSetName="Index")]
      [OutputType([int])]
      Param
      ()
@@ -1876,7 +1876,7 @@ VERBOSE: SSH Host has been added.
  #>
  function New-SSHTrustedHost
  {
-     [CmdletBinding()]
+     [CmdletBinding(DefaultParameterSetName="Index")]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
@@ -1930,7 +1930,7 @@ VERBOSE: SSH Host has been removed.
  #>
  function Remove-SSHTrustedHost
  {
-     [CmdletBinding()]
+     [CmdletBinding(DefaultParameterSetName="Index")]
      Param
      (
          # Param1 help description

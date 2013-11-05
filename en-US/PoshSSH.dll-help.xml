@@ -101,6 +101,16 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Get-SFTPCurrentDirectory</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Get-SFTPCurrentDirectory</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -135,18 +145,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>PipelineVariable</maml:name>
 			<maml:description>
@@ -155,6 +153,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -230,6 +240,23 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Get-SFTPDirectoryList</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Get-SFTPDirectoryList</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -278,18 +305,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Path</maml:name>
 			<maml:description>
@@ -310,6 +325,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -385,6 +412,37 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Get-SFTPFile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>RemoteFile</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalPath</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>FileNameAppend</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Get-SFTPFile</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -461,18 +519,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>RemoteFile</maml:name>
 			<maml:description>
@@ -517,6 +563,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -693,23 +751,6 @@
 		<command:syntaxItem>
 			<maml:name>Get-SSHPortForward</maml:name>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>PipelineVariable</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-			</command:parameter>
-		</command:syntaxItem>
-		<command:syntaxItem>
-			<maml:name>Get-SSHPortForward</maml:name>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
@@ -724,16 +765,33 @@
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Get-SSHPortForward</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>SSHSession</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Int32</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -751,13 +809,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>Index</maml:name>
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1009,12 +1067,19 @@
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="true">SSHSession[]</command:parameterValue>
+				<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnsureConnection</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1033,12 +1098,19 @@
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named">
-				<maml:name>Index</maml:name>
+			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>SSHSession</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+				<command:parameterValue required="true" variableLength="true">SSHSession[]</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>EnsureConnection</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1062,14 +1134,26 @@
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="false" position="named">
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="true">SSHSession[]</command:parameterValue>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession[]</maml:name>
+				<maml:name>Int32[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>EnsureConnection</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+			<dev:type>
+				<maml:name>SwitchParameter</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1086,14 +1170,14 @@
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
-		<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="false" position="named">
-			<maml:name>Index</maml:name>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue)" position="named">
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<command:parameterValue required="true" variableLength="true">SSHSession[]</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32[]</maml:name>
+				<maml:name>SSHSession[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1155,6 +1239,30 @@
 		<maml:para></maml:para>
 	</maml:description>
 	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>Move-SFTPFile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>OriginalPath</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>NewPath</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
 		<command:syntaxItem>
 			<maml:name>Move-SFTPFile</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
@@ -1219,18 +1327,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>OriginalPath</maml:name>
 			<maml:description>
@@ -1263,6 +1359,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1338,6 +1446,23 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>New-SFTPDirectory</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>New-SFTPDirectory</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -1386,18 +1511,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Path</maml:name>
 			<maml:description>
@@ -1422,6 +1535,18 @@
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
 		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByValue)" position="named">
 			<maml:name>SFTPSession</maml:name>
 			<maml:description>
@@ -1430,6 +1555,187 @@
 			<command:parameterValue required="true" variableLength="true">SFTPSession[]</command:parameterValue>
 			<dev:type>
 				<maml:name>SFTPSession[]</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+	</command:parameters>
+	<command:inputTypes>
+		<command:inputType>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri/>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+			</dev:type>
+			<maml:description></maml:description>
+		</command:inputType>
+	</command:inputTypes>
+	<command:returnValues>
+		<command:returnValue>
+			<dev:type>
+				<maml:name></maml:name>
+				<maml:uri/>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+			</dev:type>
+			<maml:description></maml:description>
+	</command:returnValue>
+		</command:returnValues>
+	<command:terminatingErrors></command:terminatingErrors>
+	<command:nonTerminatingErrors></command:nonTerminatingErrors>
+	<maml:alertSet>
+		<maml:title></maml:title>
+		<maml:alert>
+			<maml:para></maml:para>
+		</maml:alert>
+	</maml:alertSet>
+	<command:examples>
+	</command:examples>
+	<maml:relatedLinks>
+	</maml:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+<!--Generated by PS Cmdlet Help Editor-->
+	<command:details>
+		<command:name>New-SSHDynamicPortForward</command:name>
+		<maml:description>
+			<maml:para></maml:para>
+		</maml:description>
+		<maml:copyright>
+			<maml:para />
+		</maml:copyright>
+		<command:verb>New</command:verb>
+		<command:noun>SSHDynamicPortForward</command:noun>
+		<dev:version />
+	</command:details>
+	<maml:description>
+	<!--This is the Description section-->
+		<maml:para></maml:para>
+	</maml:description>
+	<command:syntax>
+		<command:syntaxItem>
+			<maml:name>New-SSHDynamicPortForward</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalAdress</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalPort</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>Index</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>New-SSHDynamicPortForward</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalAdress</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalPort</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>SSHSession</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+	</command:syntax>
+	<command:parameters>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>LocalAdress</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>LocalPort</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+			<maml:name>PipelineVariable</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			<dev:type>
+				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+			<maml:name>SSHSession</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<dev:type>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1522,11 +1828,11 @@
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1567,11 +1873,11 @@
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>Index</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1632,13 +1938,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Int32</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1656,13 +1962,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>Index</maml:name>
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1755,11 +2061,11 @@
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1800,11 +2106,11 @@
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>Index</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
 				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -1865,13 +2171,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Int32</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -1889,13 +2195,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>Index</maml:name>
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2078,6 +2384,23 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Remove-SFTPDirectory</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Remove-SFTPDirectory</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2126,18 +2449,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Path</maml:name>
 			<maml:description>
@@ -2158,6 +2469,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2233,6 +2556,23 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Remove-SFTPFile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>RemoteFile</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Remove-SFTPFile</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2281,18 +2621,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>RemoteFile</maml:name>
 			<maml:description>
@@ -2313,6 +2641,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2388,6 +2728,16 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Remove-SFTPSession</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Remove-SFTPSession</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2422,18 +2772,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>PipelineVariable</maml:name>
 			<maml:description>
@@ -2442,6 +2780,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2517,6 +2867,16 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Remove-SSHSession</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Remove-SSHSession</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2551,18 +2911,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>PipelineVariable</maml:name>
 			<maml:description>
@@ -2571,6 +2919,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2746,6 +3106,23 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Set-SFTPDirectoryPath</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>Path</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Set-SFTPDirectoryPath</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2794,18 +3171,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>Path</maml:name>
 			<maml:description>
@@ -2826,6 +3191,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -2901,6 +3278,30 @@
 	<command:syntax>
 		<command:syntaxItem>
 			<maml:name>Set-SFTPFile</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>RemotePath</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>LocalFile</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Set-SFTPFile</maml:name>
 			<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
@@ -2963,18 +3364,6 @@
 		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
-		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
-			<maml:name>Index</maml:name>
-			<maml:description>
-				<maml:para></maml:para>
-			</maml:description>
-			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
-			<dev:type>
-				<maml:name>Int32[]</maml:name>
-				<maml:uri/>
-			</dev:type>
-			<dev:defaultValue></dev:defaultValue>
-		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>RemotePath</maml:name>
 			<maml:description>
@@ -3007,6 +3396,18 @@
 			<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			<dev:type>
 				<maml:name>String</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>Index</maml:name>
+			<maml:description>
+				<maml:para></maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="true">Int32[]</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32[]</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -3083,30 +3484,6 @@
 		<command:syntaxItem>
 			<maml:name>Start-SSHPortForward</maml:name>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>BoundPort</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>PipelineVariable</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-			</command:parameter>
-		</command:syntaxItem>
-		<command:syntaxItem>
-			<maml:name>Start-SSHPortForward</maml:name>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
@@ -3128,16 +3505,40 @@
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Start-SSHPortForward</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>SSHSession</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>BoundPort</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Int32</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -3167,13 +3568,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>Index</maml:name>
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -3238,30 +3639,6 @@
 		<command:syntaxItem>
 			<maml:name>Stop-SSHPortForward</maml:name>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-				<maml:name>SSHSession</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>BoundPort</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
-				<maml:name>PipelineVariable</maml:name>
-				<maml:description>
-					<maml:para></maml:para>
-				</maml:description>
-				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-			</command:parameter>
-		</command:syntaxItem>
-		<command:syntaxItem>
-			<maml:name>Stop-SSHPortForward</maml:name>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
 				<maml:name>Index</maml:name>
 				<maml:description>
 					<maml:para></maml:para>
@@ -3283,16 +3660,40 @@
 				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
 			</command:parameter>
 		</command:syntaxItem>
+		<command:syntaxItem>
+			<maml:name>Stop-SSHPortForward</maml:name>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
+				<maml:name>SSHSession</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>BoundPort</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
+				<maml:name>PipelineVariable</maml:name>
+				<maml:description>
+					<maml:para></maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+			</command:parameter>
+		</command:syntaxItem>
 	</command:syntax>
 	<command:parameters>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>SSHSession</maml:name>
+			<maml:name>Index</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
-				<maml:name>SSHSession</maml:name>
+				<maml:name>Int32</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -3322,13 +3723,13 @@
 			<dev:defaultValue></dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="true (ByValue)" position="named">
-			<maml:name>Index</maml:name>
+			<maml:name>SSHSession</maml:name>
 			<maml:description>
 				<maml:para></maml:para>
 			</maml:description>
-			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<command:parameterValue required="true" variableLength="false">SSHSession</command:parameterValue>
 			<dev:type>
-				<maml:name>Int32</maml:name>
+				<maml:name>SSHSession</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -4247,6 +4648,20 @@
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>KeepAliveInterval</maml:name>
+				<maml:description>
+					<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
+			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
 				<maml:description>
@@ -4326,6 +4741,20 @@
 					<maml:para></maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>KeepAliveInterval</maml:name>
+				<maml:description>
+					<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -4441,6 +4870,30 @@
 			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			<dev:type>
 				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>KeepAliveInterval</maml:name>
+			<maml:description>
+				<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue>10</dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>AcceptKey</maml:name>
+			<maml:description>
+				<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
+			<dev:type>
+				<maml:name>Boolean</maml:name>
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
@@ -4606,6 +5059,20 @@ Index Host                                                                      
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
 			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>KeepAliveInterval</maml:name>
+				<maml:description>
+					<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
+			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
 				<maml:description>
@@ -4678,6 +5145,20 @@ Index Host                                                                      
 					<maml:para></maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>KeepAliveInterval</maml:name>
+				<maml:description>
+					<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+				</maml:description>
+				<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			</command:parameter>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+				<maml:name>AcceptKey</maml:name>
+				<maml:description>
+					<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+				</maml:description>
+				<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 				<maml:name>PipelineVariable</maml:name>
@@ -4784,6 +5265,30 @@ Index Host                                                                      
 				<maml:uri/>
 			</dev:type>
 			<dev:defaultValue></dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>KeepAliveInterval</maml:name>
+			<maml:description>
+				<maml:para>Keep Alive interval in seconds for a connection.</maml:para>
+			</maml:description>
+			<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+			<dev:type>
+				<maml:name>Int32</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue>10</dev:defaultValue>
+		</command:parameter>
+		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="true (ByPropertyName)" position="named">
+			<maml:name>AcceptKey</maml:name>
+			<maml:description>
+				<maml:para>Automatically accepts a new SSH fingerprint for a host</maml:para>
+			</maml:description>
+			<command:parameterValue required="false" variableLength="false">Boolean</command:parameterValue>
+			<dev:type>
+				<maml:name>Boolean</maml:name>
+				<maml:uri/>
+			</dev:type>
+			<dev:defaultValue>False</dev:defaultValue>
 		</command:parameter>
 		<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 			<maml:name>PipelineVariable</maml:name>

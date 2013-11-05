@@ -21,6 +21,14 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 #ChangeLog
 
+##Version 1.3
+* Option to auto accept SSH Fingerprint (Don't personally like it but gotten enough requests to make me do it)
+* Set index to default parameter set.
+* Added keep alive for connections.
+* Enabled Dynamic Port Forward function.
+* Help XML file now properly shows parameter sets.
+* Fixed several typos.
+
 ##Version 1.2
 * Added support for zlib compression.
 * Disabbled Dynamic Port Forward function, there seems to be problems with the library.

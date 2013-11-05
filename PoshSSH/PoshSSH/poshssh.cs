@@ -150,6 +150,34 @@ namespace SSH
         }
         private int connectiontimeout = 10;
 
+        // KeepAliveInterval Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int KeepAliveInterval
+        {
+            get { return keepaliveinterval; }
+            set { keepaliveinterval = value; }
+        }
+        private int keepaliveinterval = 10;
+
+        // Auto Accept key fingerprint
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public bool AcceptKey
+        {
+            get { return acceptkey; }
+            set { acceptkey = value; }
+        }
+        private bool acceptkey = false;
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> SSHHostKeys;
 
@@ -249,14 +277,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                            //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -266,16 +294,23 @@ namespace SSH
                             }
                             else
                             {
-                                Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
-                                choices.Add(new ChoiceDescription("Y"));
-                                choices.Add(new ChoiceDescription("N"));
+                                int choice;
+                                if (acceptkey)
+                                { 
+                                    choice = 0; 
+                                }
+                                else
+                                {
+                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                    choices.Add(new ChoiceDescription("Y"));
+                                    choices.Add(new ChoiceDescription("N"));
 
-                                int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
-
+                                    choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+                                }
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -287,6 +322,9 @@ namespace SSH
                         };
                         // Set the connection timeout
                         Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                        // Set Keepalive for connections
+                        Client.KeepAliveInterval = TimeSpan.FromSeconds(keepaliveinterval);
 
                         // Connect to  host using Connection info
                         Client.Connect();
@@ -395,14 +433,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -412,16 +450,23 @@ namespace SSH
                                 }
                                 else
                                 {
-                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
-                                    choices.Add(new ChoiceDescription("Y"));
-                                    choices.Add(new ChoiceDescription("N"));
+                                    int choice;
+                                    if (acceptkey)
+                                    {
+                                        choice = 0;
+                                    }
+                                    else
+                                    {
+                                        Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                        choices.Add(new ChoiceDescription("Y"));
+                                        choices.Add(new ChoiceDescription("N"));
 
-                                    int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
-
+                                        choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+                                    }
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }
@@ -433,6 +478,9 @@ namespace SSH
                             };
                             // Set the connection timeout
                             Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                            // Set Keepalive for connections
+                            Client.KeepAliveInterval = TimeSpan.FromSeconds(keepaliveinterval);
 
                             // Connect to  host using Connection info
                             Client.Connect();
@@ -605,6 +653,34 @@ namespace SSH
         }
         private int connectiontimeout = 5;
 
+        // KeepAliveInterval Parameter
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public int KeepAliveInterval
+        {
+            get { return keepaliveinterval; }
+            set { keepaliveinterval = value; }
+        }
+        private int keepaliveinterval = 10;
+
+        // Auto Accept key fingerprint
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public bool AcceptKey
+        {
+            get { return acceptkey; }
+            set { acceptkey = value; }
+        }
+        private bool acceptkey = false;
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> SSHHostKeys;
 
@@ -700,14 +776,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                           // this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -717,16 +793,23 @@ namespace SSH
                             }
                             else
                             {
-                                Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
-                                choices.Add(new ChoiceDescription("Y"));
-                                choices.Add(new ChoiceDescription("N"));
+                                int choice;
+                                if (acceptkey)
+                                {
+                                    choice = 0;
+                                }
+                                else
+                                {
+                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                    choices.Add(new ChoiceDescription("Y"));
+                                    choices.Add(new ChoiceDescription("N"));
 
-                                int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
-
+                                    choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+                                }
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -738,6 +821,9 @@ namespace SSH
                         };
                         // Set the connection timeout
                         Client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(connectiontimeout);
+
+                        // Set Keepalive for connections
+                        Client.KeepAliveInterval = TimeSpan.FromSeconds(keepaliveinterval);
 
                         // Connect to  host using Connection info
                         Client.Connect();
@@ -846,14 +932,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -863,16 +949,23 @@ namespace SSH
                                 }
                                 else
                                 {
-                                    Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
-                                    choices.Add(new ChoiceDescription("Y"));
-                                    choices.Add(new ChoiceDescription("N"));
+                                    int choice;
+                                    if (acceptkey)
+                                    {
+                                        choice = 0;
+                                    }
+                                    else
+                                    {
+                                        Collection<ChoiceDescription> choices = new Collection<ChoiceDescription>();
+                                        choices.Add(new ChoiceDescription("Y"));
+                                        choices.Add(new ChoiceDescription("N"));
 
-                                    int choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
-
+                                        choice = this.Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + FingerPrint, choices, 1);
+                                    }
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }
@@ -1188,14 +1281,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                            //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -1214,7 +1307,7 @@ namespace SSH
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                   // this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -1252,7 +1345,7 @@ namespace SSH
                         {
                             WriteVerbose("Uploading " + localfullPath);
                             FileInfo fil = new FileInfo(@localfullPath);
-                            Client.Upload2(fil, remotefile);
+                            Client.Upload(fil, remotefile);
 
                             Client.Disconnect();
                         }
@@ -1364,14 +1457,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -1390,7 +1483,7 @@ namespace SSH
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }
@@ -1429,7 +1522,7 @@ namespace SSH
                             {
                                 WriteVerbose("Uploading " + localfullPath);
                                 FileInfo fil = new FileInfo(@localfullPath);
-                                Client.Upload2(fil, remotefile);
+                                Client.Upload(fil, remotefile);
 
                                 Client.Disconnect();
                             }
@@ -1735,14 +1828,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                            //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -1761,7 +1854,7 @@ namespace SSH
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -1908,14 +2001,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -1934,7 +2027,7 @@ namespace SSH
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }
@@ -2275,14 +2368,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                            //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -2301,7 +2394,7 @@ namespace SSH
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -2444,14 +2537,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -2470,7 +2563,7 @@ namespace SSH
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }
@@ -2691,7 +2784,7 @@ namespace SSH
             get { return operationtimeout; }
             set { operationtimeout = value; }
         }
-        private int operationtimeout = 5;
+        private int operationtimeout = 15;
 
         // ConnectionTimeOut Parameter
         [Parameter(Mandatory = false,
@@ -2806,14 +2899,14 @@ namespace SSH
                                 sb.AppendFormat("{0:x}:", b);
                             }
                             string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                            this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                            this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                            //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                            //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                             if (SSHHostKeys.ContainsKey(computer))
                             {
                                 if (SSHHostKeys[computer] == FingerPrint)
                                 {
-                                    this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                     e.CanTrust = true;
                                 }
                                 else
@@ -2832,7 +2925,7 @@ namespace SSH
                                 if (choice == 0)
                                 {
                                     var keymng = new TrustedKeyMng();
-                                    this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                    //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                     keymng.SetKey(computer, FingerPrint);
                                     e.CanTrust = true;
                                 }
@@ -2981,14 +3074,14 @@ namespace SSH
                                     sb.AppendFormat("{0:x}:", b);
                                 }
                                 string FingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                                this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
-                                this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
+                                //this.Host.UI.WriteVerboseLine("Key algorithm of " + Client.ConnectionInfo.CurrentHostKeyAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Key exchange alhorithm " + Client.ConnectionInfo.CurrentKeyExchangeAlgorithm);
+                                //this.Host.UI.WriteVerboseLine("Host key fingerprint: " + FingerPrint);
                                 if (SSHHostKeys.ContainsKey(computer))
                                 {
                                     if (SSHHostKeys[computer] == FingerPrint)
                                     {
-                                        this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
                                         e.CanTrust = true;
                                     }
                                     else
@@ -3007,7 +3100,7 @@ namespace SSH
                                     if (choice == 0)
                                     {
                                         var keymng = new TrustedKeyMng();
-                                        this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                        //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
                                         keymng.SetKey(computer, FingerPrint);
                                         e.CanTrust = true;
                                     }

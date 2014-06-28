@@ -21,6 +21,10 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 #ChangeLog
 
+##Version 1.4
+* Disabled PorForward commands because of bug in library.
+* Fix upload and download speed issues in SFTP and SCP.
+
 ##Version 1.3
 * Option to auto accept SSH Fingerprint (Don't personally like it but gotten enough requests to make me do it)
 * Set index to default parameter set.

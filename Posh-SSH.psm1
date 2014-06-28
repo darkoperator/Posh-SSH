@@ -92,17 +92,17 @@ function Get-SSHSession
 #>
 function Remove-SSHSession
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$false,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Name")]
+        [Alias('Name')]
         [SSH.SSHSession[]]$SSHSession
         )
 
@@ -215,20 +215,20 @@ function Remove-SSHSession
 #>
 function Invoke-SSHCommand
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
 
         [Parameter(Mandatory=$true)]
         [string]$Command,
         
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Name")]
+        [Alias('Name')]
         [SSH.SSHSession[]]$SSHSession,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Index")]
+        ParameterSetName = 'Index')]
         [int32[]]$Index = $null,
 
         # Ensures a connection is made by reconnecting before command. (For Cisco IOS)
@@ -350,7 +350,7 @@ function Invoke-SSHCommand
     RawContentLength  : 5932
 #>
 
-function New-SSHLocalPortForward
+<#function New-SSHLocalPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -423,10 +423,10 @@ function New-SSHLocalPortForward
     End{}
 
 
-}
+}#>
 
 
-function New-SSHRemotePortForward
+<#function New-SSHRemotePortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -500,7 +500,7 @@ function New-SSHRemotePortForward
 
 
 }
-
+#>
 <#
 .Synopsis
    Establishes a Dynamic Port Forward thru a stablished SSH Session.
@@ -517,7 +517,7 @@ VERBOSE: Starting the Port Forward.
 VERBOSE: Forwarding has been started.
 #>
 
-function New-SSHDynamicPortForward
+<#function New-SSHDynamicPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -583,7 +583,7 @@ function New-SSHDynamicPortForward
         }
     }
     End{}
-}
+}#>
 
 
 <#
@@ -604,7 +604,7 @@ function New-SSHDynamicPortForward
     IsStarted : True
 #>
 
-function Get-SSHPortForward
+<#function Get-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -651,7 +651,7 @@ function Get-SSHPortForward
         }
     }
     End{}
-}
+}#>
 
 
 <#
@@ -683,7 +683,7 @@ function Get-SSHPortForward
     IsStarted : False
 #>
 
-function Stop-SSHPortForward
+<#function Stop-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -749,7 +749,7 @@ function Stop-SSHPortForward
         }
     }
     End{}
-}
+}#>
 
 
 <#
@@ -780,7 +780,7 @@ function Stop-SSHPortForward
     Port      : 80
     IsStarted : True
 #>
-function Start-SSHPortForward
+<#function Start-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -846,7 +846,7 @@ function Start-SSHPortForward
         }
     }
     End{}
-}
+}#>
 
 ########################################################################################
 # SFTP Functions
@@ -879,7 +879,7 @@ function Start-SSHPortForward
 
 function Get-SFTPSession 
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param( 
         [Parameter(Mandatory=$false)]
         [Int32[]] $Index
@@ -931,17 +931,17 @@ function Get-SFTPSession
 
 function Remove-SFTPSession
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$false,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession
         )
 
@@ -1071,17 +1071,17 @@ function Remove-SFTPSession
 
 function Get-SFTPDirectoryList
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
@@ -1139,17 +1139,17 @@ function Get-SFTPDirectoryList
 
 function New-SFTPDirectory
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
@@ -1207,17 +1207,17 @@ function New-SFTPDirectory
 
 function Remove-SFTPDirectory
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
@@ -1281,17 +1281,17 @@ function Remove-SFTPDirectory
 
 function Set-SFTPDirectoryPath
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
@@ -1350,17 +1350,17 @@ function Set-SFTPDirectoryPath
 
 function Get-SFTPCurrentDirectory
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession
      )
 
@@ -1424,17 +1424,17 @@ function Get-SFTPCurrentDirectory
 
 function Get-SFTPFile
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of file on remote system.
@@ -1526,17 +1526,17 @@ function Get-SFTPFile
 
 function Set-SFTPFile
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of where to upload file on remote system.
@@ -1616,17 +1616,17 @@ function Set-SFTPFile
 
 function Remove-SFTPFile
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         # Full path of where to upload file on remote system.
@@ -1693,17 +1693,17 @@ function Remove-SFTPFile
 
 function Move-SFTPFile
 {
-    [CmdletBinding(DefaultParameterSetName="Index")]
+    [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = "byname",
+        ParameterSetName = 'byname',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
+        ParameterSetName = 'Session',
         ValueFromPipeline=$true)]
-        [Alias("Session")]
+        [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
         [Parameter(Mandatory=$true)]
@@ -1730,7 +1730,7 @@ function Move-SFTPFile
                     {
                         Write-Verbose "Renaming $OriginalPath to $NewPath"
                         $session.Session.RenameFile($OriginalPath, $NewPath)
-                        Write-Verbose "File renamed"
+                        Write-Verbose 'File renamed'
                     }
                  }
             }
@@ -1747,7 +1747,7 @@ function Move-SFTPFile
                     {
                         Write-Verbose "Renaming $OriginalPath to $NewPath"
                         $ssh.Session.RenameFile($OriginalPath, $NewPath)
-                        Write-Verbose "File renamed"
+                        Write-Verbose 'File renamed'
                     }
                 }
              }       
@@ -1772,15 +1772,15 @@ InstalledVersion                                                                
  #>
  function Get-PoshSSHModVersion
  {
-     [CmdletBinding(DefaultParameterSetName="Index")]
+     [CmdletBinding(DefaultParameterSetName='Index')]
      [OutputType([pscustomobject])]
      Param
      ()
  
      Begin
      {
-        $currentversion = ""
-        $installed = Get-Module -Name "posh-SSH" -ListAvailable
+        $currentversion = ''
+        $installed = Get-Module -Name 'posh-SSH' -ListAvailable
      }
      Process
      {
@@ -1792,17 +1792,17 @@ InstalledVersion                                                                
         }
         Catch
         {
-            Write-Warning "Could not retrieve the current version."
+            Write-Warning 'Could not retrieve the current version.'
         }
-        $majorver,$minorver = $currentversion.split(".")
+        $majorver,$minorver = $currentversion.split('.')
 
         if ($majorver -gt $installed.Version.Major)
         {
-            Write-Warning "You are running an outdated version of the module."
+            Write-Warning 'You are running an outdated version of the module.'
         }
         elseif ($minorver -gt $installed.Version.Minor)
         {
-            Write-Warning "You are running an outdated version of the module."
+            Write-Warning 'You are running an outdated version of the module.'
         } 
         
         $props = @{
@@ -1834,7 +1834,7 @@ SSHHost                                                     Fingerprint
  #>
  function Get-SSHTrustedHosts
  {
-     [CmdletBinding(DefaultParameterSetName="Index")]
+     [CmdletBinding(DefaultParameterSetName='Index')]
      [OutputType([int])]
      Param
      ()
@@ -1844,7 +1844,7 @@ SSHHost                                                     Fingerprint
      }
      Process
      {
-        $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software\PoshSSH", $true)
+        $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
 
         $hostnames = $poshsshkey.GetValueNames()
         $TrustedHosts = @()
@@ -1876,7 +1876,7 @@ VERBOSE: SSH Host has been added.
  #>
  function New-SSHTrustedHost
  {
-     [CmdletBinding(DefaultParameterSetName="Index")]
+     [CmdletBinding(DefaultParameterSetName='Index')]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
@@ -1897,21 +1897,21 @@ VERBOSE: SSH Host has been added.
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software")
-        if ("PoshSSH" -in $softkey.GetSubKeyNames())
+        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software')
+        if ('PoshSSH' -in $softkey.GetSubKeyNames())
         {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software\PoshSSH", $true)
+            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
         else
         {
-            Write-Verbose "PoshSSH Registry key has not Present for this user."
-            $softkey.CreateSubKey("PoshSSH")
-            Write-Verbose "PoshSSH Key created."
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software\PoshSSH", $true)
+            Write-Verbose 'PoshSSH Registry key has not Present for this user.'
+            $softkey.CreateSubKey('PoshSSH')
+            Write-Verbose 'PoshSSH Key created.'
+            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
         Write-Verbose "Adding to trusted SSH Host list $($SSHHost) with a fingerprint of $($FingerPrint)"
         $poshsshkey.SetValue($SSHHost, $FingerPrint)
-        Write-Verbose "SSH Host has been added."
+        Write-Verbose 'SSH Host has been added.'
      }
      End
      {
@@ -1930,7 +1930,7 @@ VERBOSE: SSH Host has been removed.
  #>
  function Remove-SSHTrustedHost
  {
-     [CmdletBinding(DefaultParameterSetName="Index")]
+     [CmdletBinding(DefaultParameterSetName='Index')]
      Param
      (
          # Param1 help description
@@ -1945,21 +1945,21 @@ VERBOSE: SSH Host has been removed.
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software")
-        if ("PoshSSH" -in $softkey.GetSubKeyNames())
+        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software')
+        if ('PoshSSH' -in $softkey.GetSubKeyNames())
         {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software\PoshSSH", $true)
+            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
         else
         {
-            Write-warning "PoshSSH Registry key has not Present for this user."
+            Write-warning 'PoshSSH Registry key has not Present for this user.'
             return
         }
         Write-Verbose "Removing SSH Host $($SSHHost) from the list of trusted hosts."
         if ($SSHHost -in $poshsshkey.GetValueNames())
         {
             $poshsshkey.DeleteValue($SSHHost)
-            Write-Verbose "SSH Host has been removed."
+            Write-Verbose 'SSH Host has been removed.'
         }
         else
         {

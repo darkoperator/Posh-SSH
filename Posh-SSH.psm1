@@ -1084,12 +1084,16 @@ function Get-SFTPDirectoryList
         [Alias('Session')]
         [SSH.SFTPSession[]]$SFTPSession,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [string]$Path
 
      )
 
-     Begin{}
+     Begin
+     {
+       
+     }
+
      Process
      {
         if ($Index.Count -gt 0)
@@ -1101,6 +1105,10 @@ function Get-SFTPDirectoryList
                 {
                     if ($session.Index -eq $i)
                     {
+                        if ($Path -eq $null)
+                        {
+                            $Path = $session.Session.WorkingDirectory
+                        }
                         $session.Session.ListDirectory($Path)
                     }
                  }
@@ -1116,6 +1124,10 @@ function Get-SFTPDirectoryList
                 {
                     if ($ssh -eq $i)
                     {
+                        if ($Path -eq $null)
+                        {
+                            $Path = $ssh.Session.WorkingDirectory
+                        }
                         $ssh.Session.ListDirectory($Path)
                     }
                 }
@@ -1971,5 +1983,12 @@ VERBOSE: SSH Host has been removed.
      }
  }
 
-$global:SshSessions = New-Object System.Collections.ArrayList
-$global:SFTPSessions = New-Object System.Collections.ArrayList
+if (!(Test-Path variable:Global:SshSessions ))
+{
+    $global:SshSessions = New-Object System.Collections.ArrayList
+}
+
+if (!(Test-Path variable:Global:SFTPSessions ))
+{
+    $global:SFTPSessions = New-Object System.Collections.ArrayList
+}

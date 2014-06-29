@@ -1123,7 +1123,7 @@ namespace SSH
         private String keyfile = "";
 
         //Local File
-        [Parameter(Mandatory = false,
+        [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 2,
             ParameterSetName = "NoKey")]
@@ -1139,7 +1139,7 @@ namespace SSH
         private String localfile = "";
 
         //Remote File
-        [Parameter(Mandatory = false,
+        [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 3,
             ParameterSetName = "NoKey")]
@@ -1516,8 +1516,7 @@ namespace SSH
                                     this.Host.UI.WriteProgress(1, progressRecord);
                                 }
                             };
-
-                            var localfullPath = Path.GetFullPath(localfile);
+                            string localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(localfile);
                             if (File.Exists(localfullPath))
                             {
                                 WriteVerbose("Uploading " + localfullPath);
@@ -2063,7 +2062,7 @@ namespace SSH
                             };
 
                             WriteVerbose("Connection succesfull");
-                            var localfullPath = Path.GetFullPath(localfile);
+                            var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(localfile);
 
                             WriteVerbose("Downloading " + remotefile);
                             FileInfo fil = new FileInfo(@localfullPath);
@@ -2598,7 +2597,7 @@ namespace SSH
                                 }
                             };
 
-                            var localfullPath = Path.GetFullPath(localfolder);
+                            var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(localfolder);
                             WriteVerbose("Downloading " + remotefolder);
                             DirectoryInfo dirinfo = new DirectoryInfo(@localfullPath);
                             Client.Download(remotefolder, dirinfo);
@@ -3132,7 +3131,7 @@ namespace SSH
                                 this.Host.UI.WriteProgress(1, progressRecord);
                             };
 
-                            var localfullPath = Path.GetFullPath(localfolder);
+                            var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(localfolder);
                             if (Directory.Exists(localfullPath))
                             {
 

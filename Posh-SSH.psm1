@@ -1835,7 +1835,7 @@ InstalledVersion                                                                
  .DESCRIPTION
     List Host and Fingerprint pairs that Posh-SSH trusts.
  .EXAMPLE
-Get-SSHTrustedHosts
+Get-SSHTrustedHost
 
 SSHHost                                                     Fingerprint                                                                                                         
 -------                                                     -----------                                                                                                         
@@ -1844,7 +1844,7 @@ SSHHost                                                     Fingerprint
 192.168.1.225                                               ea:8c:ec:93:1e:9d:ad:2e:41:bc:d0:b3:d8:a9:98:80         
 
  #>
- function Get-SSHTrustedHosts
+ function Get-SSHTrustedHost
  {
      [CmdletBinding(DefaultParameterSetName='Index')]
      [OutputType([int])]

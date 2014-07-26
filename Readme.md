@@ -21,6 +21,11 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 #ChangeLog
 
+##Version 1.5
+* Supports PowerShell 2.0 by popular demand.
+* Refactored all C Sharp code to comply with naming guidelines and best practices.
+* Fixed several bugs the main one being the not allowing use of alternate SSH port.
+
 ##Version 1.4
 * Disabled PorForward commands because of bug in library.
 * Fix upload and download speed issues in SFTP and SCP.

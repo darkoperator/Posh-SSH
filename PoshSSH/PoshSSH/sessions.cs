@@ -65,14 +65,14 @@ namespace SSH
 
 
         //Proxy Server to use
+        private String _proxyserver = "";
+
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
-
-        private String _proxyserver = "";
         public String ProxyServer
         {
             get { return _proxyserver; }
@@ -81,14 +81,14 @@ namespace SSH
 
 
         // Proxy Port
+        private Int32 _proxyport = 8080;
+
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
-
-        private Int32 _proxyport = 8080;
         public Int32 ProxyPort
         {
             get { return _proxyport; }
@@ -112,6 +112,8 @@ namespace SSH
         private PSCredential _proxycredential;
 
         // Proxy Type
+        private string _proxytype = "HTTP";
+
         [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
@@ -124,9 +126,10 @@ namespace SSH
             get { return _proxytype; }
             set { _proxytype = value; }
         }
-        private string _proxytype = "HTTP";
-
+        
         //SSH Key File
+        private String _keyfile = "";
+
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
@@ -135,7 +138,6 @@ namespace SSH
             get { return _keyfile; }
             set { _keyfile = value; }
         }
-        private String _keyfile = "";
 
         // ConnectionTimeOut Parameter
         [Parameter(Mandatory = false,

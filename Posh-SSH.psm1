@@ -95,7 +95,7 @@ function Remove-SSHSession
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]]$Index,
 
@@ -938,7 +938,7 @@ function Remove-SFTPSession
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1078,7 +1078,7 @@ function Get-SFTPDirectoryList
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1158,7 +1158,7 @@ function New-SFTPDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1229,7 +1229,7 @@ function Test-SFTPPath
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1296,7 +1296,7 @@ function Remove-SFTPDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1370,7 +1370,7 @@ function Set-SFTPDirectoryPath
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1439,7 +1439,7 @@ function Get-SFTPCurrentDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1513,7 +1513,7 @@ function Get-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1615,7 +1615,7 @@ function Set-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1705,7 +1705,7 @@ function Remove-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 
@@ -1782,7 +1782,7 @@ function Move-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'byname',
+        ParameterSetName = 'Index',
         ValueFromPipelineByPropertyName=$true)]
         [Int32[]] $Index,
 

@@ -109,7 +109,7 @@ function Remove-SSHSession
         Begin{}
         Process
         {
-            if ($Index.Count -gt 0)
+            if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
                 $sessions2remove = @()
                  foreach($i in $Index)
@@ -137,7 +137,7 @@ function Remove-SSHSession
                 }
             }
 
-            if ($SSHSession.Count -gt 0)
+            if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
                 $sessions2remove = @()
                  foreach($i in $SSHSession)
@@ -241,7 +241,7 @@ function Invoke-SSHCommand
     Process
     {
         
-        if ($SSHSession)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             foreach($s in $SshSession)
             {
@@ -270,7 +270,7 @@ function Invoke-SSHCommand
                     }
             }
         }
-        elseif ($Index.Length -gt 0)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             foreach($s in $SshSessions)
             {
@@ -389,7 +389,7 @@ function Invoke-SSHCommand
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -406,7 +406,7 @@ function Invoke-SSHCommand
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -465,7 +465,7 @@ function Invoke-SSHCommand
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -482,7 +482,7 @@ function Invoke-SSHCommand
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -550,7 +550,7 @@ VERBOSE: Forwarding has been started.
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -569,7 +569,7 @@ VERBOSE: Forwarding has been started.
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -630,7 +630,7 @@ VERBOSE: Forwarding has been started.
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -642,7 +642,7 @@ VERBOSE: Forwarding has been started.
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -712,7 +712,7 @@ VERBOSE: Forwarding has been started.
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -732,7 +732,7 @@ VERBOSE: Forwarding has been started.
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -809,7 +809,7 @@ VERBOSE: Forwarding has been started.
     }
     Process
     {
-        if ($Index -ne $null)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             Write-Verbose "Finding session with Index $Index"
             foreach($session in $Global:SshSessions)
@@ -829,7 +829,7 @@ VERBOSE: Forwarding has been started.
                 }
             }
         }
-        elseif ($SSHSession)
+        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             if ($SSHSession -in $Global:SshSessions)
             {
@@ -951,7 +951,7 @@ function Remove-SFTPSession
         Begin{}
         Process
         {
-            if ($Index.Count -gt 0)
+            if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
                 $sessions2remove = @()
                  foreach($i in $Index)
@@ -979,7 +979,7 @@ function Remove-SFTPSession
                 }
             }
 
-            if ($SFTPSession.Count -gt 0)
+            if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
                 $sessions2remove = @()
                  foreach($i in $SFTPSession)
@@ -1099,7 +1099,7 @@ function Get-SFTPDirectoryList
 
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1118,7 +1118,7 @@ function Get-SFTPDirectoryList
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1175,7 +1175,7 @@ function New-SFTPDirectory
      Begin{}
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1190,7 +1190,7 @@ function New-SFTPDirectory
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1246,7 +1246,7 @@ function Test-SFTPPath
      Begin{}
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1261,7 +1261,7 @@ function Test-SFTPPath
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1313,7 +1313,7 @@ function Remove-SFTPDirectory
      Begin{}
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1328,7 +1328,7 @@ function Remove-SFTPDirectory
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1387,7 +1387,7 @@ function Set-SFTPDirectoryPath
      Begin{}
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1402,7 +1402,7 @@ function Set-SFTPDirectoryPath
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1452,7 +1452,7 @@ function Get-SFTPCurrentDirectory
      Begin{}
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1467,7 +1467,7 @@ function Get-SFTPCurrentDirectory
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1542,7 +1542,7 @@ function Get-SFTPFile
      }
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1566,7 +1566,7 @@ function Get-SFTPFile
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1640,7 +1640,7 @@ function Set-SFTPFile
      }
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1661,7 +1661,7 @@ function Set-SFTPFile
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1725,7 +1725,7 @@ function Remove-SFTPFile
      }
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1742,7 +1742,7 @@ function Remove-SFTPFile
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)
@@ -1804,7 +1804,7 @@ function Move-SFTPFile
      }
      Process
      {
-        if ($Index.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
             $sessions2remove = @()
             foreach($i in $Index)
@@ -1821,7 +1821,7 @@ function Move-SFTPFile
             }
         }
 
-        if ($SFTPSession.Count -gt 0)
+        if ($PSCmdlet.ParameterSetName -eq 'Session')
         {
             $sessions2remove = @()
             foreach($i in $SFTPSession)

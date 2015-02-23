@@ -883,7 +883,6 @@ VERBOSE: Forwarding has been started.
 
 function Get-SFTPSession 
 {
-    [CmdletBinding(DefaultParameterSetName='Index')]
     param( 
         [Parameter(Mandatory=$false)]
         [Int32[]] $Index
@@ -1858,7 +1857,6 @@ InstalledVersion                                                                
  #>
  function Get-PoshSSHModVersion
  {
-     [CmdletBinding(DefaultParameterSetName='Index')]
      [OutputType([pscustomobject])]
      Param
      ()
@@ -1920,7 +1918,6 @@ SSHHost                                                     Fingerprint
  #>
  function Get-SSHTrustedHost
  {
-     [CmdletBinding(DefaultParameterSetName='Index')]
      [OutputType([int])]
      Param
      ()
@@ -1962,7 +1959,6 @@ VERBOSE: SSH Host has been added.
  #>
  function New-SSHTrustedHost
  {
-     [CmdletBinding(DefaultParameterSetName='Index')]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
@@ -2016,7 +2012,6 @@ VERBOSE: SSH Host has been removed.
  #>
  function Remove-SSHTrustedHost
  {
-     [CmdletBinding(DefaultParameterSetName='Index')]
      Param
      (
          # Param1 help description

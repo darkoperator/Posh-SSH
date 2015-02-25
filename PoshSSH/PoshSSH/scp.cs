@@ -243,16 +243,33 @@ namespace SSH
                         var passconnectInfo = new PasswordAuthenticationMethod(_credential.GetNetworkCredential().UserName, _credential.GetNetworkCredential().Password);
 
                         WriteVerbose("Connecting to " + computer + " with user " + _credential.GetNetworkCredential().UserName);
-                        connectInfo = new ConnectionInfo(computer,
-                            _port,
-                            _credential.GetNetworkCredential().UserName,
-                            ptype,
-                            _proxyserver,
-                            _proxyport,
-                            _proxycredential.GetNetworkCredential().UserName,
-                            _proxycredential.GetNetworkCredential().Password,
-                            kIconnectInfo,
-                            passconnectInfo);
+                        if (_proxycredential == null)
+                        {
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                "",
+                                "",
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
+                        else
+                        {
+
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                _proxycredential.GetNetworkCredential().UserName,
+                                _proxycredential.GetNetworkCredential().Password,
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
 
                         #endregion
                     } // Proxy Server
@@ -412,7 +429,7 @@ namespace SSH
                                 WriteVerbose("Using key with passphrase.");
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), _credential.GetNetworkCredential().Password);
 
-                                if (_proxycredential.UserName == "")
+                                if (_proxycredential == null)
                                 {
                                     connectionInfo = new PrivateKeyConnectionInfo(computer,
                                         _port,
@@ -785,16 +802,33 @@ namespace SSH
                         var passconnectInfo = new PasswordAuthenticationMethod(_credential.GetNetworkCredential().UserName, _credential.GetNetworkCredential().Password);
 
                         WriteVerbose("Connecting to " + computer + " with user " + _credential.GetNetworkCredential().UserName);
-                        connectInfo = new ConnectionInfo(computer,
-                            _port,
-                            _credential.GetNetworkCredential().UserName,
-                            ptype,
-                            _proxyserver,
-                            _proxyport,
-                            _proxycredential.GetNetworkCredential().UserName,
-                            _proxycredential.GetNetworkCredential().Password,
-                            kIconnectInfo,
-                            passconnectInfo);
+                        if (_proxycredential == null)
+                        {
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                "",
+                                "",
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
+                        else
+                        {
+
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                _proxycredential.GetNetworkCredential().UserName,
+                                _proxycredential.GetNetworkCredential().Password,
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
 
                         #endregion
                     } // Proxy Server
@@ -956,7 +990,7 @@ namespace SSH
                                 WriteVerbose("Using key with passphrase.");
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), _credential.GetNetworkCredential().Password);
 
-                                if (_proxycredential.UserName == "")
+                                if (_proxycredential == null)
                                 {
                                     connectionInfo = new PrivateKeyConnectionInfo(computer,
                                         _port,
@@ -1329,16 +1363,33 @@ namespace SSH
                         var passconnectInfo = new PasswordAuthenticationMethod(_credential.GetNetworkCredential().UserName, _credential.GetNetworkCredential().Password);
 
                         WriteVerbose("Connecting to " + computer + " with user " + _credential.GetNetworkCredential().UserName);
-                        connectInfo = new ConnectionInfo(computer,
-                            _port,
-                            _credential.GetNetworkCredential().UserName,
-                            ptype,
-                            _proxyserver,
-                            _proxyport,
-                            _proxycredential.GetNetworkCredential().UserName,
-                            _proxycredential.GetNetworkCredential().Password,
-                            kIconnectInfo,
-                            passconnectInfo);
+                        if (_proxycredential == null)
+                        {
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                "",
+                                "",
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
+                        else
+                        {
+
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                _proxycredential.GetNetworkCredential().UserName,
+                                _proxycredential.GetNetworkCredential().Password,
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
 
                         #endregion
                     } // Proxy Server
@@ -1496,7 +1547,7 @@ namespace SSH
                                 WriteVerbose("Using key with passphrase.");
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), _credential.GetNetworkCredential().Password);
 
-                                if (_proxycredential.UserName == "")
+                                if (_proxycredential == null)
                                 {
                                     connectionInfo = new PrivateKeyConnectionInfo(computer,
                                         _port,
@@ -1864,16 +1915,32 @@ namespace SSH
                         var passconnectInfo = new PasswordAuthenticationMethod(_credential.GetNetworkCredential().UserName, _credential.GetNetworkCredential().Password);
 
                         WriteVerbose("Connecting to " + computer + " with user " + _credential.GetNetworkCredential().UserName);
-                        connectInfo = new ConnectionInfo(computer,
-                            _port,
-                            _credential.GetNetworkCredential().UserName,
-                            ptype,
-                            _proxyserver,
-                            _proxyport,
-                            _proxycredential.GetNetworkCredential().UserName,
-                            _proxycredential.GetNetworkCredential().Password,
-                            kIconnectInfo,
-                            passconnectInfo);
+                        if (_proxycredential == null)
+                        {
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                "",
+                                "",
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
+                        else
+                        {
+                            connectInfo = new ConnectionInfo(computer,
+                                _port,
+                                _credential.GetNetworkCredential().UserName,
+                                ptype,
+                                _proxyserver,
+                                _proxyport,
+                                _proxycredential.GetNetworkCredential().UserName,
+                                _proxycredential.GetNetworkCredential().Password,
+                                kIconnectInfo,
+                                passconnectInfo);
+                        }
 
                         #endregion
                     } // Proxy Server
@@ -2037,7 +2104,7 @@ namespace SSH
                                 WriteVerbose("Using key with passphrase.");
                                 var sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), _credential.GetNetworkCredential().Password);
 
-                                if (_proxycredential.UserName == "")
+                                if (_proxycredential == null)
                                 {
                                     connectionInfo = new PrivateKeyConnectionInfo(computer,
                                         _port,

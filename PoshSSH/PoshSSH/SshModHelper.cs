@@ -1,56 +1,10 @@
 ﻿using Renci.SshNet;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
-using Microsoft.Win32;
 
 namespace SSH
 {
-    // Class for managing the keys 
-    public class TrustedKeyMng
-    {
-        public Dictionary<string, string> GetKeys()
-        {
-            var hostkeys = new Dictionary<string, string>();
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
-            if (poshSoftKey != null)
-            {
-                string[] hosts = poshSoftKey.GetValueNames();
-                foreach (var host in hosts)
-                {
-                    var hostkey = poshSoftKey.GetValue(host).ToString();
-                    hostkeys.Add(host, hostkey);
-                }
-            }
-            else
-            {
-                using (var softKey = Registry.CurrentUser.OpenSubKey(@"Software", true))
-                {
-                    if (softKey != null) softKey.CreateSubKey("PoshSSH");
-                }
-            }
-            return hostkeys;
-        }
-
-        public bool SetKey(string host, string fingerprint)
-        {
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
-            if (poshSoftKey != null)
-            {
-                poshSoftKey.SetValue(host, fingerprint);
-                return true;
-            }
-            var softKey = Registry.CurrentUser.OpenSubKey(@"Software", true);
-            if (softKey != null)
-            {
-                softKey.CreateSubKey("PoshSSH");
-                softKey.SetValue(host, fingerprint);
-            }
-            return true;
-        }
-    }
-
     // Class for creating PS Custom Objects
     public class SshModHelper
     {
@@ -70,7 +24,7 @@ namespace SSH
             //Set initial variables
             var obj = new SshSession();
             var sshSessions = new List<SshSession>();
-            Int32 index = 0;
+            var index = 0;
 
             // Retrive existing sessions from the globla variable.
             var sessionvar = pssession.PSVariable.GetValue("Global:SshSessions") as List<SshSession>;
@@ -99,7 +53,7 @@ namespace SSH
             //Set initial variables
             var obj = new SftpSession();
             var sftpSessions = new List<SftpSession>();
-            Int32 index = 0;
+            var index = 0;
 
             // Retrive existing sessions from the globla variable.
             var sessionvar = pssession.PSVariable.GetValue("Global:SFTPSessions") as List<SftpSession>;

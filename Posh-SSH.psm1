@@ -32,8 +32,10 @@ function Get-SSHSession
 {
     [CmdletBinding()]
     param( 
-        [Parameter(Mandatory=$false)]
-        [Int32]$Index
+        [Parameter(Mandatory=$false,
+                   Position=0)]
+        [Int32]
+        $Index
     )
 
     Begin{}
@@ -95,15 +97,19 @@ function Remove-SSHSession
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]]$Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]]
+        $Index,
 
         [Parameter(Mandatory=$false,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Name')]
-        [SSH.SSHSession[]]$SSHSession
+        [SSH.SSHSession[]]
+        $SSHSession
         )
 
         Begin{}
@@ -114,7 +120,6 @@ function Remove-SSHSession
                 $sessions2remove = @()
                  foreach($i in $Index)
                 {
-                    Write-Verbose $i
                     foreach($session in $Global:SshSessions)
                     {
                         if ($session.Index -eq $i)
@@ -218,92 +223,110 @@ function Invoke-SSHCommand
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,
+                   Position=1)]
         [string]$Command,
         
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Name')]
-        [SSH.SSHSession[]]$SSHSession,
+        [SSH.SSHSession[]]
+        $SSHSession,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index')]
-        [int32[]]$Index = $null,
+                   ParameterSetName = 'Index',
+                   Position=0)]
+        [int32[]]
+        $Index = $null,
 
         # Ensures a connection is made by reconnecting before command.
         [Parameter(Mandatory=$false)]
-        [switch]$EnsureConnection
+        [switch]
+        $EnsureConnection,
+
+        [Parameter(Mandatory=$false,
+                   Position=2)]
+        [int]
+        $TimeOut = 60
 
     )
 
-    Begin{}
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SshSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
     Process
     {
-        
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
+        foreach($Connection in $ToProcess)
         {
-            foreach($s in $SshSession)
-            {
-                if ($s.session.isconnected)
+            if ($Connection.session.isconnected)
                 {
                     if ($EnsureConnection)
                     {
-                        $s.session.connect()
+                        $Connection.session.connect()
                     }
-                    $result = $S.session.RunCommand($Command)
+                    $cmd = $Connection.session.CreateCommand($Command)
                 }
                 else
                 {
                     $s.session.connect()
-                    $result = $s.session.RunCommand($Command)
+                    $cmd = $Connection.session.CreateCommand($Command)
                 }
-                if ($result)
-                    {
-                        $ResultObj = New-Object psobject -Property @{Output = $result.Result
-                                                                     ExitStatus = $result.ExitStatus 
-                                                                     Host = $s.Host
-                                                                     Error=$result.Error}
 
-                        $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
-                        $ResultObj
-                    }
-            }
-        }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Index')
-        {
-            foreach($s in $SshSessions)
-            {
-                if($Index -contains $s.Index)
+                $cmd.CommandTimeout = New-TimeSpan -Seconds $TimeOut
+
+                # start asynchronious execution of the command.
+                $Async = $cmd.BeginExecute()
+                while($Async.IsCompleted)
                 {
-                    Write-Verbose "Running command against $($s.Index)"
-                    if ($s.session.isconnected)
+                    Write-Verbose -Message 'Waiting for command to finish execution'
+                    try
                     {
-                        if ($EnsureConnection)
-                        {
-                            $s.session.connect()
-                        }
-                        $result = $S.session.RunCommand($Command)
+                        Start-Sleep -Seconds 2
                     }
-                    else
+                    finally
                     {
-                        $s.session.connect()
-                        $result = $s.session.RunCommand($Command)
-                    }
-                    if ($result)
-                    {
-                        $ResultObj = New-Object psobject -Property @{Output = $result.Result; ExitStatus = $result.ExitStatus; Host = $s.Host}
-                        $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
-                        $ResultObj
+                        $Output = $cmd.EndExecute($Async)
                     }
                 }
-            }
+
+                $Output = $cmd.EndExecute($Async)
+                $ResultProps = @{}
+                $ResultProps['Output'] = $Output
+                $ResultProps['ExitStatus'] = $cmd.ExitStatus
+                $ResultProps['Error'] = $cmd.Error
+                $ResultProps['Host'] = $Connection.Host
+
+                $ResultObj = New-Object psobject -Property $ResultProps
+                $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
+                $ResultObj
+
+
         }
 
     }
     End{}
 }
-
 ##############################################################################################
 # SSH Port Forwarding
 
@@ -884,8 +907,10 @@ VERBOSE: Forwarding has been started.
 function Get-SFTPSession 
 {
     param( 
-        [Parameter(Mandatory=$false)]
-        [Int32[]] $Index
+        [Parameter(Mandatory=$false,
+                   Position=0)]
+        [Int32[]] 
+        $Index
     )
 
     Begin{}
@@ -937,16 +962,20 @@ function Remove-SFTPSession
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$false,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession
-        )
+        [SSH.SFTPSession[]]
+        $SFTPSession
+    )
 
         Begin{}
         Process
@@ -1077,65 +1106,60 @@ function Get-SFTPDirectoryList
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]]
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$false)]
-        [string]$Path
+        [Parameter(Mandatory=$false,
+                   Position=1)]
+        [string]
+        $Path
 
      )
 
      Begin
      {
-       
+       $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
      }
 
      Process
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
-        {
-            $sessions2remove = @()
-            foreach($i in $Index)
+        foreach($Sess in $ToProcess)
+        {   
+            if ($Path -eq $null)
             {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        if ($Path -eq $null)
-                        {
-                            $Path = $session.Session.WorkingDirectory
-                        }
-                        $session.Session.ListDirectory($Path)
-                    }
-                 }
+                $Path = $Sess.Session.WorkingDirectory
             }
+            $Sess.Session.ListDirectory($Path)
         }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $Global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        if ($Path -eq $null)
-                        {
-                            $Path = $ssh.Session.WorkingDirectory
-                        }
-                        $ssh.Session.ListDirectory($Path)
-                    }
-                }
-             }       
-         }
      }
      End{}
 }
@@ -1157,53 +1181,56 @@ function New-SFTPDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$true)]
-        [string]$Path
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path
 
      )
 
-     Begin{}
-     Process
+     Begin
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($session.Index -eq $i)
+                    if ($Index -contains $session.Index)
                     {
-                        $session.Session.CreateDirectory($Path)
-                    }
-                 }
-            }
-        }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $Global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        $ssh.Session.CreateDirectory($Path)
+                        $ToProcess += $session
                     }
                 }
-             }       
-         }
+            }
+        }
+     }
+     Process
+     {
+
+        foreach($sess in $ToProcess)
+        { 
+            $sess.Session.CreateDirectory($Path)    
+        }
      }
      End{}
 }
@@ -1228,53 +1255,56 @@ function Test-SFTPPath
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$true)]
-        [string]$Path
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path
 
      )
 
-     Begin{}
-     Process
+     Begin
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($session.Index -eq $i)
+                    if ($Index -contains $session.Index)
                     {
-                        $session.Session.Exists($Path)
-                    }
-                 }
-            }
-        }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $Global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        $ssh.Session.Exists($Path)
+                        $ToProcess += $session
                     }
                 }
-             }       
-         }
+            }
+        }
+     }
+     Process
+     {
+        foreach($session in $ToProcess)
+        {
+                    
+            $session.Session.Exists($Path)
+        }
      }
      End{}
 }
@@ -1295,53 +1325,56 @@ function Remove-SFTPDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$true)]
-        [string]$Path
+        [Parameter(Mandatory=$true,
+                   Position=0)]
+        [string]
+        $Path
 
      )
 
-     Begin{}
-     Process
+     Begin
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
+            'Session'
             {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        $session.Session.DeleteDirectory($Path)
-                    }
-                 }
+                $ToProcess = $SFTPSession
             }
-        }
 
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
+            'Index'
             {
-                foreach($ssh in $global:SFTPSessions)
+                foreach($session in $Global:SFTPSessions)
                 {
-                    if ($ssh -eq $i)
+                    if ($Index -contains $session.Index)
                     {
-                        $ssh.Session.DeleteDirectory($Path)
+                        $ToProcess += $session
                     }
                 }
-             }       
-         }
+            }
+        }
+     }
+     Process
+     {
+        
+        foreach($session in $ToProcess)
+        {
+            $session.Session.DeleteDirectory($Path)
+        }
      }
      End{}
 }
@@ -1369,53 +1402,57 @@ function Set-SFTPDirectoryPath
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$true)]
-        [string]$Path
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path
 
      )
 
-     Begin{}
-     Process
+     Begin
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
+            'Session'
             {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        $session.Session.ChangeDirectory($Path)
-                    }
-                 }
+                $ToProcess = $SFTPSession
             }
-        }
 
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
+            'Index'
             {
-                foreach($ssh in $global:SFTPSessions)
+                foreach($session in $Global:SFTPSessions)
                 {
-                    if ($ssh -eq $i)
+                    if ($Index -contains $session.Index)
                     {
-                        $ssh.Session.ChangeDirectory($Path)
+                        $ToProcess += $session
                     }
                 }
-             }       
-         }
+            }
+        }
+     }
+     Process
+     {
+ 
+        foreach($session in $ToProcess)
+        {
+            Write-Verbose -Message "Creating on $($session.Host) directory $($Path)"
+            $session.Session.ChangeDirectory($Path)
+        }
      }
      End{}
 }
@@ -1438,49 +1475,51 @@ function Get-SFTPCurrentDirectory
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession
+        [SSH.SFTPSession[]]
+        $SFTPSession
      )
 
-     Begin{}
-     Process
+     Begin
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
+            'Session'
             {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        $session.Session.WorkingDirectory
-                    }
-                 }
+                $ToProcess = $SFTPSession
             }
-        }
 
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
+            'Index'
             {
-                foreach($ssh in $global:SFTPSessions)
+                foreach($session in $Global:SFTPSessions)
                 {
-                    if ($ssh -eq $i)
+                    if ($Index -contains $session.Index)
                     {
-                        $ssh.Session.WorkingDirectory
+                        $ToProcess += $session
                     }
                 }
-             }       
-         }
+            }
+        }
+     }
+     Process
+     {
+        
+        foreach($session in $ToProcess)
+        {
+            $session.Session.WorkingDirectory
+        }
+      
      }
     End{}
 }
@@ -1512,83 +1551,79 @@ function Get-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
         # Full path of file on remote system.
-        [Parameter(Mandatory=$true)]
-        [string]$RemoteFile,
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $RemoteFile,
 
         # Directory Path to save the file.
-        [Parameter(Mandatory=$true)]
-        [ValidateScript({Test-Path $_})]
-        [string]$LocalPath,
+        [Parameter(Mandatory=$true,
+                   Position=2)]
+        [ValidateScript({Test-Path -path $_ -PathType Container})]
+        [string]
+        $LocalPath,
 
         # Append to start of filename
-        [Parameter(Mandatory=$false)]
-        [string]$FileNameAppend
+        [Parameter(Mandatory=$false,
+                   Position=3)]
+        [string]
+        $FileNameAppend
      )
 
      Begin
      {
-        
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
      }
      Process
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
-        {
-            $sessions2remove = @()
-            foreach($i in $Index)
-            {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        $FileName = Split-Path $RemoteFile -Leaf
-                        $LocalFile = "$((Resolve-Path $LocalPath).Path)\$filename"
-                        if ($FileNameAppend)
-                        {
-                            $FileName = "$($FileNameAppend.Trim())$FileName"
-                        }
-                        $LocalFileStream = [System.IO.File]::Create($LocalFile)
-                        $session.Session.DownloadFile($RemoteFile, $LocalFileStream)
-                        $LocalFileStream.Flush()
-                        $LocalFileStream.Close()
-                    }
-                 }
-            }
-        }
 
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
+        foreach($session in $ToProcess)
         {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
+            $FileName = Split-Path $RemoteFile -Leaf
+            $LocalFile = "$((Resolve-Path $LocalPath).Path)\$filename"
+            Write-Verbose -Message "Downloading file $($FileName)"
+            if ($FileNameAppend)
             {
-                foreach($ssh in $global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        $FileName = Split-Path $RemoteFile -Leaf
-                        $LocalFile = "$((Resolve-Path $LocalPath).Path)\$filename"
-                        if ($FileNameAppend)
-                        {
-                            $FileName = "$($FileNameAppend.Trim())$FileName"
-                        }
-                        $LocalFileStream = [System.IO.File]::Create($LocalFile)
-                        $ssh.Session.DownloadFile($RemoteFile, $LocalFileStream)
-                        $LocalFileStream.Flush()
-                        $LocalFileStream.Close()
-                    }
-                }
-             }       
-         }
+                $FileName = "$($FileNameAppend.Trim())$FileName"
+            }
+            $LocalFileStream = [System.IO.File]::Create($LocalFile)
+            $session.Session.DownloadFile($RemoteFile, $LocalFileStream)
+            $LocalFileStream.Flush()
+            $LocalFileStream.Close()   
+        }
      }
     End{}
 }
@@ -1614,73 +1649,68 @@ function Set-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
         # Full path of where to upload file on remote system.
-        [Parameter(Mandatory=$true)]
-        [string]$RemotePath,
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $RemotePath,
 
         # Local File to upload to remote host.
-        [Parameter(Mandatory=$true)]
-        [ValidateScript({Test-Path $_})]
-        [string]$LocalFile
+        [Parameter(Mandatory=$true,
+                   Position=2)]
+        [ValidateScript({Test-Path -path $_ -PathType Leaf})]
+        [string]
+        $LocalFile
      )
 
      Begin
      {
-        
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
      }
      Process
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
-        {
-            $sessions2remove = @()
-            foreach($i in $Index)
-            {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        $LocalFileName = Split-Path $LocalFile -Leaf
-                        $RemoteFile = "$RemotePath/$LocalFileName"
-                        Write-Verbose "Uploading $LocalFile as $RemoteFile"
-                        $LocalFileStream = [System.IO.File]::OpenRead((resolve-path $LocalFile).path)
-                        $session.Session.UploadFile($LocalFileStream, $RemoteFile)
-                        $LocalFileStream.Close()
-                        Write-Verbose "Successfully Uploaded file to $RemoteFile"
-                    }
-                 }
-            }
+        foreach($session in $ToProcess)
+        {           
+            $LocalFileName = Split-Path $LocalFile -Leaf
+            $RemoteFile = "$RemotePath/$LocalFileName"
+            Write-Verbose "Uploading $LocalFile as $RemoteFile"
+            $LocalFileStream = [System.IO.File]::OpenRead((resolve-path $LocalFile).path)
+            $session.Session.UploadFile($LocalFileStream, $RemoteFile)
+            $LocalFileStream.Close()
+            Write-Verbose "Successfully Uploaded file to $RemoteFile"            
         }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        $LocalFileName = Split-Path $LocalFile -Leaf
-                        $RemoteFile = "$RemotePath/$LocalFileName"
-                        Write-Verbose "Uploading $LocalFile as $RemoteFile"
-                        $LocalFileStream = [System.IO.File]::OpenRead($LocalFile)
-                        $ssh.Session.UploadFile( $LocalFileStream, $RemoteFile)
-                        $LocalFileStream.Close()
-                        Write-Verbose "Successfully Uploaded file to $RemoteFile"
-                    }
-                }
-             }       
-         }
      }
     End{}
 }
@@ -1704,60 +1734,58 @@ function Remove-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
         # Full path of where to upload file on remote system.
-        [Parameter(Mandatory=$true)]
-        [string]$RemoteFile
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $RemoteFile
      )
 
      Begin
      {
-        
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
      }
      Process
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        
+        foreach($session in $ToProcess)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
-            {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        Write-Verbose "Deleting $RemoteFile"
-                        $session.Session.DeleteFile($RemoteFile)
-                        Write-Verbose "Deleted $RemoteFile"
-                    }
-                 }
-            }
+            Write-Verbose "Deleting $RemoteFile"
+            $session.Session.DeleteFile($RemoteFile)
+            Write-Verbose "Deleted $RemoteFile"
         }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        Write-Verbose "Deleting $RemoteFile"
-                        $ssh.Session.DeleteFile($RemoteFile)
-                        Write-Verbose "Deleted $RemoteFile"
-                    }
-                }
-             }       
-         }
      }
     End{}
 }
@@ -1781,62 +1809,62 @@ function Move-SFTPFile
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Index',
-        ValueFromPipelineByPropertyName=$true)]
-        [Int32[]] $Index,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Int32[]] 
+        $Index,
 
         [Parameter(Mandatory=$true,
-        ParameterSetName = 'Session',
-        ValueFromPipeline=$true)]
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
         [Alias('Session')]
-        [SSH.SFTPSession[]]$SFTPSession,
+        [SSH.SFTPSession[]]
+        $SFTPSession,
 
-        [Parameter(Mandatory=$true)]
-        [string]$OriginalPath,
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $OriginalPath,
 
-        [Parameter(Mandatory=$true)]
-        [string]$NewPath
+        [Parameter(Mandatory=$true,
+                   Position=2)]
+        [string]
+        $NewPath
      )
 
      Begin
      {
-        
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($Index -contains $session.Index)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
      }
      Process
      {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        
+        foreach($session in $ToProcess)
         {
-            $sessions2remove = @()
-            foreach($i in $Index)
-            {
-                foreach($session in $global:SFTPSessions)
-                {
-                    if ($session.Index -eq $i)
-                    {
-                        Write-Verbose "Renaming $OriginalPath to $NewPath"
-                        $session.Session.RenameFile($OriginalPath, $NewPath)
-                        Write-Verbose 'File renamed'
-                    }
-                 }
-            }
+            Write-Verbose "Renaming $OriginalPath to $NewPath"
+            $session.Session.RenameFile($OriginalPath, $NewPath)
+            Write-Verbose 'File renamed'
         }
-
-        if ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            $sessions2remove = @()
-            foreach($i in $SFTPSession)
-            {
-                foreach($ssh in $global:SFTPSessions)
-                {
-                    if ($ssh -eq $i)
-                    {
-                        Write-Verbose "Renaming $OriginalPath to $NewPath"
-                        $ssh.Session.RenameFile($OriginalPath, $NewPath)
-                        Write-Verbose 'File renamed'
-                    }
-                }
-             }       
-         }
      }
     End{}
 }
@@ -1857,48 +1885,44 @@ InstalledVersion                                                                
  #>
  function Get-PoshSSHModVersion
  {
-     [OutputType([pscustomobject])]
-     Param
-     ()
- 
-     Begin
-     {
-        $currentversion = ''
-        $installed = Get-Module -Name 'posh-SSH' -ListAvailable
-     }
-     Process
-     {
-        $webClient = New-Object System.Net.WebClient
-        Try
-        {
-            $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Posh-SSH.psd1')
-            $currentversion = $current.moduleversion
-        }
-        Catch
-        {
-            Write-Warning 'Could not retrieve the current version.'
-        }
-        $majorver,$minorver = $currentversion.split('.')
-
-        if ($majorver -gt $installed.Version.Major)
-        {
-            Write-Warning 'You are running an outdated version of the module.'
-        }
-        elseif ($minorver -gt $installed.Version.Minor)
-        {
-            Write-Warning 'You are running an outdated version of the module.'
-        } 
+    [CmdletBinding()]
+    [OutputType([pscustomobject])]
+    Param()
+    
+    Begin
+    {
+       $currentversion = ''
+       $installed = Get-Module -Name 'posh-SSH' -ListAvailable
+    }
+    Process
+    {
+       $webClient = New-Object System.Net.WebClient
+       Try
+       {
+           $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Posh-SSH.psd1')
+           $currentversion = $current.moduleversion
+       }
+       Catch
+       {
+           Write-Warning 'Could not retrieve the current version.'
+       }
+       $majorver,$minorver = $currentversion.split('.')
+       if ($majorver -gt $installed.Version.Major)
+       {
+           Write-Warning 'You are running an outdated version of the module.'
+       }
+       elseif ($minorver -gt $installed.Version.Minor)
+       {
+           Write-Warning 'You are running an outdated version of the module.'
+       } 
         
-        $props = @{
-            InstalledVersion = $installed.Version.ToString()
-            CurrentVersion   = $currentversion
-        }
-        New-Object -TypeName psobject -Property $props
+       $props = @{
+           InstalledVersion = $installed.Version.ToString()
+           CurrentVersion   = $currentversion
+       }
+       New-Object -TypeName psobject -Property $props
      }
-     End
-     {
-          
-     }
+     End{}
  }
 
  <#
@@ -1918,13 +1942,11 @@ SSHHost                                                     Fingerprint
  #>
  function Get-SSHTrustedHost
  {
+     [CmdletBinding()]
      [OutputType([int])]
-     Param
-     ()
+     Param()
  
-     Begin
-     {
-     }
+     Begin{}
      Process
      {
         $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
@@ -1959,6 +1981,7 @@ VERBOSE: SSH Host has been added.
  #>
  function New-SSHTrustedHost
  {
+    [CmdletBinding()]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
@@ -2012,6 +2035,7 @@ VERBOSE: SSH Host has been removed.
  #>
  function Remove-SSHTrustedHost
  {
+    [CmdletBinding()]
      Param
      (
          # Param1 help description

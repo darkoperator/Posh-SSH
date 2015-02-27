@@ -47,15 +47,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="helper.cs" />
+    <Compile Include="ConnectionInfoGenerator.cs" />
+    <Compile Include="GetScpFile.cs" />
+    <Compile Include="GetScpFolder.cs" />
+    <Compile Include="SshModHelper.cs" />
+    <Compile Include="NewSftpSession.cs" />
+    <Compile Include="NewSSHSession.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="scp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sessions.cs" />
+    <Compile Include="SessionObject.cs" />
+    <Compile Include="SetScpFile.cs" />
+    <Compile Include="SetScpFolder.cs" />
+    <Compile Include="TrustedKeyMng.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

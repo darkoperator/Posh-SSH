@@ -1092,7 +1092,7 @@ function Rename-SFTPFile
     OthersCanExecute  : True
     Extensions        : 
 #>
-function Get-SFTPPathAttributes
+function Get-SFTPPathAttribute
 {
     [CmdletBinding()]
     [OutputType([Renci.SshNet.Sftp.SftpFileAttributes])]

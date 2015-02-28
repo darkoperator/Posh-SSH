@@ -325,7 +325,7 @@ namespace SSH
 
                 // Connect to  host using Connection info
                 client.Connect();
-                client.BufferSize = 1024;
+                //client.BufferSize = 1024;
 
                 // Print progess of download.
                 client.Uploading += delegate(object sender, ScpUploadEventArgs e)
@@ -340,9 +340,13 @@ namespace SSH
                 };
 
                 WriteVerbose("Connection succesfull");
-                var localfullPath = Path.GetFullPath(_localfile);
+                
+                // Resolve the path even if a relative one is given.
+                ProviderInfo provider;
+                var pathinfo =  this.GetResolvedProviderPathFromPSPath(_localfile, out provider);
+                var localfullPath = pathinfo[0];
 
-                if (File.Exists(localfullPath))
+                if (File.Exists(@localfullPath))
                 {
                     WriteVerbose("Uploading " + localfullPath);
                     var fil = new FileInfo(@localfullPath);

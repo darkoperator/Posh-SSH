@@ -324,7 +324,7 @@ namespace SSH
                 // Print progess of upload.
                 client.Uploading += delegate(object sender, ScpUploadEventArgs e)
                 {
-                    var progressRecord = new ProgressRecord(1, "Uploading " + Path.GetDirectoryName(_remotefolder), String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size))
+                    var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size))
                     {
                         PercentComplete = Convert.ToInt32((e.Uploaded*100)/e.Size)
                     };
@@ -332,7 +332,12 @@ namespace SSH
                     Host.UI.WriteProgress(1, progressRecord);
                 };
 
-                var localfullPath = Path.GetFullPath(_localfolder);
+                // Resolve the path even if a relative one is given.
+                ProviderInfo provider;
+                var pathinfo = this.GetResolvedProviderPathFromPSPath(_localfolder, out provider);
+                var localfullPath = pathinfo[0];
+
+                //var localfullPath = Path.GetFullPath(_localfolder);
                 if (Directory.Exists(localfullPath))
                 {
 

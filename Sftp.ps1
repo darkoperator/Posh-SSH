@@ -283,7 +283,7 @@ function Get-SFTPDirectoryList
             }
             else
             {
-                $Attribs = Get-SFTPPathAttributes -SFTPSession $Sess -Path $Path
+                $Attribs = Get-SFTPPathAttribute -SFTPSession $Sess -Path $Path
                 if ($Attribs.IsDirectory)
                 {
                     $Sess.Session.ListDirectory($Path)
@@ -509,7 +509,7 @@ function Remove-SFTPDirectory
         
         foreach($session in $ToProcess)
         {
-            $Attribs = Get-SFTPPathAttributes -SFTPSession $session -Path $Path
+            $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
             if ($Attribs.IsDirectory)
             {
                 Write-Verbose -Message "Deleting directory $($Path)."
@@ -597,7 +597,7 @@ function Set-SFTPDirectoryPath
  
         foreach($session in $ToProcess)
         {
-            $Attribs = Get-SFTPPathAttributes -SFTPSession $session -Path $Path
+            $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
             if ($Attribs.IsDirectory)
             {
                 Write-Verbose -Message "Changing current directory to $($Path)"
@@ -768,7 +768,7 @@ function Get-SFTPFile
 
         foreach($session in $ToProcess)
         {
-            $Attrib = Get-SFTPPathAttributes -SFTPSession $session -Path $RemoteFile
+            $Attrib = Get-SFTPPathAttGetribute -SFTPSession $session -Path $RemoteFile
             if ($Attrib.IsRegularFile)
             {
                 $FileName = Split-Path $RemoteFile -Leaf
@@ -867,20 +867,21 @@ function Set-SFTPFile
      {
         foreach($session in $ToProcess)
         {   
-            $Attrib = Get-SFTPPathAttributes -SFTPSession $session -Path $RemotePath
+            $ContainerPath = Split-Path -Path $RemotePath |ForEach-Object {$_ -replace '\\','/'}
+            $Attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $ContainerPath
             if ($Attrib.IsDirectory)
             {    
                 $LocalFileName = Split-Path -path $LocalFile -Leaf
                 $RemoteFile = "$RemotePath/$LocalFileName"
-                Write-Verbose -message "Uploading $LocalFile as $RemoteFile"
+                Write-Verbose -message "Uploading $LocalFile as $RemotePath"
                 $LocalFileStream = [System.IO.File]::OpenRead((resolve-path -path $LocalFile).path)
-                $session.Session.UploadFile($LocalFileStream, $RemoteFile)
+                $session.Session.UploadFile($LocalFileStream, $RemotePath)
                 $LocalFileStream.Close()
-                Write-Verbose -message "Successfully Uploaded file to $RemoteFile"
+                Write-Verbose -message "Successfully Uploaded file to $RemotePath"
             }
             else
             {
-                throw "The specified remote path of $($RemotePath) does not exist."
+                throw "The specified remote path of $($ContainerPath) does not exist."
             }            
         }
      }
@@ -954,7 +955,7 @@ function Remove-SFTPFile
         
         foreach($session in $ToProcess)
         {
-            $Attrib = Get-SFTPPathAttributes -SFTPSession $session -Path $RemoteFile
+            $Attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $RemoteFile
             if ($Attrib.IsRegularFile)
             {
                 Write-Verbose  -message "Deleting $RemoteFile"
@@ -1043,7 +1044,7 @@ function Rename-SFTPFile
         
         foreach($session in $ToProcess)
         {
-            $attrib = Get-SFTPPathAttributes -SFTPSession $session -Path $Path
+            $attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
             if ($attrib.IsRegularFile)
             {
                 $ContainerPath = Split-Path -Path $Path |ForEach-Object {$_ -replace '\\','/'}
@@ -1066,7 +1067,7 @@ function Rename-SFTPFile
 .DESCRIPTION
    Get the attributes for a specified path in a SFTP session.
 .EXAMPLE
-   Get-SFTPPathAttributes -Index 0 -Path "/tmp"
+   Get-SFTPPathAttribute -Index 0 -Path "/tmp"
 
 
     LastAccessTime    : 2/27/2015 6:38:43 PM

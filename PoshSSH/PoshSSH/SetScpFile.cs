@@ -343,7 +343,7 @@ namespace SSH
                 
                 // Resolve the path even if a relative one is given.
                 ProviderInfo provider;
-                var pathinfo =  this.GetResolvedProviderPathFromPSPath(_localfile, out provider);
+                var pathinfo = this.GetResolvedProviderPathFromPSPath(_localfile, out provider);
                 var localfullPath = pathinfo[0];
 
                 if (File.Exists(@localfullPath))

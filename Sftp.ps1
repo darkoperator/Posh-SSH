@@ -870,14 +870,27 @@ function Set-SFTPFile
             $ContainerPath = Split-Path -Path $RemotePath |ForEach-Object {$_ -replace '\\','/'}
             $Attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $ContainerPath
             if ($Attrib.IsDirectory)
-            {    
+            {
                 $LocalFileName = Split-Path -path $LocalFile -Leaf
                 $RemoteFile = "$RemotePath/$LocalFileName"
                 Write-Verbose -message "Uploading $LocalFile as $RemotePath"
-                $LocalFileStream = [System.IO.File]::OpenRead((resolve-path -path $LocalFile).path)
-                $session.Session.UploadFile($LocalFileStream, $RemotePath)
-                $LocalFileStream.Close()
-                Write-Verbose -message "Successfully Uploaded file to $RemotePath"
+                try
+                {
+                    $LocalFileStream = [System.IO.File]::OpenRead((resolve-path -path $LocalFile).path)
+                    $session.Session.UploadFile($LocalFileStream, $RemotePath)
+                    $LocalFileStream.Close()
+                    Write-Verbose -message "Successfully Uploaded file to $RemotePath"
+                }
+                catch [Renci.SshNet.Common.SftpPermissionDeniedException]
+                {
+                    # Close stream so as to not leave file open.
+                    $LocalFileStream.Close()
+                    $_
+                }
+                catch
+                {
+                    $_
+                }
             }
             else
             {

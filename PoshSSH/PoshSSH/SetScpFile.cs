@@ -152,7 +152,7 @@ namespace SSH
 
 
         //Remote File
-        private String _remotefile = "";
+        private String __remotepath = "";
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 3,
@@ -161,10 +161,10 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             Position = 3,
             ParameterSetName = "Key")]
-        public String RemoteFile
+        public String RemotePath
         {
-            get { return _remotefile; }
-            set { _remotefile = value; }
+            get { return __remotepath; }
+            set { __remotepath = value; }
         }
 
 
@@ -283,12 +283,20 @@ namespace SSH
                     {
                         if (_sshHostKeys[computer1] == fingerPrint)
                         {
-                            //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                            {
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer1);
+                            }
                             e.CanTrust = true;
                         }
                         else
                         {
-                            throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            var ex = new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            ThrowTerminatingError(new ErrorRecord(
+                                ex,
+                                "SSH fingerprint mistmatch for host " + computer1,
+                                ErrorCategory.SecurityError,
+                                computer1));
                         }
                     }
                     else
@@ -327,15 +335,24 @@ namespace SSH
                 client.Connect();
                 //client.BufferSize = 1024;
 
+                var counter = 0;
                 // Print progess of download.
                 client.Uploading += delegate(object sender, ScpUploadEventArgs e)
                 {
-                    var progressRecord = new ProgressRecord(1, "Uploading " + e.Filename, String.Format("{0} Bytes Uploaded of {1}", e.Uploaded, e.Size));
                     if (e.Size != 0)
                     {
-                        progressRecord.PercentComplete = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+                        counter ++;
+                        var percent = Convert.ToInt32((e.Uploaded*100)/e.Size);
+                        if (counter > 900)
+                        {
+                            var progressRecord = new ProgressRecord(1, 
+                                "Uploading " + e.Filename, 
+                                String.Format("{0} Bytes Uploaded of {1}", 
+                                e.Uploaded, e.Size)) {PercentComplete = percent};
 
-                        Host.UI.WriteProgress(1, progressRecord);
+                            Host.UI.WriteProgress(1, progressRecord);
+                            counter = 0;
+                        }
                     }
                 };
 
@@ -343,20 +360,27 @@ namespace SSH
                 
                 // Resolve the path even if a relative one is given.
                 ProviderInfo provider;
-                var pathinfo = this.GetResolvedProviderPathFromPSPath(_localfile, out provider);
+                var pathinfo = GetResolvedProviderPathFromPSPath(_localfile, out provider);
                 var localfullPath = pathinfo[0];
 
                 if (File.Exists(@localfullPath))
                 {
                     WriteVerbose("Uploading " + localfullPath);
                     var fil = new FileInfo(@localfullPath);
-                    client.Upload(fil, _remotefile);
+                    var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
+                    client.Upload(fil, remoteFullpath);
 
                     client.Disconnect();
                 }
                 else
                 {
-                    throw new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+                    var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+
+                    ThrowTerminatingError(new ErrorRecord(
+                                                    ex,
+                                                    "File to upload " + localfullPath + " was not found.",
+                                                    ErrorCategory.InvalidArgument,
+                                                    localfullPath));
                 }
             }
 

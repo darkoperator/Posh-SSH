@@ -20,6 +20,15 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7
+* Several fixes when connecting though a proxy.
+* SCP Speed is now almost 3 times faster.
+* SFTP cmdlets for upload and download now show progress and are written in C#.
+* on Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.
+* All cmdlet return ErrorRecords.
+* SFTP functions verify that the path given on the remote host exist and that it is a directory.
+* SFTP functions verify that the file given on the remote host exits and that it is a file.
+* When uploading files via SFTP overwriting of the target file is now optional.
 
 ## Version 1.6
 * Fixed problem with ProxyServer option.

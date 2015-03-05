@@ -280,7 +280,11 @@ namespace SSH
                     {
                         if (_sshHostKeys[computer1] == fingerPrint)
                         {
-                            //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                            {
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                            }
+
                             e.CanTrust = true;
                         }
                         else
@@ -322,18 +326,24 @@ namespace SSH
 
                 // Connect to  host using Connection info
                 client.Connect();
-                client.BufferSize = 1024;
 
+                var counter = 0;
                 // Print progess of download.
                 client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                 {
-                    var progressRecord = new ProgressRecord(1, "Downloading " + e.Filename, String.Format("{0} Bytes Downloaded of {1}", e.Downloaded, e.Size));
-
                     if (e.Size != 0)
                     {
-                        progressRecord.PercentComplete = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+                        counter ++;
+                        if (counter > 900)
+                        {
+                            var progressRecord = new ProgressRecord(1, 
+                                "Downloading " + e.Filename, 
+                                String.Format("{0} Bytes Downloaded of {1}", 
+                                e.Downloaded, e.Size)) {PercentComplete = Convert.ToInt32((e.Downloaded*100)/e.Size)};
 
-                        Host.UI.WriteProgress(1, progressRecord);
+                            Host.UI.WriteProgress(1, progressRecord);
+                            counter = 0;
+                        }
                     }
                 };
                 WriteVerbose("Connection succesfull");

@@ -256,11 +256,19 @@ namespace SSH
                     }
                     var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
+                    if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                    {
+                        Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
+                    }
+
                     if (_sshHostKeys.ContainsKey(computer1))
                     {
                         if (_sshHostKeys[computer1] == fingerPrint)
                         {
-                            //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                            {
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer1);
+                            }
                             e.CanTrust = true;
                         }
                         else
@@ -305,6 +313,7 @@ namespace SSH
 
                 // Connect to  host using Connection info
                 client.Connect();
+
                 WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
             }
 

@@ -50,6 +50,7 @@
     <Compile Include="ConnectionInfoGenerator.cs" />
     <Compile Include="GetScpFile.cs" />
     <Compile Include="GetScpFolder.cs" />
+    <Compile Include="GetSftpFile.cs" />
     <Compile Include="SetSftpFile.cs" />
     <Compile Include="SshModHelper.cs" />
     <Compile Include="NewSftpSession.cs" />

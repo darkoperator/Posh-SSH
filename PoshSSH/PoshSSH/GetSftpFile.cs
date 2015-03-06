@@ -10,8 +10,8 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.Set, "SFTPFile", DefaultParameterSetName = "Index")]
-    public class SetSftpFile : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "SFTPFile", DefaultParameterSetName = "Index")]
+    public class GetSftpFile : PSCmdlet
     {
         /// <summary>
         /// Parameter for Index of the SFTPSession.
@@ -45,35 +45,35 @@ namespace SSH
         }
 
         /// <summary>
-        /// Folder on remote target where to upload the file.
+        /// Remote file to download.
         /// </summary>
-        private String _remotepath;
+        private String _remotefile;
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 2)]
-        public string RemotePath
+        public string RemoteFile
         {
-            get { return _remotepath; }
-            set { _remotepath = value; }
+            get { return _remotefile; }
+            set { _remotefile = value; }
         }
 
         /// <summary>
-        /// The local file to be uploaded.
+        /// The local path where to save the file.
         /// </summary>
-        private String _localfile;
+        private String _localpath;
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 1)]
         [Alias("PSPath")]
-        public String LocalFile
+        public String LocalPath
         {
-            get { return _localfile; }
-            set { _localfile = value; }
+            get { return _localpath; }
+            set { _localpath = value; }
         }
 
         /// <summary>
-        /// If a file on the target should be overwritten or not.
+        /// If the local file exists overwrite it.
         /// </summary>
         [Parameter(Position = 3)]
         public SwitchParameter Overwrite
@@ -120,91 +120,99 @@ namespace SSH
             // check if the file specified actually exists.
             // Resolve the path even if a relative one is given.
             ProviderInfo provider;
-            var pathinfo = GetResolvedProviderPathFromPSPath(_localfile, out provider);
+            var pathinfo = GetResolvedProviderPathFromPSPath(_localpath, out provider);
             var localfullPath = pathinfo[0];
 
-            if (File.Exists(@localfullPath))
+            if (Directory.Exists(@localfullPath))
             {
-                WriteVerbose("Uploading " + localfullPath);
-                var fil = new FileInfo(@localfullPath);
+                var filename = Path.GetFileName(_remotefile);
+
+                var localfilefullpath = localfullPath + "/" + filename;
+                var fil = new FileInfo(@localfilefullpath);
+
+                var localstream = File.Create(@localfilefullpath);
                 foreach (var sftpSession in ToProcess)
                 {
-                    var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
-                    WriteVerbose("Uploading to " + remoteFullpath + " on " + sftpSession.Host);
 
-                    // Setup Action object for showing download progress.
+                    WriteVerbose("Downloading " + filename + " to " + localfilefullpath + " from " + sftpSession.Host);
 
-                    var res = new Action<ulong>(rs =>
-                    {
-                        //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
-                        if (fil.Length != 0)
-                        {
-                            var percent = (int)((((double)rs) / fil.Length) * 100.0);
-                            if (percent % 10 == 0)
-                            {
-                                // This will prevent the progress message to end stuck on the screen.
-                                if (percent == 100)
-                                {
-                                    return;
-                                }
+                    
 
-                                var progressRecord = new ProgressRecord(1,
-                                "Uploading " + fil.Name,
-                                String.Format("{0} Bytes Uploaded of {1}", rs, fil.Length)) { PercentComplete = percent };
-
-                                Host.UI.WriteProgress(1, progressRecord);
-                                //Host.UI.WriteVerboseLine(percent.ToString(CultureInfo.InvariantCulture) + "% Completed.");
-                            }
-                        }
-                    });
-
-                    // Check that the path we are uploading to actually exists on the target.
-                    if (sftpSession.Session.Exists(RemotePath))
+                    // Check that the path we are downloading from to actually exists on the target.
+                    if (sftpSession.Session.Exists(_remotefile))
                     {
                         // Ensure the remote path is a directory. 
-                        var attribs = sftpSession.Session.GetAttributes(RemotePath);
-                        if (!attribs.IsDirectory)
+                        var attribs = sftpSession.Session.GetAttributes(_remotefile);
+                        if (!attribs.IsRegularFile)
                         {
-                            throw new SftpPathNotFoundException("Specified path is not a directory");
+                            throw new SftpPathNotFoundException("Specified path is not a file.");
                         }
-                        // Check if the file already exists o the target system.
-                        var present = sftpSession.Session.Exists(remoteFullpath);
+
+                        // Setup Action object for showing download progress.
+
+                        var res = new Action<ulong>(rs =>
+                        {
+                            //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
+                            if (attribs.Size != 0)
+                            {
+                                var percent = (int)((((double)rs) / attribs.Size) * 100.0);
+                                if (percent % 10 == 0)
+                                {
+                                    // This will prevent the progress message to end stuck on the screen.
+                                    if (percent == 100)
+                                    {
+                                        return;
+                                    }
+
+                                    var progressRecord = new ProgressRecord(1,
+                                    "Downloading " + fil.Name,
+                                    String.Format("{0} Bytes Downloaded of {1}", rs, attribs.Size)) { PercentComplete = percent };
+
+                                    Host.UI.WriteProgress(1, progressRecord);
+                                    
+                                }
+                            }
+                        });
+                       
+                        var present = File.Exists(localfilefullpath);
+                        
                         if ((present & _overwrite) || (!present))
                         {
-                            var localstream = File.OpenRead(localfullPath);
                             try
                             {
-                                sftpSession.Session.UploadFile(localstream, remoteFullpath, res);
+                                sftpSession.Session.DownloadFile(_remotefile, localstream, res);
                                 localstream.Close();
+
                             }
-                            catch (Exception ex)
+                            catch
                             {
                                 localstream.Close();
-                                WriteError(new ErrorRecord(
-                                             ex,
-                                             "Error while Uploading",
-                                             ErrorCategory.InvalidOperation,
-                                             sftpSession));
-
+                                var ex = new SftpPermissionDeniedException("Unable to download file from host.");
+                                ThrowTerminatingError(new ErrorRecord(
+                                    ex,
+                                    "Unable to download file from host.",
+                                    ErrorCategory.InvalidOperation,
+                                    sftpSession));
                             }
                         }
                         else
                         {
-                            var ex  =  new SftpPermissionDeniedException("File already exists on remote host.");
+                            localstream.Close();
+                            var ex = new SftpPermissionDeniedException("File already present on local host.");
                             WriteError(new ErrorRecord(
                                              ex,
-                                             "File already exists on remote host",
+                                             "File already present on local host.",
                                              ErrorCategory.InvalidOperation,
                                              sftpSession));
                         }
-                        
+
                     }
                     else
                     {
-                        var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
+                        var ex = new SftpPathNotFoundException(RemoteFile + " does not exist.");
                        ThrowTerminatingError(new ErrorRecord(
                                                 ex,
-                                                RemotePath + " does not exist.",
+                                                RemoteFile + " does not exist.",
                                                 ErrorCategory.InvalidOperation,
                                                 sftpSession));
                     }
@@ -212,11 +220,11 @@ namespace SSH
             }
             else
             {
-                var ex =  new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+                var ex =  new FileNotFoundException("Local path" + localfullPath + " was not found.");
 
                 ThrowTerminatingError(new ErrorRecord(
                                                 ex,
-                                                "File to upload " + localfullPath + " was not found.",
+                                                "Local path" + localfullPath + " was not found.",
                                                 ErrorCategory.InvalidOperation,
                                                 localfullPath));
             }

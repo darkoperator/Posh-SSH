@@ -342,9 +342,16 @@ namespace SSH
                     if (e.Size != 0)
                     {
                         counter ++;
-                        var percent = Convert.ToInt32((e.Uploaded*100)/e.Size);
+                        
                         if (counter > 900)
                         {
+                            var percent = Convert.ToInt32((e.Uploaded * 100) / e.Size);
+
+                            if (percent == 100)
+                            {
+                                return;
+                            }
+
                             var progressRecord = new ProgressRecord(1, 
                                 "Uploading " + e.Filename, 
                                 String.Format("{0} Bytes Uploaded of {1}", 

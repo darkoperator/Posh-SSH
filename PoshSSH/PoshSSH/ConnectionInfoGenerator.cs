@@ -87,7 +87,10 @@ namespace SSH
                 else // Handle connection with no proxy server
                 {
 
-                    connectionInfo = new PrivateKeyConnectionInfo(computer, credential.GetNetworkCredential().UserName, sshkey);
+                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                        port, 
+                        credential.GetNetworkCredential().UserName, 
+                        sshkey);
                        
                 }
             } // file exists

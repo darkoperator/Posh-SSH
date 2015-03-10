@@ -337,6 +337,12 @@ namespace SSH
                         if (counter > 900)
                         {
                             var percent = Convert.ToInt32((e.Downloaded*100)/e.Size);
+
+                            if (percent == 100)
+                            {
+                                return;
+                            }
+
                             var progressRecord = new ProgressRecord(1,
                                 "Downloading " + e.Filename,
                                 String.Format("{0} Bytes Downloaded of {1}",

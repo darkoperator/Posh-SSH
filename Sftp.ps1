@@ -702,7 +702,7 @@ function Get-SFTPCurrentDirectory
     -a---         4/13/2013   8:40 PM       1337 anaconda-ks.cfg  
 #>
 
-function Get-SFTPFile
+<#function Get-SFTPFile
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -790,7 +790,7 @@ function Get-SFTPFile
         }
      }
     End{}
-}
+}#>
 
 
 <#

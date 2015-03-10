@@ -29,6 +29,8 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * SFTP functions verify that the path given on the remote host exist and that it is a directory.
 * SFTP functions verify that the file given on the remote host exits and that it is a file.
 * When uploading files via SFTP overwriting of the target file is now optional.
+* Address issue when progress message could get stuck in the powershell window after upload or download of a files was finished.
+* Fix problem when using key files alternate port numbers where being ignored.
 
 ## Version 1.6
 * Fixed problem with ProxyServer option.

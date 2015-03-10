@@ -589,6 +589,19 @@ namespace SSH
     [Cmdlet(VerbsCommon.Get, "SCPFile", DefaultParameterSetName = "NoKey")]
     public class GetScpFile : PSCmdlet
     {
+        // Auto Accept key fingerprint
+        [Parameter( Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key" )]
+        [Parameter( Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey" )]
+        public bool AcceptKey {
+          get { return _acceptkey; }
+          set { _acceptkey = value; }
+        }
+        private bool _acceptkey;
+
         // Hosts tp conect to
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
@@ -1066,39 +1079,34 @@ namespace SSH
                             }
                             string fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                            if (_sshHostKeys.ContainsKey(computer1))
-                            {
-                                if (_sshHostKeys[computer1] == fingerPrint)
-                                {
-                                    //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
-                                    e.CanTrust = true;
-                                }
-                                else
-                                {
-                                    throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
-                                }
-                            }
-                            else
-                            {
+                            if ( _sshHostKeys.ContainsKey( computer1 ) ) {
+                              if ( _sshHostKeys[computer1] == fingerPrint || _acceptkey ) {
+                                //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                e.CanTrust = true;
+                              } else {
+                                throw new System.Security.SecurityException( "SSH fingerprint mistmatch for host " + computer1 );
+                              }
+                            } else {
+                              int choice;
+                              if ( _acceptkey ) {
+                                choice = 0;
+                              } else {
                                 var choices = new Collection<ChoiceDescription>
-                                {
-                                    new ChoiceDescription("Y"),
-                                    new ChoiceDescription("N")
-                                };
+                                  {
+                                      new ChoiceDescription("Y"),
+                                      new ChoiceDescription("N")
+                                  };
 
-                                int choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-
-                                if (choice == 0)
-                                {
-                                    var keymng = new TrustedKeyMng();
-
-                                    keymng.SetKey(computer1, fingerPrint);
-                                    e.CanTrust = true;
-                                }
-                                else
-                                {
-                                    e.CanTrust = false;
-                                }
+                                choice = Host.UI.PromptForChoice( "Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1 );
+                              }
+                              if ( choice == 0 ) {
+                                var keymng = new TrustedKeyMng();
+                                //this.Host.UI.WriteVerboseLine("Saving fingerprint " + FingerPrint + " for host " + computer);
+                                keymng.SetKey( computer1, fingerPrint );
+                                e.CanTrust = true;
+                              } else {
+                                e.CanTrust = false;
+                              }
                             }
                         };
 

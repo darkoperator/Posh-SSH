@@ -22,6 +22,13 @@ SSHHost                                                     Fingerprint
      Begin{}
      Process
      {
+        $Test_Path_Result = Test-Path -Path "hkcu:\Software\PoshSSH"
+        if ($Test_Path_Result -eq $false) 
+        {
+            Write-Verbose -Message 'No previous trusted keys have been configured on this system.'
+            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
+            return
+        }
         $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
 
         $hostnames = $poshsshkey.GetValueNames()
@@ -75,15 +82,15 @@ VERBOSE: SSH Host has been added.
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software')
+        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software'. $true)
         if ( $softkey.GetSubKeyNames() -contains 'PoshSSH')
         {
             $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
         else
         {
-            Write-Verbose 'PoshSSH Registry key has not Present for this user.'
-            $softkey.CreateSubKey('PoshSSH')
+            Write-Verbose 'PoshSSH Registry key is not present for this user.'
+            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
             Write-Verbose 'PoshSSH Key created.'
             $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
@@ -124,14 +131,14 @@ VERBOSE: SSH Host has been removed.
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software')
+        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
         if ($softkey.GetSubKeyNames() -contains 'PoshSSH' )
         {
             $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
         }
         else
         {
-            Write-warning 'PoshSSH Registry key has not Present for this user.'
+            Write-warning 'PoshSSH Registry key is not present for this user.'
             return
         }
         Write-Verbose "Removing SSH Host $($SSHHost) from the list of trusted hosts."

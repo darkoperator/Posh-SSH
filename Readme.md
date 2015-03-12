@@ -31,6 +31,8 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * When uploading files via SFTP overwriting of the target file is now optional.
 * Address issue when progress message could get stuck in the powershell window after upload or download of a files was finished.
 * Fix problem when using key files alternate port numbers where being ignored.
+* Fix registry access problem when setting trusted host.
+* Fix problem when enumerating trusted hosts and the registry key for them was not present.
 
 ## Version 1.6
 * Fixed problem with ProxyServer option.

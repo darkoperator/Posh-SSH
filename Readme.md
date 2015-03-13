@@ -9,6 +9,7 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 </pre>
 
 # Support
+
 * Provides functionality for automating SSH, SFTP and SCP actions.
 * Supports diffie-hellman-group-exchange-sha256, diffie-hellman-group-exchange-sha1, diffie-hellman-group14-sha1 and diffie-hellman-group1-sha1 key exchange methods.
 * Supports 3des-cbc, aes128-cbc, aes192-cbc, aes256-cbc, aes128-ctr, aes192-ctr, aes256-ctr, blowfish-cbc, cast128-cbc, arcfour and twofish encryptions.
@@ -20,7 +21,11 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+
 ## Version 1.7
+* Index Paramater and Property are now SessionId. All cmdlets and function have Index as an Alias so as to not break existing scripts.
+* Added support for ssh.com (SSH-2) private keys.
+* Added support on acceptable group of up to 8192 bits for SHA-1 and SHA-256 Diffie-Hellman Group and Key Exchange
 * Several fixes when connecting though a proxy.
 * SCP Speed is now almost 3 times faster.
 * SFTP cmdlets for upload and download now show progress and are written in C#.
@@ -35,6 +40,17 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Fix registry access problem when setting trusted host.
 * Fix problem when enumerating trusted hosts and the registry key for them was not present.
 * SCP, SFTP Session and SSH Session cmdlets when verbose messages are selected will show the SSH certificate fingerprint of the host one is connecting with. 
+* Disabled Zlib Compression.
+* Fix ShellStream.ReadLine produces incorrect output when reading multi-byte characters.
+* Fix ScpClient: Missing files when using DirectoryUpload.
+* Fix SendKeepAlive causes SocketException when connection is dropped.
+* Fix stuck loop on key exchange using arcfour encryption 
+* Reduced default buffer size for SftpClient from 64 KB to 32 KB as some SSH servers apply a hard limit of 64 KB at the transport level.
+* Optimization of payload size for both read and write operations (SftpClient only)
+* Increase window size from 1MB to 2MB
+* Increase buffer size from 16KB to 64KB for SftpClient
+* Take into account the maximum remote packet size of the channel for write operations
+* Increase maximum size of packets that we can receive from 32 KB to 64 KB
  
 
 ## Version 1.6

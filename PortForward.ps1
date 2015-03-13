@@ -84,8 +84,9 @@ function New-SSHLocalPortForward
             ParameterSetName = "Index",
             ValueFromPipeline=$true,
             Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index 
+        $SessionId 
     )
 
     Begin
@@ -100,14 +101,14 @@ function New-SSHLocalPortForward
 
             'Index'
             {
-                $sess = Get-SSHSession -Index $Index
+                $sess = Get-SSHSession -Index $SessionId
                 if ($sess)
                 {
                     $ToProcess = $sess
                 }
                 else
                 {
-                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
                     return
                 }
             }
@@ -259,8 +260,9 @@ function New-SSHDynamicPortForward
             ParameterSetName = "Index",
             ValueFromPipeline=$true,
             Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index
+        $SessionId
     )
 
      Begin
@@ -275,14 +277,14 @@ function New-SSHDynamicPortForward
 
             'Index'
             {
-                $sess = Get-SSHSession -Index $Index
+                $sess = Get-SSHSession -Index $SessionId
                 if ($sess)
                 {
                     $ToProcess = $sess
                 }
                 else
                 {
-                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
                     return
                 }
             }
@@ -305,7 +307,11 @@ function New-SSHDynamicPortForward
         # Add the forward port object to the session
         Write-Verbose -message "Adding Forward Port Configuration to session $($ToProcess.Index)"
         $ToProcess.session.AddForwardedPort($SSHFWP)
+        $ToProcess.session.KeepAliveInterval = New-TimeSpan -Seconds 30
+        $ToProcess.session.ConnectionInfo.Timeout = New-TimeSpan -Seconds 20
         $ToProcess.session.SendKeepAlive()
+        
+        [System.Threading.Thread]::Sleep(500)
         Write-Verbose -message "Starting the Port Forward."
         $SSHFWP.start()
         Write-Verbose -message "Forwarding has been started."
@@ -349,8 +355,9 @@ function Get-SSHPortForward
             ParameterSetName = "Index",
             ValueFromPipeline=$true,
             Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index
+        $SessionId
     )
 
      Begin
@@ -365,14 +372,14 @@ function Get-SSHPortForward
 
             'Index'
             {
-                $sess = Get-SSHSession -Index $Index
+                $sess = Get-SSHSession -Index $SessionId
                 if ($sess)
                 {
                     $ToProcess = $sess
                 }
                 else
                 {
-                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
                     return
                 }
             }
@@ -434,8 +441,9 @@ function Stop-SSHPortForward
             ParameterSetName = "Index",
             ValueFromPipeline=$true,
             Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
             Position=2)]
@@ -460,14 +468,14 @@ function Stop-SSHPortForward
 
             'Index'
             {
-                $sess = Get-SSHSession -Index $Index
+                $sess = Get-SSHSession -Index $SessionId
                 if ($sess)
                 {
                     $ToProcess = $sess
                 }
                 else
                 {
-                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
                     return
                 }
             }
@@ -534,8 +542,9 @@ function Start-SSHPortForward
             ParameterSetName = "Index",
             ValueFromPipeline=$true,
             Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
             Position=2)]
@@ -560,14 +569,14 @@ function Start-SSHPortForward
 
             'Index'
             {
-                $sess = Get-SSHSession -Index $Index
+                $sess = Get-SSHSession -Index $SessionId
                 if ($sess)
                 {
                     $ToProcess = $sess
                 }
                 else
                 {
-                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
                     return
                 }
             }

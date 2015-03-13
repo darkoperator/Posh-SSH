@@ -13,7 +13,7 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 # Dot Sourcing of functions
 ##############################################################################################
 # Library has to many bugs on forwarding still
-# . "$PSScriptRoot\PortForward.ps1"
+#. "$PSScriptRoot\PortForward.ps1"
 . "$PSScriptRoot\Trust.ps1"
 . "$PSScriptRoot\Sftp.ps1"
 

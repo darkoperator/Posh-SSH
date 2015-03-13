@@ -32,20 +32,21 @@ function Get-SFTPSession
     param( 
         [Parameter(Mandatory=$false,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index
+        $SessionId
     )
 
     Begin{}
     Process
     {
-        if ($Index.Length -gt 0)
+        if ($SessionId.Length -gt 0)
         {
-            foreach($i in $Index)
+            foreach($i in $SessionId)
             {
                 foreach($session in $global:SFTPSessions)
                 {
-                    if ($session.Index -eq $i)
+                    if ($session.SessionId -eq $i)
                     {
                         $session
                     }
@@ -73,7 +74,7 @@ function Get-SFTPSession
 .EXAMPLE
    Close a SFTP Session
 
-    PS C:\> Remove-SFTPSession -Index 0 -Verbose
+    PS C:\> Remove-SFTPSession -SessionId 0 -Verbose
     VERBOSE: 0
     VERBOSE: Removing session 0
     True
@@ -88,8 +89,9 @@ function Remove-SFTPSession
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$false,
                    ParameterSetName = 'Session',
@@ -106,12 +108,12 @@ function Remove-SFTPSession
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
                 $sessions2remove = @()
-                 foreach($i in $Index)
+                 foreach($i in $SessionId)
                 {
                     Write-Verbose $i
                     foreach($session in $Global:SFTPSessions)
                     {
-                        if ($session.Index -eq $i)
+                        if ($session.SessionId -eq $i)
                         {
                             $sessions2remove += $session
                         }
@@ -120,14 +122,14 @@ function Remove-SFTPSession
 
                 foreach($badsession in $sessions2remove)
                 {
-                     Write-Verbose "Removing session $($badsession.index)"
+                     Write-Verbose "Removing session $($badsession.SessionId)"
                      if ($badsession.session.IsConnected) 
                      { 
                         $badsession.session.Disconnect() 
                      }
                      $badsession.session.Dispose()
                      $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.index) Removed"
+                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
@@ -147,14 +149,14 @@ function Remove-SFTPSession
 
                 foreach($badsession in $sessions2remove)
                 {
-                     Write-Verbose "Removing session $($badsession.index)"
+                     Write-Verbose "Removing session $($badsession.SessionId)"
                      if ($badsession.session.IsConnected) 
                      { 
                         $badsession.session.Disconnect() 
                      }
                      $badsession.session.Dispose()
                      $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.index) Removed"
+                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
@@ -172,7 +174,7 @@ function Remove-SFTPSession
 .EXAMPLE
    List files in the /tmp path on a remote SFTP Session
 
-   C:\Users\Carlos> Get-SFTPDirectoryList -Index 0 -Path "/tmp"
+   C:\Users\Carlos> Get-SFTPDirectoryList -SessionId 0 -Path "/tmp"
 
 
     FullName       : /tmp/vmware-root
@@ -232,8 +234,9 @@ function Get-SFTPDirectoryList
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]]
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -264,7 +267,7 @@ function Get-SFTPDirectoryList
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -277,22 +280,19 @@ function Get-SFTPDirectoryList
      {
         foreach($Sess in $ToProcess)
         {   
-            if ($Path -eq $null)
+            if ($Path.Length -eq 0)
             {
                 $Path = $Sess.Session.WorkingDirectory
             }
             else
             {
                 $Attribs = Get-SFTPPathAttribute -SFTPSession $Sess -Path $Path
-                if ($Attribs.IsDirectory)
-                {
-                    $Sess.Session.ListDirectory($Path)
-                }
-                else
+                if (!$Attribs.IsDirectory)
                 {
                     throw "Specified path of $($Path) is not a directory."
                 }
             }
+            $Sess.Session.ListDirectory($Path)
         }
      }
      End{}
@@ -307,7 +307,7 @@ function Get-SFTPDirectoryList
 .EXAMPLE
    Create a folder in the /tmp directory on servia via a SFTP Session
 
-   PS C:\> New-SFTPDirectory -Index 0 -Path "/tmp/temporaryfolder"
+   PS C:\> New-SFTPDirectory -SessionId 0 -Path "/tmp/temporaryfolder"
 #>
 
 function New-SFTPDirectory
@@ -318,8 +318,9 @@ function New-SFTPDirectory
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -350,7 +351,7 @@ function New-SFTPDirectory
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -379,11 +380,11 @@ function New-SFTPDirectory
 .EXAMPLE
    Test if a folder temporaryfolder exists in the /tmp directory on server via a SFTP Session
 
-   PS C:\> Test-SFTPPath -Index 0 -Path "/tmp/temporaryfolder"
+   PS C:\> Test-SFTPPath -SessionId 0 -Path "/tmp/temporaryfolder"
 .EXAMPLE
    Test if a file myfile-1.0.0.ipa exists in the /apps directory on server via a SFTP Session
 
-   PS C:\> Test-SFTPPath -Index 0 -Path "/apps/myfile-1.0.0.ipa"
+   PS C:\> Test-SFTPPath -SessionId 0 -Path "/apps/myfile-1.0.0.ipa"
 #>
 
 function Test-SFTPPath
@@ -394,8 +395,9 @@ function Test-SFTPPath
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -426,7 +428,7 @@ function Test-SFTPPath
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -453,7 +455,7 @@ function Test-SFTPPath
 .EXAMPLE
    Remove a folder in the /tmp directory on servia via a SFTP Session
 
-   PS C:\> Remove-SFTPDirectory -Index 0 -Path "/tmp/temporaryfolder"
+   PS C:\> Remove-SFTPDirectory -SessionId 0 -Path "/tmp/temporaryfolder"
 #>
 
 function Remove-SFTPDirectory
@@ -464,8 +466,9 @@ function Remove-SFTPDirectory
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -496,7 +499,7 @@ function Remove-SFTPDirectory
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -535,16 +538,16 @@ function Remove-SFTPDirectory
 .EXAMPLE
    Change a SFTP Session current folder
 
-   PS C:\> Get-SFTPCurrentDirectory -Index 0
+   PS C:\> Get-SFTPCurrentDirectory -SessionId 0
     /root
 
-    PS C:\> Set-SFTPDirectoryPath -Index 0 -Path "/tmp"
+    PS C:\> Set-SFTPCurrentDirectory -SessionId 0 -Path "/tmp"
 
-    PS C:\> Get-SFTPCurrentDirectory -Index 0
+    PS C:\> Get-SFTPCurrentDirectory -SessionId 0
     /tmp
 #>
 
-function Set-SFTPDirectoryPath
+function Set-SFTPCurrentDirectory
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -552,8 +555,9 @@ function Set-SFTPDirectoryPath
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -584,7 +588,7 @@ function Set-SFTPDirectoryPath
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -622,7 +626,7 @@ function Set-SFTPDirectoryPath
 .EXAMPLE
    Get current folder location of a SFTP Session
 
-   PS C:\> Get-SFTPCurrentDirectory -Index 0
+   PS C:\> Get-SFTPCurrentDirectory -SessionId 0
     /root
 #>
 
@@ -634,8 +638,9 @@ function Get-SFTPCurrentDirectory
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -660,7 +665,7 @@ function Get-SFTPCurrentDirectory
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -683,125 +688,13 @@ function Get-SFTPCurrentDirectory
 
 <#
 .Synopsis
-   Download remote file from a SFTP Session
-.DESCRIPTION
-   Download remote file from a SFTP Session specified by Index or SFTP Session Object
-.EXAMPLE
-   Download the anaconda configuration file of a remote Red Hat Session via a SFTP Session
-
-   PS C:\> Get-SFTPFile -Index 0 -RemoteFile "/root/anaconda-ks.cfg" -LocalPath $env:homepath\Desktop
-
-    PS C:\> ls $env:homepath\Desktop -Filter *.cfg
-
-
-        Directory: C:\Users\Carlos\Desktop
-
-
-    Mode                LastWriteTime     Length Name                                                                                                           
-    ----                -------------     ------ ----                                                                                                           
-    -a---         4/13/2013   8:40 PM       1337 anaconda-ks.cfg  
-#>
-
-<#function Get-SFTPFile
-{
-    [CmdletBinding(DefaultParameterSetName='Index')]
-    param(
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Index',
-                   ValueFromPipelineByPropertyName=$true,
-                   Position=0)]
-        [Int32[]] 
-        $Index,
-
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Session',
-                   ValueFromPipeline=$true,
-                   Position=0)]
-        [Alias('Session')]
-        [SSH.SFTPSession[]]
-        $SFTPSession,
-
-        # Full path of file on remote system.
-        [Parameter(Mandatory=$true,
-                   Position=1)]
-        [string]
-        $RemoteFile,
-
-        # Directory Path to save the file.
-        [Parameter(Mandatory=$true,
-                   Position=2)]
-        [ValidateScript({Test-Path -path $_ -PathType Container})]
-        [string]
-        $LocalPath,
-
-        # Append to start of filename
-        [Parameter(Mandatory=$false,
-                   Position=3)]
-        [string]
-        $FileNameAppend
-     )
-
-     Begin
-     {
-        $ToProcess = @()
-        switch($PSCmdlet.ParameterSetName)
-        {
-            'Session'
-            {
-                $ToProcess = $SFTPSession
-            }
-
-            'Index'
-            {
-                foreach($session in $Global:SFTPSessions)
-                {
-                    if ($Index -contains $session.Index)
-                    {
-                        $ToProcess += $session
-                    }
-                }
-            }
-        }
-     }
-     Process
-     {
-
-        foreach($session in $ToProcess)
-        {
-            $Attrib = Get-SFTPPathAttGetribute -SFTPSession $session -Path $RemoteFile
-            if ($Attrib.IsRegularFile)
-            {
-                $FileName = Split-Path $RemoteFile -Leaf
-                $LocalFile = "$((Resolve-Path $LocalPath).Path)\$filename"
-                Write-Verbose -Message "Downloading file $($FileName)"
-                if ($FileNameAppend)
-                {
-                    $FileName = "$($FileNameAppend.Trim())$FileName"
-                }
-                $LocalFileStream = [System.IO.File]::Create($LocalFile)
-                $session.Session.DownloadFile($RemoteFile, $LocalFileStream)
-                $LocalFileStream.Flush()
-                $LocalFileStream.Close()
-            }
-            else
-            {
-                throw "Specified remote file $($RemoteFile) is not a file."
-            }
-        }
-     }
-    End{}
-}#>
-
-
-<#
-.Synopsis
    Deletes a file on a remote system via a SFTP Session
 .DESCRIPTION
    Deletes a file on a remote system via a SFTP Session specified by index or SFTP Session object.
 .EXAMPLE
    Deleting file on /tmp directory.
     
-    PS C:\> Remove-SFTPFile -Index 0 -RemoteFile "/tmp/anaconda-ks.cfg" -Verbose
+    PS C:\> Remove-SFTPFile -SessionId 0 -RemoteFile "/tmp/anaconda-ks.cfg" -Verbose
     VERBOSE: Deleting /tmp/anaconda-ks.cfg
     VERBOSE: Deleted /tmp/anaconda-ks.cfg
 #>
@@ -814,8 +707,9 @@ function Remove-SFTPFile
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -846,7 +740,7 @@ function Remove-SFTPFile
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -884,7 +778,7 @@ function Remove-SFTPFile
 .EXAMPLE
    Rename file by moving it
 
-    PS C:\> Rename-SFTPFile -Index 0 -Path /tmp/anaconda-ks.cfg -NewName anaconda-ks.cfg.old -Verbose
+    PS C:\> Rename-SFTPFile -SessionId 0 -Path /tmp/anaconda-ks.cfg -NewName anaconda-ks.cfg.old -Verbose
     VERBOSE: Renaming /tmp/anaconda-ks.cfg to anaconda-ks.cfg.old
     VERBOSE: File renamed
 #>
@@ -897,8 +791,9 @@ function Rename-SFTPFile
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -935,7 +830,7 @@ function Rename-SFTPFile
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }
@@ -971,7 +866,7 @@ function Rename-SFTPFile
 .DESCRIPTION
    Get the attributes for a specified path in a SFTP session.
 .EXAMPLE
-   Get-SFTPPathAttribute -Index 0 -Path "/tmp"
+   Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
 
 
     LastAccessTime    : 2/27/2015 6:38:43 PM
@@ -1007,8 +902,9 @@ function Get-SFTPPathAttribute
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]] 
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
@@ -1039,7 +935,7 @@ function Get-SFTPPathAttribute
             {
                 foreach($session in $Global:SFTPSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }

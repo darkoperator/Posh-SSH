@@ -12,7 +12,8 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 
 # Dot Sourcing of functions
 ##############################################################################################
-. "$PSScriptRoot\PortForward.ps1"
+# Library has to many bugs on forwarding still
+# . "$PSScriptRoot\PortForward.ps1"
 . "$PSScriptRoot\Trust.ps1"
 . "$PSScriptRoot\Sftp.ps1"
 
@@ -54,20 +55,21 @@ function Get-SSHSession
     param( 
         [Parameter(Mandatory=$false,
                    Position=0)]
+        [Alias('Index')]
         [Int32]
-        $Index
+        $SessionId
     )
 
     Begin{}
     Process
     {
-        if ($Index)
+        if ($SessionId)
         {
-            foreach($i in $Index)
+            foreach($i in $SessionId)
             {
                 foreach($session in $SshSessions)
                 {
-                    if ($session.Index -eq $i)
+                    if ($session.SessionId -eq $i)
                     {
                         $session
                     }
@@ -97,7 +99,7 @@ function Get-SSHSession
 .EXAMPLE
     Remove a SSH Session specified by Index
 
-    PS C:\> Remove-SSHSession -Index 0
+    PS C:\> Remove-SSHSession -SessionId 0
     True
 
 .PARAMETER Index
@@ -120,8 +122,9 @@ function Remove-SSHSession
                    ParameterSetName = 'Index',
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
+        [Alias('Index')]
         [Int32[]]
-        $Index,
+        $SessionId,
 
         [Parameter(Mandatory=$false,
                    ParameterSetName = 'Session',
@@ -138,11 +141,11 @@ function Remove-SSHSession
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
                 $sessions2remove = @()
-                 foreach($i in $Index)
+                 foreach($i in $SessionId)
                 {
                     foreach($session in $Global:SshSessions)
                     {
-                        if ($session.Index -eq $i)
+                        if ($session.SessionId -eq $i)
                         {
                             $sessions2remove += $session
                         }
@@ -151,14 +154,14 @@ function Remove-SSHSession
 
                 foreach($badsession in $sessions2remove)
                 {
-                     Write-Verbose "Removing session $($badsession.index)"
+                     Write-Verbose "Removing session $($badsession.SessionId)"
                      if ($badsession.session.IsConnected) 
                      { 
                         $badsession.session.Disconnect() 
                      }
                      $badsession.session.Dispose()
                      $global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.index) Removed"
+                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
@@ -178,14 +181,14 @@ function Remove-SSHSession
 
                 foreach($badsession in $sessions2remove)
                 {
-                     Write-Verbose "Removing session $($badsession.index)"
+                     Write-Verbose "Removing session $($badsession.SessionId)"
                      if ($badsession.session.IsConnected) 
                      { 
                         $badsession.session.Disconnect() 
                      }
                      $badsession.session.Dispose()
                      $Global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.index) Removed"
+                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
@@ -205,7 +208,7 @@ function Remove-SSHSession
 .EXAMPLE
     Executes the "uname -a" command against several sessions
 
-    PS C:\> Invoke-SSHCommand -Command "uname -a" -Index 0,2,3
+    PS C:\> Invoke-SSHCommand -Command "uname -a" -SessionId 0,2,3
 
 
     Host       : 192.168.1.163
@@ -258,8 +261,9 @@ function Invoke-SSHCommand
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Index',
                    Position=0)]
+        [Alias('Index')]
         [int32[]]
-        $Index = $null,
+        $SessionId = $null,
 
         # Ensures a connection is made by reconnecting before command.
         [Parameter(Mandatory=$false)]
@@ -287,7 +291,7 @@ function Invoke-SSHCommand
             {
                 foreach($session in $Global:SshSessions)
                 {
-                    if ($Index -contains $session.Index)
+                    if ($SessionId -contains $session.SessionId)
                     {
                         $ToProcess += $session
                     }

@@ -37,7 +37,7 @@ namespace SSH
             }
 
             // Create the object that will be saved
-            obj.Index = index;
+            obj.SessionId = index;
             obj.Host = sshclient.ConnectionInfo.Host;
             obj.Session = sshclient;
             sshSessions.Add(obj);
@@ -66,7 +66,7 @@ namespace SSH
             }
 
             // Create the object that will be saved
-            obj.Index = index;
+            obj.SessionId = index;
             obj.Host = sftpclient.ConnectionInfo.Host;
             obj.Session = sftpclient;
             sftpSessions.Add(obj);

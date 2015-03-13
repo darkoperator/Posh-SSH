@@ -7,7 +7,7 @@ namespace SSH
     // Object for SSH Sessions
     public class SshSession
     {
-        public Int32 Index;
+        public Int32 SessionId;
         public string Host;
         public SshClient Session;
         public bool Connected
@@ -31,7 +31,7 @@ namespace SSH
     // Object for SSTP Sessions
     public class SftpSession
     {
-        public Int32 Index;
+        public Int32 SessionId;
         public string Host;
         public SftpClient Session;
         public bool Connected

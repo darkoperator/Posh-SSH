@@ -22,7 +22,7 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             Position = 0,
             ParameterSetName = "Index")]
-        public Int32[] Index
+        public Int32[] SessionId
         {
             get { return _index; }
             set { _index = value; }
@@ -102,7 +102,7 @@ namespace SSH
                     {
                         foreach (var sess in sessionvar)
                         {
-                            if (Index.Contains(sess.Index))
+                            if (_index.Contains(sess.SessionId))
                             {
                                 toProcess.Add(sess);
                             }

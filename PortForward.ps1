@@ -48,80 +48,98 @@
     RawContentLength  : 5932
 #>
 
-<#function New-SSHLocalPortForward
+function New-SSHLocalPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-    [Parameter(Mandatory=$true)]
-    [String]$LocalAdress = '127.0.0.1',
+        [Parameter(Mandatory=$true,
+            Position=1)]
+        [String]
+        $BoundHost,
 
-    [Parameter(Mandatory=$true)]
-    [Int32]$LocalPort,
+        [Parameter(Mandatory=$true,
+            Position=2)]
+        [Int32]
+        $BoundPort,
 
-    [Parameter(Mandatory=$true)]
-    [String]$RemoteAddress,
+        [Parameter(Mandatory=$true,
+            Position=3)]
+        [String]
+        $RemoteAddress,
 
-    [Parameter(Mandatory=$true)]
-    [Int32]$RemotePort,
+        [Parameter(Mandatory=$true,
+            Position=4)]
+        [Int32]
+        $RemotePort,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
-        ValueFromPipeline=$true)]
-    [Alias("Session")]
-    [SSH.SSHSession]$SSHSession,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Session",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Alias("Session")]
+        [SSH.SSHSession]
+        $SSHSession,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Index",
-        ValueFromPipeline=$true)]
-    [Int32]$Index = $null
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Index",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Int32]
+        $Index 
     )
 
     Begin
     {
-        # Initialize the ForwardPort Object
-        $SSHFWP = New-Object Renci.SshNet.ForwardedPortLocal($LocalAdress, $LocalPort, $RemoteAddress, $RemotePort)
-    }
-    Process
-    {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
         {
-            Write-Verbose "Finding session with Index $Index"
-            foreach($session in $Global:SshSessions)
+            'Session'
             {
-                Write-Verbose $session.index
-                if ($session.index -eq $Index)
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SSHSession -Index $Index
+                if ($sess)
                 {
-                    # Add the forward port object to the session
-                    Write-Verbose "Adding Forward Port Configuration to session $Index"
-                    $session.session.AddForwardedPort($SSHFWP)
-                    Write-Verbose "Starting the Port Forward."
-                    $SSHFWP.start()
-                    Write-Verbose "Forwarding has been started."
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    return
                 }
             }
         }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
+        
+    }
+    Process
+    {
+        $ports = $ToProcess.Session.ForwardedPorts
+        foreach($p in $ports)
         {
-            if ($SSHSession -in $Global:SshSessions)
+            if (($p.BoundPort -eq $BoundPort) -and ($p.BoundHost -eq $BoundHost))
             {
-                # Add the forward port object to the session
-                Write-Verbose "Adding Forward Port Configuration to session $($SSHSession.index)"
-                $SSHSession.session.AddForwardedPort($SSHFWP)
-                Write-Verbose "Starting the Port Forward."
-                $SSHFWP.start()
-                Write-Verbose "Forwarding has been started."
-            }
-            else
-            {
-                Write-Error "The Session does not appear in the list of created sessions."
+                Write-Error -Message "A forward port already exists for port $($BoundPort) with address $($LocalAdress)"
+                return
             }
         }
+        # Initialize the ForwardPort Object
+        $SSHFWP = New-Object Renci.SshNet.ForwardedPortLocal($BoundHost, $BoundPort, $RemoteAddress, $RemotePort)
+        
+        # Add the forward port object to the session
+        Write-Verbose -message "Adding Forward Port Configuration to session $($ToProcess.Index)"
+        $ToProcess.session.AddForwardedPort($SSHFWP)
+        Write-Verbose -message "Starting the Port Forward."
+        $SSHFWP.start()
+        Write-Verbose -message "Forwarding has been started."
     
     }
     End{}
 
 
-}#>
+}
 
 
 <#function New-SSHRemotePortForward
@@ -208,80 +226,93 @@
    to bind to should be the IP of the network interface. 
 .EXAMPLE
     New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose
-VERBOSE: Finding session with Index 0
-VERBOSE: 0
-VERBOSE: Adding Forward Port Configuration to session 0
-VERBOSE: Starting the Port Forward.
-VERBOSE: Forwarding has been started.
+    VERBOSE: Finding session with Index 0
+    VERBOSE: 0
+    VERBOSE: Adding Forward Port Configuration to session 0
+    VERBOSE: Starting the Port Forward.
+    VERBOSE: Forwarding has been started.
 #>
 
-<#function New-SSHDynamicPortForward
+function New-SSHDynamicPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-    [Parameter(Mandatory=$true)]
-    [String]$LocalAdress = 'localhost',
+        [Parameter(Mandatory=$true,
+            Position=1)]
+        [String]
+        $BoundHost = 'localhost',
 
-    [Parameter(Mandatory=$true)]
-    [Int32]$LocalPort,
+        [Parameter(Mandatory=$true,
+            Position=2)]
+        [Int32]
+        $BoundPort,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
-        ValueFromPipeline=$true)]
-    [Alias("Session")]
-    [SSH.SSHSession]$SSHSession,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Session",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Alias("Session")]
+        [SSH.SSHSession]
+        $SSHSession,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Index",
-        ValueFromPipeline=$true)]
-    [Int32]$Index
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Index",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Int32]
+        $Index
     )
 
      Begin
     {
-        # Initialize the ForwardPort Object
-        $SSHFWP = New-Object Renci.SshNet.ForwardedPortDynamic($LocalAdress, $LocalPort)
+        $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SSHSession -Index $Index
+                if ($sess)
+                {
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    return
+                }
+            }
+        }  
     }
     Process
     {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ports = $ToProcess.Session.ForwardedPorts
+        foreach($p in $ports)
         {
-            Write-Verbose "Finding session with Index $Index"
-            foreach($session in $Global:SshSessions)
+            if ($p.BoundHost -eq $BoundHost -and $p.BoundPort -eq $BoundPort)
             {
-                Write-Verbose $session.index
-                if ($session.index -eq $Index)
-                {
-                    # Add the forward port object to the session
-                    Write-Verbose "Adding Forward Port Configuration to session $Index"
-                    $session.session.AddForwardedPort($SSHFWP)
-                    $session.session.SendKeepAlive()
-                    [System.Threading.Thread]::Sleep(500)
-                    Write-Verbose "Starting the Port Forward."
-                    $SSHFWP.start()
-                    Write-Verbose "Forwarding has been started."
-                }
+                throw "A forward port already exists for port $($BoundPort) with address $($BoundHost)"
             }
         }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            if ($SSHSession -in $Global:SshSessions)
-            {
-                # Add the forward port object to the session
-                Write-Verbose "Adding Forward Port Configuration to session $($SSHSession.index)"
-                $SSHSession.session.AddForwardedPort($SSHFWP)
-                Write-Verbose "Starting the Port Forward."
-                $SSHFWP.start()
-                Write-Verbose "Forwarding has been started."
-            }
-            else
-            {
-                Write-Error "The Session does not appear in the list of created sessions."
-            }
-        }
+
+         # Initialize the ForwardPort Object
+        $SSHFWP = New-Object Renci.SshNet.ForwardedPortDynamic($BoundHost, $BoundPort)
+
+        # Add the forward port object to the session
+        Write-Verbose -message "Adding Forward Port Configuration to session $($ToProcess.Index)"
+        $ToProcess.session.AddForwardedPort($SSHFWP)
+        $ToProcess.session.SendKeepAlive()
+        Write-Verbose -message "Starting the Port Forward."
+        $SSHFWP.start()
+        Write-Verbose -message "Forwarding has been started."
+               
     }
     End{}
-}#>
+}
 
 
 <#
@@ -302,54 +333,59 @@ VERBOSE: Forwarding has been started.
     IsStarted : True
 #>
 
-<#function Get-SSHPortForward
+function Get-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Session",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Alias("Session")]
+        [SSH.SSHSession]
+        $SSHSession,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
-        ValueFromPipeline=$true)]
-    [Alias("Session")]
-    [SSH.SSHSession]$SSHSession,
-
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Index",
-        ValueFromPipeline=$true)]
-    [Int32]$Index
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Index",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Int32]
+        $Index
     )
 
      Begin
     {
+        $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SSHSession -Index $Index
+                if ($sess)
+                {
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    return
+                }
+            }
+        }  
     }
     Process
     {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
-        {
-            Write-Verbose "Finding session with Index $Index"
-            foreach($session in $Global:SshSessions)
-            {
-                if ($session.index -eq $Index)
-                {
-                    Write-Verbose "Session with index $Index found."
-                    $session.Session.ForwardedPorts
-                }
-            }
-        }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            if ($SSHSession -in $Global:SshSessions)
-            {
-                $SSHSession.Session.ForwardedPorts
-            }
-            else
-            {
-                Write-Error "The Session does not appear in the list of created sessions."
-            }
-        }
+        
+        $ToProcess.Session.ForwardedPorts
+              
     }
     End{}
-}#>
+}
 
 
 <#
@@ -381,68 +417,71 @@ VERBOSE: Forwarding has been started.
     IsStarted : False
 #>
 
-<#function Stop-SSHPortForward
+function Stop-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
-        ValueFromPipeline=$true)]
-    [Alias("Session")]
-    [SSH.SSHSession]$SSHSession,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Session",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Alias("Session")]
+        [SSH.SSHSession]
+        $SSHSession,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Index",
-        ValueFromPipeline=$true)]
-    [Int32]$Index,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Index",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Int32]
+        $Index,
 
-    [Parameter(Mandatory=$true)]
-    [Int32]$BoundPort
+        [Parameter(Mandatory=$true,
+            Position=2)]
+        [Int32]
+        $BoundPort,
+
+        [Parameter(Mandatory=$true,
+            Position=1)]
+        [string]
+        $BoundHost
     )
 
      Begin
     {
+         $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SSHSession -Index $Index
+                if ($sess)
+                {
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    return
+                }
+            }
+        } 
     }
     Process
     {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+        $ports = $ToProcess.Session.ForwardedPorts
+        foreach($p in $ports)
         {
-            Write-Verbose "Finding session with Index $Index"
-            foreach($session in $Global:SshSessions)
+            if ($p.BoundPort -eq $BoundPort -and $p.BoundHost -eq $BoundHost)
             {
-                Write-Verbose $session.index
-                if ($session.index -eq $Index)
-                {
-                    $ports = $session.Session.ForwardedPorts
-                    foreach($p in $ports)
-                    {
-                        if ($p.BoundPort -eq $BoundPort)
-                        {
-                            $p.Stop()
-                            $p
-                        }
-                    }
-                }
-            }
-        }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            if ($SSHSession -in $Global:SshSessions)
-            {
-                $ports = $SSHSession.Session.ForwardedPorts
-                foreach($p in $ports)
-                {
-                    if ($p.BoundPort -eq $BoundPort)
-                    {
-                        $p.Stop()
-                        $p
-                    }
-                }
-            }
-            else
-            {
-                Write-Error "The Session does not appear in the list of created sessions."
+                $p.Stop()
+                $p
             }
         }
     }
@@ -478,70 +517,75 @@ VERBOSE: Forwarding has been started.
     Port      : 80
     IsStarted : True
 #>
-<#function Start-SSHPortForward
+function Start-SSHPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Session",
-        ValueFromPipeline=$true)]
-    [Alias("Session")]
-    [SSH.SSHSession]$SSHSession,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Session",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Alias("Session")]
+        [SSH.SSHSession]
+        $SSHSession,
 
-    [Parameter(Mandatory=$true,
-        ParameterSetName = "Index",
-        ValueFromPipeline=$true)]
-    [Int32]$Index,
+        [Parameter(Mandatory=$true,
+            ParameterSetName = "Index",
+            ValueFromPipeline=$true,
+            Position=0)]
+        [Int32]
+        $Index,
 
-    [Parameter(Mandatory=$true)]
-    [Int32]$BoundPort
+        [Parameter(Mandatory=$true,
+            Position=2)]
+        [Int32]
+        $BoundPort,
+
+        [Parameter(Mandatory=$true,
+            Position=1)]
+        [string]
+        $BoundHost
     )
 
      Begin
     {
+         $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SSHSession -Index $Index
+                if ($sess)
+                {
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($Index) was not found"
+                    return
+                }
+            }
+        } 
     }
     Process
     {
-        if ($PSCmdlet.ParameterSetName -eq 'Index')
+
+        $ports = $ToProcess.Session.ForwardedPorts
+        foreach($p in $ports)
         {
-            Write-Verbose "Finding session with Index $Index"
-            foreach($session in $Global:SshSessions)
+            if ($p.BoundPort -eq $BoundPort -and $p.BoundHost -eq $BoundHost)
             {
-                Write-Verbose $session.index
-                if ($session.index -eq $Index)
-                {
-                    $ports = $session.Session.ForwardedPorts
-                    foreach($p in $ports)
-                    {
-                        if ($p.BoundPort -eq $BoundPort)
-                        {
-                            $p.Start()
-                            $p
-                        }
-                    }
-                }
+                $p.Start()
+                $p
             }
         }
-        elseif ($PSCmdlet.ParameterSetName -eq 'Session')
-        {
-            if ($SSHSession -in $Global:SshSessions)
-            {
-                $ports = $SSHSession.Session.ForwardedPorts
-                foreach($p in $ports)
-                {
-                    if ($p.BoundPort -eq $BoundPort)
-                    {
-                        $p.Start()
-                        $p
-                    }
-                }
-            }
-            else
-            {
-                Write-Error "The Session does not appear in the list of created sessions."
-            }
-        }
+               
     }
     End{}
-}#>
+}

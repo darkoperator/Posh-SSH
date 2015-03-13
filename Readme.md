@@ -24,15 +24,18 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Several fixes when connecting though a proxy.
 * SCP Speed is now almost 3 times faster.
 * SFTP cmdlets for upload and download now show progress and are written in C#.
-* on Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.
+* On Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.
+* Cmdlet Set-SFTPDirectoryPath renamed to Set-SFTPCurrentDirectory so as to match the verb of the Get Cmdlet that gets the current working directory.
 * All cmdlet return ErrorRecords.
 * SFTP functions verify that the path given on the remote host exist and that it is a directory.
 * SFTP functions verify that the file given on the remote host exits and that it is a file.
 * When uploading files via SFTP overwriting of the target file is now optional.
-* Address issue when progress message could get stuck in the powershell window after upload or download of a files was finished.
+* Address issue when progress message could get stuck in the PowerShell window after upload or download of a files was finished.
 * Fix problem when using key files alternate port numbers where being ignored.
 * Fix registry access problem when setting trusted host.
 * Fix problem when enumerating trusted hosts and the registry key for them was not present.
+* SCP, SFTP Session and SSH Session cmdlets when verbose messages are selected will show the SSH certificate fingerprint of the host one is connecting with. 
+ 
 
 ## Version 1.6
 * Fixed problem with ProxyServer option.
@@ -65,10 +68,8 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Added Download and Upload Progress to SCP cmdlets.
 * Patched the Renci SSH .Net library to correct problems when uploading using SCP.
 
-# ToDo
-* Add progress for SFTP upload and Download
-
 # Know Issues
 * No Compression support at the moment.
 * Once a Download or Upload is started only way to cancel is by closing PowerShell.
-* Subterminals are not supported (su, vi, vim)
+* Port Forwarding support in the library used is still not good enough to enable functions. 
+

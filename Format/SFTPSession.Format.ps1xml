@@ -20,7 +20,7 @@
             <TableRowEntry>
                 <TableColumnItems>
                     <TableColumnItem>
-                        <PropertyName>Index</PropertyName>
+                        <PropertyName>SessionId</PropertyName>
                         <Alignment>Center</Alignment>
                     </TableColumnItem>
                     <TableColumnItem>

@@ -2,31 +2,7 @@
 # SFTP Functions
 
 
-<#
-.Synopsis
-   Get current SFTP Sessions that are available for interaction.
-.DESCRIPTION
-   Get current SFTP Sessions that are available for interaction.
-
-.EXAMPLE
-    Get list of current sessions available.
-
-    PS C:\> Get-SFTPSession
-
-    Index Host                                                                                Connected                                                                   
-    ----- ----                                                                                ---------                                                                   
-      0   192.168.1.155                                                                         True  
-
-.PARAMETER Index
-    Index number of Session to retrive.
-
-.NOTES
-    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
-.LINK
-    http://sshnet.codeplex.com/
-    http://www.darkoperator.com/
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPSession 
 {
     param( 
@@ -66,21 +42,7 @@ function Get-SFTPSession
 }
 
 
-<#
-.Synopsis
-   Close and Remove a SFTP Session
-.DESCRIPTION
-   Close and Remove a SFTP Session specified by Index or SFTP Session Object.
-.EXAMPLE
-   Close a SFTP Session
-
-    PS C:\> Remove-SFTPSession -SessionId 0 -Verbose
-    VERBOSE: 0
-    VERBOSE: Removing session 0
-    True
-    VERBOSE: Session 0 Removed
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Remove-SFTPSession
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -166,66 +128,7 @@ function Remove-SFTPSession
 }
 
 
-<#
-.Synopsis
-   Get a List of Files for SFTP Session.
-.DESCRIPTION
-   Get a collection of objection representing files on a given path on a SFTP Session.
-.EXAMPLE
-   List files in the /tmp path on a remote SFTP Session
-
-   C:\Users\Carlos> Get-SFTPDirectoryList -SessionId 0 -Path "/tmp"
-
-
-    FullName       : /tmp/vmware-root
-    LastAccessTime : 4/13/2013 5:44:56 PM
-    LastWriteTime  : 4/13/2013 5:44:56 PM
-    Length         : 4096
-    UserId         : 0
-
-    FullName       : /tmp/..
-    LastAccessTime : 4/13/2013 5:31:46 PM
-    LastWriteTime  : 4/13/2013 7:11:05 PM
-    Length         : 4096
-    UserId         : 0
-
-    FullName       : /tmp/vmware-config1
-    LastAccessTime : 4/13/2013 5:44:23 PM
-    LastWriteTime  : 4/13/2013 5:44:23 PM
-    Length         : 4096
-    UserId         : 0
-
-    FullName       : /tmp/.
-    LastAccessTime : 4/13/2013 8:11:43 PM
-    LastWriteTime  : 4/13/2013 8:11:41 PM
-    Length         : 4096
-    UserId         : 0
-
-    FullName       : /tmp/yum.conf.security
-    LastAccessTime : 4/13/2013 6:19:22 PM
-    LastWriteTime  : 4/13/2013 6:19:21 PM
-    Length         : 865
-    UserId         : 0
-
-    FullName       : /tmp/.ICE-unix
-    LastAccessTime : 4/13/2013 5:27:15 PM
-    LastWriteTime  : 4/13/2013 5:27:15 PM
-    Length         : 4096
-    UserId         : 0
-
-.PARAMETER Index
-    Index number of Session to interact with.
-
-.PARAMETER Path
-    Remote path to list.
-
-.NOTES
-    AUTHOR: Carlos Perez carlos_perez@darkoprator.com
-.LINK
-    http://sshnet.codeplex.com/
-    http://www.darkoperator.com/
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPDirectoryList
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -299,17 +202,7 @@ function Get-SFTPDirectoryList
 }
 
 
-<#
-.Synopsis
-   Create Directory on Remote Server via SFTP
-.DESCRIPTION
-   Create Directory on Remote Server via SFTP specified by Index or SFTP Session Object.
-.EXAMPLE
-   Create a folder in the /tmp directory on servia via a SFTP Session
-
-   PS C:\> New-SFTPDirectory -SessionId 0 -Path "/tmp/temporaryfolder"
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SFTPDirectory
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -372,21 +265,7 @@ function New-SFTPDirectory
      End{}
 }
 
-<#
-.Synopsis
-   Test if a File or Directory exists on Remote Server via SFTP
-.DESCRIPTION
-   Test if a File or Directory exists on Remote Server via SFTP specified by Index or SFTP Session Object.
-.EXAMPLE
-   Test if a folder temporaryfolder exists in the /tmp directory on server via a SFTP Session
-
-   PS C:\> Test-SFTPPath -SessionId 0 -Path "/tmp/temporaryfolder"
-.EXAMPLE
-   Test if a file myfile-1.0.0.ipa exists in the /apps directory on server via a SFTP Session
-
-   PS C:\> Test-SFTPPath -SessionId 0 -Path "/apps/myfile-1.0.0.ipa"
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Test-SFTPPath
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -447,17 +326,7 @@ function Test-SFTPPath
      End{}
 }
 
-<#
-.Synopsis
-   Remove Directory on Remote Server via SFTP
-.DESCRIPTION
-   Remove Directory on Remote Server via SFTP specified by Index or SFTP Session Object.
-.EXAMPLE
-   Remove a folder in the /tmp directory on servia via a SFTP Session
-
-   PS C:\> Remove-SFTPDirectory -SessionId 0 -Path "/tmp/temporaryfolder"
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Remove-SFTPDirectory
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -530,23 +399,7 @@ function Remove-SFTPDirectory
 }
 
 
-<#
-.Synopsis
-   Change the current folder location of a SFTP Session
-.DESCRIPTION
-   Change the current folder location of a SFTP Session specified by Index or SFTP Session Object.
-.EXAMPLE
-   Change a SFTP Session current folder
-
-   PS C:\> Get-SFTPCurrentDirectory -SessionId 0
-    /root
-
-    PS C:\> Set-SFTPCurrentDirectory -SessionId 0 -Path "/tmp"
-
-    PS C:\> Get-SFTPCurrentDirectory -SessionId 0
-    /tmp
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Set-SFTPCurrentDirectory
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -618,18 +471,7 @@ function Set-SFTPCurrentDirectory
 }
 
 
-<#
-.Synopsis
-   Get the current location of a SFTP Session
-.DESCRIPTION
-   Get the current location of a SFTP Session specified by Index or SFTP Session Object.
-.EXAMPLE
-   Get current folder location of a SFTP Session
-
-   PS C:\> Get-SFTPCurrentDirectory -SessionId 0
-    /root
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPCurrentDirectory
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -686,19 +528,7 @@ function Get-SFTPCurrentDirectory
 }
 
 
-<#
-.Synopsis
-   Deletes a file on a remote system via a SFTP Session
-.DESCRIPTION
-   Deletes a file on a remote system via a SFTP Session specified by index or SFTP Session object.
-.EXAMPLE
-   Deleting file on /tmp directory.
-    
-    PS C:\> Remove-SFTPFile -SessionId 0 -RemoteFile "/tmp/anaconda-ks.cfg" -Verbose
-    VERBOSE: Deleting /tmp/anaconda-ks.cfg
-    VERBOSE: Deleted /tmp/anaconda-ks.cfg
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Remove-SFTPFile
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -770,19 +600,7 @@ function Remove-SFTPFile
 }
 
 
-<#
-.Synopsis
-   Move or Rename remote file via a SFTP Session
-.DESCRIPTION
-   Move or Rename remote file via a SFTP Session  specified by index or SFTP Session object.
-.EXAMPLE
-   Rename file by moving it
-
-    PS C:\> Rename-SFTPFile -SessionId 0 -Path /tmp/anaconda-ks.cfg -NewName anaconda-ks.cfg.old -Verbose
-    VERBOSE: Renaming /tmp/anaconda-ks.cfg to anaconda-ks.cfg.old
-    VERBOSE: File renamed
-#>
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Rename-SFTPFile
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -860,38 +678,7 @@ function Rename-SFTPFile
     End{}
 }
 
-<#
-.Synopsis
-   Get the attributes for a specified path in a SFTP session.
-.DESCRIPTION
-   Get the attributes for a specified path in a SFTP session.
-.EXAMPLE
-   Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
-
-
-    LastAccessTime    : 2/27/2015 6:38:43 PM
-    LastWriteTime     : 2/27/2015 7:01:01 PM
-    Size              : 512
-    UserId            : 0
-    GroupId           : 0
-    IsSocket          : False
-    IsSymbolicLink    : False
-    IsRegularFile     : False
-    IsBlockDevice     : False
-    IsDirectory       : True
-    IsCharacterDevice : False
-    IsNamedPipe       : False
-    OwnerCanRead      : True
-    OwnerCanWrite     : True
-    OwnerCanExecute   : True
-    GroupCanRead      : True
-    GroupCanWrite     : True
-    GroupCanExecute   : True
-    OthersCanRead     : True
-    OthersCanWrite    : True
-    OthersCanExecute  : True
-    Extensions        : 
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPPathAttribute
 {
     [CmdletBinding()]

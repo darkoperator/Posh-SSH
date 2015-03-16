@@ -862,99 +862,82 @@ phrase.</maml:para>
 			<!-- Parameter Sets-->
 			<command:syntaxItem>
 				<maml:name>Get-SFTPFile</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0">
 					<maml:name>SessionId</maml:name>
 					<maml:description>
-						<maml:para>Session Id number of an exiting SFTP Session. </maml:para>
+						<maml:para>Session Id number of an exiting SFTP Session.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1">
 					<maml:name>LocalPath</maml:name>
 					<maml:description>
 						<maml:para>Folder on the local machine where to download the file to.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2">
 					<maml:name>RemoteFile</maml:name>
 					<maml:description>
 						<maml:para>Full path on of file to download on the remote host.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3" aliases="">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3">
 					<maml:name>Overwrite</maml:name>
 					<maml:description>
 						<maml:para>If file is already present locally overwrite it.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
 				<maml:name>Get-SFTPFile</maml:name>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0">
 					<maml:name>SFTPSession</maml:name>
 					<maml:description>
 						<maml:para>SFTP Session Object of a currently connected session.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1">
 					<maml:name>LocalPath</maml:name>
 					<maml:description>
 						<maml:para>Folder on the local machine where to download the file to.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="">
+				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2">
 					<maml:name>RemoteFile</maml:name>
 					<maml:description>
 						<maml:para>Full path on of file to download on the remote host.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3" aliases="">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3">
 					<maml:name>Overwrite</maml:name>
 					<maml:description>
 						<maml:para>If file is already present locally overwrite it.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
 		<command:parameters>
 			<!-- All Parameters-->
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0">
 				<maml:name>SessionId</maml:name>
 				<maml:description>
-					<maml:para>Session Id number of an exiting SFTP Session. </maml:para>
+					<maml:para>Session Id number of an exiting SFTP Session.</maml:para>
 				</maml:description>
 				<command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
 				<dev:type>
 					<maml:name>Int32[]</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="2">
 				<maml:name>RemoteFile</maml:name>
 				<maml:description>
 					<maml:para>Full path on of file to download on the remote host.</maml:para>
@@ -964,10 +947,9 @@ phrase.</maml:para>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="1">
 				<maml:name>LocalPath</maml:name>
 				<maml:description>
 					<maml:para>Folder on the local machine where to download the file to.</maml:para>
@@ -977,10 +959,9 @@ phrase.</maml:para>
 					<maml:name>String</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3" aliases="">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="3">
 				<maml:name>Overwrite</maml:name>
 				<maml:description>
 					<maml:para>If file is already present locally overwrite it.</maml:para>
@@ -990,10 +971,9 @@ phrase.</maml:para>
 					<maml:name>SwitchParameter</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="">
+			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="0">
 				<maml:name>SFTPSession</maml:name>
 				<maml:description>
 					<maml:para>SFTP Session Object of a currently connected session.</maml:para>
@@ -1003,8 +983,7 @@ phrase.</maml:para>
 					<maml:name>SftpSession[]</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>

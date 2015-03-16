@@ -305,19 +305,11 @@ function Invoke-SSHCommand
  }
 
 
-<#
-.Synopsis
-   Short description
-.DESCRIPTION
-   Long description
-.EXAMPLE
-   Example of how to use this cmdlet
-.EXAMPLE
-   Another example of how to use this cmdlet
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SSHShellStream
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
+    [OutputType([Renci.SshNet.ShellStream])]
     Param
     (
         [Parameter(Mandatory=$true,
@@ -407,19 +399,11 @@ function New-SSHShellStream
     }
 }
 
-<#
-.Synopsis
-   Short description
-.DESCRIPTION
-   Long description
-.EXAMPLE
-   Example of how to use this cmdlet
-.EXAMPLE
-   Another example of how to use this cmdlet
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Invoke-SSHStreamExpectAction
 {
     [CmdletBinding(DefaultParameterSetName='String')]
+    [OutputType([Bool])]
     Param
     (
         # SSH Shell Stream. 
@@ -487,10 +471,12 @@ function Invoke-SSHStreamExpectAction
             Write-Verbose -Message "Executing action: $($Action)."
             $ShellStream.WriteLine($Action)
             Write-Verbose -Message 'Action has been executed.'
+            $true
         }
         else
         {
-            Write-Warning -Message 'Expect timeout without achiving a match.'
+            Write-Verbose -Message 'Expect timeout without achiving a match.'
+            $false
         }
     }
     End
@@ -498,66 +484,11 @@ function Invoke-SSHStreamExpectAction
     }
 }
 
-<#
-.Synopsis
-   Executes an action stored in a secure string when an output is matched. 
-.DESCRIPTION
-   Executes an action stored in a secure string when an output is matched. By
-   the expect action being in a secure string this function is best used when a
-   password must be provided to a promp protecting it in memory. Examples 
-   uses would be for use in su or sudo commands.
-.EXAMPLE
-
-    Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'su -' -ExpectString 'Passord:' -SecureAction (read-host -AsSecureString) -Verbose
-    ***********
-    VERBOSE: Executing command su -.
-    VERBOSE: Waiting for match.
-    VERBOSE: Executing action.
-    VERBOSE: Action has been executed.
-    PS C:\> $stream.Read()
-
-    Last login: Sat Mar 14 18:18:52 EDT 2015 on pts/0
-    Last failed login: Sun Mar 15 08:52:07 EDT 2015 on pts/0
-    There were 2 failed login attempts since the last successful login.
-    [root@localhost ~]#
-
-.EXAMPLE
-     $sudoPassPropmp = [regex]':\s$'
-    PS C:\> Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'sudo ifconfig' -ExpectRege
-    x $sudoPassPropmp -SecureAction (read-host -AsSecureString) -Verbose
-    ***********
-    VERBOSE: Executing command sudo ifconfig.
-    VERBOSE: Waiting for match.
-    VERBOSE: Matching by RegEx.
-    VERBOSE: Executing action.
-    VERBOSE: Action has been executed.
-    PS C:\> $stream.Read()
-
-    [sudo] password for admin:
-    ens192: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-            inet 192.168.1.180  netmask 255.255.240.0  broadcast 192.168.15.255
-            inet6 fe80::20c:29ff:feeb:34a0  prefixlen 64  scopeid 0x20<link>
-            ether 00:0c:29:eb:34:a0  txqueuelen 1000  (Ethernet)
-            RX packets 300644  bytes 175076049 (166.9 MiB)
-            RX errors 0  dropped 0  overruns 0  frame 0
-            TX packets 139657  bytes 56363667 (53.7 MiB)
-            TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-    lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-            inet 127.0.0.1  netmask 255.0.0.0
-            inet6 ::1  prefixlen 128  scopeid 0x10<host>
-            loop  txqueuelen 0  (Local Loopback)
-            RX packets 0  bytes 0 (0.0 B)
-            RX errors 0  dropped 0  overruns 0  frame 0
-            TX packets 0  bytes 0 (0.0 B)
-            TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-    [admin@localhost ~]$
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Invoke-SSHStreamExpectSecureAction
 {
     [CmdletBinding(DefaultParameterSetName='String')]
-    [OutputType([int])]
+    [OutputType([Bool])]
     Param
     (
         # SSH Shell Stream. 
@@ -633,14 +564,16 @@ function Invoke-SSHStreamExpectSecureAction
             $ShellStream.WriteLine([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureAction)))
             Write-Verbose -Message 'Action has been executed.'
             $SecureAction.Dispose()
-            
+            $true
         }
         else
         {
-            Write-Warning -Message 'Expect timeout without achiving a match.'
+            Write-Verbose -Message 'Expect timeout without achiving a match.'
+            $false
         }
     }
     End
     {
     }
 }
+

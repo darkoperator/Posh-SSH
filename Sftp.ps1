@@ -257,9 +257,17 @@ function New-SFTPDirectory
 
         foreach($sess in $ToProcess)
         { 
-            Write-Verbose -Message "Creating directory $($Path)"
-            $sess.Session.CreateDirectory($Path)
-            Write-Verbose -Message 'Successful directory creation.'
+            if (!$sess.Session.Exists($Path))
+            {
+                Write-Verbose -Message "Creating directory $($Path)"
+                $sess.Session.CreateDirectory($Path)
+                Write-Verbose -Message 'Successful directory creation.'
+                $sess.Session.Get($Path)
+            }
+            else
+            {
+                Write-Error -Message "Specified path of $($Path) already exists."
+            }
         }
      }
      End{}

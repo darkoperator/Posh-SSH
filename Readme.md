@@ -23,7 +23,72 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 # ChangeLog
 
 ## Version 1.7
-* Index Paramater and Property are now SessionId. All cmdlets and function have Index as an Alias so as to not break existing scripts.
+* New function New-SSHShellStream for easier creation of shell stream objects.
+
+```PowerShell
+C:\PS>$SSHStream = New-SSHShellStream -Index 0
+PS C:\> $SSHStream.WriteLine("uname -a")
+PS C:\> $SSHStream.read()
+Last login: Sat Mar 14 20:02:16 2015 from infidel01.darkoperator.com
+[admin@localhost ~]$ uname -a
+Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC 2014 x86_64
+x86_64 x86_64 GNU/Linux
+[admin@localhost ~]$
+```
+
+* New function Invoke-SSHStreamExpectSecureAction for passing passwords to prompt on a shell stream.
+
+```PowerShell
+C:\PS>Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'su -' -ExpectString 'Passord:' -SecureAction (read-host -AsSecureString) -Verbose
+
+***********
+VERBOSE: Executing command su -.
+VERBOSE: Waiting for match.
+VERBOSE: Executing action.
+VERBOSE: Action has been executed.
+True
+PS C:\> $stream.Read()
+
+Last login: Sat Mar 14 18:18:52 EDT 2015 on pts/0
+Last failed login: Sun Mar 15 08:52:07 EDT 2015 on pts/0
+There were 2 failed login attempts since the last successful login.
+[root@localhost ~]#
+
+```
+
+* New function Invoke-SSHStreamExpectAction for executing expect actions on a shell stream.
+* New function Get-SFTPPathAttribute to get attributes of a given path. 
+
+```PowerShell
+C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
+
+ LastAccessTime    : 2/27/2015 6:38:43 PM
+ LastWriteTime     : 2/27/2015 7:01:01 PM
+ Size              : 512
+ UserId            : 0
+ GroupId           : 0
+ IsSocket          : False
+ IsSymbolicLink    : False
+ IsRegularFile     : False
+ IsBlockDevice     : False
+ IsDirectory       : True
+ IsCharacterDevice : False
+ IsNamedPipe       : False
+ OwnerCanRead      : True
+ OwnerCanWrite     : True
+ OwnerCanExecute   : True
+ GroupCanRead      : True
+ GroupCanWrite     : True
+ GroupCanExecute   : True
+ OthersCanRead     : True
+ OthersCanWrite    : True
+ OthersCanExecute  : True
+ Extensions        :
+```
+
+* New-SFTPDirectory returns a Renci.SshNet.Sftp.SftpFile object after creating a directory.
+* New-SFTPDirectory has better error message if a folder already exists.
+* Index Parameter and Property are now SessionId. All cmdlets and function have Index as an Alias so as to not break existing scripts.
 * Added support for ssh.com (SSH-2) private keys.
 * Added support on acceptable group of up to 8192 bits for SHA-1 and SHA-256 Diffie-Hellman Group and Key Exchange
 * Several fixes when connecting though a proxy.
@@ -51,6 +116,7 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Increase buffer size from 16KB to 64KB for SftpClient
 * Take into account the maximum remote packet size of the channel for write operations
 * Increase maximum size of packets that we can receive from 32 KB to 64 KB
+
  
 
 ## Version 1.6

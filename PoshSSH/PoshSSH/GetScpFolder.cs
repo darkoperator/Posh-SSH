@@ -13,7 +13,7 @@ namespace SSH
     [Cmdlet(VerbsCommon.Get, "SCPFolder", DefaultParameterSetName = "NoKey")]
     public class GetScpFolder : PSCmdlet
     {
-        // Hosts tp conect to
+        // Hosts to conect to
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -169,21 +169,21 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int OperationTimeOut
+        public int OperationTimeout
         {
             get { return _operationtimeout; }
             set { _operationtimeout = value; }
         }
         private int _operationtimeout = 5;
 
-        // ConnectionTimeOut Parameter
+        // ConnectionTimeout Parameter
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int ConnectionTimeOut
+        public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
             set { _connectiontimeout = value; }
@@ -278,16 +278,16 @@ namespace SSH
                         {
                             if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                             {
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer1);
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                             }
                             e.CanTrust = true;
                         }
                         else
                         {
-                            var ex =  new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            var ex = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
                             ThrowTerminatingError(new ErrorRecord(
                                 ex,
-                                "SSH fingerprint mistmatch for host " + computer1,
+                                "SSH fingerprint mismatch for host " + computer1,
                                 ErrorCategory.SecurityError,
                                 computer1));
                         }
@@ -324,7 +324,7 @@ namespace SSH
                 // Set the connection timeout
                 client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                // Connect to  host using Connection info
+                // Connect to host using Connection info
                 client.Connect();
 
                 var counter = 0;

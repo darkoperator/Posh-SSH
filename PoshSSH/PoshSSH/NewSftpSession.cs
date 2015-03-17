@@ -16,7 +16,7 @@ namespace SSH
     [Cmdlet(VerbsCommon.New, "SFTPSession", DefaultParameterSetName = "NoKey")]
     public class NewSftpSession : PSCmdlet
     {
-        // Hosts tp conect to
+        // Hosts to conect to
         private string[] _computername;
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
@@ -148,14 +148,14 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int OperationTimeOut
+        public int OperationTimeout
         {
             get { return _operationtimeout; }
             set { _operationtimeout = value; }
         }
 
 
-        // ConnectionTimeOut Parameter
+        // ConnectionTimeout Parameter
         private int _connectiontimeout = 5;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
@@ -163,7 +163,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int ConnectionTimeOut
+        public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
             set { _connectiontimeout = value; }
@@ -278,14 +278,14 @@ namespace SSH
                         {
                             if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                             {
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " +
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " +
                                                           computer);
                             }
                             e.CanTrust = true;
                         }
                         else
                         {
-                            throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
                         }
                     }
                     else
@@ -323,7 +323,7 @@ namespace SSH
                 // Set Keepalive for connections
                 client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
 
-                // Connect to  host using Connection info
+                // Connect to host using Connection info
                 client.Connect();
                 WriteObject(SshModHelper.AddToSftpSessionCollection(client, SessionState), true);
             }

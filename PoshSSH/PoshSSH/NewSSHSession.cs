@@ -15,7 +15,7 @@ namespace SSH
     [Cmdlet(VerbsCommon.New, "SSHSession", DefaultParameterSetName = "NoKey")]
     public class NewSshSession : PSCmdlet
     {
-        // Hosts tp conect to
+        // Hosts to conect to
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -143,7 +143,7 @@ namespace SSH
             set { _keyfile = value; }
         }
 
-        // ConnectionTimeOut Parameter
+        // ConnectionTimeout Parameter
         private int _connectiontimeout = 10;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
@@ -151,7 +151,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int ConnectionTimeOut
+        public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
             set { _connectiontimeout = value; }
@@ -267,13 +267,13 @@ namespace SSH
                         {
                             if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                             {
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer1);
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                             }
                             e.CanTrust = true;
                         }
                         else
                         {
-                            throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
                         }
                     }
                     else
@@ -311,7 +311,7 @@ namespace SSH
                 // Set Keepalive for connections
                 client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
 
-                // Connect to  host using Connection info
+                // Connect to host using Connection info
                 client.Connect();
 
                 WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);

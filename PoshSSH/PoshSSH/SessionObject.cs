@@ -28,7 +28,7 @@ namespace SSH
         }
     }
 
-    // Object for SSTP Sessions
+    // Object for SFTP Sessions
     public class SftpSession
     {
         public Int32 SessionId;

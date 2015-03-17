@@ -13,7 +13,7 @@ namespace SSH
     [Cmdlet(VerbsCommon.Get, "SCPFile", DefaultParameterSetName = "NoKey")]
     public class GetScpFile : PSCmdlet
     {
-        // Hosts tp conect to
+        // Hosts to conect to
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -173,21 +173,21 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int OperationTimeOut
+        public int OperationTimeout
         {
             get { return _operationtimeout; }
             set { _operationtimeout = value; }
         }
         private int _operationtimeout = 5;
 
-        // ConnectionTimeOut Parameter
+        // ConnectionTimeout Parameter
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int ConnectionTimeOut
+        public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
             set { _connectiontimeout = value; }
@@ -282,14 +282,14 @@ namespace SSH
                         {
                             if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                             {
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer);
                             }
 
                             e.CanTrust = true;
                         }
                         else
                         {
-                            throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
                         }
                     }
                     else
@@ -324,7 +324,7 @@ namespace SSH
                 // Set the connection timeout
                 client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                // Connect to  host using Connection info
+                // Connect to host using Connection info
                 client.Connect();
 
                 var counter = 0;
@@ -352,7 +352,7 @@ namespace SSH
                         }
                     }
                 };
-                WriteVerbose("Connection succesfull");
+                WriteVerbose("Connection successful");
                 var localfullPath = Path.GetFullPath(_localfile);
 
                 WriteVerbose("Downloading " + _remotefile);

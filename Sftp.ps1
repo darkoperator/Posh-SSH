@@ -686,6 +686,7 @@ function Rename-SFTPFile
     End{}
 }
 
+
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPPathAttribute
 {
@@ -752,6 +753,606 @@ function Get-SFTPPathAttribute
                 throw "Path $($Path) does not exist on the target host."
             }
         }
+    }
+    End
+    {
+    }
+}
+
+<#
+.Synopsis
+   Create a Symbolic Link on the remote host via SFTP.
+.DESCRIPTION
+   Create a Symbolic Link on the remote host via SFTP.
+#>
+function New-SFTPSymlink
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=1)]
+        [String]
+        $Path,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=2)]
+        [String]
+        $LinkPath
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
+    Process
+    {
+        foreach($session in $ToProcess)
+        {
+            $filepath = Test-SFTPPath -SFTPSession $session -Path $Path
+            $linkstatus = Test-SFTPPath -SFTPSession $session -path $LinkPath`
+            if (($filepath) -and (!$linkstatus))
+            {
+                try
+                {
+                    Write-Verbose -Message "Creating symlink for $($Path) to $($LinkPath)"
+                    $session.session.SymbolicLink($Path, $LinkPath)
+                    $session.session.Get($LinkPath)
+                }
+                catch
+                {
+                    Write-Error -Exception $_ 
+                }
+
+            }
+            else
+            {
+                if ($linkstatus)
+                {
+                    Write-Error -Message "A file already exists in the path of the link $($linkstatus)"
+                }
+               
+                if (!$filepath)
+                {
+                    Write-Error -Message "The path $($Path) to link does not exist"
+                }
+            }
+        }
+    }
+    End
+    {
+    }
+}
+
+<#
+.Synopsis
+   Gets the content of the item at the specified location over SFTP.
+.DESCRIPTION
+   Gets the content of the item at the specified location over SFTP.
+.EXAMPLE
+   PS C:\> Get-SFTPContent -SessionId 0 -Path  /etc/system-release
+   CentOS Linux release 7.0.1406 (Core)
+#>
+function Get-SFTPContent
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=1)]
+        [String]
+        $Path,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=2)]
+        [ValidateSet('String', 'Byte', 'MultiLine')]
+        [string]
+        $ContentType = 'String',
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipelineByPropertyName=$true)]
+        [ValidateSet('ASCII','Unicode', 'UTF7', 'UTF8', 'UTF32', 'BigEndianUnicode')]
+        [string]
+        $Encoding='UTF8'
+    )
+
+    Begin
+    {
+        
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+
+        # Set encoding.
+        switch ($Encoding)
+        {
+            'ASCII' {
+                $ContentEncoding = [System.Text.Encoding]::ASCII
+            }
+
+            'Unicode' {
+                $ContentEncoding = [System.Text.Encoding]::Unicode
+            }
+            
+            'UTF7' {
+                $ContentEncoding = [System.Text.Encoding]::UTF7
+            }
+            
+            'UTF8' {
+                $ContentEncoding = [System.Text.Encoding]::UTF8
+            }
+            
+            'UTF32' {
+                $ContentEncoding = [System.Text.Encoding]::UTF32
+            }
+            
+            'BigEndianUnicode'{
+                $ContentEncoding = [System.Text.Encoding]::BigEndianUnicode
+            }
+        }
+    }
+    Process
+    {
+        foreach($session in $ToProcess)
+        {
+
+            $attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
+            if ($attrib.IsRegularFile)
+            {    
+                try 
+                {
+                switch ($ContentType)
+                {
+                    'String' {
+                            
+                        $session.session.ReadAllText($Path, $ContentEncoding)
+                       
+                     }
+
+                    'Byte' {
+                        
+                        $session.session.ReadAllBytes($Path)
+                       
+                     }
+                
+                    'MultiLine' {
+                        
+                        $session.session.ReadAllLines($Path, $Value, $ContentEncoding)
+
+                    }
+                    Default {$session.session.ReadAllBytes($Path)}
+                }
+            }
+                catch
+                {
+                Write-Error -Exception $_ -Message "Failed to get content to file $($Path)"
+            }
+            }
+            else
+            {
+                Write-Error -Message "The specified path $($Path) is not to a file."
+            }
+        }
+    }
+    End
+    {
+    }
+}
+
+
+<#
+.Synopsis
+   Writes or replaces the content in an item with new content over SFTP.
+.DESCRIPTION
+   Writes or replaces the content in an item with new content over SFTP
+.EXAMPLE
+    PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"
+
+
+    FullName       : /tmp/example.txt
+    LastAccessTime : 3/16/2015 10:40:16 PM
+    LastWriteTime  : 3/16/2015 10:40:55 PM
+    Length         : 22
+    UserId         : 1000
+
+
+
+    PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
+    My example message
+
+    PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "New message`n" -Append
+
+
+    FullName       : /tmp/example.txt
+    LastAccessTime : 3/16/2015 10:40:59 PM
+    LastWriteTime  : 3/16/2015 10:41:18 PM
+    Length         : 34
+    UserId         : 1000
+
+
+
+    PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
+    My example message
+    New message
+#>
+function Set-SFTPContent
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    [OutputType([Renci.SshNet.Sftp.SftpFile])]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=1)]
+        [String]
+        $Path,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=2)]
+        $Value,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipelineByPropertyName=$true)]
+        [ValidateSet('ASCII','Unicode', 'UTF7', 'UTF8', 'UTF32', 'BigEndianUnicode')]
+        [string]
+        $Encoding='UTF8',
+
+        [switch]
+        $Append
+
+        
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+
+        # Set encoding.
+        switch ($Encoding)
+        {
+            'ASCII' {
+                $ContentEncoding = [System.Text.Encoding]::ASCII
+            }
+
+            'Unicode' {
+                $ContentEncoding = [System.Text.Encoding]::Unicode
+            }
+            
+            'UTF7' {
+                $ContentEncoding = [System.Text.Encoding]::UTF7
+            }
+            
+            'UTF8' {
+                $ContentEncoding = [System.Text.Encoding]::UTF8
+            }
+            
+            'UTF32' {
+                $ContentEncoding = [System.Text.Encoding]::UTF32
+            }
+            
+            'BigEndianUnicode'{
+                $ContentEncoding = [System.Text.Encoding]::BigEndianUnicode
+            }
+        }
+
+    }
+    Process
+    {
+        foreach($session in $ToProcess)
+        {
+            $ValueType = $Value.GetType().Name
+            write-verbose -message  "Saving a $($ValueType) to $($Path)."
+            try 
+            {
+                switch ($ValueType)
+                {
+                    'string[]' {
+                        if ($Append)
+                        {
+                            $session.session.AppendAllLines($Path, $Value, $ContentEncoding)
+                        }
+                        else
+                        {
+                            $session.session.WriteAllLines($Path, $Value, $ContentEncoding)
+                        }
+                        $session.session.Get($Path)
+                     }
+
+                    'byte[]' {
+                        if ($Append)
+                        {
+                            $session.session.WriteAllBytes($Path, $Value)
+                        }
+                        else
+                        {
+                            $session.session.WriteAllBytes($Path, $Value)
+                        }
+                        $session.session.Get($Path)
+                     }
+                
+                    'string' {
+                        if ($Append)
+                        {
+                            $session.session.AppendAllText($Path, $Value, $ContentEncoding)
+                        }
+                        else
+                        {
+                            $session.session.WriteAllText($Path, $Value, $ContentEncoding)
+                        }
+
+                        $session.session.Get($Path)
+                    }
+                    Default {Write-Error -Message "The value of type $($ValueType) is not supported."}
+                }
+            }
+            catch
+            {
+                Write-Error -Exception $_ -Message "Failed to write content to file $($Path)"
+            }
+        }
+    }
+    End
+    {
+    }
+}
+
+<#
+.Synopsis
+   Create a IO Stream over SFTP for a file on a remote host.
+.DESCRIPTION
+   Create a IO Stream over SFTP for a file on a remote host.
+.EXAMPLE
+   PS C:\> $bashhistory = New-SFTPFileStream -SessionId 0 -Path /home/admin/.bash_history -FileMode Open -FileAccess Read
+   PS C:\> $bashhistory
+
+
+    CanRead      : True
+    CanSeek      : True
+    CanWrite     : False
+    CanTimeout   : True
+    Length       : 830
+    Position     : 0
+    IsAsync      : False
+    Name         : /home/admin/.bash_history
+    Handle       : {0, 0, 0, 0}
+    Timeout      : 00:00:30
+    ReadTimeout  :
+    WriteTimeout :
+
+    PS C:\> $streamreader = New-Object System.IO.StreamReader -ArgumentList $bashhistory
+    PS C:\> while ($streamreader.Peek() -ge 0) {$streamreader.ReadLine()}
+    ls
+    exit
+    ssh-keygen -t rsa
+    mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+    chmod 600 ~/.ssh/authorized_keys
+    vim /etc/ssh/sshd_config
+    sudo vim /etc/ssh/sshd_config
+
+    PS C:\> 
+
+
+#>
+function New-SFTPFileStream
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    [OutputType([Renci.SshNet.Sftp.SftpFileStream])]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=1)]
+        [String]
+        $Path,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=2)]
+        [ValidateSet('Append', 'Create', 'CreateNew', 'Open', 'OpenOrCreate', 'Truncate')]
+        [string]
+        $FileMode,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=3)]
+        [ValidateSet('Read', 'ReadWrite', 'Write')]
+        [string]
+        $FileAccess
+    )
+
+    Begin
+    {
+        $ToProcess = $null
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                $sess = Get-SFTPSession -Index $SessionId
+                if ($sess)
+                {
+                    $ToProcess = $sess
+                }
+                else
+                {
+                    Write-Error -Message "Session specified with Index $($SessionId) was not found"
+                    return
+                }
+            }
+        }
+
+        # Set FileAccess.
+        switch ($FileAccess)
+        {
+            'Read' {
+                $StreamFileAccess = [System.IO.FileAccess]::Read
+            }
+
+            'ReadWrite' {
+                $StreamFileAccess = [System.IO.FileAccess]::ReadWrite
+            }
+
+            'Write' {
+                $StreamFileAccess = [System.IO.FileAccess]::Write
+            }
+        }
+
+        # Set FileMode.
+        switch ($FileMode)
+        {
+            'Append' {
+                $StreamFileMode = [System.IO.FileMode]::Append
+            }
+
+            'Create' {
+                $StreamFileMode = [System.IO.FileMode]::Create
+            }
+
+            'CreateNew' {
+                $StreamFileMode = [System.IO.FileMode]::CreateNew
+            }
+
+            'Open' {
+                $StreamFileMode = [System.IO.FileMode]::Open
+            }
+
+            'OpenOrCreate' {
+                $StreamFileMode = [System.IO.FileMode]::OpenOrCreate
+            }
+
+            'Truncate' {
+                $StreamFileMode = [System.IO.FileMode]::Truncate
+            }
+        }
+    }
+    Process
+    {
+        $ToProcess.Session.Open($Path, $StreamFileMode, $StreamFileAccess)
     }
     End
     {

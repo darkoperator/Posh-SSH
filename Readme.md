@@ -101,7 +101,7 @@ C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
 * SFTP functions verify that the file given on the remote host exits and that it is a file.
 * When uploading files via SFTP overwriting of the target file is now optional.
 * Address issue when progress message could get stuck in the PowerShell window after upload or download of a files was finished.
-* Fix problem when using key files alternate port numbers where being ignored.
+* Fix problem when using key files and connecting to alternate SSH port numbers, the port number was being ignored.
 * Fix registry access problem when setting trusted host.
 * Fix problem when enumerating trusted hosts and the registry key for them was not present.
 * SCP, SFTP Session and SSH Session cmdlets when verbose messages are selected will show the SSH certificate fingerprint of the host one is connecting with. 

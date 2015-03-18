@@ -138,7 +138,7 @@ namespace SSH
 
                     
 
-                    // Check that the path we are downloading from to actually exists on the target.
+                    // Check that the path we are downloading from actually exists on the target.
                     if (sftpSession.Session.Exists(_remotefile))
                     {
                         // Ensure the remote path is a directory. 
@@ -158,7 +158,7 @@ namespace SSH
                                 var percent = (int)((((double)rs) / attribs.Size) * 100.0);
                                 if (percent % 10 == 0)
                                 {
-                                    // This will prevent the progress message to end stuck on the screen.
+                                    // This will prevent the progress message from being stuck on the screen.
                                     if (percent == 100)
                                     {
                                         return;
@@ -220,7 +220,7 @@ namespace SSH
             }
             else
             {
-                var ex =  new FileNotFoundException("Local path" + localfullPath + " was not found.");
+                var ex = new FileNotFoundException("Local path" + localfullPath + " was not found.");
 
                 ThrowTerminatingError(new ErrorRecord(
                                                 ex,

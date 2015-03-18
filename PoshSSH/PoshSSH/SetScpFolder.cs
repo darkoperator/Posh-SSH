@@ -13,7 +13,7 @@ namespace SSH
     [Cmdlet(VerbsCommon.Set, "SCPFolder", DefaultParameterSetName = "NoKey")]
     public class SetScpFolder : PSCmdlet
     {
-        // Hosts tp conect to
+        // Hosts to conect to
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -170,21 +170,21 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int OperationTimeOut
+        public int OperationTimeout
         {
             get { return _operationtimeout; }
             set { _operationtimeout = value; }
         }
         private int _operationtimeout = 15;
 
-        // ConnectionTimeOut Parameter
+        // ConnectionTimeout Parameter
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public int ConnectionTimeOut
+        public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
             set { _connectiontimeout = value; }
@@ -277,12 +277,12 @@ namespace SSH
                     {
                         if (_sshHostKeys[computer1] == fingerPrint)
                         {
-                            //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerpring for host " + computer);
+                            //this.Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer);
                             e.CanTrust = true;
                         }
                         else
                         {
-                            throw new System.Security.SecurityException("SSH fingerprint mistmatch for host " + computer1);
+                            throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
                         }
                     }
                     else
@@ -317,7 +317,7 @@ namespace SSH
                 // Set the connection timeout
                 client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                // Connect to  host using Connection info
+                // Connect to host using Connection info
                 client.Connect();
                 client.BufferSize = 1024;
 

@@ -26,10 +26,10 @@ namespace SSH
             var sshSessions = new List<SshSession>();
             var index = 0;
 
-            // Retrive existing sessions from the globla variable.
+            // Retrieve existing sessions from the global variable.
             var sessionvar = pssession.PSVariable.GetValue("Global:SshSessions") as List<SshSession>;
 
-            // If sessions exist  we set the proper index number for it.
+            // If sessions exist we set the proper index number for them.
             if (sessionvar != null)
             {
                 sshSessions.AddRange(sessionvar);
@@ -58,7 +58,7 @@ namespace SSH
             // Retrive existing sessions from the globla variable.
             var sessionvar = pssession.PSVariable.GetValue("Global:SFTPSessions") as List<SftpSession>;
 
-            // If sessions exist  we set the proper index number for it.
+            // If sessions exist we set the proper index number for them.
             if (sessionvar != null)
             {
                 sftpSessions.AddRange(sessionvar);

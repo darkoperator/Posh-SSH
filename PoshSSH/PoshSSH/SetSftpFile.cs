@@ -30,7 +30,7 @@ namespace SSH
         
 
         /// <summary>
-        /// Session paramter that takes private SSH.SftpSession[] 
+        /// Session parameter that takes private SSH.SftpSession[] 
         /// </summary>
         private SftpSession[] _session;
         [ValidateNotNullOrEmpty]
@@ -45,7 +45,7 @@ namespace SSH
         }
 
         /// <summary>
-        /// Folder on remote target where to upload the file.
+        /// Folder on remote target to upload the file to.
         /// </summary>
         private String _remotepath;
         [ValidateNotNullOrEmpty]
@@ -142,7 +142,7 @@ namespace SSH
                             var percent = (int)((((double)rs) / fil.Length) * 100.0);
                             if (percent % 10 == 0)
                             {
-                                // This will prevent the progress message to end stuck on the screen.
+                                // This will prevent the progress message from being stuck on the screen.
                                 if (percent == 100)
                                 {
                                     return;
@@ -167,7 +167,7 @@ namespace SSH
                         {
                             throw new SftpPathNotFoundException("Specified path is not a directory");
                         }
-                        // Check if the file already exists o the target system.
+                        // Check if the file already exists on the target system.
                         var present = sftpSession.Session.Exists(remoteFullpath);
                         if ((present & _overwrite) || (!present))
                         {
@@ -190,7 +190,7 @@ namespace SSH
                         }
                         else
                         {
-                            var ex  =  new SftpPermissionDeniedException("File already exists on remote host.");
+                            var ex = new SftpPermissionDeniedException("File already exists on remote host.");
                             WriteError(new ErrorRecord(
                                              ex,
                                              "File already exists on remote host",
@@ -212,7 +212,7 @@ namespace SSH
             }
             else
             {
-                var ex =  new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+                var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
 
                 ThrowTerminatingError(new ErrorRecord(
                                                 ex,

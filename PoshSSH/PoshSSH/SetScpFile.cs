@@ -363,7 +363,7 @@ namespace SSH
                     }
                 };
 
-                WriteVerbose("Connection succesfull");
+                WriteVerbose("Connection successful");
                 
                 // Resolve the path even if a relative one is given.
                 ProviderInfo provider;

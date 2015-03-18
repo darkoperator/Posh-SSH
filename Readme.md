@@ -23,7 +23,7 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 # ChangeLog
 
 ## Version 1.7
-* New function New-SSHShellStream for easier creation of shell stream objects.
+* New function **New-SSHShellStream** for easier creation of shell stream objects.
 
 ```PowerShell
 C:\PS>$SSHStream = New-SSHShellStream -Index 0
@@ -36,7 +36,7 @@ x86_64 x86_64 GNU/Linux
 [admin@localhost ~]$
 ```
 
-* New function Invoke-SSHStreamExpectSecureAction for passing passwords to prompt on a shell stream.
+* New function **Invoke-SSHStreamExpectSecureAction **for passing passwords to prompt on a shell stream.
 
 ```PowerShell
 C:\PS>Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'su -' -ExpectString 'Passord:' -SecureAction (read-host -AsSecureString) -Verbose
@@ -56,8 +56,8 @@ There were 2 failed login attempts since the last successful login.
 
 ```
 
-* New function Invoke-SSHStreamExpectAction for executing expect actions on a shell stream.
-* New function Get-SFTPPathAttribute to get attributes of a given path. 
+* New function **Invoke-SSHStreamExpectAction** for executing expect actions on a shell stream.
+* New function **Get-SFTPPathAttribute** to get attributes of a given path. 
 
 ```PowerShell
 C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
@@ -85,17 +85,89 @@ C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
  OthersCanExecute  : True
  Extensions        :
 ```
+* New function **New-SFTPFileStream** to create a IO Stream of a file on a host via SFTP.
 
-* New-SFTPDirectory returns a Renci.SshNet.Sftp.SftpFile object after creating a directory.
-* New-SFTPDirectory has better error message if a folder already exists.
-* Index Parameter and Property are now SessionId. All cmdlets and function have Index as an Alias so as to not break existing scripts.
+```PowerShell
+PS C:\> $bashhistory = New-SFTPFileStream -SessionId 0 -Path /home/admin/.bash_history -FileMode Open -FileAccess Read
+PS C:\> $bashhistory
+
+
+CanRead      : True
+CanSeek      : True
+CanWrite     : False
+CanTimeout   : True
+Length       : 830
+Position     : 0
+IsAsync      : False
+Name         : /home/admin/.bash_history
+Handle       : {0, 0, 0, 0}
+Timeout      : 00:00:30
+ReadTimeout  :
+WriteTimeout :
+
+PS C:\> $streamreader = New-Object System.IO.StreamReader -ArgumentList $bashhistory
+PS C:\> while ($streamreader.Peek() -ge 0) {$streamreader.ReadLine()}
+ls
+exit
+ssh-keygen -t rsa
+mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+vim /etc/ssh/sshd_config
+sudo vim /etc/ssh/sshd_config
+
+PS C:\> 
+
+```
+* New function **New-SFTPSymlink** to create symbolic link on a a remote host via SFTP.
+* New function **Set-SFTPContent** to get the content of a file on a remote host via SFTP.
+
+```PowerShell
+PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"
+
+FullName       : /tmp/example.txt
+LastAccessTime : 3/16/2015 10:40:16 PM
+LastWriteTime  : 3/16/2015 10:40:55 PM
+Length         : 22
+UserId         : 1000
+
+
+
+PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
+My example message
+
+PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "New message`n" -Append
+
+
+FullName       : /tmp/example.txt
+LastAccessTime : 3/16/2015 10:40:59 PM
+LastWriteTime  : 3/16/2015 10:41:18 PM
+Length         : 34
+UserId         : 1000
+
+
+
+PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
+My example message
+New message
+```
+* New function **Get-SFTPContent** to set the content of a file on a remote host via SFTP.
+
+
+```PowerShell
+PS C:\> Get-SFTPContent -SessionId 0 -Path  /etc/system-release
+CentOS Linux release 7.0.1406 (Core)
+```
+* **New-SFTPDirectory** is replaced **New-SFTPItem** to match how PowerShell refers to files and directories.
+* **Remove-SFTPFile** and **Remove-SFTPDirectory** are replaced by **Remove-SFTPItem** to match how PowerShell refers to files and directories.
+* **Set-SFTPDirectoryPath** is replaced by **Set-SFTPLocation** to match how PowerShell refers to files and directories.
+* **Get-SFTPCurrentWorkingDirectory** is replaced by **Get-SFTPLocation** to match how PowerShell refers to files and directories.
+* **Index** Parameter and Property are now **SessionId**. All cmdlets and function have Index as an Alias so as to not break existing scripts.
 * Added support for ssh.com (SSH-2) private keys.
 * Added support on acceptable group of up to 8192 bits for SHA-1 and SHA-256 Diffie-Hellman Group and Key Exchange
 * Several fixes when connecting though a proxy.
 * SCP Speed is now almost 3 times faster.
 * SFTP cmdlets for upload and download now show progress and are written in C#.
 * On Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.
-* Cmdlet Set-SFTPDirectoryPath renamed to Set-SFTPCurrentDirectory so as to match the verb of the Get Cmdlet that gets the current working directory.
 * All cmdlet return ErrorRecords.
 * SFTP functions verify that the path given on the remote host exist and that it is a directory.
 * SFTP functions verify that the file given on the remote host exits and that it is a file.

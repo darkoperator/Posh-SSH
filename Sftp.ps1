@@ -129,7 +129,7 @@ function Remove-SFTPSession
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SFTPDirectoryList
+function Get-SFTPChildItem
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -202,76 +202,6 @@ function Get-SFTPDirectoryList
 }
 
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
-function New-SFTPDirectory
-{
-    [CmdletBinding(DefaultParameterSetName='Index')]
-    param(
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Index',
-                   ValueFromPipelineByPropertyName=$true,
-                   Position=0)]
-        [Alias('Index')]
-        [Int32[]] 
-        $SessionId,
-
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Session',
-                   ValueFromPipeline=$true,
-                   Position=0)]
-        [Alias('Session')]
-        [SSH.SFTPSession[]]
-        $SFTPSession,
-
-        [Parameter(Mandatory=$true,
-                   Position=1)]
-        [string]
-        $Path
-
-     )
-
-     Begin
-     {
-        $ToProcess = @()
-        switch($PSCmdlet.ParameterSetName)
-        {
-            'Session'
-            {
-                $ToProcess = $SFTPSession
-            }
-
-            'Index'
-            {
-                foreach($session in $Global:SFTPSessions)
-                {
-                    if ($SessionId -contains $session.SessionId)
-                    {
-                        $ToProcess += $session
-                    }
-                }
-            }
-        }
-     }
-     Process
-     {
-
-        foreach($sess in $ToProcess)
-        { 
-            if (!$sess.Session.Exists($Path))
-            {
-                Write-Verbose -Message "Creating directory $($Path)"
-                $sess.Session.CreateDirectory($Path)
-                Write-Verbose -Message 'Successful directory creation.'
-                $sess.Session.Get($Path)
-            }
-            else
-            {
-                Write-Error -Message "Specified path of $($Path) already exists."
-            }
-        }
-     }
-     End{}
-}
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Test-SFTPPath
@@ -335,7 +265,7 @@ function Test-SFTPPath
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Remove-SFTPDirectory
+function Remove-SFTPItem
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -389,16 +319,16 @@ function Remove-SFTPDirectory
         
         foreach($session in $ToProcess)
         {
-            $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
-            if ($Attribs.IsDirectory)
+            
+            if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
-                Write-Verbose -Message "Deleting directory $($Path)."
-                $session.Session.DeleteDirectory($Path)
-                Write-Verbose -Message 'Directory was deleted.'
+                Write-Verbose -Message "Removing $($Path)."
+                $session.Session.Delete($Path)
+                Write-Verbose -Message "$($Path) removed."
             }
             else
             {
-                throw "Specified path of $($Path) is not a directory."       
+                throw "Specified path of $($Path) does not exist."       
             }
 
         }
@@ -408,7 +338,7 @@ function Remove-SFTPDirectory
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Set-SFTPCurrentDirectory
+function Set-SFTPLocation
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -480,7 +410,7 @@ function Set-SFTPCurrentDirectory
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SFTPCurrentDirectory
+function Get-SFTPLocation
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
     param(
@@ -531,78 +461,6 @@ function Get-SFTPCurrentDirectory
             $session.Session.WorkingDirectory
         }
       
-     }
-    End{}
-}
-
-
-# .ExternalHelp Posh-SSH.psm1-Help.xml
-function Remove-SFTPFile
-{
-    [CmdletBinding(DefaultParameterSetName='Index')]
-    param(
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Index',
-                   ValueFromPipelineByPropertyName=$true,
-                   Position=0)]
-        [Alias('Index')]
-        [Int32[]] 
-        $SessionId,
-
-        [Parameter(Mandatory=$true,
-                   ParameterSetName = 'Session',
-                   ValueFromPipeline=$true,
-                   Position=0)]
-        [Alias('Session')]
-        [SSH.SFTPSession[]]
-        $SFTPSession,
-
-        # Full path of where to upload file on remote system.
-        [Parameter(Mandatory=$true,
-                   Position=1)]
-        [string]
-        $RemoteFile
-     )
-
-     Begin
-     {
-        $ToProcess = @()
-        switch($PSCmdlet.ParameterSetName)
-        {
-            'Session'
-            {
-                $ToProcess = $SFTPSession
-            }
-
-            'Index'
-            {
-                foreach($session in $Global:SFTPSessions)
-                {
-                    if ($SessionId -contains $session.SessionId)
-                    {
-                        $ToProcess += $session
-                    }
-                }
-            }
-        }
-     }
-     Process
-     {
-        
-        foreach($session in $ToProcess)
-        {
-            $Attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $RemoteFile
-            if ($Attrib.IsRegularFile)
-            {
-                Write-Verbose  -message "Deleting $RemoteFile"
-                $session.Session.DeleteFile($RemoteFile)
-                Write-Verbose -message "Deleted $RemoteFile"
-            }
-            else
-            {
-                throw "The specified remote file $($RemoteFile) is not a file."
-            }
-        }
      }
     End{}
 }
@@ -759,12 +617,8 @@ function Get-SFTPPathAttribute
     }
 }
 
-<#
-.Synopsis
-   Create a Symbolic Link on the remote host via SFTP.
-.DESCRIPTION
-   Create a Symbolic Link on the remote host via SFTP.
-#>
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SFTPSymlink
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -860,15 +714,8 @@ function New-SFTPSymlink
     }
 }
 
-<#
-.Synopsis
-   Gets the content of the item at the specified location over SFTP.
-.DESCRIPTION
-   Gets the content of the item at the specified location over SFTP.
-.EXAMPLE
-   PS C:\> Get-SFTPContent -SessionId 0 -Path  /etc/system-release
-   CentOS Linux release 7.0.1406 (Core)
-#>
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SFTPContent
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -1010,41 +857,7 @@ function Get-SFTPContent
 }
 
 
-<#
-.Synopsis
-   Writes or replaces the content in an item with new content over SFTP.
-.DESCRIPTION
-   Writes or replaces the content in an item with new content over SFTP
-.EXAMPLE
-    PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"
-
-
-    FullName       : /tmp/example.txt
-    LastAccessTime : 3/16/2015 10:40:16 PM
-    LastWriteTime  : 3/16/2015 10:40:55 PM
-    Length         : 22
-    UserId         : 1000
-
-
-
-    PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
-    My example message
-
-    PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "New message`n" -Append
-
-
-    FullName       : /tmp/example.txt
-    LastAccessTime : 3/16/2015 10:40:59 PM
-    LastWriteTime  : 3/16/2015 10:41:18 PM
-    Length         : 34
-    UserId         : 1000
-
-
-
-    PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
-    My example message
-    New message
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Set-SFTPContent
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -1201,43 +1014,8 @@ function Set-SFTPContent
     }
 }
 
-<#
-.Synopsis
-   Create a IO Stream over SFTP for a file on a remote host.
-.DESCRIPTION
-   Create a IO Stream over SFTP for a file on a remote host.
-.EXAMPLE
-   PS C:\> $bashhistory = New-SFTPFileStream -SessionId 0 -Path /home/admin/.bash_history -FileMode Open -FileAccess Read
-   PS C:\> $bashhistory
 
-
-    CanRead      : True
-    CanSeek      : True
-    CanWrite     : False
-    CanTimeout   : True
-    Length       : 830
-    Position     : 0
-    IsAsync      : False
-    Name         : /home/admin/.bash_history
-    Handle       : {0, 0, 0, 0}
-    Timeout      : 00:00:30
-    ReadTimeout  :
-    WriteTimeout :
-
-    PS C:\> $streamreader = New-Object System.IO.StreamReader -ArgumentList $bashhistory
-    PS C:\> while ($streamreader.Peek() -ge 0) {$streamreader.ReadLine()}
-    ls
-    exit
-    ssh-keygen -t rsa
-    mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
-    chmod 600 ~/.ssh/authorized_keys
-    vim /etc/ssh/sshd_config
-    sudo vim /etc/ssh/sshd_config
-
-    PS C:\> 
-
-
-#>
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SFTPFileStream
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -1358,3 +1136,96 @@ function New-SFTPFileStream
     {
     }
 }
+
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function New-SFTPItem
+{
+  [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path,
+
+        [Parameter(Mandatory=$false,
+                   Position=2)]
+        [ValidateSet('File', 'Directory')]
+        [string]
+        $ItemType = 'File'
+
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
+    Process
+    {
+        foreach($sess in $ToProcess)
+        { 
+            if (!$sess.Session.Exists($Path))
+            {
+                switch($ItemType)
+                {
+                    'Directory' {
+                        Write-Verbose -Message "Creating directory $($Path)"
+                        $sess.Session.CreateDirectory($Path)
+                        Write-Verbose -Message 'Directory succesfully created.'
+                        $sess.Session.Get($Path)
+                    }
+
+                    'File' {
+                        Write-Verbose -Message "Creating file $($Path)"
+                        $sess.Session.Create($Path).close()
+                        Write-Verbose -Message 'File succesfully created.'
+                        $sess.Session.Get($Path)
+                    }
+
+                }
+            }
+            else
+            {
+                Write-Error -Message "Specified path of $($Path) already exists."
+            }
+        }
+    }
+    End
+    {
+    }
+}
+

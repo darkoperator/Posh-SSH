@@ -23,6 +23,15 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 # ChangeLog
 
 ## Version 1.7
+* **New-SFTPDirectory** is replaced by **New-SFTPItem** to match how PowerShell refers to files and directories.
+* **Remove-SFTPFile** and **Remove-SFTPDirectory** are replaced by **Remove-SFTPItem** to match how PowerShell refers to files and directories.
+* **Set-SFTPDirectoryPath** is replaced by **Set-SFTPLocation** to match how PowerShell refers to files and directories.
+* **Get-SFTPCurrentWorkingDirectory** is replaced by **Get-SFTPLocation** to match how PowerShell refers to files and directories.
+* **Get-SFTPDirectoryList** is replaced by **Get-SFTPChildItem** to match how PowerShell refers to files and directories.
+* **Index** Parameter and Property are now **SessionId**. All cmdlets and function have Index as an Alias so as to not break existing scripts.
+* **On Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.**
+* **On Set-SCPFolder the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the folde.**
+* **On New-SFTPSession, New-SSHSession, Set-SCPFile and Set-SCPFolder the AcceptKey parameter is now a switch.**
 * New function **New-SSHShellStream** for easier creation of shell stream objects.
 
 ```PowerShell
@@ -157,17 +166,11 @@ New message
 PS C:\> Get-SFTPContent -SessionId 0 -Path  /etc/system-release
 CentOS Linux release 7.0.1406 (Core)
 ```
-* **New-SFTPDirectory** is replaced **New-SFTPItem** to match how PowerShell refers to files and directories.
-* **Remove-SFTPFile** and **Remove-SFTPDirectory** are replaced by **Remove-SFTPItem** to match how PowerShell refers to files and directories.
-* **Set-SFTPDirectoryPath** is replaced by **Set-SFTPLocation** to match how PowerShell refers to files and directories.
-* **Get-SFTPCurrentWorkingDirectory** is replaced by **Get-SFTPLocation** to match how PowerShell refers to files and directories.
-* **Index** Parameter and Property are now **SessionId**. All cmdlets and function have Index as an Alias so as to not break existing scripts.
 * Added support for ssh.com (SSH-2) private keys.
 * Added support on acceptable group of up to 8192 bits for SHA-1 and SHA-256 Diffie-Hellman Group and Key Exchange
 * Several fixes when connecting though a proxy.
 * SCP Speed is now almost 3 times faster.
 * SFTP cmdlets for upload and download now show progress and are written in C#.
-* On Set-SCPFile the parameter RemoteFile is now changed to RemotePath and one only needs to give the Path to where to copy the file.
 * All cmdlet return ErrorRecords.
 * SFTP functions verify that the path given on the remote host exist and that it is a directory.
 * SFTP functions verify that the file given on the remote host exits and that it is a file.

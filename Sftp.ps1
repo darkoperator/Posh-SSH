@@ -1229,3 +1229,432 @@ function New-SFTPItem
     }
 }
 
+# Deprecated
+##############
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function New-SFTPDirectory
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path
+
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by New-SFTPItem'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+
+        foreach($sess in $ToProcess)
+        { 
+            if (!$sess.Session.Exists($Path))
+            {
+                Write-Verbose -Message "Creating directory $($Path)"
+                $sess.Session.CreateDirectory($Path)
+                Write-Verbose -Message 'Successful directory creation.'
+                $sess.Session.Get($Path)
+            }
+            else
+            {
+                Write-Error -Message "Specified path of $($Path) already exists."
+            }
+        }
+     }
+     End{}
+}
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Get-SFTPDirectoryList
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]]
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$false,
+                   Position=1)]
+        [string]
+        $Path
+
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by Get-SFTPChildItem'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+
+     Process
+     {
+        foreach($Sess in $ToProcess)
+        {   
+            if ($Path.Length -eq 0)
+            {
+                $Path = $Sess.Session.WorkingDirectory
+            }
+            else
+            {
+                $Attribs = Get-SFTPPathAttribute -SFTPSession $Sess -Path $Path
+                if (!$Attribs.IsDirectory)
+                {
+                    throw "Specified path of $($Path) is not a directory."
+                }
+            }
+            $Sess.Session.ListDirectory($Path)
+        }
+     }
+     End{}
+}
+
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Remove-SFTPDirectory
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   Position=0)]
+        [string]
+        $Path
+
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by Remove-SFTPItem'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+        
+        foreach($session in $ToProcess)
+        {
+            $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
+            if ($Attribs.IsDirectory)
+            {
+                Write-Verbose -Message "Deleting directory $($Path)."
+                $session.Session.DeleteDirectory($Path)
+                Write-Verbose -Message 'Directory was deleted.'
+            }
+            else
+            {
+                throw "Specified path of $($Path) is not a directory."       
+            }
+
+        }
+     }
+     End{}
+}
+
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Set-SFTPCurrentDirectory
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $Path
+
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by Set-SFTPLocation'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+ 
+        foreach($session in $ToProcess)
+        {
+            $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
+            if ($Attribs.IsDirectory)
+            {
+                Write-Verbose -Message "Changing current directory to $($Path)"
+                $session.Session.ChangeDirectory($Path)
+                Write-Verbose -Message 'Current directory changed.'
+            }
+            else
+            {
+                throw "Specified path of $($Path) is not a directory."  
+            }
+        }
+     }
+     End{}
+}
+
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Get-SFTPCurrentDirectory
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by Get-SFTPLocation'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+        
+        foreach($session in $ToProcess)
+        {
+            $session.Session.WorkingDirectory
+        }
+      
+     }
+    End{}
+}
+
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Remove-SFTPFile
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        # Full path of where to upload file on remote system.
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]
+        $RemoteFile
+     )
+
+     Begin
+     {
+        Write-Warning -Message 'This function has been deprecated and replaced by Remove-SFTPItem'
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+        
+        foreach($session in $ToProcess)
+        {
+            $Attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $RemoteFile
+            if ($Attrib.IsRegularFile)
+            {
+                Write-Verbose  -message "Deleting $RemoteFile"
+                $session.Session.DeleteFile($RemoteFile)
+                Write-Verbose -message "Deleted $RemoteFile"
+            }
+            else
+            {
+                throw "The specified remote file $($RemoteFile) is not a file."
+            }
+        }
+     }
+    End{}
+}
+
+
+

@@ -181,7 +181,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
-        public bool AcceptKey
+        public SwitchParameter AcceptKey
         {
             get { return _acceptkey; }
             set { _acceptkey = value; }

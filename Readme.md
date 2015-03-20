@@ -21,6 +21,8 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7.1
+* Fix typo in trust submodule.
 
 ## Version 1.7
 * **New-SFTPDirectory** is replaced by **New-SFTPItem** to match how PowerShell refers to files and directories.

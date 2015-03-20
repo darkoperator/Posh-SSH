@@ -59,7 +59,7 @@
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software'. $true)
+        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
         if ( $softkey.GetSubKeyNames() -contains 'PoshSSH')
         {
             $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)

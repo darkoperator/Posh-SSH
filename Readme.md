@@ -1,5 +1,5 @@
 # Description
-Powershell module that leverages a custom version of the SSH.NET Library (http://sshnet.codeplex.com/) to provide basic SSH functionalyty in Powershell.
+Powershell module that leverages a custom version of the SSH.NET Library (http://sshnet.codeplex.com/) to provide basic SSH functionality in Powershell.
 The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled servers.
 
 # Install

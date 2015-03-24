@@ -338,7 +338,7 @@ function New-SSHShellStream
         [Parameter(Mandatory=$false,
                    ValueFromPipelineByPropertyName=$true)]
         [int]
-        $Colums=80,
+        $Columns=80,
 
         # The rows.
         [Parameter(Mandatory=$false,

@@ -2608,19 +2608,21 @@ PS C:\&gt; $bashhistory
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-					<maml:name>Colums</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+					<maml:name>Columns</maml:name>
 					<maml:description>
 						<maml:para>The columns</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>80</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Rows</maml:name>
 					<maml:description>
 						<maml:para>The rows.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>24</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Width</maml:name>
@@ -2628,22 +2630,23 @@ PS C:\&gt; $bashhistory
 						<maml:para>The width.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue>800</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Height</maml:name>
 					<maml:description>
 						<maml:para>The height.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>600</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>BufferSize</maml:name>
 					<maml:description>
 						<maml:para>Size of the buffer.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>1000</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 			<command:syntaxItem>
@@ -2662,19 +2665,21 @@ PS C:\&gt; $bashhistory
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">String</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-					<maml:name>Colums</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+					<maml:name>Columns</maml:name>
 					<maml:description>
 						<maml:para>The columns</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>80</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Rows</maml:name>
 					<maml:description>
 						<maml:para>The rows.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>24</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Width</maml:name>
@@ -2682,22 +2687,23 @@ PS C:\&gt; $bashhistory
 						<maml:para>The width.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue>800</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>Height</maml:name>
 					<maml:description>
 						<maml:para>The height.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>600</dev:defaultValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 					<maml:name>BufferSize</maml:name>
 					<maml:description>
 						<maml:para>Size of the buffer.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>1000</dev:defaultValue>
 				</command:parameter>
 			</command:syntaxItem>
 		</command:syntax>
@@ -2727,8 +2733,8 @@ PS C:\&gt; $bashhistory
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-				<maml:name>Colums</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+				<maml:name>Columns</maml:name>
 				<maml:description>
 					<maml:para>The columns</maml:para>
 				</maml:description>
@@ -2737,9 +2743,9 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>80</dev:defaultValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 				<maml:name>Rows</maml:name>
 				<maml:description>
 					<maml:para>The rows.</maml:para>
@@ -2749,7 +2755,7 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>24</dev:defaultValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 				<maml:name>Width</maml:name>
@@ -2761,10 +2767,9 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue>800</dev:defaultValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 				<maml:name>Height</maml:name>
 				<maml:description>
 					<maml:para>The height.</maml:para>
@@ -2774,9 +2779,9 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>600</dev:defaultValue>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
 				<maml:name>BufferSize</maml:name>
 				<maml:description>
 					<maml:para>Size of the buffer.</maml:para>
@@ -2786,7 +2791,7 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>1000</dev:defaultValue>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0">
 				<maml:name>SSHSession</maml:name>

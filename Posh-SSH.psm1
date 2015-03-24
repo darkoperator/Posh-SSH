@@ -350,7 +350,7 @@ function New-SSHShellStream
         [Parameter(Mandatory=$false,
                    ValueFromPipelineByPropertyName=$true)]
         [int]
-        $With= 800,
+        $Width= 800,
 
         # The height.
         [Parameter(Mandatory=$false,
@@ -392,7 +392,7 @@ function New-SSHShellStream
     }
     Process
     {
-        $ToProcess.Session.CreateShellStream($TerminalName, $Colums, $Rows, $With, $Height, $BufferSize)
+        $ToProcess.Session.CreateShellStream($TerminalName, $Colums, $Rows, $Width, $Height, $BufferSize)
     }
     End
     {

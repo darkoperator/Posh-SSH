@@ -1161,8 +1161,7 @@ SSH Session.</maml:para>
 						<maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>EnsureConnection</maml:name>
@@ -1180,8 +1179,7 @@ SSH Session.</maml:para>
 						<maml:para>SSH Session object.</maml:para>
 					</maml:description>
 					<command:parameterValue required="true" variableLength="false">SshSession[]</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="false" position="1">
 					<maml:name>Command</maml:name>
@@ -1196,8 +1194,7 @@ SSH Session.</maml:para>
 						<maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
-					<dev:defaultValue>
-					</dev:defaultValue>
+					<dev:defaultValue/>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="false" position="named">
 					<maml:name>EnsureConnection</maml:name>
@@ -1256,8 +1253,7 @@ SSH Session.</maml:para>
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 			<command:parameter required="true" variableLength="false" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="">
 				<maml:name>SSHSession</maml:name>
@@ -1269,8 +1265,7 @@ SSH Session.</maml:para>
 					<maml:name>SshSession[]</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue>
-				</dev:defaultValue>
+				<dev:defaultValue/>
 			</command:parameter>
 		</command:parameters>
 		<command:inputTypes>
@@ -2627,12 +2622,14 @@ PS C:\&gt; $bashhistory
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-					<maml:name>With</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+					<maml:name>Width</maml:name>
 					<maml:description>
 						<maml:para>The width.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
 					<maml:name>Height</maml:name>
@@ -2679,12 +2676,14 @@ PS C:\&gt; $bashhistory
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
 				</command:parameter>
-				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-					<maml:name>With</maml:name>
+				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+					<maml:name>Width</maml:name>
 					<maml:description>
 						<maml:para>The width.</maml:para>
 					</maml:description>
 					<command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+					<dev:defaultValue>
+					</dev:defaultValue>
 				</command:parameter>
 				<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
 					<maml:name>Height</maml:name>
@@ -2752,8 +2751,8 @@ PS C:\&gt; $bashhistory
 				</dev:type>
 				<dev:defaultValue/>
 			</command:parameter>
-			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
-				<maml:name>With</maml:name>
+			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="">
+				<maml:name>Width</maml:name>
 				<maml:description>
 					<maml:para>The width.</maml:para>
 				</maml:description>
@@ -2762,7 +2761,8 @@ PS C:\&gt; $bashhistory
 					<maml:name>Int32</maml:name>
 					<maml:uri/>
 				</dev:type>
-				<dev:defaultValue/>
+				<dev:defaultValue>
+				</dev:defaultValue>
 			</command:parameter>
 			<command:parameter required="false" variableLength="false" globbing="false" pipelineInput="True (ByPropertyName)" position="named">
 				<maml:name>Height</maml:name>

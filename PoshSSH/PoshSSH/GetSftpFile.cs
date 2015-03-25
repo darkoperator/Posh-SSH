@@ -130,7 +130,7 @@ namespace SSH
                 var localfilefullpath = localfullPath + "/" + filename;
                 var fil = new FileInfo(@localfilefullpath);
 
-                var localstream = File.Create(@localfilefullpath);
+                
                 foreach (var sftpSession in ToProcess)
                 {
 
@@ -178,8 +178,10 @@ namespace SSH
                         
                         if ((present & _overwrite) || (!present))
                         {
+                            var localstream = File.Create(@localfilefullpath);
                             try
                             {
+                                
                                 sftpSession.Session.DownloadFile(_remotefile, localstream, res);
                                 localstream.Close();
 
@@ -197,7 +199,6 @@ namespace SSH
                         }
                         else
                         {
-                            localstream.Close();
                             var ex = new SftpPermissionDeniedException("File already present on local host.");
                             WriteError(new ErrorRecord(
                                              ex,

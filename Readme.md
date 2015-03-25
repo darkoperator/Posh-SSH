@@ -21,6 +21,9 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7.2
+* Fix problem with Get-SFTPFile cmdlet. It was creating a empty file before checking if a file existed causing error or blanking a exiting file accidentaly.
+
 ## Version 1.7.1
 * Fix typo in trust submodule.
 

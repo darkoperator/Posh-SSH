@@ -392,7 +392,10 @@ function New-SSHShellStream
     }
     Process
     {
-        $ToProcess.Session.CreateShellStream($TerminalName, $Colums, $Rows, $Width, $Height, $BufferSize)
+        $stream = $ToProcess.Session.CreateShellStream($TerminalName, $Colums, $Rows, $Width, $Height, $BufferSize)
+        Add-Member -InputObject $stream -MemberType NoteProperty -Name SessionId -Value $ToProcess.SessionId
+        Add-Member -InputObject $stream -MemberType NoteProperty -Name Session -Value $ToProcess.Session
+        $stream
     }
     End
     {

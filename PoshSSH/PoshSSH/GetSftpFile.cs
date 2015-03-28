@@ -95,7 +95,9 @@ namespace SSH
             switch (ParameterSetName)
             {
                 case "Session":
-                    ToProcess.AddRange(_session);
+                    // fix issue #37: Get-SFTPFile/Set-SFTPFile fail with 'Object reference not set to an instance of an object.'
+                    toProcess.AddRange(_session);
+                    ToProcess = toProcess;
                     break;
                 case "Index":
                     if (sessionvar != null)

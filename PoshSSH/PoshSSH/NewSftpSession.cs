@@ -218,7 +218,7 @@ namespace SSH
                 if (_keyfile.Equals(""))
                 {
                     WriteVerbose("Using SSH Username and Password authentication for connection.");
-                    var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(_credential.GetNetworkCredential().UserName);
+                    var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(_credential.UserName);
                     connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
                         _port,
                         _credential,

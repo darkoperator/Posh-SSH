@@ -60,11 +60,11 @@ namespace SSH
                             break;
                     }
 
-                    if (proxycredential.GetNetworkCredential().UserName != "")
+                    if (proxycredential.UserName != "")
                     {
                         connectionInfo = new PrivateKeyConnectionInfo(computer,
                             port,
-                            credential.GetNetworkCredential().UserName,
+                            credential.UserName,
                             ptype,
                             proxyserver,
                             proxyport,
@@ -75,11 +75,11 @@ namespace SSH
                        
                         connectionInfo = new PrivateKeyConnectionInfo(computer,
                             port,
-                            credential.GetNetworkCredential().UserName,
+                            credential.UserName,
                             ptype,
                             proxyserver,
                             proxyport,
-                            proxycredential.GetNetworkCredential().UserName,
+                            proxycredential.UserName,
                             proxycredential.GetNetworkCredential().Password,
                             sshkey);
                     }
@@ -89,7 +89,7 @@ namespace SSH
 
                     connectionInfo = new PrivateKeyConnectionInfo(computer,
                         port, 
-                        credential.GetNetworkCredential().UserName, 
+                        credential.UserName, 
                         sshkey);
                        
                 }
@@ -123,7 +123,7 @@ namespace SSH
             KeyboardInteractiveAuthenticationMethod kIconnectInfo)
         {
             ConnectionInfo connectionInfo;
-            var passconnectInfo = new PasswordAuthenticationMethod(credential.GetNetworkCredential().UserName, 
+            var passconnectInfo = new PasswordAuthenticationMethod(credential.UserName, 
                                                                    credential.GetNetworkCredential().Password);
             if (proxyserver != "")
             {
@@ -142,11 +142,11 @@ namespace SSH
                         break;
                 }
 
-                if (proxycredential.GetNetworkCredential().UserName != "")
+                if (proxycredential.UserName != "")
                 {
                     connectionInfo = new ConnectionInfo(computer,
                                                         port,
-                                                        credential.GetNetworkCredential().UserName,
+                                                        credential.UserName,
                                                         ptype,
                                                         proxyserver,
                                                         proxyport,
@@ -160,11 +160,11 @@ namespace SSH
 
                     connectionInfo = new ConnectionInfo(computer,
                                                         port,
-                                                        credential.GetNetworkCredential().UserName,
+                                                        credential.UserName,
                                                         ptype,
                                                         proxyserver,
                                                         proxyport,
-                                                        proxycredential.GetNetworkCredential().UserName,
+                                                        proxycredential.UserName,
                                                         proxycredential.GetNetworkCredential().Password,
                                                         kIconnectInfo,
                                                         passconnectInfo);
@@ -175,7 +175,7 @@ namespace SSH
 
                 connectionInfo = new ConnectionInfo(computer,
                                                     port,
-                                                    credential.GetNetworkCredential().UserName,
+                                                    credential.UserName,
                                                     passconnectInfo,
                                                     kIconnectInfo);
 

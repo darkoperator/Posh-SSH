@@ -347,7 +347,7 @@ function Invoke-SSHCommand
     Begin
     {
        $currentversion = ''
-       $installed = Get-Module -Name 'posh-SSH' -ListAvailable
+       $installed = Get-Module -Name 'posh-SSH'
     }
     Process
     {

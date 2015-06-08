@@ -30,14 +30,14 @@ function Get-SSHSession
         [Parameter(Mandatory=$false,
                    Position=0)]
         [Alias('Index')]
-        [Int32]
+        [Int32[]]
         $SessionId
     )
 
     Begin{}
     Process
     {
-        if ($SessionId)
+        if ( $PSBoundParameters.ContainsKey('SessionId') )
         {
             foreach($i in $SessionId)
             {
@@ -206,58 +206,100 @@ function Invoke-SSHCommand
                 }
             }
         }
+
+        # array to keep track of all the running jobs.
+        $AsyncProcessing = @()
     }
     Process
     {
         foreach($Connection in $ToProcess)
         {
-            if ($Connection.session.isconnected)
+            if ($Connection.Session.IsConnected)
+            {
+                if ($EnsureConnection)
                 {
-                    if ($EnsureConnection)
-                    {
-                        $Connection.session.connect()
-                    }
-                    $cmd = $Connection.session.CreateCommand($Command)
-                }
-                else
-                {
-                    $s.session.connect()
-                    $cmd = $Connection.session.CreateCommand($Command)
-                }
-
-                $cmd.CommandTimeout = New-TimeSpan -Seconds $TimeOut
-
-                # start asynchronious execution of the command.
-                $Async = $cmd.BeginExecute()
-                while($Async.IsCompleted)
-                {
-                    Write-Verbose -Message 'Waiting for command to finish execution'
                     try
                     {
-                        Start-Sleep -Seconds 2
+                        $Connection.Session.Connect()
                     }
-                    finally
-                    {
-                        $Output = $cmd.EndExecute($Async)
+                    catch
+                    {                            
+                        if ( $_.Exception.InnerException.Message -ne 'The client is already connected.' )
+                        { Write-Error -Exception $_.Exception }
                     }
+                }                
+            }
+            else
+            {
+                try
+                {
+                    $Connection.Session.Connect()
                 }
+                catch
+                {
+                    Write-Error "Unable to connect session to $($Connection.Host) :: $_"
+                }
+                
+            }
 
-                $Output = $cmd.EndExecute($Async)
-                $ResultProps = @{}
-                $ResultProps['Output'] = $Output
-                $ResultProps['ExitStatus'] = $cmd.ExitStatus
-                $ResultProps['Error'] = $cmd.Error
-                $ResultProps['Host'] = $Connection.Host
+            if ($Connection.Session.IsConnected)
+            {
+                $cmd = $Connection.session.CreateCommand($Command)
+                $cmd.CommandTimeout = [timespan]::FromMilliseconds(50) #New-TimeSpan -Seconds $TimeOut
 
-                $ResultObj = New-Object psobject -Property $ResultProps
-                $ResultObj.pstypenames.insert(0,'Renci.SshNet.SshCommand')
-                $ResultObj
-
-
+                # start asynchronious execution of the command.
+                $Duration = [System.Diagnostics.Stopwatch]::StartNew()
+                $Async = $cmd.BeginExecute()
+                
+                $AsyncProcessing  += [pscustomobject]@{
+                    cmd = $cmd
+                    Async = $Async
+                    Connection = $Connection
+                    Duration = $Duration
+                    Processed = $false
+                }
+            }
         }
-
     }
-    End{}
+    End
+    {
+        $Done = $false
+        while ( -not $Done )
+        {
+            $AsyncProcessing |
+            % {
+                # Check if it completed or is past the timeout setting.
+                if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
+                {
+                    $Output = $_.cmd.EndExecute($_.Async)
+                    
+                    # Generate custom object to return to pipeline and client
+                    [pscustomobject]@{
+                        Output = $Output
+                        ExitStatus = $_.cmd.ExitStatus
+                        Error = $_.cmd.Error
+                        Host = $_.Connection.Host
+                        Duration = $_.Duration.Elapsed
+                    } | 
+                    % { 
+                        $_.pstypenames.insert(0,'Renci.SshNet.SshCommand'); 
+
+                        #Return object to pipeline
+                        $_
+                    }
+
+                    # Set this object as having been processed.
+                    $_.Processed = $true
+                }
+            }
+
+            # Check if the list is done or sleep for 50 ms.
+            $AsyncProcessing = @($AsyncProcessing | ? { -not $_.Processed } )
+            if ( $AsyncProcessing.Count -eq 0 )
+            { $Done = $true }
+            else { Start-Sleep -Milliseconds 50 }
+        }
+    }
 }
 
 
@@ -303,6 +345,159 @@ function Invoke-SSHCommand
      }
      End{}
  }
+
+function Invoke-SSHCommandStream
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+
+        [Parameter(Mandatory=$true,
+                   Position=1)]
+        [string]$Command,
+        
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Name')]
+        [SSH.SSHSession]
+        $SSHSession,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   Position=0)]
+        [Alias('Index')]
+        [int32]
+        $SessionId,
+
+        # Ensures a connection is made by reconnecting before command.
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $EnsureConnection,
+
+        [Parameter(Mandatory=$false,
+                   Position=2)]
+        [int]
+        $TimeOut = 60,
+
+        [Parameter()]
+        [string]
+        $HostVariable,
+
+        [Parameter()]
+        [string]
+        $ExitStatusVariable
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SSHSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SshSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
+    Process
+    {        
+        foreach($Connection in $ToProcess)
+        {
+            if ($Connection.session.isconnected)
+                {
+                    if ($EnsureConnection)
+                    {
+                        $Connection.session.connect()
+                    }
+                    $cmd = $Connection.session.CreateCommand($Command)
+                }
+                else
+                {
+                    $s.session.connect()
+                    $cmd = $Connection.session.CreateCommand($Command)
+                }
+
+                $cmd.CommandTimeout = New-TimeSpan -Seconds $TimeOut
+
+                if ( $PSBoundParameters.ContainsKey('HostVariable') )
+                { Set-Variable -Scope 1 -Name $HostVariable -Value $Connection.Host }
+
+
+                # start asynchronious execution of the command.
+                $Async = $cmd.BeginExecute()
+                $Duration = [System.Diagnostics.Stopwatch]::StartNew()
+                $Reader = New-Object System.IO.StreamReader -ArgumentList $cmd.OutputStream
+
+                try
+                {
+                    Write-Verbose "IsCompleted Before: $($Async.IsCompleted)"
+                    while(-not $Async.IsCompleted -and $Duration.Elapsed -lt $cmd.CommandTimeout )
+                    {                   
+                        Write-Verbose "IsCompleted During: $($Async.IsCompleted)"
+                        #if ( $Reader.Peek() -gt -1)
+                        while ( $Reader.Peek() -gt -1)
+                        {
+                            $Result = $Reader.ReadLine()                            
+                            $Result -replace '\n\r$'
+                        }
+                        Start-Sleep -Milliseconds 5
+                    }                    
+                }
+                catch
+                {
+                    Write-Error -Message "Error with Command: $_"                    
+                }
+                finally
+                {
+                    Write-Verbose "IsCompleted After: $($Async.IsCompleted)"
+                    # Using finally clause to make sure the command is ended if Ctrl-C is used to cancel it.
+
+                    while ( $Reader.Peek() -gt -1)
+                    {
+                        $Result = $Reader.ReadLine()                            
+                        $Result -replace '\n\r$'
+                    }
+                    
+                    if (-not $Async.IsCompleted -and $Duration.Elapsed -ge $cmd.CommandTimeout )
+                    {
+                        $cmd.EndExecute($Async)
+                     
+                    }
+                    elseif ( -not $Async.IsCompleted )
+                    {
+                        $cmd.CancelAsync() 
+                        Write-Warning "Canceled execution"
+                        
+                    }
+
+                }
+
+            if ( $PSBoundParameters.ContainsKey('ExitStatusVariable') )
+            {
+                Set-Variable -Scope 1 -Name $ExitStatusVariable -Value @{
+                    Host = $Connection.Host
+                    ExitStatus = $cmd.ExitStatus
+                    Error = $cmd.Error
+                }
+            }
+        }
+    }
+    End{}
+}
+
+
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

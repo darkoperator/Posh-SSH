@@ -215,8 +215,11 @@ function Invoke-SSHCommand
         [Parameter(Mandatory=$false,
                    Position=2)]
         [int]
-        $TimeOut = 60
+        $TimeOut = 60,
 
+        [Parameter(Mandatory=$false, Position=3)]
+        [int]
+        $ThrottleLimit = 32
     )
 
     Begin
@@ -242,8 +245,60 @@ function Invoke-SSHCommand
         }
 
         # array to keep track of all the running jobs.
-        $AsyncProcessing = @()
+        $Script:AsyncProcessing = @{}
+        $JobId = 0
+        function CheckAsyncProcessing
+        {
+            process
+            {
+                $RemoveJobs = @()
+                $Script:AsyncProcessing.GetEnumerator() | 
+                % { 
+                    $JobKey = $_.Key
+                    #Write-Verbose $JobKey -Verbose
+                    $_.Value 
+                } |
+                % {
+                    # Check if it completed or is past the timeout setting.
+                    if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
+                    {
+                        $Output = $_.cmd.EndExecute($_.Async)
+                    
+                        # Generate custom object to return to pipeline and client
+                        [pscustomobject]@{
+                            Output = $Output -replace '\n$' -split '\n'
+                            ExitStatus = $_.cmd.ExitStatus
+                            Error = $_.cmd.Error
+                            Host = $_.Connection.Host
+                            Duration = $_.Duration.Elapsed
+                        } | 
+                        % { 
+                            $_.pstypenames.insert(0,'Renci.SshNet.SshCommand'); 
+
+                            #Return object to pipeline
+                            $_
+                        }
+
+                        # Set this object as having been processed.
+                        $_.Processed = $true
+                        $RemoveJobs += $JobKey                     
+                    }
+                }
+
+                # Remove all the items that are done.                
+                #[int[]]$Script:AsyncProcessing.Keys | 
+                $RemoveJobs |
+                % {
+                    if ($Script:AsyncProcessing.$_.Processed)
+                    {
+                        $Script:AsyncProcessing.Remove( $_ )
+                    }
+                }
+            }
+        }
     }
+
+
     Process
     {
         foreach($Connection in $ToProcess)
@@ -278,6 +333,13 @@ function Invoke-SSHCommand
 
             if ($Connection.Session.IsConnected)
             {
+                while ($Script:AsyncProcessing.Count -ge $ThrottleLimit )
+                {
+                    CheckAsyncProcessing
+                    Write-Debug "Throttle reached: $ThrottleLimit"
+                    Start-Sleep -Milliseconds 50
+                }
+
                 $cmd = $Connection.session.CreateCommand($Command)
                 $cmd.CommandTimeout = [timespan]::FromMilliseconds(50) #New-TimeSpan -Seconds $TimeOut
 
@@ -285,14 +347,19 @@ function Invoke-SSHCommand
                 $Duration = [System.Diagnostics.Stopwatch]::StartNew()
                 $Async = $cmd.BeginExecute()
                 
-                $AsyncProcessing  += [pscustomobject]@{
+                $Script:AsyncProcessing.Add( $JobId, ( [pscustomobject]@{
                     cmd = $cmd
                     Async = $Async
                     Connection = $Connection
                     Duration = $Duration
                     Processed = $false
-                }
+                }))
+
+                $JobId++
             }
+
+            CheckAsyncProcessing
+
         }
     }
     End
@@ -300,36 +367,9 @@ function Invoke-SSHCommand
         $Done = $false
         while ( -not $Done )
         {
-            $AsyncProcessing |
-            % {
-                # Check if it completed or is past the timeout setting.
-                if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
-                {
-                    $Output = $_.cmd.EndExecute($_.Async)
-                    
-                    # Generate custom object to return to pipeline and client
-                    [pscustomobject]@{
-                        Output = $Output
-                        ExitStatus = $_.cmd.ExitStatus
-                        Error = $_.cmd.Error
-                        Host = $_.Connection.Host
-                        Duration = $_.Duration.Elapsed
-                    } | 
-                    % { 
-                        $_.pstypenames.insert(0,'Renci.SshNet.SshCommand'); 
+           CheckAsyncProcessing
 
-                        #Return object to pipeline
-                        $_
-                    }
-
-                    # Set this object as having been processed.
-                    $_.Processed = $true
-                }
-            }
-
-            # Check if the list is done or sleep for 50 ms.
-            $AsyncProcessing = @($AsyncProcessing | ? { -not $_.Processed } )
-            if ( $AsyncProcessing.Count -eq 0 )
+            if ( $Script:AsyncProcessing.Count -eq 0 )
             { $Done = $true }
             else { Start-Sleep -Milliseconds 50 }
         }

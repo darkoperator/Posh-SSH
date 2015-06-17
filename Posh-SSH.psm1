@@ -386,8 +386,8 @@ function Invoke-SSHCommand
     
     Begin
     {
-       $currentversion = ''
-       $installed = Get-Module -Name 'posh-SSH'
+       $CurrentVersion = $null
+       $installed = (Get-Module -Name 'posh-SSH').Version       
     }
     Process
     {
@@ -395,25 +395,25 @@ function Invoke-SSHCommand
        Try
        {
            $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Posh-SSH.psd1')
-           $currentversion = $current.moduleversion
+           $CurrentVersion = [Version]$current.ModuleVersion
        }
        Catch
        {
            Write-Warning 'Could not retrieve the current version.'
        }
-       $majorver,$minorver = $currentversion.split('.')
-       if ($majorver -gt $installed.Version.Major)
+
+       if ( $installed -eq $null )
+       {
+           Write-Error 'Unable to locate Posh-SSH.'
+       }
+       elseif ( $CurrentVersion -gt $installed )
        {
            Write-Warning 'You are running an outdated version of the module.'
        }
-       elseif ($minorver -gt $installed.Version.Minor)
-       {
-           Write-Warning 'You are running an outdated version of the module.'
-       } 
-        
+
        $props = @{
-           InstalledVersion = $installed.Version.ToString()
-           CurrentVersion   = $currentversion
+           InstalledVersion = $installed
+           CurrentVersion   = $CurrentVersion
        }
        New-Object -TypeName psobject -Property $props
      }

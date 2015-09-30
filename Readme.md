@@ -22,7 +22,7 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 # ChangeLog
 ## Version 1.7.2
-* Fix problem with Get-SFTPFile cmdlet. It was creating a empty file before checking if a file existed causing error or blanking a exiting file accidentaly.
+* Fix problem with Get-SFTPFile cmdlet. It was creating a empty file before checking if a file existed causing error or blanking a exiting file accidentally.
 - Add session and session id properties to a generated streem to address request in issue #34
 
 ## Version 1.7.1

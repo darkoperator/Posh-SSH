@@ -139,13 +139,13 @@ namespace SSH
                     var res = new Action<ulong>(rs =>
                     {
                         //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
-                        if (fil.Length != 0)
+                        if (fil.Length > 1240000)
                         {
                             var percent = (int)((((double)rs) / fil.Length) * 100.0);
                             if (percent % 10 == 0)
                             {
                                 // This will prevent the progress message from being stuck on the screen.
-                                if (percent == 100)
+                                if (percent == 90 || percent > 90)
                                 {
                                     return;
                                 }

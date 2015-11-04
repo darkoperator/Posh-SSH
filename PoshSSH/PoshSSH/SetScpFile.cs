@@ -152,7 +152,7 @@ namespace SSH
 
 
         //Remote File
-        private String __remotepath = "";
+        private String _remotepath = "";
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 3,
@@ -163,8 +163,8 @@ namespace SSH
             ParameterSetName = "Key")]
         public String RemotePath
         {
-            get { return __remotepath; }
-            set { __remotepath = value; }
+            get { return _remotepath; }
+            set { _remotepath = value; }
         }
 
 
@@ -383,11 +383,10 @@ namespace SSH
                 {
                     var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
 
-                    ThrowTerminatingError(new ErrorRecord(
-                                                    ex,
-                                                    "File to upload " + localfullPath + " was not found.",
-                                                    ErrorCategory.InvalidArgument,
-                                                    localfullPath));
+                    WriteError(new ErrorRecord( ex,
+                                                "File to upload " + localfullPath + " was not found.",
+                                                ErrorCategory.InvalidArgument,
+                                                localfullPath));
                 }
             }
 

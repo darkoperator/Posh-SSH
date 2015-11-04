@@ -190,7 +190,7 @@ namespace SSH
                             {
                                 localstream.Close();
                                 var ex = new SftpPermissionDeniedException("Unable to download file from host.");
-                                ThrowTerminatingError(new ErrorRecord(
+                                WriteError(new ErrorRecord(
                                     ex,
                                     "Unable to download file from host.",
                                     ErrorCategory.InvalidOperation,
@@ -211,7 +211,8 @@ namespace SSH
                     else
                     {
                         var ex = new SftpPathNotFoundException(RemoteFile + " does not exist.");
-                       ThrowTerminatingError(new ErrorRecord(
+                       
+                       WriteError(new ErrorRecord(
                                                 ex,
                                                 RemoteFile + " does not exist.",
                                                 ErrorCategory.InvalidOperation,
@@ -223,7 +224,7 @@ namespace SSH
             {
                 var ex = new FileNotFoundException("Local path" + localfullPath + " was not found.");
 
-                ThrowTerminatingError(new ErrorRecord(
+                WriteError(new ErrorRecord(
                                                 ex,
                                                 "Local path" + localfullPath + " was not found.",
                                                 ErrorCategory.InvalidOperation,

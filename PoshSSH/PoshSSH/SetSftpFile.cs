@@ -204,11 +204,11 @@ namespace SSH
                     else
                     {
                         var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
-                       ThrowTerminatingError(new ErrorRecord(
-                                                ex,
-                                                RemotePath + " does not exist.",
-                                                ErrorCategory.InvalidOperation,
-                                                sftpSession));
+                        WriteError(new ErrorRecord(
+                                    ex,
+                                    RemotePath + " does not exist.",
+                                    ErrorCategory.InvalidOperation,
+                                    sftpSession));
                     }
                 }
             }
@@ -216,11 +216,11 @@ namespace SSH
             {
                 var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
 
-                ThrowTerminatingError(new ErrorRecord(
-                                                ex,
-                                                "File to upload " + localfullPath + " was not found.",
-                                                ErrorCategory.InvalidOperation,
-                                                localfullPath));
+                WriteError(new ErrorRecord(
+                                        ex,
+                                        "File to upload " + localfullPath + " was not found.",
+                                        ErrorCategory.InvalidOperation,
+                                        localfullPath));
             }
         }
     }

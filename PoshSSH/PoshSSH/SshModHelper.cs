@@ -33,7 +33,10 @@ namespace SSH
             if (sessionvar != null)
             {
                 sshSessions.AddRange(sessionvar);
-                index = sshSessions.Count;
+
+                // Get the SessionId of the last item and count + 1
+                SshSession lastSession = sshSessions[sshSessions.Count - 1];
+                index = lastSession.SessionId + 1;
             }
 
             // Create the object that will be saved

@@ -65,7 +65,10 @@ namespace SSH
             if (sessionvar != null)
             {
                 sftpSessions.AddRange(sessionvar);
-                index = sftpSessions.Count;
+
+                // Get the SessionId of the last item and count + 1
+                SftpSession lastSession = sftpSessions[sftpSessions.Count - 1];
+                index = lastSession.SessionId + 1;
             }
 
             // Create the object that will be saved

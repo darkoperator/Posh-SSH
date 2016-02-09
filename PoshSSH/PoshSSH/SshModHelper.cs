@@ -30,7 +30,7 @@ namespace SSH
             var sessionvar = pssession.PSVariable.GetValue("Global:SshSessions") as List<SshSession>;
 
             // If sessions exist we set the proper index number for them.
-            if (sessionvar != null)
+            if (sessionvar != null || sessionvar.Count > 0)
             {
                 sshSessions.AddRange(sessionvar);
 
@@ -62,7 +62,7 @@ namespace SSH
             var sessionvar = pssession.PSVariable.GetValue("Global:SFTPSessions") as List<SftpSession>;
 
             // If sessions exist we set the proper index number for them.
-            if (sessionvar != null)
+            if (sessionvar != null || sessionvar.Count > 0)
             {
                 sftpSessions.AddRange(sessionvar);
 

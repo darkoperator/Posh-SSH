@@ -152,13 +152,36 @@ function Get-SFTPChildItem
         [Parameter(Mandatory=$false,
                    Position=1)]
         [string]
-        $Path
+        $Path,
+        [Parameter(Mandatory=$false,
+                   Position=2)]
+        [switch]
+        $Recursive
 
      )
 
      Begin
      {
-       $ToProcess = @()
+            
+        function Get-SFTPDirectoryRecursive 
+        {
+            param($Path,$SFTPSession)
+            
+            $total = $Sess.Session.ListDirectory($Path)
+
+            #List Files
+            $total | ? {$_.IsDirectory -eq $false}
+            
+            #List non filtered directories
+            $total | ? {$_.IsDirectory -eq $true -and @('.','..') -contains $_.name}           
+            
+            #Get items in a path
+            $total | ? {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
+            % {Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
+       
+        }
+
+        $ToProcess = @()
         switch($PSCmdlet.ParameterSetName)
         {
             'Session'
@@ -195,12 +218,18 @@ function Get-SFTPChildItem
                     throw "Specified path of $($Path) is not a directory."
                 }
             }
-            $Sess.Session.ListDirectory($Path)
+            if($Recursive)
+            {   
+                Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess        
+            }
+            else
+            {
+                $Sess.Session.ListDirectory($Path)
+            }
         }
      }
      End{}
 }
-
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

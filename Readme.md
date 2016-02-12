@@ -22,6 +22,10 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 # ChangeLog
 
+## Version 1.7.4
+* Fixed index problem for sessions when adding and removing them. Thanks to BornToBeRoot for the PR.
+* Added a recursive option to the Get-SFTPChildItem function. Thanks to aaroneuph for the PR.
+
 ## Version 1.7.3
 
 * Made some of the SFTP cmdlets will now honor the erroraction variable with the exception of a problem during transfer where a terminating error will be raised and should be handled in a Try{}Catch{} block.

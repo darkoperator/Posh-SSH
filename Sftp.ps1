@@ -1413,7 +1413,11 @@ function New-SFTPItem
                    Position=2)]
         [ValidateSet('File', 'Directory')]
         [string]
-        $ItemType = 'File'
+        $ItemType = 'File',
+        
+        [Parameter(Mandatory=$false]
+        [switch]
+        $Recurse
 
     )
 
@@ -1449,9 +1453,49 @@ function New-SFTPItem
                 {
                     'Directory' {
                         Write-Verbose -Message "Creating directory $($Path)"
-                        $sess.Session.CreateDirectory($Path)
-                        Write-Verbose -Message 'Directory succesfully created.'
-                        $sess.Session.Get($Path)
+                        if ($Recurse) {
+                            $components = $Path.Split('/')
+                            $level = 0
+                            $newPath = ''
+                            if($Path[0] -eq '.') {
+                                $newPath = '.'
+                                $level = 1
+                            } elseif ($Path[0] -eq '/') {
+                                $level = 1
+                            } else {
+                                $level = 0
+                            }
+
+                            for ($level; $level -le ($components.Count -1); $level++ )
+                            {
+                                if ($level -gt 0)
+                                {
+                                    $newpath = $newPath + '/' + $components[$level]
+                                }
+                                else
+                                {
+                                    $newpath = $newPath + $components[$level]
+                                }
+                                Write-Verbose -message "Checking if $($newPath) exists."
+                                if ($sess.Session.Exists($newPath)) {
+                                    write-Verbose -message "$($newPath) exist."
+                                    $attr = $sess.Session.GetAttributes($newPath)
+                                    if (!$attr.IsDirectory) {
+                                        throw "Path in recursive creation is not a directory."
+                                    } else {
+                                        write-Verbose -message "$($newPath) is directory"
+                                    }
+                                } else {
+                                    Write-Verbose -Message "Creating $($newPath)"
+                                    $sess.Session.CreateDirectory($newPath)
+                                }
+                            }
+                            $sess.Session.Get($Path)
+                        } else {
+                            $sess.Session.CreateDirectory($Path)
+                            Write-Verbose -Message 'Directory succesfully created.'
+                            $sess.Session.Get($Path)
+                        }
                     }
 
                     'File' {

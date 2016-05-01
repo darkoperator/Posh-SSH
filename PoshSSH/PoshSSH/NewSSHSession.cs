@@ -202,8 +202,20 @@ namespace SSH
             get { return _force; }
             set { _force = value; }
         }
-       
 
+        // Automatically error if key is not trusted.
+        private bool _errorOnUntrusted = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter ErrorOnUntrusted
+        {
+            get { return _errorOnUntrusted; }
+            set { _errorOnUntrusted = value; }
+        }
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> _sshHostKeys;
 
@@ -215,10 +227,14 @@ namespace SSH
             _sshHostKeys = keymng.GetKeys();
         }
 
+        private bool _trusted;
+        private string _currentfingerprint;
+
         protected override void ProcessRecord()
         {
             foreach (var computer in _computername)
             {
+              
                 ConnectionInfo connectInfo;
                 if (_keyfile.Equals(""))
                 {
@@ -264,11 +280,14 @@ namespace SSH
                 // Handle host key
                 if (_force)
                 {
-                    WriteWarning("Host key is not being verified since Force switch is used.");
+                    WriteWarning("Host key for " + computer + " is not being verified since Force switch is used.");
+                    _trusted = true;
                 }
                 else
                 {
                     var computer1 = computer;
+                    _trusted = false;
+                    _currentfingerprint = "";
                     client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                     {
                         var sb = new StringBuilder();
@@ -292,14 +311,22 @@ namespace SSH
                                     Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
                                 e.CanTrust = true;
+                                _trusted = true;
                             }
                             else
                             {
-                                throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
+                                _trusted = false;
+                                _currentfingerprint = fingerPrint;
                             }
                         }
                         else
                         {
+                            if (_errorOnUntrusted)
+                            {
+                                _trusted = false;
+                                _currentfingerprint = fingerPrint;
+                            }
+                            
                             int choice;
                             if (_acceptkey)
                             {
@@ -320,6 +347,7 @@ namespace SSH
                                 var keymng = new TrustedKeyMng();
                                 keymng.SetKey(computer1, fingerPrint);
                                 e.CanTrust = true;
+                                _trusted = true;
                             }
                             else
                             {
@@ -328,16 +356,34 @@ namespace SSH
                         }
                     };
                 }
-                // Set the connection timeout
-                client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
+                try
+                {
+                    if (_trusted)
+                    {
+                        WriteVerbose("Connecting to host " + computer + " with fingerprint " + _currentfingerprint);
+                        // Set the connection timeout
+                        client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                // Set Keepalive for connections
-                client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
+                        // Set Keepalive for connections
+                        client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
 
-                // Connect to host using Connection info
-                client.Connect();
+                        // Connect to host using Connection info
+                        client.Connect();
 
-                WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
+                        WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
+                        }
+                    else
+                    {
+                        var excep = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer);
+                        ErrorRecord erec = new ErrorRecord(excep, null, ErrorCategory.SecurityError, _currentfingerprint);
+                        WriteError(erec);
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
+                    WriteError(erec);
+                }
             }
 
         } // End process record

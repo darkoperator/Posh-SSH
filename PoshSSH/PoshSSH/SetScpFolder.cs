@@ -207,6 +207,20 @@ namespace SSH
             set { _acceptkey = value; }
         }
 
+        // Automatically error if key is not trusted.
+        private bool _errorOnUntrusted = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter ErrorOnUntrusted
+        {
+            get { return _errorOnUntrusted; }
+            set { _errorOnUntrusted = value; }
+        }
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> _sshHostKeys;
 
@@ -309,6 +323,10 @@ namespace SSH
                         }
                         else
                         {
+                            if (_errorOnUntrusted)
+                            { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
+                            
+
                             int choice;
                             if (_acceptkey)
                             {

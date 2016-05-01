@@ -351,7 +351,7 @@ function Remove-SFTPItem
             
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
-                $pathAttrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
+                $attr = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
                 if ($attr.IsDirectory)
                 {
                     $content = Get-SFTPChildItem -SFTPSession $session -Path $Path 
@@ -655,6 +655,213 @@ function Get-SFTPPathAttribute
     }
 }
 
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Set-SFTPPathAttribute
+{
+    [CmdletBinding()]
+    [OutputType([Renci.SshNet.Sftp.SftpFileAttributes])]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]] 
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=1)]
+        [string]
+        $Path,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [datetime]
+        $LastAccessTime,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [datetime]
+        $LastWriteTime,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [int]
+        $GroupId,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [int]
+        $UserId,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $GroupCanExecute,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $GroupCanRead,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $GroupCanWrite,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OthersCanExecute,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OthersCanRead,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OthersCanWrite,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OwnerCanExecute,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OwnerCanRead,
+
+        [Parameter(Mandatory=$false,
+                   ValueFromPipeline=$true)]
+        [bool]
+        $OwnerCanWrite
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
+    Process
+    {
+        foreach($session in $ToProcess)
+        {
+            
+            if (Test-SFTPPath -SFTPSession $session -Path $Path)
+            {
+                $currentAttrib = $session.Session.GetAttributes($Path)
+                
+                if($PSBoundParameters.ContainsKey("OwnerCanWrite"))
+                {
+                    $currentAttrib.OwnerCanWrite = $OwnerCanWrite
+                }
+
+                if($PSBoundParameters.ContainsKey("OwnerCanRead"))
+                {
+                    $currentAttrib.OwnerCanRead = $OwnerCanRead
+                }
+
+                if($PSBoundParameters.ContainsKey("OwnerCanExecute"))
+                {
+                    $currentAttrib.OwnerCanExecute = $OwnerCanExecute
+                }
+
+                if($PSBoundParameters.ContainsKey("OthersCanWrite"))
+                {
+                    $currentAttrib.OthersCanWrite = $OthersCanWrite
+                }
+
+                if($PSBoundParameters.ContainsKey("OthersCanRead"))
+                {
+                    $currentAttrib.OthersCanRead = $OthersCanRead
+                }
+
+                if($PSBoundParameters.ContainsKey("OthersCanExecute"))
+                {
+                    $currentAttrib.OthersCanExecute = $OthersCanExecute
+                }
+
+
+                if($PSBoundParameters.ContainsKey("GroupCanWrite"))
+                {
+                    $currentAttrib.GroupCanWrite = $GroupCanWrite
+                }
+
+                if($PSBoundParameters.ContainsKey("GroupCanRead"))
+                {
+                    $currentAttrib.GroupCanRead = $GroupCanRead
+                }
+
+                if($PSBoundParameters.ContainsKey("OwnerCanWrite"))
+                {
+                    $currentAttrib.GroupCanExecute = $GroupCanExecute
+                }
+
+                if($PSBoundParameters.ContainsKey("UserId"))
+                {
+                    $currentAttrib.UserId = $UserId
+                }
+
+                if($PSBoundParameters.ContainsKey("GroupId"))
+                {
+                    $currentAttrib.GroupId = $GroupId
+                }
+
+                if($PSBoundParameters.ContainsKey("LastWriteTime"))
+                {
+                    $currentAttrib.LastWriteTime = $LastWriteTime
+                }
+                
+                if($PSBoundParameters.ContainsKey("LastAccessTime"))
+                {
+                    $currentAttrib.LastAccessTime = $LastAccessTime
+                }
+
+                $session.Session.SetAttributes($Path, $currentAttrib)
+
+
+            }
+            else
+            {
+                throw "Path $($Path) does not exist on the target host."
+            }
+        }
+    }
+    End
+    {
+    }
+}
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SFTPSymlink

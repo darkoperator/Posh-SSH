@@ -1415,7 +1415,7 @@ function New-SFTPItem
         [string]
         $ItemType = 'File',
         
-        [Parameter(Mandatory=$false]
+        [Parameter(Mandatory=$false)]
         [switch]
         $Recurse
 
@@ -1487,7 +1487,12 @@ function New-SFTPItem
                                     }
                                 } else {
                                     Write-Verbose -Message "Creating $($newPath)"
-                                    $sess.Session.CreateDirectory($newPath)
+                                    try {
+                                        $sess.Session.CreateDirectory($newPath)
+                                    } catch {
+                                        $_
+                                        $return
+                                    }
                                 }
                             }
                             $sess.Session.Get($Path)

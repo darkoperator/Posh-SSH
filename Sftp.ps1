@@ -351,6 +351,15 @@ function Remove-SFTPItem
             
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
+                $pathAttrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
+                if ($attr.IsDirectory)
+                {
+                    $content = Get-SFTPChildItem -SFTPSession $session -Path $Path 
+                    if ($content.count -gt 2)
+                    {
+                        throw "Specified path of $($Path) is not an empty directory." 
+                    }
+                }
                 Write-Verbose -Message "Removing $($Path)."
                 $session.Session.Delete($Path)
                 Write-Verbose -Message "$($Path) removed."

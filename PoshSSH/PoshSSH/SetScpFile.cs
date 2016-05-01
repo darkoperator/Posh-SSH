@@ -41,6 +41,7 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             Position = 1,
             ParameterSetName = "Key")]
+        [System.Management.Automation.CredentialAttribute()]
         public PSCredential Credential
         {
             get { return _credential; }
@@ -99,6 +100,7 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
         [ValidateNotNullOrEmpty]
+        [System.Management.Automation.CredentialAttribute()]
         public PSCredential ProxyCredential
         {
             get { return _proxycredential; }
@@ -211,6 +213,20 @@ namespace SSH
             set { _acceptkey = value; }
         }
 
+        // Do not check server fingerprint.
+        private bool _force = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter Force
+        {
+            get { return _force; }
+            set { _force = value; }
+        }
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> _sshHostKeys;
 
@@ -269,65 +285,72 @@ namespace SSH
 
 
                 // Handle host key
-                var computer1 = computer;
-                client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
+                if (_force)
                 {
-                    var sb = new StringBuilder();
-                    foreach (var b in e.FingerPrint)
+                    WriteWarning("Host key is not being verified since Force switch is used.");
+                }
+                else
+                {
+                    var computer1 = computer;
+                    client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                     {
-                        sb.AppendFormat("{0:x}:", b);
-                    }
-                    var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                        var sb = new StringBuilder();
+                        foreach (var b in e.FingerPrint)
+                        {
+                            sb.AppendFormat("{0:x}:", b);
+                        }
+                        var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                    if (_sshHostKeys.ContainsKey(computer1))
-                    {
-                        if (_sshHostKeys[computer1] == fingerPrint)
+                        if (_sshHostKeys.ContainsKey(computer1))
                         {
-                            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                            if (_sshHostKeys[computer1] == fingerPrint)
                             {
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                                if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                                {
+                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                                }
+                                e.CanTrust = true;
                             }
-                            e.CanTrust = true;
+                            else
+                            {
+                                var ex = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
+                                ThrowTerminatingError(new ErrorRecord(
+                                    ex,
+                                    "SSH fingerprint mismatch for host " + computer1,
+                                    ErrorCategory.SecurityError,
+                                    computer1));
+                            }
                         }
                         else
                         {
-                            var ex = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
-                            ThrowTerminatingError(new ErrorRecord(
-                                ex,
-                                "SSH fingerprint mismatch for host " + computer1,
-                                ErrorCategory.SecurityError,
-                                computer1));
-                        }
-                    }
-                    else
-                    {
-                        int choice;
-                        if (_acceptkey)
-                        {
-                            choice = 0;
-                        }
-                        else
-                        {
-                            var choices = new Collection<ChoiceDescription>
+                            int choice;
+                            if (_acceptkey)
+                            {
+                                choice = 0;
+                            }
+                            else
+                            {
+                                var choices = new Collection<ChoiceDescription>
                                 {
                                     new ChoiceDescription("Y"),
                                     new ChoiceDescription("N")
                                 };
 
-                            choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                            }
+                            if (choice == 0)
+                            {
+                                var keymng = new TrustedKeyMng();
+                                keymng.SetKey(computer1, fingerPrint);
+                                e.CanTrust = true;
+                            }
+                            else
+                            {
+                                e.CanTrust = false;
+                            }
                         }
-                        if (choice == 0)
-                        {
-                            var keymng = new TrustedKeyMng();
-                            keymng.SetKey(computer1, fingerPrint);
-                            e.CanTrust = true;
-                        }
-                        else
-                        {
-                            e.CanTrust = false;
-                        }
-                    }
-                };
+                    };
+                }
                 // Set the connection timeout
                 client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 

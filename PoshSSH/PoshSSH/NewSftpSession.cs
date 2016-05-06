@@ -295,6 +295,7 @@ namespace SSH
                     var computer1 = computer;
                     client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                     {
+
                         var sb = new StringBuilder();
                         foreach (var b in e.FingerPrint)
                         {
@@ -313,58 +314,86 @@ namespace SSH
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {
-                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " +
-                                                              computer);
+                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
                                 e.CanTrust = true;
+
                             }
                             else
                             {
-                                throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
+                                e.CanTrust = false;
+
                             }
                         }
                         else
                         {
                             if (_errorOnUntrusted)
-                            { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
-                            
-                            int choice;
-                            if (_acceptkey)
-                            {
-                                choice = 0;
-                            }
-                            else
-                            {
-                                var choices = new Collection<ChoiceDescription>
-                                {
-                                    new ChoiceDescription("Y"),
-                                    new ChoiceDescription("N")
-                                };
-
-                                choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-                            }
-                            if (choice == 0)
-                            {
-                                var keymng = new TrustedKeyMng();
-                                keymng.SetKey(computer1, fingerPrint);
-                                e.CanTrust = true;
-                            }
-                            else
                             {
                                 e.CanTrust = false;
+                            }
+                            else
+                            {
+                                int choice;
+                                if (_acceptkey)
+                                {
+                                    choice = 0;
+                                }
+                                else
+                                {
+                                    var choices = new Collection<ChoiceDescription>
+                                    {
+                                        new ChoiceDescription("Y"),
+                                        new ChoiceDescription("N")
+                                    };
+
+                                    choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                }
+                                if (choice == 0)
+                                {
+                                    var keymng = new TrustedKeyMng();
+                                    keymng.SetKey(computer1, fingerPrint);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    e.CanTrust = false;
+                                }
                             }
                         }
                     };
                 }
-                // Set the connection timeout
-                client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
+                try
+                {
+                    // Set the connection timeout
+                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                // Set Keepalive for connections
-                client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
+                    // Set Keepalive for connections
+                    client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
 
-                // Connect to host using Connection info
-                client.Connect();
-                WriteObject(SshModHelper.AddToSftpSessionCollection(client, SessionState), true);
+                    // Connect to host using Connection info
+                    client.Connect();
+                    WriteObject(SshModHelper.AddToSftpSessionCollection(client, SessionState), true);
+                }
+                catch (Renci.SshNet.Common.SshConnectionException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshOperationTimeoutException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshAuthenticationException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                    WriteError(erec);
+                }
             }
 
         } // End process record

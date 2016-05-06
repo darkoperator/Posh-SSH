@@ -237,6 +237,20 @@ namespace SSH
             set { _errorOnUntrusted = value; }
         }
 
+        // Supress progress bar.
+        private bool _noProgress = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter NoProgress
+        {
+            get { return _noProgress; }
+            set { _noProgress = value; }
+        }
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> _sshHostKeys;
 
@@ -292,18 +306,20 @@ namespace SSH
 
                 //Ceate instance of SSH Client with connection info
                 var client = new ScpClient(connectInfo);
-
+                // Set the connection timeout
+                client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
                 // Handle host key
                 if (_force)
                 {
-                    WriteWarning("Host key is not being verified since Force switch is used.");
+                    WriteWarning("Host key for " + computer + " is not being verified since Force switch is used.");
                 }
                 else
                 {
                     var computer1 = computer;
                     client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                     {
+
                         var sb = new StringBuilder();
                         foreach (var b in e.FingerPrint)
                         {
@@ -311,96 +327,145 @@ namespace SSH
                         }
                         var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
+                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                        {
+                            Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
+                        }
+
                         if (_sshHostKeys.ContainsKey(computer1))
                         {
                             if (_sshHostKeys[computer1] == fingerPrint)
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {
-                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer);
+                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
-
                                 e.CanTrust = true;
+
                             }
                             else
                             {
-                                throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
+                                e.CanTrust = false;
+
                             }
                         }
                         else
                         {
                             if (_errorOnUntrusted)
-                            { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
-                            
-                            int choice;
-                            if (_acceptkey)
-                            {
-                                choice = 0;
-                            }
-                            else
-                            {
-                                var choices = new Collection<ChoiceDescription>
-                                {
-                                    new ChoiceDescription("Y"),
-                                    new ChoiceDescription("N")
-                                };
-
-                                choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-                            }
-                            if (choice == 0)
-                            {
-                                var keymng = new TrustedKeyMng();
-                                keymng.SetKey(computer1, fingerPrint);
-                                e.CanTrust = true;
-                            }
-                            else
                             {
                                 e.CanTrust = false;
+                            }
+                            else
+                            {
+                                int choice;
+                                if (_acceptkey)
+                                {
+                                    choice = 0;
+                                }
+                                else
+                                {
+                                    var choices = new Collection<ChoiceDescription>
+                                    {
+                                        new ChoiceDescription("Y"),
+                                        new ChoiceDescription("N")
+                                    };
+
+                                    choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                }
+                                if (choice == 0)
+                                {
+                                    var keymng = new TrustedKeyMng();
+                                    keymng.SetKey(computer1, fingerPrint);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    e.CanTrust = false;
+                                }
                             }
                         }
                     };
                 }
-                // Set the connection timeout
-                client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
-
-                // Connect to host using Connection info
-                client.Connect();
-
-                var counter = 0;
-                // Print progess of download.
-                client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
+                try
                 {
-                    if (e.Size != 0)
+                    // Connect to host using Connection info
+                    client.Connect();
+
+                    var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
+
+                    if (_noProgress == false)
                     {
-                        counter ++;
-                        if (counter > 900)
+                        var counter = 0;
+                        // Print progess of download.
+                            
+                        client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                         {
-                            var percent = Convert.ToInt32((e.Downloaded*100)/e.Size);
-                            if (percent == 100)
+                            if (e.Size != 0)
                             {
-                                return;
+                                counter++;
+                                if (counter > 900)
+                                {
+                                    var percent = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+                                    if (percent == 100)
+                                    {
+                                        return;
+                                    }
+
+                                    var progressRecord = new ProgressRecord(1,
+                                        "Downloading " + e.Filename,
+                                        String.Format("{0} Bytes Downloaded of {1}",
+                                        e.Downloaded, e.Size)) { PercentComplete = percent };
+
+                                    Host.UI.WriteProgress(1, progressRecord);
+                                    counter = 0;
+                                }
                             }
-
-                            var progressRecord = new ProgressRecord(1, 
-                                "Downloading " + e.Filename, 
-                                String.Format("{0} Bytes Downloaded of {1}", 
-                                e.Downloaded, e.Size)) {PercentComplete = percent};
-
-                            Host.UI.WriteProgress(1, progressRecord);
-                            counter = 0;
-                        }
+                        };
                     }
-                };
-                WriteVerbose("Connection successful");
-                var localfullPath = Path.GetFullPath(_localfile);
+                    WriteVerbose("Connection successful");
+                }
+                catch (Renci.SshNet.Common.SshConnectionException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshOperationTimeoutException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshAuthenticationException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                    WriteError(erec);
+                }
 
-                WriteVerbose("Downloading " + _remotefile);
-                var fil = new FileInfo(@localfullPath);
+                try
+                {
+                    if (client.IsConnected)
+                    { 
+                        var localfullPath = Path.GetFullPath(_localfile);
 
-                // Download the file
-                client.Download(_remotefile, fil);
+                        WriteVerbose("Downloading " + _remotefile);
+                        var fil = new FileInfo(@localfullPath);
 
-                client.Disconnect();
+                        // Download the file
+                        client.Download(_remotefile, fil);
+
+                        client.Disconnect();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationStopped, client);
+                    WriteError(erec);
+                }
+                   
             }
 
         } // End process record

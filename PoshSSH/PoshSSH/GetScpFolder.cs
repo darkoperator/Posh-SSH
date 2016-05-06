@@ -233,6 +233,23 @@ namespace SSH
             get { return _errorOnUntrusted; }
             set { _errorOnUntrusted = value; }
         }
+
+
+        // Supress progress bar.
+        private bool _noProgress = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter NoProgress
+        {
+            get { return _noProgress; }
+            set { _noProgress = value; }
+        }
+
+
         // Variable to hold the host/fingerprint information
         private Dictionary<string, string> _sshHostKeys;
 
@@ -364,42 +381,80 @@ namespace SSH
                 client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
                 // Connect to host using Connection info
-                client.Connect();
-
-                var counter = 0;
-                // Print progess of download.
-                client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
+                try
                 {
-                    if (e.Size != 0)
+                    client.Connect();
+
+                    var counter = 0;
+                    // Print progess of download.
+                    if (!_noProgress)
                     {
-                        counter++;
-                        if (counter > 900)
+                        client.Downloading += delegate(object sender, ScpDownloadEventArgs e)
                         {
-                            var percent = Convert.ToInt32((e.Downloaded*100)/e.Size);
-
-                            if (percent == 100)
+                            if (e.Size != 0)
                             {
-                                return;
+                                counter++;
+                                if (counter > 900)
+                                {
+                                    var percent = Convert.ToInt32((e.Downloaded * 100) / e.Size);
+
+                                    if (percent == 100)
+                                    {
+                                        return;
+                                    }
+
+                                    var progressRecord = new ProgressRecord(1,
+                                        "Downloading " + e.Filename,
+                                        String.Format("{0} Bytes Downloaded of {1}",
+                                            e.Downloaded,
+                                            e.Size)) { PercentComplete = percent };
+
+                                    Host.UI.WriteProgress(1, progressRecord);
+                                    counter = 0;
+                                }
                             }
-
-                            var progressRecord = new ProgressRecord(1,
-                                "Downloading " + e.Filename,
-                                String.Format("{0} Bytes Downloaded of {1}",
-                                    e.Downloaded,
-                                    e.Size)) {PercentComplete = percent};
-
-                            Host.UI.WriteProgress(1, progressRecord);
-                            counter = 0;
-                        }
+                        };
                     }
-                };
 
-                var localfullPath = Path.GetFullPath(_localfolder);
-                WriteVerbose("Downloading " + _remotefolder);
-                var dirinfo = new DirectoryInfo(@localfullPath);
-                client.Download(_remotefolder, dirinfo);
-                client.Disconnect();
-                WriteVerbose("Finished downloading.");
+                }
+                catch (Renci.SshNet.Common.SshConnectionException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshOperationTimeoutException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshAuthenticationException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                    WriteError(erec);
+                }
+
+                if (client.IsConnected)
+                {
+                    try
+                    {
+                        var localfullPath = Path.GetFullPath(_localfolder);
+                        WriteVerbose("Downloading " + _remotefolder);
+                        var dirinfo = new DirectoryInfo(@localfullPath);
+                        client.Download(_remotefolder, dirinfo);
+                        WriteVerbose("Finished downloading.");
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                        WriteError(erec);
+                    }
+                    client.Disconnect();
+                }
             }
 
         } // End process record

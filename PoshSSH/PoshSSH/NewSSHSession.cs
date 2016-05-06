@@ -227,9 +227,6 @@ namespace SSH
             _sshHostKeys = keymng.GetKeys();
         }
 
-        private bool _trusted;
-        private string _currentfingerprint;
-
         protected override void ProcessRecord()
         {
             foreach (var computer in _computername)
@@ -280,16 +277,14 @@ namespace SSH
                 // Handle host key
                 if (_force)
                 {
-                    WriteWarning("Host key for " + computer + " is not being verified since Force switch is used.");
-                    _trusted = true;
+                    WriteWarning("Host key is not being verified since Force switch is used.");
                 }
                 else
                 {
                     var computer1 = computer;
-                    _trusted = false;
-                    _currentfingerprint = "";
                     client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
                     {
+                        
                         var sb = new StringBuilder();
                         foreach (var b in e.FingerPrint)
                         {
@@ -311,79 +306,88 @@ namespace SSH
                                     Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
                                 e.CanTrust = true;
-                                _trusted = true;
+                                
                             }
                             else
                             {
-                                _trusted = false;
-                                _currentfingerprint = fingerPrint;
+                                e.CanTrust = false;
+                                
                             }
                         }
                         else
                         {
                             if (_errorOnUntrusted)
                             {
-                                _trusted = false;
-                                _currentfingerprint = fingerPrint;
-                            }
-                            
-                            int choice;
-                            if (_acceptkey)
-                            {
-                                choice = 0;
-                            }
-                            else
-                            {
-                                var choices = new Collection<ChoiceDescription>
-                                {
-                                    new ChoiceDescription("Y"),
-                                    new ChoiceDescription("N")
-                                };
-
-                                choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-                            }
-                            if (choice == 0)
-                            {
-                                var keymng = new TrustedKeyMng();
-                                keymng.SetKey(computer1, fingerPrint);
-                                e.CanTrust = true;
-                                _trusted = true;
-                            }
-                            else
-                            {
                                 e.CanTrust = false;
+                            }
+                            else
+                            {
+                                int choice;
+                                if (_acceptkey)
+                                {
+                                    choice = 0;
+                                }
+                                else
+                                {
+                                    var choices = new Collection<ChoiceDescription>
+                                    {
+                                        new ChoiceDescription("Y"),
+                                        new ChoiceDescription("N")
+                                    };
+
+                                    choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                }
+                                if (choice == 0)
+                                {
+                                    var keymng = new TrustedKeyMng();
+                                    keymng.SetKey(computer1, fingerPrint);
+                                    e.CanTrust = true;
+                                }
+                                else
+                                {
+                                    e.CanTrust = false;
+                                }
                             }
                         }
                     };
                 }
                 try
                 {
-                    if (_trusted)
-                    {
-                        WriteVerbose("Connecting to host " + computer + " with fingerprint " + _currentfingerprint);
-                        // Set the connection timeout
-                        client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
+                    // Set the connection timeout
+                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
 
-                        // Set Keepalive for connections
-                        client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
+                    // Set Keepalive for connections
+                    client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
 
-                        // Connect to host using Connection info
-                        client.Connect();
+                    // Connect to host using Connection info
+                    client.Connect();
 
-                        WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
-                        }
-                    else
-                    {
-                        var excep = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer);
-                        ErrorRecord erec = new ErrorRecord(excep, null, ErrorCategory.SecurityError, _currentfingerprint);
-                        WriteError(erec);
-                    }
+                    WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
                 }
-                catch (Exception e)
+                catch (Renci.SshNet.Common.SshConnectionException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Renci.SshNet.Common.SshOperationTimeoutException e)
                 {
                     ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
                     WriteError(erec);
                 }
+                catch (Renci.SshNet.Common.SshAuthenticationException e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                    WriteError(erec);
+                }
+                catch (Exception e)
+                {
+                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                    WriteError(erec);
+                }
+
+                // Renci.SshNet.Common.SshOperationTimeoutException when host is not alive or connection times out.
+                // Renci.SshNet.Common.SshConnectionException when fingerprint mismatched
+                // Renci.SshNet.Common.SshAuthenticationException Bad password
             }
 
         } // End process record

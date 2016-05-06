@@ -70,6 +70,20 @@ namespace SSH
             set { _localpath = value; }
         }
 
+        // Supress progress bar.
+        private bool _noProgress = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "NoKey")]
+        public SwitchParameter NoProgress
+        {
+            get { return _noProgress; }
+            set { _noProgress = value; }
+        }
+
         /// <summary>
         /// If the local file exists overwrite it.
         /// </summary>
@@ -126,17 +140,13 @@ namespace SSH
             if (Directory.Exists(@localfullPath))
             {
                 var filename = Path.GetFileName(_remotefile);
-
                 var localfilefullpath = localfullPath + "/" + filename;
                 var fil = new FileInfo(@localfilefullpath);
 
-                
                 foreach (var sftpSession in ToProcess)
                 {
 
                     WriteVerbose("Downloading " + filename + " to " + localfilefullpath + " from " + sftpSession.Host);
-
-                    
 
                     // Check that the path we are downloading from actually exists on the target.
                     if (sftpSession.Session.Exists(_remotefile))
@@ -149,10 +159,8 @@ namespace SSH
                         }
 
                         // Setup Action object for showing download progress.
-
                         var res = new Action<ulong>(rs =>
                         {
-                            //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
                             if (attribs.Size != 0)
                             {
                                 var percent = (int)((((double)rs) / attribs.Size) * 100.0);
@@ -169,11 +177,10 @@ namespace SSH
                                     String.Format("{0} Bytes Downloaded of {1}", rs, attribs.Size)) { PercentComplete = percent };
 
                                     Host.UI.WriteProgress(1, progressRecord);
-                                    
                                 }
                             }
                         });
-                       
+                        
                         var present = File.Exists(localfilefullpath);
                         
                         if ((present & _overwrite) || (!present))
@@ -181,8 +188,14 @@ namespace SSH
                             var localstream = File.Create(@localfilefullpath);
                             try
                             {
-                                
-                                sftpSession.Session.DownloadFile(_remotefile, localstream, res);
+                                if (_noProgress)
+                                {
+                                    sftpSession.Session.DownloadFile(_remotefile, localstream, null);
+                                }
+                                else
+                                {
+                                    sftpSession.Session.DownloadFile(_remotefile, localstream, res);
+                                }
                                 localstream.Close();
 
                             }

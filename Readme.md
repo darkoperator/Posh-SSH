@@ -22,6 +22,15 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 
 # ChangeLog
 
+## Version 1.7.5
+
+* New-SFTPItem can now create sub directories in a path if they do not exist when -Recurse parameter is used.
+* New -Force parameter on New-SSHSession, New-SFTPSession, Get-SCPFolder, Set-SCPFolder, Get-SCPFile and Set-SCPFile that will disable any host key checking.
+* Better warning on Remove-SFTPItem when it is not an empty directory.
+* New function Set-SFTPPathAttribute for setting SFTP Path Attribute.
+* PSCredential attributte added to all cmdlets and functions that take credentials.
+* Added NoProgress parameter to SCP and SFTP cmdlets
+
 ## Version 1.7.4
 * Fixed index problem for sessions when adding and removing them. Thanks to BornToBeRoot for the PR.
 * Added a recursive option to the Get-SFTPChildItem function. Thanks to aaroneuph for the PR.

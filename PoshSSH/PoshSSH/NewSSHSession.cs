@@ -190,7 +190,7 @@ namespace SSH
         }
 
         // Do not check server fingerprint.
-        private bool _force = false;
+        private bool _force;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
@@ -204,7 +204,7 @@ namespace SSH
         }
 
         // Automatically error if key is not trusted.
-        private bool _errorOnUntrusted = false;
+        private bool _errorOnUntrusted;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
@@ -364,17 +364,17 @@ namespace SSH
 
                     WriteObject(SshModHelper.AddToSshSessionCollection(client, SessionState), true);
                 }
-                catch (Renci.SshNet.Common.SshConnectionException e)
+                catch (SshConnectionException e)
                 {
                     ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
                     WriteError(erec);
                 }
-                catch (Renci.SshNet.Common.SshOperationTimeoutException e)
+                catch (SshOperationTimeoutException e)
                 {
                     ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
                     WriteError(erec);
                 }
-                catch (Renci.SshNet.Common.SshAuthenticationException e)
+                catch (SshAuthenticationException e)
                 {
                     ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
                     WriteError(erec);

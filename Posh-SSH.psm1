@@ -420,6 +420,7 @@ function Invoke-SSHCommand
      End{}
  }
 
+ # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Invoke-SSHCommandStream
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
@@ -570,8 +571,6 @@ function Invoke-SSHCommandStream
     }
     End{}
 }
-
-
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

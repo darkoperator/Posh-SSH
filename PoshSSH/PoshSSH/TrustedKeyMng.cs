@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Win32;
+using System;
 
 namespace SSH
 {
@@ -8,7 +9,7 @@ namespace SSH
     {
         public Dictionary<string, string> GetKeys()
         {
-            var hostkeys = new Dictionary<string, string>();
+            var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
             if (poshSoftKey != null)
             {

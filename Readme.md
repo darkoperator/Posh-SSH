@@ -21,7 +21,11 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7.6
 
+* Fixed problem where wrong help file was shipped.
+* Fixed problem where host comparison was not case insensitive for server key fingerprint.
+* 
 ## Version 1.7.5
 
 * New-SFTPItem can now create sub directories in a path if they do not exist when -Recurse parameter is used.

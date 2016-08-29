@@ -77,7 +77,7 @@ x86_64 x86_64 GNU/Linux
 * New function **Invoke-SSHStreamExpectSecureAction **for passing passwords to prompt on a shell stream.
 
 ```PowerShell
-C:\PS>Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'su -' -ExpectString 'Passord:' -SecureAction (read-host -AsSecureString) -Verbose
+C:\PS>Invoke-SSHStreamExpectSecureAction -ShellStream $stream -Command 'su -' -ExpectString 'Password:' -SecureAction (read-host -AsSecureString) -Verbose
 
 ***********
 VERBOSE: Executing command su -.

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Management.Automation;
 using Renci.SshNet;
 
@@ -18,85 +19,101 @@ namespace SSH
         /// <param name="proxyport"></param>
         /// <param name="proxycredential"></param>
         /// <returns></returns>
-        public static PrivateKeyConnectionInfo GetKeyConnectionInfo(string computer, 
-            int port, 
-            string keyfile, 
-            PSCredential credential, 
-            string proxyserver, 
-            string proxytype, 
-            int proxyport, 
+        public static PrivateKeyConnectionInfo GetKeyConnectionInfo(string computer,
+            int port,
+            string keyfile,
+            PSCredential credential,
+            string proxyserver,
+            string proxytype,
+            int proxyport,
+            PSCredential proxycredential)
+
+        {
+            string fullPath = Path.GetFullPath(keyfile);
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("File " + fullPath + " not found");
+            var keyFileStream = File.OpenRead(@fullPath);
+            return GetKeyConnectionInfo(computer, port, keyFileStream, credential, proxyserver, proxytype, proxyport, proxycredential);
+        }
+        public static PrivateKeyConnectionInfo GetKeyConnectionInfo(string computer,
+            int port,
+            string[] keyfile,
+            PSCredential credential,
+            string proxyserver,
+            string proxytype,
+            int proxyport,
+            PSCredential proxycredential)
+        {
+            var keyFileStream = new MemoryStream(System.Text.Encoding.Default.GetBytes(String.Join("\n", keyfile)));
+
+            return GetKeyConnectionInfo(computer, port, keyFileStream, credential, proxyserver, proxytype, proxyport, proxycredential);
+        }
+        private static PrivateKeyConnectionInfo GetKeyConnectionInfo(string computer,
+            int port,
+            Stream keyFileStream,
+            PSCredential credential,
+            string proxyserver,
+            string proxytype,
+            int proxyport,
             PSCredential proxycredential)
         {
             PrivateKeyConnectionInfo connectionInfo;
-            var fullPath = Path.GetFullPath(keyfile);
-            // Check if the file actually exists.
-            if (File.Exists(fullPath))
+            // Create the key object.
+            PrivateKeyFile sshkey;
+            if (credential.GetNetworkCredential().Password == String.Empty)
+                sshkey = new PrivateKeyFile(keyFileStream);
+            else
+                sshkey = new PrivateKeyFile(keyFileStream, credential.GetNetworkCredential().Password);
+
+            if (proxyserver != String.Empty)
             {
-                // Create the key object.
-                PrivateKeyFile sshkey;
-                if (credential.GetNetworkCredential().Password == "")
+                // Set the proper proxy type
+                var ptype = ProxyTypes.Http;
+                switch (proxytype)
                 {
-                    sshkey = new PrivateKeyFile(File.OpenRead(@fullPath));
+                    case "HTTP":
+                        ptype = ProxyTypes.Http;
+                        break;
+                    case "Socks4":
+                        ptype = ProxyTypes.Socks4;
+                        break;
+                    case "Socks5":
+                        ptype = ProxyTypes.Socks5;
+                        break;
+                }
+
+                if (proxycredential.UserName != String.Empty)
+                {
+                    connectionInfo = new PrivateKeyConnectionInfo(computer,
+                        port,
+                        credential.UserName,
+                        ptype,
+                        proxyserver,
+                        proxyport,
+                        sshkey);
                 }
                 else
                 {
-                    sshkey = new PrivateKeyFile(File.OpenRead(@fullPath), credential.GetNetworkCredential().Password);
-                }
-
-                if (proxyserver != "")
-                {
-                    // Set the proper proxy type
-                    var ptype = ProxyTypes.Http;
-                    switch (proxytype)
-                    {
-                        case "HTTP":
-                            ptype = ProxyTypes.Http;
-                            break;
-                        case "Socks4":
-                            ptype = ProxyTypes.Socks4;
-                            break;
-                        case "Socks5":
-                            ptype = ProxyTypes.Socks5;
-                            break;
-                    }
-
-                    if (proxycredential.UserName != "")
-                    {
-                        connectionInfo = new PrivateKeyConnectionInfo(computer,
-                            port,
-                            credential.UserName,
-                            ptype,
-                            proxyserver,
-                            proxyport,
-                            sshkey);
-                    }
-                    else
-                    {
-                       
-                        connectionInfo = new PrivateKeyConnectionInfo(computer,
-                            port,
-                            credential.UserName,
-                            ptype,
-                            proxyserver,
-                            proxyport,
-                            proxycredential.UserName,
-                            proxycredential.GetNetworkCredential().Password,
-                            sshkey);
-                    }
-                }
-                else // Handle connection with no proxy server
-                {
 
                     connectionInfo = new PrivateKeyConnectionInfo(computer,
-                        port, 
-                        credential.UserName, 
+                        port,
+                        credential.UserName,
+                        ptype,
+                        proxyserver,
+                        proxyport,
+                        proxycredential.UserName,
+                        proxycredential.GetNetworkCredential().Password,
                         sshkey);
-                       
                 }
-            } // file exists
-            else
+            }
+            else // Handle connection with no proxy server
             {
-                throw new FileNotFoundException("Key file " + fullPath + " was not found.");
+
+                connectionInfo = new PrivateKeyConnectionInfo(computer,
+                    port,
+                    credential.UserName,
+                    sshkey);
+
             }
             return connectionInfo;
         }
@@ -123,9 +140,9 @@ namespace SSH
             KeyboardInteractiveAuthenticationMethod kIconnectInfo)
         {
             ConnectionInfo connectionInfo;
-            var passconnectInfo = new PasswordAuthenticationMethod(credential.UserName, 
+            var passconnectInfo = new PasswordAuthenticationMethod(credential.UserName,
                                                                    credential.GetNetworkCredential().Password);
-            if (proxyserver != "")
+            if (proxyserver != String.Empty)
             {
                 // Set the proper proxy type
                 var ptype = ProxyTypes.Http;
@@ -142,7 +159,7 @@ namespace SSH
                         break;
                 }
 
-                if (proxycredential.UserName != "")
+                if (proxycredential.UserName != String.Empty)
                 {
                     connectionInfo = new ConnectionInfo(computer,
                                                         port,
@@ -150,8 +167,8 @@ namespace SSH
                                                         ptype,
                                                         proxyserver,
                                                         proxyport,
-                                                        "",
-                                                        "",
+                                                        String.Empty,
+                                                        String.Empty,
                                                         kIconnectInfo,
                                                         passconnectInfo);
                 }

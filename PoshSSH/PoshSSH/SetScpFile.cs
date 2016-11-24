@@ -146,6 +146,7 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             Position = 2,
             ParameterSetName = "Key")]
+        [Alias("FullName")]
         public String LocalFile
         {
             get { return _localfile; }

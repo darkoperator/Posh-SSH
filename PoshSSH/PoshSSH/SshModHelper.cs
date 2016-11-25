@@ -81,5 +81,28 @@ namespace SSH
             pssession.PSVariable.Set((new PSVariable("Global:SFTPSessions", sftpSessions, ScopedItemOptions.AllScope)));
             return obj;
         }
+
+        /// <summary>
+        /// Deletes the directory recursively.
+        /// </summary>
+        /// <param name="remoteDirectory">The remote directory.</param>
+        public static void DeleteDirectoryRecursive(string remoteDirectory, SftpClient Client)
+        {
+            if (!Client.Exists(remoteDirectory))
+                return;
+
+            foreach (var file in Client.ListDirectory(remoteDirectory))
+            {
+                if (file.Name.Equals(".") || file.Name.Equals(".."))
+                    continue;
+
+                if (file.IsDirectory)
+                    DeleteDirectoryRecursive(file.FullName, Client);
+                else
+                    Client.DeleteFile(file.FullName);
+            }
+
+            Client.DeleteDirectory(remoteDirectory);
+        }
     }
 }

@@ -74,10 +74,10 @@ namespace SSH
         private bool _noProgress = false;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
+            ParameterSetName = "Index")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            ParameterSetName = "Session")]
         public SwitchParameter NoProgress
         {
             get { return _noProgress; }

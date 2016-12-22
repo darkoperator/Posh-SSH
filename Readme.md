@@ -21,6 +21,9 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7.7
+* Fixed typo on parameter set name for NoProgress parameter in Get-SFTPFile.
+
 ## Version 1.7.6
 
 * Fixed problem where wrong help file was shipped.

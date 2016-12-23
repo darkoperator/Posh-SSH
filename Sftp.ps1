@@ -936,7 +936,7 @@ function New-SFTPSymlink
                 }
                 catch
                 {
-                    Write-Error -Exception $_ 
+                    Write-Error -Exception $_.Exception
                 }
 
             }
@@ -1087,7 +1087,7 @@ function Get-SFTPContent
             }
                 catch
                 {
-                Write-Error -Exception $_ -Message "Failed to get content to file $($Path)"
+                Write-Error -Exception $_.Exception -Message "Failed to get content to file $($Path)"
             }
             }
             else
@@ -1250,7 +1250,7 @@ function Set-SFTPContent
             }
             catch
             {
-                Write-Error -Exception $_ -Message "Failed to write content to file $($Path)"
+                Write-Error -Exception $_.Exception -Message "Failed to write content to file $($Path)"
             }
         }
     }

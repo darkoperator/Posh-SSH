@@ -275,7 +275,7 @@ http://www.darkoperator.com/</maml:uri>
 			<dev:version/>
 		</command:details>
 		<maml:description>
-			<maml:para>Executes a given command on a remote SSH hosst given credentials to the host or using an existing
+			<maml:para>Executes a given command on a remote SSH host given credentials to the host or using an existing
 SSH Session.</maml:para>
 		</maml:description>
 		<command:syntax>

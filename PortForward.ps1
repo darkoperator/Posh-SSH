@@ -143,7 +143,7 @@ function New-SSHLocalPortForward
 }
 
 
-<#function New-SSHRemotePortForward
+function New-SSHRemotePortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
@@ -214,10 +214,8 @@ function New-SSHLocalPortForward
     
     }
     End{}
-
-
 }
-#>
+
 <#
 .Synopsis
    Establishes a Dynamic Port Forward thru a stablished SSH Session.

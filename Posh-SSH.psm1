@@ -16,6 +16,7 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 #. "$PSScriptRoot\PortForward.ps1"
 . "$PSScriptRoot\Trust.ps1"
 . "$PSScriptRoot\Sftp.ps1"
+. "$PSScriptRoot\PortForward.ps1"
 
 
 # SSH Functions
@@ -660,7 +661,7 @@ function New-SSHShellStream
     }
     Process
     {
-        $stream = $ToProcess.Session.CreateShellStream($TerminalName, $Colums, $Rows, $Width, $Height, $BufferSize)
+        $stream = $ToProcess.Session.CreateShellStream($TerminalName, $Columns, $Rows, $Width, $Height, $BufferSize)
         Add-Member -InputObject $stream -MemberType NoteProperty -Name SessionId -Value $ToProcess.SessionId
         Add-Member -InputObject $stream -MemberType NoteProperty -Name Session -Value $ToProcess.Session
         $stream

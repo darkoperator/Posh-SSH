@@ -1,0 +1,858 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems xmlns="http://msh" schema="maml">
+
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Get-SSHPortForward</command:name>
+<command:verb>Get</command:verb>
+<command:noun>SSHPortForward</command:noun>
+<maml:description><maml:para>Get a list of forwarded TCP Ports for a SSH Session
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Get a list of forwarded TCP Ports for a SSH Session
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Get-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Get list of configured forwarded ports</dev:code>
+<dev:remarks><maml:para>PS C:\&gt; Get-SSHPortForward -Index 0
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> BoundHost : 0.0.0.0  BoundPort : 8081  Host      : 10.10.10.1  Port      : 80  IsStarted : True
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>New-SSHDynamicPortForward</command:name>
+<command:verb>New</command:verb>
+<command:noun>SSHDynamicPortForward</command:noun>
+<maml:description><maml:para>Establishes a Dynamic Port Forward thru a stablished SSH Session.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Dynamic port forwarding is a transparent mechanism available for applications, which  support the SOCKS4 or SOCKS5 client protoco. In windows for best results the local address to bind to should be the IP of the network interface.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>New-SSHDynamicPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>Localhost</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>New-SSHDynamicPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>Localhost</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>Localhost</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose</dev:code>
+<dev:remarks><maml:para>VERBOSE: Finding session with Index 0 VERBOSE: 0 VERBOSE: Adding Forward Port Configuration to session 0 VERBOSE: Starting the Port Forward. VERBOSE: Forwarding has been started.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>New-SSHLocalPortForward</command:name>
+<command:verb>New</command:verb>
+<command:noun>SSHLocalPortForward</command:noun>
+<maml:description><maml:para>Redirects traffic from a local port to a remote host and port via a SSH Session.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Redirects TCP traffic from a local port to a remote host and port via a SSH Session.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>New-SSHLocalPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>New-SSHLocalPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Forward traffic from 0.0.0.0:8081 to 10.10.10.1:80 thru a SSH Session</dev:code>
+<dev:remarks><maml:para>PS C:\&gt; New-SSHLocalPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 -RemoteAddress 10.10.10.1 -RemotePort 80 -Verbose  VERBOSE: Finding session with Index 0  VERBOSE: 0  VERBOSE: Adding Forward Port Configuration to session 0  VERBOSE: Starting the Port Forward.  VERBOSE: Forwarding has been started.
+</maml:para>
+<maml:para> PS C:\&gt; Invoke-WebRequest -Uri http://localhost:8081
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> StatusCode        : 200  StatusDescription : OK  Content           :                       &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;                      &lt;html&gt;                          &lt;head&gt;                              &lt;script type="text/javascript" src="/javascript/scri...  RawContent        : HTTP/1.1 200 OK                      Expires: Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT                      Cache-Control: max-age=180000,no-store, no-cache, must-revalidate, post-check=0, pre-check=0                      Set-Cookie: PHPSESS...  Forms             : {iform}  Headers           : {[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT], [Cache-Control, max-age=180000,no-store, no-cache,                       must-revalidate, post-check=0, pre-check=0], [Set-Cookie, PHPSESSID=d53d3dc62ffac241112bcfd16af36bb8; path=/], [Pragma, no-cache]...}  Images            : {}  InputFields       : {@{innerHTML=; innerText=; outerHTML=&lt;INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user"                       name=usernamefld&gt;; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld                       user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=&lt;INPUT onchange=clearError(); onclick=clearError(); tabIndex=2                       id=passwordfld class="formfld pwd" type=password value="" name=passwordfld&gt;; outerText=; tagName=INPUT; onchange=clearError();;                       onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=;                       innerText=; outerHTML=&lt;INPUT tabIndex=3 class=formbtn type=submit value=Login name=login&gt;; outerText=; tagName=INPUT; tabIndex=3;                       class=formbtn; type=submit; value=Login; name=login}}  Links             : {}  ParsedHtml        : mshtml.HTMLDocumentClass  RawContentLength  : 5932
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>New-SSHRemotePortForward</command:name>
+<command:verb>New</command:verb>
+<command:noun>SSHRemotePortForward</command:noun>
+<maml:description><maml:para>{{Fill in the Synopsis}}
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>{{Fill in the Description}}
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>New-SSHRemotePortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none"><maml:name>Index</maml:name>
+<maml:Description><maml:para>{{Fill Index Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalAdress</maml:name>
+<maml:Description><maml:para>{{Fill LocalAdress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalPort</maml:name>
+<maml:Description><maml:para>{{Fill LocalPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>New-SSHRemotePortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalAdress</maml:name>
+<maml:Description><maml:para>{{Fill LocalAdress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalPort</maml:name>
+<maml:Description><maml:para>{{Fill LocalPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none"><maml:name>Index</maml:name>
+<maml:Description><maml:para>{{Fill Index Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalAdress</maml:name>
+<maml:Description><maml:para>{{Fill LocalAdress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>LocalPort</maml:name>
+<maml:Description><maml:para>{{Fill LocalPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemoteAddress</maml:name>
+<maml:Description><maml:para>{{Fill RemoteAddress Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>RemotePort</maml:name>
+<maml:Description><maml:para>{{Fill RemotePort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>SSH.SshSession</maml:name>
+</dev:type>
+<maml:description><maml:para>System.Int32
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+<dev:remarks><maml:para>{{ Add example description here }}
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Start-SSHPortForward</command:name>
+<command:verb>Start</command:verb>
+<command:noun>SSHPortForward</command:noun>
+<maml:description><maml:para>Start a configured port forward configured for a SSH Session
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Stops a configured port forward configured for a SSH Session given the session and port number
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Start-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Start-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Stop a currently working port forward thru a SSH Session</dev:code>
+<dev:remarks><maml:para>C:\Users\Carlos&gt; Get-SSHPortForward -Index 0
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> BoundHost : 192.168.1.158  BoundPort : 8081  Host      : 10.10.10.1  Port      : 80  IsStarted : False
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> C:\Users\Carlos&gt; Start-SSHPortForward -Index 0 -BoundPort 8081
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> BoundHost : 192.168.1.158  BoundPort : 8081  Host      : 10.10.10.1  Port      : 80  IsStarted : True
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Stop-SSHPortForward</command:name>
+<command:verb>Stop</command:verb>
+<command:noun>SSHPortForward</command:noun>
+<maml:description><maml:para>Stops a configured port forward configured for a SSH Session
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Stops a configured port forward configured for  a SSH Session given the session and port number
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Stop-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Stop-SSHPortForward</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session"><maml:name>SSHSession</maml:name>
+<maml:Description><maml:para>{{Fill SSHSession Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
+<dev:type><maml:name>SshSession</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index"><maml:name>SessionId</maml:name>
+<maml:Description><maml:para>{{Fill SessionId Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>BoundPort</maml:name>
+<maml:Description><maml:para>{{Fill BoundPort Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+<dev:type><maml:name>Int32</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>BoundHost</maml:name>
+<maml:Description><maml:para>{{Fill BoundHost Description}}
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Stop a currently working port forward thru a SSH Session</dev:code>
+<dev:remarks><maml:para>C:\Users\Carlos&gt; Get-SSHPortForward -Index 0
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> BoundHost : 192.168.1.158  BoundPort : 8081  Host      : 10.10.10.1  Port      : 80  IsStarted : True
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> C:\Users\Carlos&gt; Stop-SSHPortForward -Index 0 -BoundPort 8081
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para> BoundHost : 192.168.1.158  BoundPort : 8081  Host      : 10.10.10.1  Port      : 80  IsStarted : False
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>http://sshnet.codeplex.com/</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+</helpItems>

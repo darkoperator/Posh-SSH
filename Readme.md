@@ -21,6 +21,16 @@ iex (New-Object Net.WebClient).DownloadString("https://gist.github.com/darkopera
 * Remote, dynamic and local port forwarding
 
 # ChangeLog
+## Version 1.7.8
+* Fixed typo on variable for colums when creating a shell stream.
+* New cmdlets for PortForwarding
+  * Get-SSHPortForward
+  * New-SSHDynamicPortForward
+  * New-SSHLocalPortForward
+  * New-SSHRemotePortForward
+  * Start-SSHPortForward
+  * Stop-SSHPortForward
+
 ## Version 1.7.7
 * Fixed typo on parameter set name for NoProgress parameter in Get-SFTPFile.
 

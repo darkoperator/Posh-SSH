@@ -449,9 +449,10 @@ namespace SSH
                 {
                     if (client.IsConnected)
                     { 
-                        var localfullPath = Path.GetFullPath(_localfile);
+                        var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
 
                         WriteVerbose("Downloading " + _remotefile);
+                        WriteVerbose("Saving as " + localfullPath);
                         var fil = new FileInfo(@localfullPath);
 
                         // Download the file

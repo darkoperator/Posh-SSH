@@ -287,10 +287,14 @@ namespace SSH
 
         protected override void BeginProcessing()
         {
-            // Collect host/fingerprint information from the registry.
-            base.BeginProcessing();
-            var keymng = new TrustedKeyMng();
-            _sshHostKeys = keymng.GetKeys();
+            // no need to validate keys if the force parameter is selected.
+            if ( !_force)
+            {
+                // Collect host/fingerprint information from the registry.
+                base.BeginProcessing();
+                var keymng = new TrustedKeyMng();
+                _sshHostKeys = keymng.GetKeys();
+            }
         }
 
         protected override void ProcessRecord()

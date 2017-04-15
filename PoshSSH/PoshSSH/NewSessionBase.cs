@@ -169,7 +169,7 @@ namespace SSH
             set { _keyfile = value; }
         }
 
-        //SSH Key File
+        //SSH Key Content
         private string[] _keystring = new string[] { };
 
         [Parameter(Mandatory = false,
@@ -180,6 +180,7 @@ namespace SSH
             get { return _keystring; }
             set { _keystring = value; }
         }
+
         // ConnectionTimeout Parameter
         private int _connectiontimeout = 10;
         [Parameter(Mandatory = false,

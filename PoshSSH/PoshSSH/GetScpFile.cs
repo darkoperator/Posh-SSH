@@ -448,8 +448,10 @@ namespace SSH
                 try
                 {
                     if (client.IsConnected)
-                    { 
-                        var localfullPath = Path.GetFullPath(_localfile);
+                    {
+                        ProviderInfo provider;
+                        var pathinfo = GetResolvedProviderPathFromPSPath(_keyfile, out provider);
+                        var localfullPath = pathinfo[0];
 
                         WriteVerbose("Downloading " + _remotefile);
                         var fil = new FileInfo(@localfullPath);

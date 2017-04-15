@@ -37,14 +37,14 @@ namespace SSH
         }
         public static PrivateKeyConnectionInfo GetKeyConnectionInfo(string computer,
             int port,
-            string[] keyfile,
+            string[] keycontent,
             PSCredential credential,
             string proxyserver,
             string proxytype,
             int proxyport,
             PSCredential proxycredential)
         {
-            var keyFileStream = new MemoryStream(System.Text.Encoding.Default.GetBytes(String.Join("\n", keyfile)));
+            var keyFileStream = new MemoryStream(System.Text.Encoding.Default.GetBytes(String.Join("\n", keycontent)));
 
             return GetKeyConnectionInfo(computer, port, keyFileStream, credential, proxyserver, proxytype, proxyport, proxycredential);
         }

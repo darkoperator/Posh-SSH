@@ -1,4 +1,4 @@
-﻿using Renci.SshNet;
+using Renci.SshNet;
 using Renci.SshNet.Common;
 using System;
 using System.Collections.Generic;
@@ -106,7 +106,7 @@ namespace SSH
             get { return _proxycredential; }
             set { _proxycredential = value; }
         }
-        
+
 
         // Proxy Type
         private string _proxytype = "HTTP";
@@ -138,7 +138,7 @@ namespace SSH
 
         //Local File
         private String _localfile = "";
-        [Parameter(Mandatory = true,
+        [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             Position = 2,
             ParameterSetName = "NoKey")]
@@ -150,6 +150,20 @@ namespace SSH
         {
             get { return _localfile; }
             set { _localfile = value; }
+        }
+
+        //ScriptBlock
+        private ScriptBlock _scriptBlock;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key")]
+        public ScriptBlock ScriptBlock
+        {
+            get { return _scriptBlock; }
+            set { _scriptBlock = value; }
         }
 
 
@@ -285,7 +299,7 @@ namespace SSH
                         kIconnectInfo);
 
                     // Event Handler for interactive Authentication
-                    kIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
+                    kIconnectInfo.AuthenticationPrompt += delegate (object sender, AuthenticationPromptEventArgs e)
                     {
                         foreach (var prompt in e.Prompts)
                         {
@@ -320,7 +334,7 @@ namespace SSH
                 else
                 {
                     var computer1 = computer;
-                    client.HostKeyReceived += delegate(object sender, HostKeyEventArgs e)
+                    client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                     {
 
                         var sb = new StringBuilder();
@@ -402,7 +416,7 @@ namespace SSH
                     {
                         var counter = 0;
                         // Print progess of download.
-                        client.Uploading += delegate(object sender, ScpUploadEventArgs e)
+                        client.Uploading += delegate (object sender, ScpUploadEventArgs e)
                         {
                             if (e.Size != 0)
                             {
@@ -420,7 +434,8 @@ namespace SSH
                                     var progressRecord = new ProgressRecord(1,
                                         "Uploading " + e.Filename,
                                         String.Format("{0} Bytes Uploaded of {1}",
-                                        e.Uploaded, e.Size)) { PercentComplete = percent };
+                                        e.Uploaded, e.Size))
+                                    { PercentComplete = percent };
 
                                     Host.UI.WriteProgress(1, progressRecord);
                                     counter = 0;
@@ -453,37 +468,50 @@ namespace SSH
                 {
                     WriteVerbose("Connection successful");
 
-
-                    // Resolve the path even if a relative one is given.
-                    ProviderInfo provider;
-                    var pathinfo = GetResolvedProviderPathFromPSPath(_localfile, out provider);
-                    var localfullPath = pathinfo[0];
-
-                    if (File.Exists(@localfullPath))
+                    if (_scriptBlock != null)
                     {
-                        try
+                        using (MemoryStream ms = new MemoryStream(Encoding.Default.GetBytes(_scriptBlock.ToString())))
                         {
-                            WriteVerbose("Uploading " + localfullPath);
-                            var fil = new FileInfo(@localfullPath);
-                            var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
-                            client.Upload(fil, remoteFullpath);
+                            // Upload File
+                            client.Upload(ms, _remotepath);
 
+                            // Close Connection
                             client.Disconnect();
-                        }
-                        catch (Exception e)
-                        {
-                            ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
-                            WriteError(erec);
                         }
                     }
                     else
                     {
-                        var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+                        // Resolve the path even if a relative one is given.
+                        ProviderInfo provider;
+                        var pathinfo = GetResolvedProviderPathFromPSPath(_localfile, out provider);
+                        var localfullPath = pathinfo[0];
 
-                        WriteError(new ErrorRecord(ex,
-                                                    "File to upload " + localfullPath + " was not found.",
-                                                    ErrorCategory.InvalidArgument,
-                                                    localfullPath));
+                        if (File.Exists(@localfullPath))
+                        {
+                            try
+                            {
+                                WriteVerbose("Uploading " + localfullPath);
+                                var fil = new FileInfo(@localfullPath);
+                                var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
+                                client.Upload(fil, remoteFullpath);
+
+                                client.Disconnect();
+                            }
+                            catch (Exception e)
+                            {
+                                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                                WriteError(erec);
+                            }
+                        }
+                        else
+                        {
+                            var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+
+                            WriteError(new ErrorRecord(ex,
+                                                        "File to upload " + localfullPath + " was not found.",
+                                                        ErrorCategory.InvalidArgument,
+                                                        localfullPath));
+                        }
                     }
                 }
             }

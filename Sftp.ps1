@@ -1487,12 +1487,7 @@ function New-SFTPItem
                                     }
                                 } else {
                                     Write-Verbose -Message "Creating $($newPath)"
-                                    try {
-                                        $sess.Session.CreateDirectory($newPath)
-                                    } catch {
-                                        $_
-                                        $return
-                                    }
+                                    $sess.Session.CreateDirectory($newPath)
                                 }
                             }
                             $sess.Session.Get($Path)

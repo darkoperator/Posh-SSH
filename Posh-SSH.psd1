@@ -30,7 +30,7 @@ Copyright = '(c) 2016 Carlos Perez. All rights reserved.'
 Description = 'Provide SSH functionality for executing commands against remote hosts.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '3.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -39,7 +39,7 @@ PowerShellVersion = '2.0'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '3.5'
+DotNetFrameworkVersion = '4.0'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'

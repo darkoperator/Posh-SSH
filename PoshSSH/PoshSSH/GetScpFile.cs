@@ -41,6 +41,10 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             Position = 1,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            ParameterSetName = "KeyString")]
         [System.Management.Automation.CredentialAttribute()]
         public PSCredential Credential
         {
@@ -58,6 +62,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         public Int32 Port
         {
             get { return _port; }
@@ -74,6 +81,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         public String ProxyServer
         {
             get { return _proxyserver; }
@@ -89,6 +99,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         public Int32 ProxyPort
         {
             get { return _proxyport; }
@@ -103,6 +116,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [ValidateNotNullOrEmpty]
         public PSCredential ProxyCredential
         {
@@ -118,6 +134,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
@@ -138,10 +157,25 @@ namespace SSH
         }
         private String _keyfile = "";
 
+        //SSH Key Content
+        private string[] _keystring = new string[] { };
+
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
+        public string[] KeyString
+        {
+            get { return _keystring; }
+            set { _keystring = value; }
+        }
+
         //Local File
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
@@ -156,6 +190,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
@@ -173,6 +210,9 @@ namespace SSH
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         public int OperationTimeout
         {
@@ -185,6 +225,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
@@ -202,6 +245,9 @@ namespace SSH
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         public SwitchParameter AcceptKey
         {
@@ -214,6 +260,9 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
@@ -230,6 +279,9 @@ namespace SSH
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         public SwitchParameter ErrorOnUntrusted
         {
@@ -244,6 +296,9 @@ namespace SSH
             ParameterSetName = "Key")]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
             ParameterSetName = "NoKey")]
         public SwitchParameter NoProgress
         {
@@ -256,54 +311,75 @@ namespace SSH
 
         protected override void BeginProcessing()
         {
-            // Collect host/fingerprint information from the registry.
-            base.BeginProcessing();
-            var keymng = new TrustedKeyMng();
-            _sshHostKeys = keymng.GetKeys();
+            // Collect host/fingerprint information from the registry if connection is not forced.
+            if (!_force)
+            {
+                base.BeginProcessing();
+                var keymng = new TrustedKeyMng();
+                _sshHostKeys = keymng.GetKeys();
+            }
         }
 
         protected override void ProcessRecord()
         {
             foreach (var computer in _computername)
             {
-                ConnectionInfo connectInfo;
-                if (_keyfile.Equals(""))
+                ConnectionInfo connectInfo = null;
+                switch (ParameterSetName)
                 {
-                    WriteVerbose("Using SSH Username and Password authentication for connection.");
-                    var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(_credential.UserName);
-                    connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
-                        _port,
-                        _credential,
-                        _proxyserver,
-                        _proxytype,
-                        _proxyport,
-                        _proxycredential,
-                        kIconnectInfo);
+                    case "NoKey":
+                        WriteVerbose("Using SSH Username and Password authentication for connection.");
+                        var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(_credential.UserName);
+                        connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
+                            _port,
+                            _credential,
+                            _proxyserver,
+                            _proxytype,
+                            _proxyport,
+                            _proxycredential,
+                            kIconnectInfo);
 
-                    // Event Handler for interactive Authentication
-                    kIconnectInfo.AuthenticationPrompt += delegate(object sender, AuthenticationPromptEventArgs e)
-                    {
-                        foreach (var prompt in e.Prompts)
+                        // Event Handler for interactive Authentication
+                        kIconnectInfo.AuthenticationPrompt += delegate (object sender, AuthenticationPromptEventArgs e)
                         {
-                            if (prompt.Request.Contains("Password"))
-                                prompt.Response = _credential.GetNetworkCredential().Password;
-                        }
-                    };
+                            foreach (var prompt in e.Prompts)
+                            {
+                                if (prompt.Request.Contains("Password"))
+                                    prompt.Response = _credential.GetNetworkCredential().Password;
+                            }
+                        };
+                        break;
 
-                }
-                else
-                {
-                    WriteVerbose("Using SSH Key authentication for connection.");
-                    connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
-                        _port,
-                        _keyfile,
-                        _credential,
-                        _proxyserver,
-                        _proxytype,
-                        _proxyport,
-                        _proxycredential);
-                }
+                    case "Key":
+                        ProviderInfo provider;
+                        var pathinfo = GetResolvedProviderPathFromPSPath(_keyfile, out provider);
+                        var localfullPath = pathinfo[0];
+                        connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
+                            _port,
+                            localfullPath,
+                            _credential,
+                            _proxyserver,
+                            _proxytype,
+                            _proxyport,
+                            _proxycredential);
+                        break;
 
+                    case "KeyString":
+                        WriteVerbose("Using SSH Key authentication for connection.");
+                        connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
+                            _port,
+                            _keystring,
+                            _credential,
+                            _proxyserver,
+                            _proxytype,
+                            _proxyport,
+                            _proxycredential);
+                        break;
+
+                    default:
+                        break;
+                }
+                
                 //Ceate instance of SSH Client with connection info
                 var client = new ScpClient(connectInfo);
                 // Set the connection timeout
@@ -448,8 +524,10 @@ namespace SSH
                 try
                 {
                     if (client.IsConnected)
-                    { 
-                        var localfullPath = Path.GetFullPath(_localfile);
+                    {
+                        ProviderInfo provider;
+                        var pathinfo = GetResolvedProviderPathFromPSPath(_keyfile, out provider);
+                        var localfullPath = pathinfo[0];
 
                         WriteVerbose("Downloading " + _remotefile);
                         var fil = new FileInfo(@localfullPath);

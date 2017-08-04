@@ -3,13 +3,13 @@
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SFTPSession 
+function Get-SFTPSession
 {
-    param( 
+    param(
         [Parameter(Mandatory=$false,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId
     )
 
@@ -52,7 +52,7 @@ function Remove-SFTPSession
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$false,
@@ -64,7 +64,7 @@ function Remove-SFTPSession
         $SFTPSession
     )
 
-        Begin{}
+        Begin {}
         Process
         {
             if ($PSCmdlet.ParameterSetName -eq 'Index')
@@ -85,9 +85,9 @@ function Remove-SFTPSession
                 foreach($badsession in $sessions2remove)
                 {
                      Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected) 
-                     { 
-                        $badsession.session.Disconnect() 
+                     if ($badsession.session.IsConnected)
+                     {
+                        $badsession.session.Disconnect()
                      }
                      $badsession.session.Dispose()
                      $Global:SFTPSessions.Remove($badsession)
@@ -112,9 +112,9 @@ function Remove-SFTPSession
                 foreach($badsession in $sessions2remove)
                 {
                      Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected) 
-                     { 
-                        $badsession.session.Disconnect() 
+                     if ($badsession.session.IsConnected)
+                     {
+                        $badsession.session.Disconnect()
                      }
                      $badsession.session.Dispose()
                      $Global:SFTPSessions.Remove($badsession)
@@ -124,7 +124,7 @@ function Remove-SFTPSession
 
         }
         End{}
-    
+
 }
 
 
@@ -162,23 +162,20 @@ function Get-SFTPChildItem
 
      Begin
      {
-            
-        function Get-SFTPDirectoryRecursive 
+
+        function Get-SFTPDirectoryRecursive
         {
             param($Path,$SFTPSession)
-            
+
             $total = $Sess.Session.ListDirectory($Path)
 
             #List Files
             $total | ? {$_.IsDirectory -eq $false}
-            
-            #List non filtered directories
-            $total | ? {$_.IsDirectory -eq $true -and @('.','..') -contains $_.name}           
-            
+
             #Get items in a path
             $total | ? {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
             % {Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
-       
+
         }
 
         $ToProcess = @()
@@ -205,7 +202,7 @@ function Get-SFTPChildItem
      Process
      {
         foreach($Sess in $ToProcess)
-        {   
+        {
             if ($Path.Length -eq 0)
             {
                 $Path = $Sess.Session.WorkingDirectory
@@ -219,8 +216,8 @@ function Get-SFTPChildItem
                 }
             }
             if($Recursive)
-            {   
-                Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess        
+            {
+                Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess
             }
             else
             {
@@ -242,7 +239,7 @@ function Test-SFTPPath
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -286,7 +283,7 @@ function Test-SFTPPath
      {
         foreach($session in $ToProcess)
         {
-                    
+
             $session.Session.Exists($Path)
         }
      }
@@ -303,7 +300,7 @@ function Remove-SFTPItem
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -319,7 +316,7 @@ function Remove-SFTPItem
         [string]
         $Path,
 
-        # Force the deletion of a none empty directory by recursively deleting all files in it. 
+        # Force the deletion of a none empty directory by recursively deleting all files in it.
         [Parameter(Mandatory=$false)]
         [switch]
         $Force
@@ -350,19 +347,19 @@ function Remove-SFTPItem
      }
      Process
      {
-        
+
         foreach($session in $ToProcess)
         {
-            
+
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
                 $attr = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
                 if ($attr.IsDirectory)
                 {
-                    $content = Get-SFTPChildItem -SFTPSession $session -Path $Path 
+                    $content = Get-SFTPChildItem -SFTPSession $session -Path $Path
                     if ($content.count -gt 2 -and !$Force)
                     {
-                        throw "Specified path of $($Path) is not an empty directory." 
+                        throw "Specified path of $($Path) is not an empty directory."
                     }
                     elseif ($Force)
                     {
@@ -377,7 +374,7 @@ function Remove-SFTPItem
             }
             else
             {
-                throw "Specified path of $($Path) does not exist."       
+                throw "Specified path of $($Path) does not exist."
             }
 
         }
@@ -396,7 +393,7 @@ function Set-SFTPLocation
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -438,7 +435,7 @@ function Set-SFTPLocation
      }
      Process
      {
- 
+
         foreach($session in $ToProcess)
         {
             $Attribs = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
@@ -450,7 +447,7 @@ function Set-SFTPLocation
             }
             else
             {
-                throw "Specified path of $($Path) is not a directory."  
+                throw "Specified path of $($Path) is not a directory."
             }
         }
      }
@@ -468,7 +465,7 @@ function Get-SFTPLocation
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -504,12 +501,12 @@ function Get-SFTPLocation
      }
      Process
      {
-        
+
         foreach($session in $ToProcess)
         {
             $session.Session.WorkingDirectory
         }
-      
+
      }
     End{}
 }
@@ -524,7 +521,7 @@ function Rename-SFTPFile
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -572,7 +569,7 @@ function Rename-SFTPFile
      }
      Process
      {
-        
+
         foreach($session in $ToProcess)
         {
             $attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
@@ -605,7 +602,7 @@ function Get-SFTPPathAttribute
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -649,7 +646,7 @@ function Get-SFTPPathAttribute
     {
         foreach($session in $ToProcess)
         {
-            
+
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
                 $session.Session.GetAttributes($Path)
@@ -678,7 +675,7 @@ function Set-SFTPPathAttribute
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -787,11 +784,11 @@ function Set-SFTPPathAttribute
     {
         foreach($session in $ToProcess)
         {
-            
+
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
                 $currentAttrib = $session.Session.GetAttributes($Path)
-                
+
                 if($PSBoundParameters.ContainsKey("OwnerCanWrite"))
                 {
                     $currentAttrib.OwnerCanWrite = $OwnerCanWrite
@@ -852,7 +849,7 @@ function Set-SFTPPathAttribute
                 {
                     $currentAttrib.LastWriteTime = $LastWriteTime
                 }
-                
+
                 if($PSBoundParameters.ContainsKey("LastAccessTime"))
                 {
                     $currentAttrib.LastAccessTime = $LastAccessTime
@@ -884,7 +881,7 @@ function New-SFTPSymlink
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -956,7 +953,7 @@ function New-SFTPSymlink
                 {
                     Write-Error -Message "A file already exists in the path of the link $($linkstatus)"
                 }
-               
+
                 if (!$filepath)
                 {
                     Write-Error -Message "The path $($Path) to link does not exist"
@@ -981,7 +978,7 @@ function Get-SFTPContent
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -1014,7 +1011,7 @@ function Get-SFTPContent
 
     Begin
     {
-        
+
         $ToProcess = @()
         switch($PSCmdlet.ParameterSetName)
         {
@@ -1045,19 +1042,19 @@ function Get-SFTPContent
             'Unicode' {
                 $ContentEncoding = [System.Text.Encoding]::Unicode
             }
-            
+
             'UTF7' {
                 $ContentEncoding = [System.Text.Encoding]::UTF7
             }
-            
+
             'UTF8' {
                 $ContentEncoding = [System.Text.Encoding]::UTF8
             }
-            
+
             'UTF32' {
                 $ContentEncoding = [System.Text.Encoding]::UTF32
             }
-            
+
             'BigEndianUnicode'{
                 $ContentEncoding = [System.Text.Encoding]::BigEndianUnicode
             }
@@ -1070,25 +1067,25 @@ function Get-SFTPContent
 
             $attrib = Get-SFTPPathAttribute -SFTPSession $session -Path $Path
             if ($attrib.IsRegularFile)
-            {    
-                try 
+            {
+                try
                 {
                 switch ($ContentType)
                 {
                     'String' {
-                            
+
                         $session.session.ReadAllText($Path, $ContentEncoding)
-                       
+
                      }
 
                     'Byte' {
-                        
+
                         $session.session.ReadAllBytes($Path)
-                       
+
                      }
-                
+
                     'MultiLine' {
-                        
+
                         $session.session.ReadAllLines($Path, $Value, $ContentEncoding)
 
                     }
@@ -1124,7 +1121,7 @@ function Set-SFTPContent
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -1155,7 +1152,7 @@ function Set-SFTPContent
         [switch]
         $Append
 
-        
+
     )
 
     Begin
@@ -1190,19 +1187,19 @@ function Set-SFTPContent
             'Unicode' {
                 $ContentEncoding = [System.Text.Encoding]::Unicode
             }
-            
+
             'UTF7' {
                 $ContentEncoding = [System.Text.Encoding]::UTF7
             }
-            
+
             'UTF8' {
                 $ContentEncoding = [System.Text.Encoding]::UTF8
             }
-            
+
             'UTF32' {
                 $ContentEncoding = [System.Text.Encoding]::UTF32
             }
-            
+
             'BigEndianUnicode'{
                 $ContentEncoding = [System.Text.Encoding]::BigEndianUnicode
             }
@@ -1215,7 +1212,7 @@ function Set-SFTPContent
         {
             $ValueType = $Value.GetType().Name
             write-verbose -message  "Saving a $($ValueType) to $($Path)."
-            try 
+            try
             {
                 switch ($ValueType)
                 {
@@ -1242,7 +1239,7 @@ function Set-SFTPContent
                         }
                         $session.session.Get($Path)
                      }
-                
+
                     'string' {
                         if ($Append)
                         {
@@ -1282,7 +1279,7 @@ function New-SFTPFileStream
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32] 
+        [Int32]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -1403,7 +1400,7 @@ function New-SFTPItem
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
         [Alias('Index')]
-        [Int32[]] 
+        [Int32[]]
         $SessionId,
 
         [Parameter(Mandatory=$true,
@@ -1424,7 +1421,7 @@ function New-SFTPItem
         [ValidateSet('File', 'Directory')]
         [string]
         $ItemType = 'File',
-        
+
         [Parameter(Mandatory=$false)]
         [switch]
         $Recurse
@@ -1456,7 +1453,7 @@ function New-SFTPItem
     Process
     {
         foreach($sess in $ToProcess)
-        { 
+        {
             if (!$sess.Session.Exists($Path))
             {
                 switch($ItemType)

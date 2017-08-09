@@ -4,12 +4,12 @@
      [CmdletBinding()]
      [OutputType([int])]
      Param()
- 
+
      Begin{}
      Process
      {
         $Test_Path_Result = Test-Path -Path "hkcu:\Software\PoshSSH"
-        if ($Test_Path_Result -eq $false) 
+        if ($Test_Path_Result -eq $false)
         {
             Write-Verbose -Message 'No previous trusted keys have been configured on this system.'
             New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
@@ -46,14 +46,14 @@
                     ValueFromPipelineByPropertyName=$true,
                     Position=0)]
          $SSHHost,
- 
+
          # SSH Server Fingerprint.
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
          $FingerPrint
      )
- 
+
      Begin
      {
      }
@@ -93,7 +93,7 @@
          [string]
          $SSHHost
      )
- 
+
      Begin
      {
      }
@@ -117,7 +117,7 @@
         }
         else
         {
-            Write-Warning "SSH Hosts $($SSHHost) was not present in the list of trusted hosts." 
+            Write-Warning "SSH Hosts $($SSHHost) was not present in the list of trusted hosts."
         }
      }
      End{}

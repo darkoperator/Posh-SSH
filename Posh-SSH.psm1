@@ -253,12 +253,12 @@ function Invoke-SSHCommand
             {
                 $RemoveJobs = @()
                 $Script:AsyncProcessing.GetEnumerator() |
-                % {
+                ForEach-Object {
                     $JobKey = $_.Key
                     #Write-Verbose $JobKey -Verbose
                     $_.Value
                 } |
-                % {
+                ForEach-Object {
                     # Check if it completed or is past the timeout setting.
                     if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
                     {
@@ -272,7 +272,7 @@ function Invoke-SSHCommand
                             Host = $_.Connection.Host
                             Duration = $_.Duration.Elapsed
                         } |
-                        % {
+                        ForEach-Object {
                             $_.pstypenames.insert(0,'Renci.SshNet.SshCommand');
 
                             #Return object to pipeline
@@ -288,7 +288,7 @@ function Invoke-SSHCommand
                 # Remove all the items that are done.
                 #[int[]]$Script:AsyncProcessing.Keys |
                 $RemoveJobs |
-                % {
+                ForEach-Object {
                     if ($Script:AsyncProcessing.$_.Processed)
                     {
                         $Script:AsyncProcessing.Remove( $_ )

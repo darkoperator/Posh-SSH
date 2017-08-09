@@ -170,11 +170,11 @@ function Get-SFTPChildItem
             $total = $Sess.Session.ListDirectory($Path)
 
             #List Files
-            $total | ? {$_.IsDirectory -eq $false}
+            $total | Where-Object {$_.IsDirectory -eq $false}
 
             #Get items in a path
-            $total | ? {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
-            % {Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
+            $total | Where-Object {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
+            ForEach-Object {Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
 
         }
 

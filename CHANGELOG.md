@@ -1,5 +1,13 @@
 # ChangeLog
 
+## Version 2.0
+
+* Windows PowerShell 2.0 has been deprecated by Microsoft and several major versions have been released after it, for this reason PowerShell 2.0 is no longer supported by the module.
+* New-SSHSession, New-SFTPSession, Set-SCPFile and Set-SCPFolder support the KeyString parameter, a string array of the content of a OpenSSH key for authentication.
+* For Azure users when Force parameter is used it will not look in to the resgitry for exiting keys to validate against. Usefull when ran under an account that is not a user.
+* Set-SCPFile Better pipeline support when receiving objects from Get-Childitem.
+* Set-SFTPFile LocalFile Parameter accepts a string[].
+
 ## Version 1.7.7
 
 * Fixed typo on parameter set name for NoProgress parameter in Get-SFTPFile.

@@ -1,52 +1,22 @@
-# Posh-SSH
-
-## Description
-
-Windows Powershell module that leverages a custom version of the SSH.NET Library <http://sshnet.codeplex.com/> to provide basic SSH functionality in Powershell.
-The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled servers.
-
-This module is for Windows PowerShell 3.0 or above. It is compiled for .NET Framework 4.5.
-
-## Install
-
-To install the module including all source code you can just run in a PowerShell v3 the following command:
-
-``` PowerShell
-Install-Module -Name Posh-SSH
-```
-
-## Support
-
-* Provides functionality for automating SSH, SFTP and SCP actions.
-* Supports diffie-hellman-group-exchange-sha256, diffie-hellman-group-exchange-sha1, diffie-hellman-group14-sha1 and diffie-hellman-group1-sha1 key exchange methods.
-* Supports 3des-cbc, aes128-cbc, aes192-cbc, aes256-cbc, aes128-ctr, aes192-ctr, aes256-ctr, blowfish-cbc, cast128-cbc, arcfour and twofish encryptions.
-* Supports hmac-md5, hmac-sha1, hmac-ripemd160, hmac-sha2-256, hmac-sha2-256-96, hmac-md5-96 and hmac-sha1-96 hashing algorithms.
-* Supports publickey, password and keyboard-interactive authentication methods
-* Supports RSA and DSA private key
-* Supports DES-EDE3-CBC, DES-EDE3-CFB, DES-CBC, AES-128-CBC, AES-192-CBC and AES-256-CBC algorithms for private key encryption
-* Supports SOCKS4, SOCKS5 and HTTP Proxy
-* Remote, dynamic and local port forwarding
-<<<<<<< HEAD
-
 # ChangeLog
-## Version 1.7.8
-* Fixed typo on variable for colums when creating a shell stream.
-* New cmdlets for PortForwarding
-  * Get-SSHPortForward
-  * New-SSHDynamicPortForward
-  * New-SSHLocalPortForward
-  * New-SSHRemotePortForward
-  * Start-SSHPortForward
-  * Stop-SSHPortForward
+
+## Version 2.0
+
+* Windows PowerShell 2.0 has been deprecated by Microsoft and several major versions have been released after it, for this reason PowerShell 2.0 is no longer supported by the module.
+* New-SSHSession, New-SFTPSession, Set-SCPFile and Set-SCPFolder support the KeyString parameter, a string array of the content of a OpenSSH key for authentication.
+* For Azure users when Force parameter is used it will not look in to the resgitry for exiting keys to validate against. Usefull when ran under an account that is not a user.
+* Set-SCPFile Better pipeline support when receiving objects from Get-Childitem.
+* Set-SFTPFile LocalFile Parameter accepts a string[].
 
 ## Version 1.7.7
+
 * Fixed typo on parameter set name for NoProgress parameter in Get-SFTPFile.
 
 ## Version 1.7.6
 
 * Fixed problem where wrong help file was shipped.
 * Fixed problem where host comparison was not case insensitive for server key fingerprint.
-* 
+
 ## Version 1.7.5
 
 * New-SFTPItem can now create sub directories in a path if they do not exist when -Recurse parameter is used.
@@ -57,6 +27,7 @@ Install-Module -Name Posh-SSH
 * Added NoProgress parameter to SCP and SFTP cmdlets
 
 ## Version 1.7.4
+
 * Fixed index problem for sessions when adding and removing them. Thanks to BornToBeRoot for the PR.
 * Added a recursive option to the Get-SFTPChildItem function. Thanks to aaroneuph for the PR.
 
@@ -66,13 +37,16 @@ Install-Module -Name Posh-SSH
 * Will pass the domain during logon for those cases where SSH server is connected to an AD infrastructure.
 
 ## Version 1.7.2
+
 * Fix problem with Get-SFTPFile cmdlet. It was creating a empty file before checking if a file existed causing error or blanking a exiting file accidentally.
-- Add session and session id properties to a generated streem to address request in issue #34
+* Add session and session id properties to a generated streem to address request in issue #34
 
 ## Version 1.7.1
+
 * Fix typo in trust submodule.
 
 ## Version 1.7
+
 * **New-SFTPDirectory** is replaced by **New-SFTPItem** to match how PowerShell refers to files and directories.
 * **Remove-SFTPFile** and **Remove-SFTPDirectory** are replaced by **Remove-SFTPItem** to match how PowerShell refers to files and directories.
 * **Set-SFTPDirectoryPath** is replaced by **Set-SFTPLocation** to match how PowerShell refers to files and directories.
@@ -116,7 +90,7 @@ There were 2 failed login attempts since the last successful login.
 ```
 
 * New function **Invoke-SSHStreamExpectAction** for executing expect actions on a shell stream.
-* New function **Get-SFTPPathAttribute** to get attributes of a given path. 
+* New function **Get-SFTPPathAttribute** to get attributes of a given path.
 
 ```PowerShell
 C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
@@ -144,6 +118,7 @@ C:\PS>Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
  OthersCanExecute  : True
  Extensions        :
 ```
+
 * New function **New-SFTPFileStream** to create a IO Stream of a file on a host via SFTP.
 
 ```PowerShell
@@ -174,9 +149,10 @@ chmod 600 ~/.ssh/authorized_keys
 vim /etc/ssh/sshd_config
 sudo vim /etc/ssh/sshd_config
 
-PS C:\> 
+PS C:\>
 
 ```
+
 * New function **New-SFTPSymlink** to create symbolic link on a a remote host via SFTP.
 * New function **Set-SFTPContent** to get the content of a file on a remote host via SFTP.
 
@@ -209,13 +185,14 @@ PS C:\> Get-SFTPContent -SessionId 0 -Path /tmp/example.txt
 My example message
 New message
 ```
-* New function **Get-SFTPContent** to set the content of a file on a remote host via SFTP.
 
+* New function **Get-SFTPContent** to set the content of a file on a remote host via SFTP.
 
 ```PowerShell
 PS C:\> Get-SFTPContent -SessionId 0 -Path  /etc/system-release
 CentOS Linux release 7.0.1406 (Core)
 ```
+
 * Added support for ssh.com (SSH-2) private keys.
 * Added support on acceptable group of up to 8192 bits for SHA-1 and SHA-256 Diffie-Hellman Group and Key Exchange
 * Several fixes when connecting though a proxy.
@@ -229,12 +206,12 @@ CentOS Linux release 7.0.1406 (Core)
 * Fix problem when using key files and connecting to alternate SSH port numbers, the port number was being ignored.
 * Fix registry access problem when setting trusted host.
 * Fix problem when enumerating trusted hosts and the registry key for them was not present.
-* SCP, SFTP Session and SSH Session cmdlets when verbose messages are selected will show the SSH certificate fingerprint of the host one is connecting with. 
+* SCP, SFTP Session and SSH Session cmdlets when verbose messages are selected will show the SSH certificate fingerprint of the host one is connecting with.
 * Disabled Zlib Compression.
 * Fix ShellStream.ReadLine produces incorrect output when reading multi-byte characters.
 * Fix ScpClient: Missing files when using DirectoryUpload.
 * Fix SendKeepAlive causes SocketException when connection is dropped.
-* Fix stuck loop on key exchange using arcfour encryption 
+* Fix stuck loop on key exchange using arcfour encryption
 * Reduced default buffer size for SftpClient from 64 KB to 32 KB as some SSH servers apply a hard limit of 64 KB at the transport level.
 * Optimization of payload size for both read and write operations (SftpClient only)
 * Increase window size from 1MB to 2MB
@@ -242,21 +219,23 @@ CentOS Linux release 7.0.1406 (Core)
 * Take into account the maximum remote packet size of the channel for write operations
 * Increase maximum size of packets that we can receive from 32 KB to 64 KB
 
- 
-
 ## Version 1.6
+
 * Fixed problem with ProxyServer option.
 
 ## Version 1.5
+
 * Supports PowerShell 2.0 by popular demand.
 * Refactored all C Sharp code to comply with naming guidelines and best practices.
 * Fixed several bugs the main one being the not allowing use of alternate SSH port.
 
 ## Version 1.4
+
 * Disabled PorForward commands because of bug in library.
 * Fix upload and download speed issues in SFTP and SCP.
 
 ## Version 1.3
+
 * Option to auto accept SSH Fingerprint (Don't personally like it but gotten enough requests to make me do it)
 * Set index to default parameter set.
 * Added keep alive for connections.
@@ -265,20 +244,14 @@ CentOS Linux release 7.0.1406 (Core)
 * Fixed several typos.
 
 ## Version 1.2
+
 * Added support for zlib compression.
 * Disabbled Dynamic Port Forward function, there seems to be problems with the library.
 
 ## Version 1.1
+
 * Added functions for managing SSH Trusted Host list.
 * SCP, SSH Session and SFTP Session cmdlets now verify the SSH Host Fingerprint.
 * Complete refactor of the cmdlets for SSH Session, SFTP Session and SCP.
 * Added Download and Upload Progress to SCP cmdlets.
 * Patched the Renci SSH .Net library to correct problems when uploading using SCP.
-
-# Know Issues
-* No Compression support at the moment.
-* Once a Download or Upload is started only way to cancel is by closing PowerShell.
-* Port Forwarding support in the library used is still not good enough to enable functions. 
-
-=======
->>>>>>> Release_v2

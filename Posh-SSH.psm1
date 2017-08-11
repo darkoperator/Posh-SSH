@@ -24,10 +24,10 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SSHSession 
+function Get-SSHSession
 {
     [CmdletBinding(DefaultParameterSetName='Index')]
-    param( 
+    param(
         [Parameter(Mandatory=$false,
                    ParameterSetName = 'Index',
                    Position=0)]
@@ -38,13 +38,13 @@ function Get-SSHSession
         [Parameter(Mandatory=$false,
                    ParameterSetName = 'ComputerName',
                    Position=0)]
-        [Alias('Server', 'HostName', 'Host')]        
+        [Alias('Server', 'HostName', 'Host')]
         [string[]]
         $ComputerName,
 
         [Parameter(Mandatory=$false,
                    ParameterSetName = 'ComputerName',
-                   Position=0)]        
+                   Position=0)]
         [switch]
         $ExactMatch
     )
@@ -140,9 +140,9 @@ function Remove-SSHSession
                 foreach($badsession in $sessions2remove)
                 {
                      Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected) 
-                     { 
-                        $badsession.session.Disconnect() 
+                     if ($badsession.session.IsConnected)
+                     {
+                        $badsession.session.Disconnect()
                      }
                      $badsession.session.Dispose()
                      $global:SshSessions.Remove($badsession)
@@ -167,9 +167,9 @@ function Remove-SSHSession
                 foreach($badsession in $sessions2remove)
                 {
                      Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected) 
-                     { 
-                        $badsession.session.Disconnect() 
+                     if ($badsession.session.IsConnected)
+                     {
+                        $badsession.session.Disconnect()
                      }
                      $badsession.session.Dispose()
                      $Global:SshSessions.Remove($badsession)
@@ -179,7 +179,7 @@ function Remove-SSHSession
 
         }
         End{}
-    
+
 }
 
 
@@ -192,7 +192,7 @@ function Invoke-SSHCommand
         [Parameter(Mandatory=$true,
                    Position=1)]
         [string]$Command,
-        
+
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
                    ValueFromPipeline=$true,
@@ -253,18 +253,18 @@ function Invoke-SSHCommand
             process
             {
                 $RemoveJobs = @()
-                $Script:AsyncProcessing.GetEnumerator() | 
-                % { 
+                $Script:AsyncProcessing.GetEnumerator() |
+                ForEach-Object {
                     $JobKey = $_.Key
                     #Write-Verbose $JobKey -Verbose
-                    $_.Value 
+                    $_.Value
                 } |
-                % {
+                ForEach-Object {
                     # Check if it completed or is past the timeout setting.
                     if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
                     {
                         $Output = $_.cmd.EndExecute($_.Async)
-                    
+
                         # Generate custom object to return to pipeline and client
                         [pscustomobject]@{
                             Output = $Output -replace '\n$' -split '\n'
@@ -272,9 +272,9 @@ function Invoke-SSHCommand
                             Error = $_.cmd.Error
                             Host = $_.Connection.Host
                             Duration = $_.Duration.Elapsed
-                        } | 
-                        % { 
-                            $_.pstypenames.insert(0,'Renci.SshNet.SshCommand'); 
+                        } |
+                        ForEach-Object {
+                            $_.pstypenames.insert(0,'Renci.SshNet.SshCommand');
 
                             #Return object to pipeline
                             $_
@@ -282,14 +282,14 @@ function Invoke-SSHCommand
 
                         # Set this object as having been processed.
                         $_.Processed = $true
-                        $RemoveJobs += $JobKey                     
+                        $RemoveJobs += $JobKey
                     }
                 }
 
-                # Remove all the items that are done.                
-                #[int[]]$Script:AsyncProcessing.Keys | 
+                # Remove all the items that are done.
+                #[int[]]$Script:AsyncProcessing.Keys |
                 $RemoveJobs |
-                % {
+                ForEach-Object {
                     if ($Script:AsyncProcessing.$_.Processed)
                     {
                         $Script:AsyncProcessing.Remove( $_ )
@@ -313,11 +313,11 @@ function Invoke-SSHCommand
                         $Connection.Session.Connect()
                     }
                     catch
-                    {                            
+                    {
                         if ( $_.Exception.InnerException.Message -ne 'The client is already connected.' )
                         { Write-Error -Exception $_.Exception }
                     }
-                }                
+                }
             }
             else
             {
@@ -329,7 +329,7 @@ function Invoke-SSHCommand
                 {
                     Write-Error "Unable to connect session to $($Connection.Host) :: $_"
                 }
-                
+
             }
 
             if ($Connection.Session.IsConnected)
@@ -347,7 +347,7 @@ function Invoke-SSHCommand
                 # start asynchronious execution of the command.
                 $Duration = [System.Diagnostics.Stopwatch]::StartNew()
                 $Async = $cmd.BeginExecute()
-                
+
                 $Script:AsyncProcessing.Add( $JobId, ( [pscustomobject]@{
                     cmd = $cmd
                     Async = $Async
@@ -384,11 +384,11 @@ function Invoke-SSHCommand
     [CmdletBinding()]
     [OutputType([pscustomobject])]
     Param()
-    
+
     Begin
     {
        $CurrentVersion = $null
-       $installed = (Get-Module -Name 'posh-SSH').Version       
+       $installed = (Get-Module -Name 'posh-SSH').Version
     }
     Process
     {
@@ -430,7 +430,7 @@ function Invoke-SSHCommandStream
         [Parameter(Mandatory=$true,
                    Position=1)]
         [string]$Command,
-        
+
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Session',
                    ValueFromPipeline=$true,
@@ -488,7 +488,7 @@ function Invoke-SSHCommandStream
         }
     }
     Process
-    {        
+    {
         foreach($Connection in $ToProcess)
         {
             if ($Connection.session.isconnected)
@@ -520,20 +520,20 @@ function Invoke-SSHCommandStream
                 {
                     Write-Verbose "IsCompleted Before: $($Async.IsCompleted)"
                     while(-not $Async.IsCompleted -and $Duration.Elapsed -lt $cmd.CommandTimeout )
-                    {                   
+                    {
                         Write-Verbose "IsCompleted During: $($Async.IsCompleted)"
                         #if ( $Reader.Peek() -gt -1)
                         while ( $Reader.Peek() -gt -1)
                         {
-                            $Result = $Reader.ReadLine()                            
+                            $Result = $Reader.ReadLine()
                             $Result -replace '\n\r$'
                         }
                         Start-Sleep -Milliseconds 5
-                    }                    
+                    }
                 }
                 catch
                 {
-                    Write-Error -Message "Error with Command: $_"                    
+                    Write-Error -Message "Error with Command: $_"
                 }
                 finally
                 {
@@ -542,20 +542,20 @@ function Invoke-SSHCommandStream
 
                     while ( $Reader.Peek() -gt -1)
                     {
-                        $Result = $Reader.ReadLine()                            
+                        $Result = $Reader.ReadLine()
                         $Result -replace '\n\r$'
                     }
-                    
+
                     if (-not $Async.IsCompleted -and $Duration.Elapsed -ge $cmd.CommandTimeout )
                     {
                         $cmd.EndExecute($Async)
-                     
+
                     }
                     elseif ( -not $Async.IsCompleted )
                     {
-                        $cmd.CancelAsync() 
+                        $cmd.CancelAsync()
                         Write-Warning "Canceled execution"
-                        
+
                     }
 
                 }
@@ -678,7 +678,7 @@ function Invoke-SSHStreamExpectAction
     [OutputType([Bool])]
     Param
     (
-        # SSH Shell Stream. 
+        # SSH Shell Stream.
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    ValueFromPipeline=$true,
@@ -737,7 +737,7 @@ function Invoke-SSHStreamExpectAction
             'string' {$found = $ShellStream.Expect($ExpectString, (New-TimeSpan -Seconds $TimeOut))}
             'Regex'  {$found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))}
         }
-        
+
         if ($found -ne $null)
         {
             Write-Verbose -Message "Executing action: $($Action)."
@@ -763,7 +763,7 @@ function Invoke-SSHStreamExpectSecureAction
     [OutputType([Bool])]
     Param
     (
-        # SSH Shell Stream. 
+        # SSH Shell Stream.
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    ValueFromPipeline=$true,
@@ -829,13 +829,12 @@ function Invoke-SSHStreamExpectSecureAction
                 $found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))
              }
         }
-        
+
         if ($found -ne $null)
         {
             Write-Verbose -Message "Executing action."
             $ShellStream.WriteLine([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureAction)))
             Write-Verbose -Message 'Action has been executed.'
-            $SecureAction.Dispose()
             $true
         }
         else

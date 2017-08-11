@@ -22,7 +22,7 @@
 
     StatusCode        : 200
     StatusDescription : OK
-    Content           : 
+    Content           :
                         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html>
@@ -33,15 +33,15 @@
                         Cache-Control: max-age=180000,no-store, no-cache, must-revalidate, post-check=0, pre-check=0
                         Set-Cookie: PHPSESS...
     Forms             : {iform}
-    Headers           : {[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT], [Cache-Control, max-age=180000,no-store, no-cache, 
+    Headers           : {[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT], [Cache-Control, max-age=180000,no-store, no-cache,
                         must-revalidate, post-check=0, pre-check=0], [Set-Cookie, PHPSESSID=d53d3dc62ffac241112bcfd16af36bb8; path=/], [Pragma, no-cache]...}
     Images            : {}
-    InputFields       : {@{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user" 
-                        name=usernamefld>; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld 
-                        user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=2 
-                        id=passwordfld class="formfld pwd" type=password value="" name=passwordfld>; outerText=; tagName=INPUT; onchange=clearError();; 
-                        onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=; 
-                        innerText=; outerHTML=<INPUT tabIndex=3 class=formbtn type=submit value=Login name=login>; outerText=; tagName=INPUT; tabIndex=3; 
+    InputFields       : {@{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user"
+                        name=usernamefld>; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld
+                        user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=<INPUT onchange=clearError(); onclick=clearError(); tabIndex=2
+                        id=passwordfld class="formfld pwd" type=password value="" name=passwordfld>; outerText=; tagName=INPUT; onchange=clearError();;
+                        onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=;
+                        innerText=; outerHTML=<INPUT tabIndex=3 class=formbtn type=submit value=Login name=login>; outerText=; tagName=INPUT; tabIndex=3;
                         class=formbtn; type=submit; value=Login; name=login}}
     Links             : {}
     ParsedHtml        : mshtml.HTMLDocumentClass
@@ -86,7 +86,7 @@ function New-SSHLocalPortForward
             Position=0)]
         [Alias('Index')]
         [Int32]
-        $SessionId 
+        $SessionId
     )
 
     Begin
@@ -113,7 +113,7 @@ function New-SSHLocalPortForward
                 }
             }
         }
-        
+
     }
     Process
     {
@@ -128,14 +128,14 @@ function New-SSHLocalPortForward
         }
         # Initialize the ForwardPort Object
         $SSHFWP = New-Object Renci.SshNet.ForwardedPortLocal($BoundHost, $BoundPort, $RemoteAddress, $RemotePort)
-        
+
         # Add the forward port object to the session
         Write-Verbose -message "Adding Forward Port Configuration to session $($ToProcess.Index)"
         $ToProcess.session.AddForwardedPort($SSHFWP)
         Write-Verbose -message "Starting the Port Forward."
         $SSHFWP.start()
         Write-Verbose -message "Forwarding has been started."
-    
+
     }
     End{}
 
@@ -211,7 +211,7 @@ function New-SSHRemotePortForward
                 Write-Error "The Session does not appear in the list of created sessions."
             }
         }
-    
+
     }
     End{}
 }
@@ -220,9 +220,9 @@ function New-SSHRemotePortForward
 .Synopsis
    Establishes a Dynamic Port Forward thru a stablished SSH Session.
 .DESCRIPTION
-   Dynamic port forwarding is a transparent mechanism available for applications, which 
+   Dynamic port forwarding is a transparent mechanism available for applications, which
    support the SOCKS4 or SOCKS5 client protoco. In windows for best results the local address
-   to bind to should be the IP of the network interface. 
+   to bind to should be the IP of the network interface.
 .EXAMPLE
     New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose
     VERBOSE: Finding session with Index 0
@@ -286,7 +286,7 @@ function New-SSHDynamicPortForward
                     return
                 }
             }
-        }  
+        }
     }
     Process
     {
@@ -308,12 +308,12 @@ function New-SSHDynamicPortForward
         $ToProcess.session.KeepAliveInterval = New-TimeSpan -Seconds 30
         $ToProcess.session.ConnectionInfo.Timeout = New-TimeSpan -Seconds 20
         $ToProcess.session.SendKeepAlive()
-        
+
         [System.Threading.Thread]::Sleep(500)
         Write-Verbose -message "Starting the Port Forward."
         $SSHFWP.start()
         Write-Verbose -message "Forwarding has been started."
-               
+
     }
     End{}
 }
@@ -381,13 +381,13 @@ function Get-SSHPortForward
                     return
                 }
             }
-        }  
+        }
     }
     Process
     {
-        
+
         $ToProcess.Session.ForwardedPorts
-              
+
     }
     End{}
 }
@@ -477,7 +477,7 @@ function Stop-SSHPortForward
                     return
                 }
             }
-        } 
+        }
     }
     Process
     {
@@ -578,7 +578,7 @@ function Start-SSHPortForward
                     return
                 }
             }
-        } 
+        }
     }
     Process
     {
@@ -592,7 +592,7 @@ function Start-SSHPortForward
                 $p
             }
         }
-               
+
     }
     End{}
 }

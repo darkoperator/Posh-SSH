@@ -12,7 +12,11 @@
 #RootModule = ''
 
 # Version number of this module.
+<<<<<<< HEAD
 ModuleVersion = '1.7.8'
+=======
+ModuleVersion = '2.0'
+>>>>>>> Release_v2
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -27,10 +31,10 @@ CompanyName = 'www.darkoperator.com'
 Copyright = '(c) 2017 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Provide SSH functionality for executing commands against remote hosts.'
+Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '2.0'
+PowerShellVersion = '3.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -39,7 +43,7 @@ PowerShellVersion = '2.0'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '3.5'
+DotNetFrameworkVersion = '4.0'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'

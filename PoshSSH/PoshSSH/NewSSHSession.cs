@@ -1,11 +1,4 @@
-﻿using Renci.SshNet;
-using Renci.SshNet.Common;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Management.Automation;
-using System.Management.Automation.Host;
-using System.Text;
+﻿using System.Management.Automation;
 
 namespace SSH
 {

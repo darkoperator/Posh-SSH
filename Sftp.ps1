@@ -174,7 +174,7 @@ function Get-SFTPChildItem
 
             #Get items in a path
             $total | Where-Object {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
-            ForEach-Object {Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
+            ForEach-Object {$_; Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
 
         }
 

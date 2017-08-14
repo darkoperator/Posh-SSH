@@ -525,15 +525,10 @@ namespace SSH
                 try
                 {
                     if (client.IsConnected)
-<<<<<<< HEAD
-                    { 
-                        var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
-=======
                     {
                         ProviderInfo provider;
                         var pathinfo = GetResolvedProviderPathFromPSPath(_keyfile, out provider);
                         var localfullPath = pathinfo[0];
->>>>>>> Release_v2
 
                         WriteVerbose("Downloading " + _remotefile);
                         WriteVerbose("Saving as " + localfullPath);

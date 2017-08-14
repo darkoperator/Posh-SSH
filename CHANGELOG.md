@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 2.0.1
+
+* Get-SFTPCholdItem was not showinng folders when recursively listing.
+* Fixed issue when deleteting none empty folders.
+
 ## Version 2.0
 
 * Windows PowerShell 2.0 has been deprecated by Microsoft and several major versions have been released after it, for this reason PowerShell 2.0 is no longer supported by the module.

@@ -1193,7 +1193,7 @@ function Set-SFTPContent
             }
 
             'UTF8' {
-                $ContentEncoding = [System.Text.Encoding]::UTF8
+                $ContentEncoding = New-Object System.Text.UTF8Encoding $false
             }
 
             'UTF32' {

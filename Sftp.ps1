@@ -932,7 +932,7 @@ function New-SFTPSymlink
         foreach($session in $ToProcess)
         {
             $filepath = Test-SFTPPath -SFTPSession $session -Path $Path
-            $linkstatus = Test-SFTPPath -SFTPSession $session -path $LinkPath`
+            $linkstatus = Test-SFTPPath -SFTPSession $session -path $LinkPath
             if (($filepath) -and (!$linkstatus))
             {
                 try

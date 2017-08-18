@@ -1,5 +1,11 @@
 # ChangeLog
 
+## Version 2.0.2
+
+* Set-SFTPContent will no longer add a BOM to UTF8 encoded files.
+* Fixed issue with path resolution in Get-SCPFile.
+* Fixed typo in New-SFTPSymlink.
+
 ## Version 2.0.1
 
 * Get-SFTPCholdItem was not showinng folders when recursively listing.

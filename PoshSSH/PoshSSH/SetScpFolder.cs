@@ -251,13 +251,13 @@ namespace SSH
 
 
         // Variable to hold the host/fingerprint information
-        private Dictionary<string, string> _sshHostKeys;
+        private List<TrustedKey> _sshHostKeys;
 
         protected override void BeginProcessing()
         {
             // Collect host/fingerprint information from the registry.
             base.BeginProcessing();
-            var keymng = new TrustedKeyMng();
+            TrustedKeyMng keymng = new TrustedKeyMng();
             _sshHostKeys = keymng.GetKeys();
         }
 
@@ -332,9 +332,11 @@ namespace SSH
                             Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
                         }
 
-                        if (_sshHostKeys.ContainsKey(computer1))
+                        List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
+
+                        if (computerKeys.Count > 0)
                         {
-                            if (_sshHostKeys[computer1] == fingerPrint)
+                            if (computerKeys.Exists(key => key.Key == fingerPrint))
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {

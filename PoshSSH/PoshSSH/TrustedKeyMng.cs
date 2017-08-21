@@ -7,17 +7,19 @@ namespace SSH
     // Class for managing the keys 
     public class TrustedKeyMng
     {
-        public Dictionary<string, string> GetKeys()
+        public List<TrustedKey> GetKeys()
         {
-            var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
+            List<TrustedKey> hostkeys = new List<TrustedKey>();
+            RegistryKey poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
             if (poshSoftKey != null)
             {
                 var hosts = poshSoftKey.GetValueNames();
                 foreach (var host in hosts)
                 {
-                    var hostkey = poshSoftKey.GetValue(host).ToString();
-                    hostkeys.Add(host, hostkey);
+                    TrustedKey[] keys = Array.ConvertAll((string[])poshSoftKey.GetValue(host), element => new TrustedKey(host, element));
+
+                    hostkeys.AddRange(keys);
+
                 }
             }
             else
@@ -32,17 +34,37 @@ namespace SSH
 
         public bool SetKey(string host, string fingerprint)
         {
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
-            if (poshSoftKey != null)
-            {
-                poshSoftKey.SetValue(host, fingerprint);
+            RegistryKey softKey = Registry.CurrentUser.OpenSubKey("Software", RegistryKeyPermissionCheck.ReadWriteSubTree);
+
+            if (softKey != null) {
+                RegistryKey poshSoftKey = softKey.OpenSubKey("PoshSSH", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                if ( poshSoftKey == null ) {
+                    poshSoftKey = softKey.CreateSubKey("PoshSSH", RegistryKeyPermissionCheck.ReadWriteSubTree);
+                }
+
+                List<string> hostkeys = new List<string>();
+                if (Array.Exists(poshSoftKey.GetValueNames(), value => value == host)) {
+                    hostkeys = (List<string>)poshSoftKey.GetValue(host);
+                } else {
+                    hostkeys.Add(fingerprint);
+                }
+
+                poshSoftKey.SetValue(host, ((string[])hostkeys.ToArray()), RegistryValueKind.MultiString);
                 return true;
             }
-            var softKey = Registry.CurrentUser.OpenSubKey(@"Software", true);
-            if (softKey == null) return true;
-            softKey.CreateSubKey("PoshSSH");
-            softKey.SetValue(host, fingerprint);
-            return true;
+            return false;
+        }
+    }
+
+    public class TrustedKey
+    {
+        public string Host { get; set; }
+        public string Key { get; set; }
+
+        public TrustedKey (string Host, string Key)
+        {
+            this.Host = Host;
+            this.Key = Key;
         }
     }
 }

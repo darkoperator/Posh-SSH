@@ -44,7 +44,8 @@ namespace SSH
 
                 List<string> hostkeys = new List<string>();
                 if (Array.Exists(poshSoftKey.GetValueNames(), value => value == host)) {
-                    hostkeys = (List<string>)poshSoftKey.GetValue(host);
+                    hostkeys.AddRange((string[])poshSoftKey.GetValue(host));
+                    hostkeys.Add(fingerprint);
                 } else {
                     hostkeys.Add(fingerprint);
                 }

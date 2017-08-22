@@ -297,6 +297,7 @@ namespace SSH
                         var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
                         List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
+                        bool hostKeyFound = false;
 
                         if (computerKeys.Count > 0)
                         {
@@ -307,46 +308,34 @@ namespace SSH
                                     Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
                                 e.CanTrust = true;
-                            }
-                            else
-                            {
-                                var ex = new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1);
-                                ThrowTerminatingError(new ErrorRecord(
-                                    ex,
-                                    "SSH fingerprint mismatch for host " + computer1,
-                                    ErrorCategory.SecurityError,
-                                    computer1));
-                            }
-                        }
-                        else
-                        {
-                            if (_errorOnUntrusted)
-                            { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
-                            
-                            int choice;
-                            if (_acceptkey)
-                            {
-                                choice = 0;
-                            }
-                            else
-                            {
-                                var choices = new Collection<ChoiceDescription>
-                                {
-                                    new ChoiceDescription("Y"),
-                                    new ChoiceDescription("N")
-                                };
-
-                                choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-                            }
-                            if (choice == 0)
-                            {
-                                var keymng = new TrustedKeyMng();
-                                keymng.SetKey(computer1, fingerPrint);
-                                e.CanTrust = true;
+                                hostKeyFound = true;
                             }
                             else
                             {
                                 e.CanTrust = false;
+                            }
+                        }
+
+                        if (!e.CanTrust)
+                        {
+                            if (_errorOnUntrusted)
+                            { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
+
+                            if (!_acceptkey)
+                            {
+                                var choices = new Collection<ChoiceDescription>
+                                    {
+                                        new ChoiceDescription("Y"),
+                                        new ChoiceDescription("N")
+                                    };
+                                e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                            }
+                            else
+                                e.CanTrust = true;
+                            if (e.CanTrust && hostKeyFound == false)
+                            {
+                                var keymng = new TrustedKeyMng();
+                                keymng.SetKey(computer1, fingerPrint);
                             }
                         }
                     };

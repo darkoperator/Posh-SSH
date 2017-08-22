@@ -392,12 +392,14 @@ namespace SSH
                         }
 
                         List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
+                        bool hostKeyFound = false;
 
                         if (computerKeys.Count > 0)
                         {
                             if (computerKeys.Exists(key => key.Key == fingerPrint))
                             {
                                 e.CanTrust = true;
+                                hostKeyFound = true;
                                 if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                     Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                             }
@@ -406,7 +408,8 @@ namespace SSH
                                 e.CanTrust = false;
                             }
                         }
-                        else
+
+                        if (!e.CanTrust)
                         {
                             if (_errorOnUntrusted)
                             {
@@ -425,7 +428,7 @@ namespace SSH
                                 }
                                 else
                                     e.CanTrust = true;
-                                if (e.CanTrust)
+                                if (e.CanTrust && hostKeyFound == false)
                                 {
                                     var keymng = new TrustedKeyMng();
                                     keymng.SetKey(computer1, fingerPrint);

@@ -302,6 +302,7 @@ namespace SSH
                         }
 
                         List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
+                        bool hostKeyFound = false;
 
                         if (computerKeys.Count > 0)
                         {
@@ -312,6 +313,7 @@ namespace SSH
                                     Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                                 }
                                 e.CanTrust = true;
+                                hostKeyFound = true;
 
                             }
                             else
@@ -320,7 +322,8 @@ namespace SSH
 
                             }
                         }
-                        else
+
+                        if (!e.CanTrust)
                         {
                             if (_errorOnUntrusted)
                             {
@@ -328,30 +331,21 @@ namespace SSH
                             }
                             else
                             {
-                                int choice;
-                                if (_acceptkey)
-                                {
-                                    choice = 0;
-                                }
-                                else
+                                if (!_acceptkey)
                                 {
                                     var choices = new Collection<ChoiceDescription>
                                     {
                                         new ChoiceDescription("Y"),
                                         new ChoiceDescription("N")
                                     };
-
-                                    choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                    e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
                                 }
-                                if (choice == 0)
+                                else
+                                    e.CanTrust = true;
+                                if (e.CanTrust && hostKeyFound == false)
                                 {
                                     var keymng = new TrustedKeyMng();
                                     keymng.SetKey(computer1, fingerPrint);
-                                    e.CanTrust = true;
-                                }
-                                else
-                                {
-                                    e.CanTrust = false;
                                 }
                             }
                         }

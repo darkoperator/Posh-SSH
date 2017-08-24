@@ -334,6 +334,7 @@ namespace SSH
 
                         List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
                         bool hostKeyFound = false;
+                        e.CanTrust = false;
 
                         if (computerKeys.Count > 0)
                         {
@@ -341,7 +342,7 @@ namespace SSH
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {
-                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted key for host " + computer1);
                                 }
                                 e.CanTrust = true;
                                 hostKeyFound = true;
@@ -349,6 +350,8 @@ namespace SSH
                             }
                             else
                             {
+                                if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                                    Host.UI.WriteVerboseLine("No trusted key match found for host " + computer1);
                                 e.CanTrust = false;
 
                             }

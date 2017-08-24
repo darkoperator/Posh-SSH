@@ -19,13 +19,15 @@
 
         $hostnames = $poshsshkey.GetValueNames()
         $TrustedHosts = @()
-        foreach($h in $hostnames)
+        foreach($hostname in $hostnames)
         {
-            $TrustedHost = @{
-                SSHHost        = $h
-                Fingerprint = $poshsshkey.GetValue($h)
+            foreach ($fingerprint in $poshsshkey.getvalue($hostname)) {
+                $TrustedHost = @{
+                    SSHHost        = $hostname
+                    Fingerprint = $fingerprint
+                }
+                $TrustedHosts += New-Object -TypeName psobject -Property $TrustedHost
             }
-            $TrustedHosts += New-Object -TypeName psobject -Property $TrustedHost
         }
      }
      End
@@ -59,20 +61,36 @@
      }
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
+        $softkey = Get-Item -Path HKCU:\Software
         if ( $softkey.GetSubKeyNames() -contains 'PoshSSH')
         {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+            $poshsshkey = Get-Item -Path HKCU:\Software\PoshSSH
         }
         else
         {
             Write-Verbose 'PoshSSH Registry key is not present for this user.'
             New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
             Write-Verbose 'PoshSSH Key created.'
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+            $poshsshkey = Get-Item -Path HKCU:\Software\PoshSSH
+        }
+        
+        if ($poshsshkey.GetValueNames() -contains $SSHHost) {
+            Write-Verbose "Fingerprint will be added to an existing SSH Host."
+            $hostFingerprints =  @($poshsshkey.GetValue($SSHHost))
+            $hostFingerprints += $FingerPrint
+        } else {
+            Write-Verbose "Fingerprint will be added for a new SSH host."
+            $hostFingerprints = @($FingerPrint)
         }
         Write-Verbose "Adding to trusted SSH Host list $($SSHHost) with a fingerprint of $($FingerPrint)"
-        $poshsshkey.SetValue($SSHHost, $FingerPrint)
+        $newItemParams = @{
+            "Path" = $poshsshkey.pspath;
+            "Name" = $SSHHost
+            "PropertyType" = "MultiString";
+            "Value" = $hostFingerprints;
+            "Force" = $true;
+        }
+        New-ItemProperty @newItemParams | Out-Null
         Write-Verbose 'SSH Host has been added.'
      }
      End

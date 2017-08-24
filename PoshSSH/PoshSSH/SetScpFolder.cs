@@ -251,13 +251,13 @@ namespace SSH
 
 
         // Variable to hold the host/fingerprint information
-        private Dictionary<string, string> _sshHostKeys;
+        private List<TrustedKey> _sshHostKeys;
 
         protected override void BeginProcessing()
         {
             // Collect host/fingerprint information from the registry.
             base.BeginProcessing();
-            var keymng = new TrustedKeyMng();
+            TrustedKeyMng keymng = new TrustedKeyMng();
             _sshHostKeys = keymng.GetKeys();
         }
 
@@ -332,24 +332,32 @@ namespace SSH
                             Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
                         }
 
-                        if (_sshHostKeys.ContainsKey(computer1))
+                        List<TrustedKey> computerKeys = _sshHostKeys.FindAll(key => key.Host == computer1);
+                        bool hostKeyFound = false;
+                        e.CanTrust = false;
+
+                        if (computerKeys.Count > 0)
                         {
-                            if (_sshHostKeys[computer1] == fingerPrint)
+                            if (computerKeys.Exists(key => key.Key == fingerPrint))
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {
-                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                                    Host.UI.WriteVerboseLine("Fingerprint matched trusted key for host " + computer1);
                                 }
                                 e.CanTrust = true;
+                                hostKeyFound = true;
 
                             }
                             else
                             {
+                                if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                                    Host.UI.WriteVerboseLine("No trusted key match found for host " + computer1);
                                 e.CanTrust = false;
 
                             }
                         }
-                        else
+
+                        if (!e.CanTrust)
                         {
                             if (_errorOnUntrusted)
                             {
@@ -357,30 +365,21 @@ namespace SSH
                             }
                             else
                             {
-                                int choice;
-                                if (_acceptkey)
-                                {
-                                    choice = 0;
-                                }
-                                else
+                                if (!_acceptkey)
                                 {
                                     var choices = new Collection<ChoiceDescription>
                                     {
                                         new ChoiceDescription("Y"),
                                         new ChoiceDescription("N")
                                     };
-
-                                    choice = Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                    e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
                                 }
-                                if (choice == 0)
+                                else
+                                    e.CanTrust = true;
+                                if (e.CanTrust && hostKeyFound == false)
                                 {
                                     var keymng = new TrustedKeyMng();
                                     keymng.SetKey(computer1, fingerPrint);
-                                    e.CanTrust = true;
-                                }
-                                else
-                                {
-                                    e.CanTrust = false;
                                 }
                             }
                         }

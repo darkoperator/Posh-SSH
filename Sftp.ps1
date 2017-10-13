@@ -932,7 +932,7 @@ function New-SFTPSymlink
         foreach($session in $ToProcess)
         {
             $filepath = Test-SFTPPath -SFTPSession $session -Path $Path
-            $linkstatus = Test-SFTPPath -SFTPSession $session -path $LinkPath`
+            $linkstatus = Test-SFTPPath -SFTPSession $session -path $LinkPath
             if (($filepath) -and (!$linkstatus))
             {
                 try
@@ -1193,7 +1193,7 @@ function Set-SFTPContent
             }
 
             'UTF8' {
-                $ContentEncoding = [System.Text.Encoding]::UTF8
+                $ContentEncoding = New-Object System.Text.UTF8Encoding $false
             }
 
             'UTF32' {

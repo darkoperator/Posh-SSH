@@ -205,10 +205,10 @@ namespace SSH
                         }
                         else
                         {
-                            var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
+                            var ex = new SftpPathNotFoundException("Directory " + RemotePath + " does not exist.");
                             WriteError(new ErrorRecord(
                                         ex,
-                                        RemotePath + " does not exist.",
+                                        "Directory " + RemotePath + " does not exist.",
                                         ErrorCategory.InvalidOperation,
                                         sftpSession));
                         }

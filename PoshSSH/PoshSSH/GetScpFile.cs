@@ -345,7 +345,7 @@ namespace SSH
                         {
                             foreach (var prompt in e.Prompts)
                             {
-                                if (prompt.Request.Contains("Password"))
+                                if (prompt.Request.ToLowerInvariant().Contains("password"))
                                     prompt.Response = _credential.GetNetworkCredential().Password;
                             }
                         };

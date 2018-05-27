@@ -369,7 +369,7 @@ namespace SSH
                 // Handle host key
                 if (_force)
                 {
-                    WriteWarning("Host key is not being verified since Force switch is used.");
+                    WriteWarning("Host key for " + computer + " is not being verified since Force switch is used.");
                 }
                 else
                 {

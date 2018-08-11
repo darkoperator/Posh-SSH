@@ -4,7 +4,7 @@ using Renci.SshNet.Common;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-
+using Renci.SshNet;
 
 namespace SSH
 {
@@ -133,10 +133,9 @@ namespace SSH
                     {
                         if (filePresent)
                         {
-                            WriteVerbose("Uploading " + localfullPath);
                             var fil = new FileInfo(@localfullPath);
                             var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
-                            WriteVerbose("Uploading to " + remoteFullpath + " on " + sftpSession.Host);
+                            WriteVerbose("Uploading " + localfullPath + " to " + RemotePath);
 
                             // Setup Action object for showing download progress.
 
@@ -220,7 +219,39 @@ namespace SSH
                         else
                         {
                             var dirName = new DirectoryInfo(@localfullPath).Name;
+                            var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + dirName;
+                            
+                            WriteVerbose("Uploading " + localfullPath + " to " + RemotePath);
+                            if (!sftpSession.Session.Exists(remoteFullpath))
+                            {
+                                sftpSession.Session.CreateDirectory(remoteFullpath);
+                            }
+                            else
+                            {
+                                if (!_overwrite)
+                                {
+                                    var ex = new SftpPermissionDeniedException("Folder already exists on remote host.");
+                                    ThrowTerminatingError(new ErrorRecord(
+                                        ex,
+                                        "Folder already exists on remote host",
+                                        ErrorCategory.InvalidOperation,
+                                        sftpSession));
+                                }
+                            }
 
+                            try
+                            {
+                                UploadDirectory(sftpSession.Session, localfullPath, remoteFullpath);
+                            }
+                            catch (Exception ex)
+                            {
+                                WriteError(new ErrorRecord(
+                                             ex,
+                                             "Error while Uploading",
+                                             ErrorCategory.InvalidOperation,
+                                             sftpSession));
+
+                            }
                         }
                     }
                     else
@@ -237,5 +268,62 @@ namespace SSH
                 } // foreach local file
             } // sftp session.
         } // Process Record.
+        void UploadDirectory(SftpClient client, string localPath, string remotePath)
+        {
+
+            IEnumerable<FileSystemInfo> infos = new DirectoryInfo(localPath).EnumerateFileSystemInfos();
+            foreach (FileSystemInfo info in infos)
+            {
+                if (info.Attributes.HasFlag(FileAttributes.Directory))
+                {
+                    string subPath = remotePath + "/" + info.Name;
+                    WriteVerbose("Uploading to " + subPath);
+                    if (!client.Exists(subPath))
+                    {
+                        client.CreateDirectory(subPath);
+                    }
+                    UploadDirectory(client, info.FullName, remotePath + "/" + info.Name);
+                }
+                else
+                {
+                    using (Stream fileStream = new FileStream(info.FullName, FileMode.Open))
+                    {
+                        var fil = new FileInfo(info.FullName);
+                        WriteVerbose("Uploading file: " + remotePath + "/" + info.Name);
+                        var res = new Action<ulong>(rs =>
+                        {
+
+                            if (fil.Length > 1240000)
+                            {
+                                var percent = (int)((((double)rs) / fil.Length) * 100.0);
+                                if (percent % 10 == 0)
+                                {
+                                    // This will prevent the progress message from being stuck on the screen.
+                                    if (percent == 90 || percent > 90)
+                                    {
+                                        return;
+                                    }
+
+                                    var progressRecord = new ProgressRecord(1,
+                                            "Uploading " + fil.Name,
+                                            $"{rs} Bytes Uploaded of {fil.Length}")
+                                    { PercentComplete = percent };
+
+                                    Host.UI.WriteProgress(1, progressRecord);
+                                }
+                            }
+                        });
+                        client.UploadFile(fileStream, remotePath + "/" + info.Name, res);
+
+                        // Clean any stray progress bar.
+                        var progressRecordEnd = new ProgressRecord(1,
+                                "Uploading ",
+                                "end");
+
+                        Host.UI.WriteProgress(1, progressRecordEnd);
+                    }
+                }
+            }
+        } // upload directory.
     }
 }

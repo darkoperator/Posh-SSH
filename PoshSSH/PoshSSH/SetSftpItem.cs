@@ -159,7 +159,6 @@ namespace SSH
                                         { PercentComplete = percent };
 
                                         Host.UI.WriteProgress(1, progressRecord);
-                                        //Host.UI.WriteVerboseLine(percent.ToString(CultureInfo.InvariantCulture) + "% Completed.");
                                     }
                                 }
                             });

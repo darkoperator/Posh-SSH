@@ -263,6 +263,9 @@ function Invoke-SSHCommand
                     # Check if it completed or is past the timeout setting.
                     if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
                     {
+                        # Set the variable within this function to not use its value from outer scope in case the
+                        # EndExecute call throws an exception
+                        $Output = ''
                         $Output = $_.cmd.EndExecute($_.Async)
 
                         # Generate custom object to return to pipeline and client

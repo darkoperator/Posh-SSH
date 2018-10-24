@@ -320,7 +320,7 @@ namespace SSH
                         {
                             if (_errorOnUntrusted)
                             { throw new System.Security.SecurityException("SSH fingerprint mismatch for host " + computer1); }
-                            
+
                             int choice;
                             if (_acceptkey)
                             {
@@ -414,8 +414,9 @@ namespace SSH
                 {
                     try
                     {
-                        var localfullPath = Path.GetFullPath(_localfolder);
-                        WriteVerbose("Downloading " + _remotefolder);
+                        var localfullPath = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfolder);
+                        WriteVerbose("Downloading From " + _remotefolder);
+                        WriteVerbose("Saving as " + localfullPath);
                         var dirinfo = new DirectoryInfo(@localfullPath);
                         client.Download(_remotefolder, dirinfo);
                         WriteVerbose("Finished downloading.");

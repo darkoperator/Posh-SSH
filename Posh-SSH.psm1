@@ -2,12 +2,12 @@
 ##############################################################################################
 if (!(Test-Path variable:Global:SshSessions ))
 {
-    $global:SshSessions = New-Object System.Collections.ArrayList
+    $global:SshSessions = New-Object -TypeName 'System.Collections.Generic.List[SSH.SshSession]'
 }
 
 if (!(Test-Path variable:Global:SFTPSessions ))
 {
-    $global:SFTPSessions = New-Object System.Collections.ArrayList
+    $global:SFTPSessions = New-Object -TypeName 'System.Collections.Generic.List[SSH.SftpSession]'
 }
 
 # Dot Sourcing of functions

@@ -57,10 +57,24 @@ namespace SSH
         }
 
         /// <summary>
+        /// File name on remote target, required when file stream is used.
+        /// </summary>
+        private String _remotefilename;
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 4)]
+        public string RemoteFileName
+        {
+            get { return _remotefilename; }
+            set { _remotefilename = value; }
+        }
+
+        /// <summary>
         /// The local file to be uploaded.
         /// </summary>
         private String[] _localfile;
-        [Parameter(Mandatory = true,
+        [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             Position = 1)]
         [Alias("PSPath")]
@@ -68,6 +82,20 @@ namespace SSH
         {
             get { return _localfile; }
             set { _localfile = value; }
+        }
+
+        /// <summary>
+        /// The local file to be uploaded.
+        /// </summary>
+        private MemoryStream _localfilestream;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1)]
+        [Alias("PSStream")]
+        public MemoryStream LocalFileStream
+        {
+            get { return _localfilestream; }
+            set { _localfilestream = value; }
         }
 
         /// <summary>
@@ -119,112 +147,212 @@ namespace SSH
         {
             foreach (var sftpSession in ToProcess)
             {
-                // check if the file specified actually exists.
-                // Resolve the path even if a relative one is given.
-                foreach (var localfile in _localfile)
+                // Check for local file or local file stream
+                if ((_localfilestream != null) && (_remotefilename != null))
                 {
-                    ProviderInfo provider;
-                    var pathinfo = GetResolvedProviderPathFromPSPath(localfile, out provider);
-                    var localfullPath = pathinfo[0];
+                    var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + _remotefilename;
+                    WriteVerbose("Uploading to " + remoteFullpath + " on " + sftpSession.Host);
 
+                    // Setup Action object for showing download progress.
 
-                    if (File.Exists(@localfullPath))
+                    var res = new Action<ulong>(rs =>
                     {
-                        WriteVerbose("Uploading " + localfullPath);
-                        var fil = new FileInfo(@localfullPath);
-                        var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
-                        WriteVerbose("Uploading to " + remoteFullpath + " on " + sftpSession.Host);
-
-                        // Setup Action object for showing download progress.
-
-                        var res = new Action<ulong>(rs =>
+                        //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
+                        if (_localfilestream.Length > 1240000)
                         {
-                            //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
-                            if (fil.Length > 1240000)
+                            var percent = (int)((((double)rs) / _localfilestream.Length) * 100.0);
+                            if (percent % 10 == 0)
                             {
-                                var percent = (int)((((double)rs) / fil.Length) * 100.0);
-                                if (percent % 10 == 0)
+                                // This will prevent the progress message from being stuck on the screen.
+                                if (percent == 90 || percent > 90)
                                 {
-                                    // This will prevent the progress message from being stuck on the screen.
-                                    if (percent == 90 || percent > 90)
+                                    return;
+                                }
+
+                                var progressRecord = new ProgressRecord(1,
+                                "Uploading ",
+                                String.Format("{0} Bytes Uploaded of {1}", rs, _localfilestream.Length))
+                                { PercentComplete = percent };
+
+                                Host.UI.WriteProgress(1, progressRecord);
+                                //Host.UI.WriteVerboseLine(percent.ToString(CultureInfo.InvariantCulture) + "% Completed.");
+                            }
+                        }
+                    });
+
+                    // Check that the path we are uploading to actually exists on the target.
+                    if (sftpSession.Session.Exists(RemotePath))
+                            {
+                                // Ensure the remote path is a directory. 
+                                var attribs = sftpSession.Session.GetAttributes(RemotePath);
+                                if (!attribs.IsDirectory)
+                                {
+                                    throw new SftpPathNotFoundException("Specified path is not a directory");
+                                }
+                                // Check if the file already exists on the target system.
+                                var present = sftpSession.Session.Exists(remoteFullpath);
+                                if ((present & _overwrite) || (!present))
+                                {
+                                    try
                                     {
-                                        return;
+                                        sftpSession.Session.UploadFile(_localfilestream, remoteFullpath, res);
+                                        _localfilestream.Close();
                                     }
+                                    catch (Exception ex)
+                                    {
+                                        _localfilestream.Close();
+                                        WriteError(new ErrorRecord(
+                                                     ex,
+                                                     "Error while Uploading",
+                                                     ErrorCategory.InvalidOperation,
+                                                     sftpSession));
 
-                                    var progressRecord = new ProgressRecord(1,
-                                    "Uploading " + fil.Name,
-                                    String.Format("{0} Bytes Uploaded of {1}", rs, fil.Length))
-                                    { PercentComplete = percent };
-
-                                    Host.UI.WriteProgress(1, progressRecord);
-                                    //Host.UI.WriteVerboseLine(percent.ToString(CultureInfo.InvariantCulture) + "% Completed.");
+                                    }
                                 }
-                            }
-                        });
-
-                        // Check that the path we are uploading to actually exists on the target.
-                        if (sftpSession.Session.Exists(RemotePath))
-                        {
-                            // Ensure the remote path is a directory. 
-                            var attribs = sftpSession.Session.GetAttributes(RemotePath);
-                            if (!attribs.IsDirectory)
-                            {
-                                throw new SftpPathNotFoundException("Specified path is not a directory");
-                            }
-                            // Check if the file already exists on the target system.
-                            var present = sftpSession.Session.Exists(remoteFullpath);
-                            if ((present & _overwrite) || (!present))
-                            {
-                                var localstream = File.OpenRead(localfullPath);
-                                try
+                                else
                                 {
-                                    sftpSession.Session.UploadFile(localstream, remoteFullpath, res);
-                                    localstream.Close();
-                                }
-                                catch (Exception ex)
-                                {
-                                    localstream.Close();
+                                    var ex = new SftpPermissionDeniedException("File already exists on remote host.");
                                     WriteError(new ErrorRecord(
-                                                 ex,
-                                                 "Error while Uploading",
-                                                 ErrorCategory.InvalidOperation,
-                                                 sftpSession));
-
+                                                     ex,
+                                                     "File already exists on remote host",
+                                                     ErrorCategory.InvalidOperation,
+                                                     sftpSession));
                                 }
+
                             }
                             else
                             {
-                                var ex = new SftpPermissionDeniedException("File already exists on remote host.");
+                                var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
                                 WriteError(new ErrorRecord(
-                                                 ex,
-                                                 "File already exists on remote host",
-                                                 ErrorCategory.InvalidOperation,
-                                                 sftpSession));
+                                            ex,
+                                            RemotePath + " does not exist.",
+                                            ErrorCategory.InvalidOperation,
+                                            sftpSession));
+                            }
+                }
+                else if (_localfile != null)
+                {
+                    // check if the file specified actually exists.
+                    // Resolve the path even if a relative one is given.
+                    foreach (var localfile in _localfile)
+                    {
+                        ProviderInfo provider;
+                        var pathinfo = GetResolvedProviderPathFromPSPath(localfile, out provider);
+                        var localfullPath = pathinfo[0];
+
+
+                        if (File.Exists(@localfullPath))
+                        {
+                            WriteVerbose("Uploading " + localfullPath);
+                            var fil = new FileInfo(@localfullPath);
+
+                            // Check for remote name overwrite
+                            if (_remotefilename == null)
+                                _remotefilename = fil.Name;
+                            
+                            var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + _remotefilename;
+                            WriteVerbose("Uploading to " + remoteFullpath + " on " + sftpSession.Host);
+
+                            // Setup Action object for showing download progress.
+
+                            var res = new Action<ulong>(rs =>
+                            {
+                                //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
+                                if (fil.Length > 1240000)
+                                {
+                                    var percent = (int)((((double)rs) / fil.Length) * 100.0);
+                                    if (percent % 10 == 0)
+                                    {
+                                        // This will prevent the progress message from being stuck on the screen.
+                                        if (percent == 90 || percent > 90)
+                                        {
+                                            return;
+                                        }
+
+                                        var progressRecord = new ProgressRecord(1,
+                                        "Uploading " + fil.Name,
+                                        String.Format("{0} Bytes Uploaded of {1}", rs, fil.Length))
+                                        { PercentComplete = percent };
+
+                                        Host.UI.WriteProgress(1, progressRecord);
+                                        //Host.UI.WriteVerboseLine(percent.ToString(CultureInfo.InvariantCulture) + "% Completed.");
+                                    }
+                                }
+                            });
+
+                            // Check that the path we are uploading to actually exists on the target.
+                            if (sftpSession.Session.Exists(RemotePath))
+                            {
+                                // Ensure the remote path is a directory. 
+                                var attribs = sftpSession.Session.GetAttributes(RemotePath);
+                                if (!attribs.IsDirectory)
+                                {
+                                    throw new SftpPathNotFoundException("Specified path is not a directory");
+                                }
+                                // Check if the file already exists on the target system.
+                                var present = sftpSession.Session.Exists(remoteFullpath);
+                                if ((present & _overwrite) || (!present))
+                                {
+                                    var localstream = File.OpenRead(localfullPath);
+                                    try
+                                    {
+                                        sftpSession.Session.UploadFile(localstream, remoteFullpath, res);
+                                        localstream.Close();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        localstream.Close();
+                                        WriteError(new ErrorRecord(
+                                                     ex,
+                                                     "Error while Uploading",
+                                                     ErrorCategory.InvalidOperation,
+                                                     sftpSession));
+
+                                    }
+                                }
+                                else
+                                {
+                                    var ex = new SftpPermissionDeniedException("File already exists on remote host.");
+                                    WriteError(new ErrorRecord(
+                                                     ex,
+                                                     "File already exists on remote host",
+                                                     ErrorCategory.InvalidOperation,
+                                                     sftpSession));
+                                }
+
+                            }
+                            else
+                            {
+                                var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
+                                WriteError(new ErrorRecord(
+                                            ex,
+                                            RemotePath + " does not exist.",
+                                            ErrorCategory.InvalidOperation,
+                                            sftpSession));
                             }
 
                         }
                         else
                         {
-                            var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
+                            var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
+
                             WriteError(new ErrorRecord(
-                                        ex,
-                                        RemotePath + " does not exist.",
-                                        ErrorCategory.InvalidOperation,
-                                        sftpSession));
-                        }
+                                                    ex,
+                                                    "File to upload " + localfullPath + " was not found.",
+                                                    ErrorCategory.InvalidOperation,
+                                                    localfullPath));
+                        } // check if file exists.
+                    } // foreach local file
+                }
+                else
+                {
+                    var ex = new FileNotFoundException("File path or File Stream AND Remote File Name was not specified.");
 
-                    }
-                    else
-                    {
-                        var ex = new FileNotFoundException("File to upload " + localfullPath + " was not found.");
-
-                        WriteError(new ErrorRecord(
-                                                ex,
-                                                "File to upload " + localfullPath + " was not found.",
-                                                ErrorCategory.InvalidOperation,
-                                                localfullPath));
-                    } // check if file exists.
-                } // foreach local file
+                    WriteError(new ErrorRecord(
+                                            ex,
+                                            "File path or File Stream AND Remote File Name was not specified.",
+                                            ErrorCategory.InvalidOperation, sftpSession));
+                }
             } // sftp session.
         } // Process Record.
     }

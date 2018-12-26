@@ -830,7 +830,7 @@ function Set-SFTPPathAttribute
                     $currentAttrib.GroupCanRead = $GroupCanRead
                 }
 
-                if($PSBoundParameters.ContainsKey("OwnerCanWrite"))
+                if($PSBoundParameters.ContainsKey("GroupCanExecute"))
                 {
                     $currentAttrib.GroupCanExecute = $GroupCanExecute
                 }

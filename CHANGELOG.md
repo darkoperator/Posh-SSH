@@ -1,5 +1,14 @@
 # ChangeLog
 
+## Version 2.1
+
+* Fixed typo in Set-SFTPPathAttribute command when setting GroupCanChange.
+* Removed use of the variable $output for command execution due to scope issues.
+* New cmdlet Set-SFTPItem, in the next release it will replace Set-SFTPFile and Set-SFTPFolder cmdlets.
+* New cmdlet Get-SFTPItem, in the next release it will replace Get-SFTPFile and Get-SFTPFolder cmdlets.
+
+
+
 ## Version 2.0.2
 
 * Set-SFTPContent will no longer add a BOM to UTF8 encoded files.

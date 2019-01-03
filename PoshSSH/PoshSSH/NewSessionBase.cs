@@ -412,8 +412,10 @@ namespace SSH
                                     };
                                     e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
                                 }
-                                else
+                                else // User specified he would accept the key so we can just add it to our list.
+                                {
                                     e.CanTrust = true;
+                                }
                                 if (e.CanTrust)
                                 {
                                     var keymng = new TrustedKeyMng();

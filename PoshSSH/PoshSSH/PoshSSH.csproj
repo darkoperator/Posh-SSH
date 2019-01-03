@@ -52,9 +52,13 @@
     <Compile Include="ConnectionInfoGenerator.cs" />
     <Compile Include="GetScpFile.cs" />
     <Compile Include="GetScpFolder.cs" />
+    <Compile Include="GetScpItem.cs" />
     <Compile Include="GetSftpFile.cs" />
+    <Compile Include="GetSftpItem.cs" />
     <Compile Include="NewSessionBase.cs" />
+    <Compile Include="SetScpItem.cs" />
     <Compile Include="SetSftpFile.cs" />
+    <Compile Include="SetSftpItem.cs" />
     <Compile Include="SshModHelper.cs" />
     <Compile Include="NewSftpSession.cs" />
     <Compile Include="NewSSHSession.cs" />

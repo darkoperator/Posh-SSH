@@ -50,7 +50,7 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 2)]
-        public string RemotePath
+        public string Destination
         {
             get { return _remotepath; }
             set { _remotepath = value; }
@@ -134,8 +134,8 @@ namespace SSH
                         if (filePresent)
                         {
                             var fil = new FileInfo(@localfullPath);
-                            var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
-                            WriteVerbose("Uploading " + localfullPath + " to " + RemotePath);
+                            var remoteFullpath = _remotepath.TrimEnd(new[] { '/' }) + "/" + fil.Name;
+                            WriteVerbose("Uploading " + localfullPath + " to " + _remotepath);
 
                             // Setup Action object for showing download progress.
 
@@ -164,10 +164,10 @@ namespace SSH
                             });
 
                             // Check that the path we are uploading to actually exists on the target.
-                            if (sftpSession.Session.Exists(RemotePath))
+                            if (sftpSession.Session.Exists(_remotepath))
                             {
                                 // Ensure the remote path is a directory. 
-                                var attribs = sftpSession.Session.GetAttributes(RemotePath);
+                                var attribs = sftpSession.Session.GetAttributes(_remotepath);
                                 if (!attribs.IsDirectory)
                                 {
                                     throw new SftpPathNotFoundException("Specified path is not a directory");
@@ -206,10 +206,10 @@ namespace SSH
                             }
                             else
                             {
-                                var ex = new SftpPathNotFoundException(RemotePath + " does not exist.");
+                                var ex = new SftpPathNotFoundException(_remotepath + " does not exist.");
                                 WriteError(new ErrorRecord(
                                             ex,
-                                            RemotePath + " does not exist.",
+                                            _remotepath + " does not exist.",
                                             ErrorCategory.InvalidOperation,
                                             sftpSession));
                             }
@@ -218,9 +218,9 @@ namespace SSH
                         else
                         {
                             var dirName = new DirectoryInfo(@localfullPath).Name;
-                            var remoteFullpath = RemotePath.TrimEnd(new[] { '/' }) + "/" + dirName;
+                            var remoteFullpath = _remotepath.TrimEnd(new[] { '/' }) + "/" + dirName;
                             
-                            WriteVerbose("Uploading " + localfullPath + " to " + RemotePath);
+                            WriteVerbose("Uploading " + localfullPath + " to " + _remotepath);
                             if (!sftpSession.Session.Exists(remoteFullpath))
                             {
                                 sftpSession.Session.CreateDirectory(remoteFullpath);
@@ -263,8 +263,8 @@ namespace SSH
                                                 ErrorCategory.InvalidOperation,
                                                 localfullPath));
 
-                    } // check if file exists.
-                } // foreach local file
+                    } // check if item exists.
+                } // foreach local item
             } // sftp session.
         } // Process Record.
         void UploadDirectory(SftpClient client, string localPath, string remotePath)

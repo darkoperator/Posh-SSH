@@ -19,7 +19,8 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
-            ParameterSetName = "Index")]
+            ParameterSetName = "Index",
+            HelpMessage = "Session Id of an existing SFTPSession.")]
         public Int32[] SessionId
         {
             get { return _index; }
@@ -35,7 +36,8 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
-            ParameterSetName = "Session")]
+            ParameterSetName = "Session",
+            HelpMessage = "Existing SFTPSession object.")]
         public SftpSession[] SFTPSession
         {
             get { return _session; }
@@ -49,7 +51,8 @@ namespace SSH
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
-            Position = 2)]
+            Position = 2,
+            HelpMessage = "Remote path where to upload the item to")]
         public string Destination
         {
             get { return _remotepath; }
@@ -62,7 +65,8 @@ namespace SSH
         private String[] _localItem;
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
-            Position = 1)]
+            Position = 1,
+            HelpMessage = "Local path to item to upload")]
         [Alias("PSPath")]
         public String[] Path
         {
@@ -73,7 +77,8 @@ namespace SSH
         /// <summary>
         /// If a file on the target should be overwritten or not.
         /// </summary>
-        [Parameter(Position = 3)]
+        [Parameter(Position = 3,
+            HelpMessage = "Overrite item on remote host if it already pressent.")]
         public SwitchParameter Force
         {
             get { return _overwrite; }

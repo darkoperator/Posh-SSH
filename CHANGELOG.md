@@ -6,6 +6,7 @@
 * Removed use of the variable $output for command execution due to scope issues.
 * New cmdlet Set-SFTPItem, in the next release it will replace Set-SFTPFile and Set-SFTPFolder cmdlets.
 * New cmdlet Get-SFTPItem, in the next release it will replace Get-SFTPFile and Get-SFTPFolder cmdlets.
+* Fix NullReferenceException when using proxy credentials.
 
 ## Version 2.0.2
 

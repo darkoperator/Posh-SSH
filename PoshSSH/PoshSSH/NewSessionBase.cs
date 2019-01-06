@@ -21,15 +21,7 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 0,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 0,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "FQDN or IP Address of host to establish a SSH connection.")]
         [Alias("HostName", "Computer", "IPAddress", "Host")]
         public string[] ComputerName
         {
@@ -43,15 +35,7 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 1,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 1,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 1,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "SSH Credentials to use for connecting to a server. If a key file is used the password field is used for the Key pass phrase.")]
         [System.Management.Automation.CredentialAttribute()]
         public PSCredential Credential
         {
@@ -65,13 +49,7 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "SSH TCP Port number to use for the SSH connection.")]
         public Int32 Port
         {
             get { return _port; }
@@ -84,13 +62,7 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "Proxy server name or IP Address to use for connection.")]
         public String ProxyServer
         {
             get { return _proxyserver; }
@@ -103,13 +75,7 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "Port to connect to on proxy server to route connection.")]
         public Int32 ProxyPort
         {
             get { return _proxyport; }
@@ -122,13 +88,7 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
+            HelpMessage = "PowerShell Credential Object with the credentials for use to connect to proxy server if required.")]
         [ValidateNotNullOrEmpty]
         [System.Management.Automation.CredentialAttribute()]
         public PSCredential ProxyCredential
@@ -140,17 +100,10 @@ namespace SSH
 
         // Proxy Type
         private string _proxytype = "HTTP";
-
         [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            HelpMessage = "Type of Proxy being used (HTTP, Socks4 or Socks5).")]
         public string ProxyType
         {
             get { return _proxytype; }
@@ -162,7 +115,8 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
+            ParameterSetName = "Key",
+            HelpMessage = "OpenSSH format SSH private key file.")]
         public string KeyFile
         {
             get { return _keyfile; }
@@ -174,7 +128,8 @@ namespace SSH
 
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
+            ParameterSetName = "KeyString",
+            HelpMessage = "String array of the content of a OpenSSH key file.")]
         public string[] KeyString
         {
             get { return _keystring; }
@@ -185,13 +140,8 @@ namespace SSH
         private int _connectiontimeout = 10;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            ParameterSetName = "Key",
+            HelpMessage = "Connection timeout interval.")]
         public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
@@ -219,13 +169,8 @@ namespace SSH
         private int _keepaliveinterval = 10;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            ParameterSetName = "Key",
+            HelpMessage = "Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server")]
         public int KeepAliveInterval
         {
             get { return _keepaliveinterval; }
@@ -237,13 +182,7 @@ namespace SSH
         private bool _acceptkey;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+             HelpMessage = "Auto add host key fingerprint to the list of trusted host/gingerprint pairs.")]
         public SwitchParameter AcceptKey
         {
             get { return _acceptkey; }
@@ -254,13 +193,7 @@ namespace SSH
         private bool _force;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            HelpMessage = "Do not check the remote host fingerprint.")]
         public SwitchParameter Force
         {
             get { return _force; }
@@ -271,13 +204,7 @@ namespace SSH
         private bool _errorOnUntrusted;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            HelpMessage = "Raise an exception if the fingerprint is not trusted for the host.")]
         public SwitchParameter ErrorOnUntrusted
         {
             get { return _errorOnUntrusted; }

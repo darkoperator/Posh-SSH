@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '2.0.2'
+ModuleVersion = '2.1'
 
 
 # ID used to uniquely identify this module
@@ -25,7 +25,7 @@ Author = 'Carlos Perez'
 CompanyName = 'www.darkoperator.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Carlos Perez. All rights reserved.'
+Copyright = '(c) 2019 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'

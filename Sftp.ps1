@@ -382,6 +382,86 @@ function Remove-SFTPItem
      End{}
 }
 
+# .ExternalHelp Posh-SSH.psm1-Help.xml
+function Move-SFTPItem
+{
+    [CmdletBinding(DefaultParameterSetName='Index')]
+    param(
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]]
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   Position=1,
+                   ValueFromPipelineByPropertyName = $true)]
+        [Alias('FullName')]
+        [string]
+        $Path,
+
+        [Parameter(Mandatory=$true,
+                   Position=2)]
+        [string]
+        $Destination
+
+     )
+
+     Begin
+     {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+     }
+     Process
+     {
+
+        foreach($session in $ToProcess)
+        {
+
+            if (Test-SFTPPath -SFTPSession $session -Path $Path)
+            {
+                $itemInfo = $session.Session.Get($path)
+                Write-Verbose("Moving $($path) to $($Destination).")
+                $itemInfo.MoveTo($Destination)
+                Write-Verbose("Item moved succesfuly.")
+            }
+            else
+            {
+                throw "Specified path of $($Path) does not exist."
+            }
+
+        }
+     }
+     End{}
+}
+
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Set-SFTPLocation

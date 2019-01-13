@@ -1,12 +1,13 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
 # Set-SFTPPathAttribute
 
 ## SYNOPSIS
+Sets one or more attributes on a scefied item to a remote server though a SFTP Session.
 
 ## SYNTAX
 
@@ -27,21 +28,21 @@ Set-SFTPPathAttribute [-SFTPSession] <SftpSession[]> [-Path] <String> [-LastAcce
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Sets one or more attributes on a scefied item to a remote server though a SFTP Session.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Set-SFTPPathAttribute -SessionId 0 -Path /usr/local/test_tools/dns_test.py -GroupCanExecute $true -OwnerCanExecute $true -OthersCanExecute $true
 ```
 
-{{ Add example description here }}
+Make a specific file executable by all.
 
 ## PARAMETERS
 
 ### -SessionId
-{{Fill SessionId Description}}
+Session Id of an existing SFTPSession.
 
 ```yaml
 Type: Int32[]
@@ -49,29 +50,14 @@ Parameter Sets: Index
 Aliases: Index
 
 Required: True
-Position: 1
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -SFTPSession
-{{Fill SFTPSession Description}}
-
-```yaml
-Type: SftpSession[]
-Parameter Sets: Session
-Aliases: Session
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Path
-{{Fill Path Description}}
+Remote path we want to set attribute on.
 
 ```yaml
 Type: String
@@ -79,14 +65,14 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: 2
+Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
 ### -LastAccessTime
-{{Fill LastAccessTime Description}}
+Set the last access time.
 
 ```yaml
 Type: DateTime
@@ -101,7 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -LastWriteTime
-{{Fill LastWriteTime Description}}
+Set the last write time.
 
 ```yaml
 Type: DateTime
@@ -116,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupId
-{{Fill GroupId Description}}
+Set a group id.
 
 ```yaml
 Type: Int32
@@ -131,7 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -UserId
-{{Fill UserId Description}}
+Set the user id.
 
 ```yaml
 Type: Int32
@@ -146,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupCanExecute
-{{Fill GroupCanExecute Description}}
+Set if the owning group can execute.
 
 ```yaml
 Type: Boolean
@@ -161,7 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupCanRead
-{{Fill GroupCanRead Description}}
+Set if the owning group can read.
 
 ```yaml
 Type: Boolean
@@ -176,7 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -GroupCanWrite
-{{Fill GroupCanWrite Description}}
+Set if the owning group can write.
 
 ```yaml
 Type: Boolean
@@ -191,7 +177,7 @@ Accept wildcard characters: False
 ```
 
 ### -OthersCanExecute
-{{Fill OthersCanExecute Description}}
+Set if others can execute.
 
 ```yaml
 Type: Boolean
@@ -206,7 +192,7 @@ Accept wildcard characters: False
 ```
 
 ### -OthersCanRead
-{{Fill OthersCanRead Description}}
+Set if others can read.
 
 ```yaml
 Type: Boolean
@@ -221,7 +207,7 @@ Accept wildcard characters: False
 ```
 
 ### -OthersCanWrite
-{{Fill OthersCanWrite Description}}
+Set if others can write.
 
 ```yaml
 Type: Boolean
@@ -236,7 +222,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerCanExecute
-{{Fill OwnerCanExecute Description}}
+Set if owner can execute.
 
 ```yaml
 Type: Boolean
@@ -251,7 +237,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerCanRead
-{{Fill OwnerCanRead Description}}
+Set if owner can read.
 
 ```yaml
 Type: Boolean
@@ -266,7 +252,7 @@ Accept wildcard characters: False
 ```
 
 ### -OwnerCanWrite
-{{Fill OwnerCanWrite Description}}
+Set if owner can write.
 
 ```yaml
 Type: Boolean
@@ -280,7 +266,34 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -SFTPSession
+Existing SFTPSession object.
+
+```yaml
+Type: SftpSession[]
+Parameter Sets: Session
+Aliases: Session
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ## INPUTS
+
+### System.Int32[]
+
+### System.String
+
+### System.DateTime
+
+### System.Int32
+
+### System.Boolean
+
+### SSH.SftpSession[]
 
 ## OUTPUTS
 

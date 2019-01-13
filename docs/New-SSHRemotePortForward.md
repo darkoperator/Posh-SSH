@@ -1,13 +1,13 @@
 ---
 external help file: Posh-SSH-help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
 # New-SSHRemotePortForward
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Port forward a local port as a port on a remote server.
 
 ## SYNTAX
 
@@ -24,7 +24,8 @@ New-SSHRemotePortForward -LocalAdress <String> -LocalPort <Int32> -RemoteAddress
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Port forward a local port as a port on a remote server.
+A connection on the remote host to the forwarded port will be redirected to the local host port.
 
 ## EXAMPLES
 
@@ -131,7 +132,6 @@ Accept wildcard characters: False
 
 ### SSH.SshSession
 System.Int32
-
 
 ## OUTPUTS
 

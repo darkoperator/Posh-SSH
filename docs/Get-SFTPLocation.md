@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: 
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -28,10 +28,11 @@ Get the current working location for a SFTP connection.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\>  Get-SFTPLocation -SessionId 0
+/home/carlos
 ```
 
-{{ Add example description here }}
+Get the current SFTP location a given session is executing under.
 
 ## PARAMETERS
 

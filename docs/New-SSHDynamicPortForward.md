@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -22,7 +22,7 @@ New-SSHDynamicPortForward [-BoundHost] <String> [-BoundPort] <Int32> [-SSHSessio
 ```
 
 ## DESCRIPTION
-Dynamic port forwarding is a transparent mechanism available for applications, which 
+Dynamic port forwarding is a transparent mechanism available for applications, which
 support the SOCKS4 or SOCKS5 client protoco.
 In windows for best results the local address
 to bind to should be the IP of the network interface.

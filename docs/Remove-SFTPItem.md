@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -13,12 +13,12 @@ Deletes the specified item on a SFTP session.
 
 ### Index (Default)
 ```
-Remove-SFTPItem [-SessionId] <Int32[]> [-Path] <String>
+Remove-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Force]
 ```
 
 ### Session
 ```
-Remove-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String>
+Remove-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Force]
 ```
 
 ## DESCRIPTION
@@ -59,8 +59,23 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Force the deletion of a none empty directory by recursively deleting all files in it.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

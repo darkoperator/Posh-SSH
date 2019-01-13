@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -28,10 +28,12 @@ Change current location of the SFTP session.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Set-SFTPLocation -SessionId 0 -Path /usr/local
+PS C:\> Get-SFTPLocation -SessionId 0
+/usr/local
 ```
 
-{{ Add example description here }}
+Set the SFTP session current location to /usr/local
 
 ## PARAMETERS
 

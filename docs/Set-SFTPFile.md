@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -13,12 +13,12 @@ Copy a local file to a remote host using an existing SFTP Session.
 
 ### Index (Default)
 ```
-Set-SFTPFile [-SessionId] <Int32[]> [-RemotePath] <String> [-LocalFile] <String> [-Overwrite]
+Set-SFTPFile [-SessionId] <Int32[]> [-RemotePath] <String> [-LocalFile] <String[]> [-Overwrite]
 ```
 
 ### Session
 ```
-Set-SFTPFile [-SFTPSession] <SftpSession[]> [-RemotePath] <String> [-LocalFile] <String> [-Overwrite]
+Set-SFTPFile [-SFTPSession] <SftpSession[]> [-RemotePath] <String> [-LocalFile] <String[]> [-Overwrite]
 ```
 
 ## DESCRIPTION
@@ -28,15 +28,15 @@ Copy a local file to a remote host using an existing SFTP Session.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Set-SFTPFile -SessionId 0 -RemotePath "/tmp/dns_validator.py" -LocalFile ./Development/dns_validator.py -Overwrite
 ```
 
-{{ Add example description here }}
+Upload script to target system and overrite it if already present.
 
 ## PARAMETERS
 
 ### -SessionId
-@{Text=}
+Session Id of an existing SFTPSession.
 
 ```yaml
 Type: Int32[]
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemotePath
-@{Text=}
+Remote path where to upload the item to, including its name.
 
 ```yaml
 Type: String
@@ -66,10 +66,10 @@ Accept wildcard characters: False
 ```
 
 ### -LocalFile
-@{Text=}
+Local path to item to upload
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases: PSPath
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-@{Text=}
+Overrite item on remote host if it already pressent.
 
 ```yaml
 Type: SwitchParameter
@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -SFTPSession
-@{Text=}
+Existing SFTPSession object.
 
 ```yaml
 Type: SftpSession[]

@@ -54,15 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionInfoGenerator.cs" />
-    <Compile Include="GetScpFile.cs" />
-    <Compile Include="GetScpFolder.cs" />
     <Compile Include="GetScpItem.cs" />
-    <Compile Include="GetSftpFile.cs" />
     <Compile Include="GetSftpItem.cs" />
     <Compile Include="NewSessionBase.cs" />
     <Compile Include="SetScpItem.cs" />
-    <Compile Include="SetSftpFile.cs" />
-    <Compile Include="SetSftpFolder.cs" />
     <Compile Include="SetSftpItem.cs" />
     <Compile Include="SshModHelper.cs" />
     <Compile Include="NewSftpSession.cs" />
@@ -74,8 +69,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionObject.cs" />
-    <Compile Include="SetScpFile.cs" />
-    <Compile Include="SetScpFolder.cs" />
     <Compile Include="TrustedKeyMng.cs" />
   </ItemGroup>
   <ItemGroup>

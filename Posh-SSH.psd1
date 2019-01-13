@@ -31,7 +31,7 @@ Copyright = '(c) 2019 Carlos Perez. All rights reserved.'
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+# PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -40,7 +40,7 @@ PowerShellVersion = '3.0'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '4.0'
+# DotNetFrameworkVersion = '4.0'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'
@@ -52,7 +52,7 @@ DotNetFrameworkVersion = '4.0'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = @('Assembly\Renci.SshNet.dll')
+RequiredAssemblies = @('Assembly\Renci.SshNet.dll', '.\Assembly\Newtonsoft.Json.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()

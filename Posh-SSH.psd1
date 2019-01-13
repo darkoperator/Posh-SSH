@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '2.1'
+ModuleVersion = '3.0'
 
 
 # ID used to uniquely identify this module

@@ -93,7 +93,7 @@ namespace SSH
                     return true;
                 }
             }
-            else if (platform == PlatformID.Unix || platform == PlatformID.MacOSX)
+            else if (platform == PlatformID.Unix || platform == PlatformID.MacOSX) // For managing Mac OS and Linux platform.
             {
                 var homeFolder = Environment.GetEnvironmentVariable("HOME");
                 var keyStore = $"{homeFolder}/.poshssh/keystore.json";

@@ -215,6 +215,10 @@ namespace SSH
                 base.BeginProcessing();
                 var keymng = new TrustedKeyMng();
                 _sshHostKeys = keymng.GetKeys();
+                if (_sshHostKeys == null)
+                {
+                    _sshHostKeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+                }
             }
         }
 

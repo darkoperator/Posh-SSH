@@ -1,30 +1,59 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Win32;
 using System;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace SSH
 {
     // Class for managing the keys 
     public class TrustedKeyMng
     {
+
         public Dictionary<string, string> GetKeys()
         {
+            var platform = System.Environment.OSVersion.Platform;
             var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
-            if (poshSoftKey != null)
+
+            // check if the platform is windows we stay with the registry.
+            if (platform == PlatformID.Win32NT)
             {
-                var hosts = poshSoftKey.GetValueNames();
-                foreach (var host in hosts)
+                var homeFolder = Environment.GetEnvironmentVariable("HOMEPATH");
+                var keyStore = $"{homeFolder}\\.poshssh\\keystore.json";
+                if (File.Exists(keyStore))
                 {
-                    var hostkey = poshSoftKey.GetValue(host).ToString();
-                    hostkeys.Add(host, hostkey);
+                    var json = File.ReadAllText(keyStore);
+                    var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    if (currentHostkeys != null)
+                    {
+                        hostkeys = currentHostkeys;
+                    }
+                }
+                else
+                {
+                    var keyStoreHome = $"{homeFolder}\\.poshssh";
+                    Directory.CreateDirectory(keyStoreHome);
+                    File.CreateText(keyStore);
                 }
             }
-            else
+            else if (platform == PlatformID.Unix || platform == PlatformID.MacOSX)
             {
-                using (var softKey = Registry.CurrentUser.OpenSubKey(@"Software", true))
+                var homeFolder = Environment.GetEnvironmentVariable("HOME");
+                var keyStore = $"{homeFolder}/.poshssh/keystore.json";
+                if (File.Exists(keyStore))
                 {
-                    if (softKey != null) softKey.CreateSubKey("PoshSSH");
+                    var json = File.ReadAllText(keyStore);
+                    var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    if (currentHostkeys != null)
+                    {
+                        hostkeys = currentHostkeys;
+                    }
+                }
+                else
+                {
+                    var keyStoreHome = $"{homeFolder}/.poshssh/";
+                    Directory.CreateDirectory(keyStoreHome);
+                    File.CreateText(keyStore);
                 }
             }
             return hostkeys;
@@ -32,17 +61,65 @@ namespace SSH
 
         public bool SetKey(string host, string fingerprint)
         {
-            var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);
-            if (poshSoftKey != null)
+
+
+            var platform = System.Environment.OSVersion.Platform;
+            var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+
+            // check if the platform is windows we stay with the registry.
+            if (platform == PlatformID.Win32NT)
             {
-                poshSoftKey.SetValue(host, fingerprint);
-                return true;
+                var homeFolder = Environment.GetEnvironmentVariable("HOMEPATH");
+                var keyStore = $"{homeFolder}\\.poshssh\\keystore.json";
+                if (File.Exists(keyStore))
+                {
+                    var json = File.ReadAllText(keyStore);
+                    var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    if (currentHostkeys != null)
+                    {
+                        hostkeys = currentHostkeys;
+                    }
+                    hostkeys.Add(host, fingerprint);
+
+                    string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
+                    File.WriteAllText(keyStore, jsonkeys);
+                    return true;
+                }
+                else
+                {
+                    var keyStoreHome = $"{homeFolder}\\.poshssh";
+                    Directory.CreateDirectory(keyStoreHome);
+                    File.CreateText(keyStore);
+                    return true;
+                }
             }
-            var softKey = Registry.CurrentUser.OpenSubKey(@"Software", true);
-            if (softKey == null) return true;
-            softKey.CreateSubKey("PoshSSH");
-            softKey.SetValue(host, fingerprint);
+            else if (platform == PlatformID.Unix || platform == PlatformID.MacOSX)
+            {
+                var homeFolder = Environment.GetEnvironmentVariable("HOME");
+                var keyStore = $"{homeFolder}/.poshssh/keystore.json";
+                if (File.Exists(keyStore))
+                {
+                    var json = File.ReadAllText(keyStore);
+                    var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    if (currentHostkeys != null)
+                    {
+                        hostkeys = currentHostkeys;
+                    }
+                    hostkeys.Add(host, fingerprint);
+                    string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
+                    File.WriteAllText(keyStore, jsonkeys);
+                    return true;
+                }
+                else
+                {
+                    var keyStoreHome = $"{homeFolder}/.poshssh/";
+                    Directory.CreateDirectory(keyStoreHome);
+                    File.CreateText(keyStore);
+                    return true;
+                }
+            }
             return true;
+
         }
     }
 }

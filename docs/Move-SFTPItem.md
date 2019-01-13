@@ -4,39 +4,39 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Set-SFTPContent
+# Move-SFTPItem
 
 ## SYNOPSIS
+Move or rename a specified item in a SFTP session.
 
 ## SYNTAX
 
 ### Index (Default)
 ```
-Set-SFTPContent [-SessionId] <Int32[]> [-Path] <String> [-Value] <Object> [-Encoding <String>] [-Append]
+Move-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Destination] <String>
 ```
 
 ### Session
 ```
-Set-SFTPContent [-SFTPSession] <SftpSession[]> [-Path] <String> [-Value] <Object> [-Encoding <String>]
- [-Append]
+Move-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Destination] <String>
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Move or rename a specified item in a SFTP session.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Move-SFTPItem -SessionId 0 -Path "/tmp/dev_app" -Destination "/usr/local/share/app"
 ```
 
-{{ Add example description here }}
+Move a folder in to /usr/local with a new name.
 
 ## PARAMETERS
 
 ### -SessionId
-{{Fill SessionId Description}}
+Session Id of an existing SFTPSession.
 
 ```yaml
 Type: Int32[]
@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -SFTPSession
-{{Fill SFTPSession Description}}
+Existing SFTPSession object.
 
 ```yaml
 Type: SftpSession[]
@@ -66,12 +66,12 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-{{Fill Path Description}}
+Full path of item to be moved.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases: FullName
 
 Required: True
 Position: 2
@@ -80,47 +80,17 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Value
-{{Fill Value Description}}
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases: 
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Encoding
-{{Fill Encoding Description}}
+### -Destination
+New destination full path.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
-Position: Named
-Default value: UTF8
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Append
-{{Fill Append Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
+Required: True
+Position: 3
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -128,8 +98,6 @@ Accept wildcard characters: False
 ## INPUTS
 
 ## OUTPUTS
-
-### Renci.SshNet.Sftp.SftpFile
 
 ## NOTES
 

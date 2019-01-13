@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -28,15 +28,15 @@ Create a Symbolic Link on the remote host via SFTP.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> New-SFTPSymlink -SessionId 0 -Path "/usr/share/myscripts/nullhistory.py" -LinkPath "/usr/bin/nullhistory"
 ```
 
-{{ Add example description here }}
+Create a symlink for a script.
 
 ## PARAMETERS
 
 ### -SessionId
-SSH Session Id for an existing session.
+SFTP Session Id for an existing session.
 
 ```yaml
 Type: Int32[]

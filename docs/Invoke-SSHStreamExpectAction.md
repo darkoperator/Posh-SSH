@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -25,15 +25,16 @@ Invoke-SSHStreamExpectAction [-ShellStream] <ShellStream> [-Command] <String> [-
 
 ## DESCRIPTION
 Executes an action on a SSH ShellStream when output matches a desired string.
+Function returns true if an action was executed.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Invoke-SSHStreamExpectAction -ShellStream $ShellStream -Command "config" -ExpectRegex '[\$%#>] $' -Action 'set interface eth0 address 10.10.10.240\24' -Verbose
 ```
 
-{{ Add example description here }}
+Run second command if the regex for a prompt matches.
 
 ## PARAMETERS
 

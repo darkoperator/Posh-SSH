@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -27,6 +27,14 @@ Get-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
  [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-NoProgress]
 ```
 
+### KeyString
+```
+Get-SCPFile [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>] [-ProxyPort <Int32>]
+ [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>] [-LocalFile <String>]
+ [-RemoteFile <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-NoProgress]
+```
+
 ## DESCRIPTION
 Download a specified file from a SSH Server using SCP given its full path and name to give it locally.
 
@@ -34,10 +42,10 @@ Download a specified file from a SSH Server using SCP given its full path and na
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\>  Get-SCPFile -ComputerName 192.168.1.169 -Credential carlos -LocalFile .\dmesg_log -RemoteFile "/var/log/dmesg" -Verbos
 ```
 
-{{ Add example description here }}
+Download a remote server dmesg log file and save it under a new name in the current folder.
 
 ## PARAMETERS
 
@@ -46,7 +54,7 @@ FQDN or IP Address of host to establish a SCP Session.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: NoKey, Key
 Aliases: HostName, Computer, IPAddress, Host
 
 Required: True
@@ -273,6 +281,21 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KeyString
+OpenSSH key in a string array to be used for authentication.
+
+```yaml
+Type: String[]
+Parameter Sets: KeyString
 Aliases: 
 
 Required: False

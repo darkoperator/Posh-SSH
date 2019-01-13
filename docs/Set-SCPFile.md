@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -23,7 +23,15 @@ Set-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 ```
 Set-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [[-LocalFile] <String>] [[-RemotePath] <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
+ [-LocalFile] <String> [-RemotePath] <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
+ [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+```
+
+### KeyString
+```
+Set-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
+ [-LocalFile] <String> [-RemotePath] <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
  [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
 ```
 
@@ -152,22 +160,10 @@ Full path and file name on the local system of the file to upload.
 
 ```yaml
 Type: String
-Parameter Sets: NoKey
-Aliases: 
+Parameter Sets: (All)
+Aliases: FullName
 
 Required: True
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Key
-Aliases: 
-
-Required: False
 Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -179,22 +175,10 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: NoKey
+Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Key
-Aliases: 
-
-Required: False
 Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
@@ -304,6 +288,21 @@ Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
+```
+
+### -KeyString
+OpenSSH key in a string array to be used for authentication.
+
+```yaml
+Type: String[]
+Parameter Sets: KeyString
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: True
 ```
 
 ## INPUTS

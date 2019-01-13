@@ -20,23 +20,24 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
-            ParameterSetName = "Index")]
+            ParameterSetName = "Index",
+            HelpMessage = "Session Id of an existing SFTPSession.")]
         public Int32[] SessionId
         {
             get { return _index; }
             set { _index = value; }
         }
 
-
         /// <summary>
-        /// Session paramter that takes private SSH.SftpSession[] 
+        /// Session parameter that takes private SSH.SftpSession[] 
         /// </summary>
         private SftpSession[] _session;
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
-            ParameterSetName = "Session")]
+            ParameterSetName = "Session",
+            HelpMessage = "Existing SFTPSession object.")]
         public SftpSession[] SFTPSession
         {
             get { return _session; }
@@ -51,8 +52,9 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             ValueFromPipeline = true,
-            Position = 2)]
-        public string[] RemotePath
+            Position = 2,
+            HelpMessage = "Remote path of item to download.")]
+        public string[] Path
         {
             get { return _remotepath; }
             set { _remotepath = value; }
@@ -64,9 +66,10 @@ namespace SSH
         private String _localpath;
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
-            Position = 1)]
+            Position = 1,
+            HelpMessage = "Local path where to download item to.")]
         [Alias("PSPath")]
-        public String Path
+        public String Destination
         {
             get { return _localpath; }
             set { _localpath = value; }
@@ -76,10 +79,7 @@ namespace SSH
         private bool _noProgress = false;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Index")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Session")]
+            HelpMessage = "Do not show upload progress.")]
         public SwitchParameter NoProgress
         {
             get { return _noProgress; }
@@ -89,7 +89,8 @@ namespace SSH
         /// <summary>
         /// If the local file exists overwrite it.
         /// </summary>
-        [Parameter(Position = 3)]
+        [Parameter(Position = 3,
+            HelpMessage = "Overrite item on remote host if it already pressent.")]
         public SwitchParameter Force
         {
             get { return _overwrite; }
@@ -100,7 +101,8 @@ namespace SSH
         /// <summary>
         /// Skip Symbolic Links when downloading a folder.
         /// </summary>
-        [Parameter(Position = 4)]
+        [Parameter(Position = 4,
+            HelpMessage = "Do not follow symboliclinks if present in a directory.")]
         public SwitchParameter SkipSymLink
         {
             get { return _skipsymlink; }
@@ -224,7 +226,7 @@ namespace SSH
                                             }
 
                                             var progressRecord = new ProgressRecord(1,
-                                            "Downloading " + fileName,
+                                            "Downloading: " + fileName,
                                             String.Format("{0} Bytes Downloaded of {1}", rs, attribs.Size))
                                             { PercentComplete = percent };
 
@@ -243,11 +245,11 @@ namespace SSH
                                     var localstream = File.Create(fileFullPath);
                                     try
                                     {
-                                        WriteVerbose($"Downloading {remotepath}");
+                                        WriteVerbose($"Downloading: {remotepath}");
                                         sftpSession.Session.DownloadFile(remotepath, localstream, res);
                                         localstream.Close();
                                         var progressRecord = new ProgressRecord(1,
-                                            "Downloading " + remotepath,
+                                            "Downloading: " + remotepath,
                                             String.Format("{0} Bytes Downloaded of {1}",attribs.Size, attribs.Size))
                                         { PercentComplete = 100 };
 

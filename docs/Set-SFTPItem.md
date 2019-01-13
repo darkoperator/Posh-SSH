@@ -1,73 +1,41 @@
 ---
 external help file: PoshSSH.dll-Help.xml
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
-http://www.darkoperator.com/
 schema: 2.0.0
 ---
 
-# Set-SFTPFolder
+# Set-SFTPItem
 
 ## SYNOPSIS
-Uploads a folder to a given location using SFTP.
+Upload a scefied item to a remote server though a SFTP Session.
 
 ## SYNTAX
 
 ### Index (Default)
 ```
-Set-SFTPFolder [-SessionId] <Int32[]> [-RemotePath] <String> [-LocalFolder] <String[]> [-Overwrite]
+Set-SFTPItem [-SessionId] <Int32[]> [-Destination] <String> [-Path] <String[]> [-Force]
 ```
 
 ### Session
 ```
-Set-SFTPFolder [-SFTPSession] <SftpSession[]> [-RemotePath] <String> [-LocalFolder] <String[]> [-Overwrite]
+Set-SFTPItem [-SFTPSession] <SftpSession[]> [-Destination] <String> [-Path] <String[]> [-Force]
 ```
 
 ## DESCRIPTION
-Uploads a folder to a given location using SFTP.
+Upload a scefied item to a remote server though a SFTP Session.
+The item can be either a file or a folder.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFile ./Development/site_src -Overwrite
+PS C:\> Set-SFTPItem -SessionId 0 -Destination /tmp -Path ./Development/dns_test.py -Force
 ```
-
-Upload local folder to tmp directory with a new name. 
 
 ## PARAMETERS
 
-### -LocalFolder
-Local path to folder to be uploaded.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases: PSPath
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Overwrite
-Overrite folder on target if it already exists.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RemotePath
-Remote path where to upload the item to, including name.
+### -Destination
+Remote path where to upload the item to.
 
 ```yaml
 Type: String
@@ -76,6 +44,36 @@ Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Force
+Overrite item on remote host if it already pressent.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 3
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+Local path to item to upload
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases: PSPath
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -114,10 +112,7 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Int32[]
-SSH.SftpSession[]
-System.String
-System.String[]
-
+SSH.SftpSession\[\] System.String System.String\[\]
 
 ## OUTPUTS
 

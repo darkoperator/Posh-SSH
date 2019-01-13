@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -45,7 +45,7 @@ PS C:\\\> New-SSHLocalPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 
 
  StatusCode        : 200
  StatusDescription : OK
- Content           : 
+ Content           :
                      \<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"\>
                      \<html\>
@@ -56,15 +56,15 @@ PS C:\\\> New-SSHLocalPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 
                      Cache-Control: max-age=180000,no-store, no-cache, must-revalidate, post-check=0, pre-check=0
                      Set-Cookie: PHPSESS...
  Forms             : {iform}
- Headers           : {\[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT\], \[Cache-Control, max-age=180000,no-store, no-cache, 
+ Headers           : {\[Expires, Tue, 16 Apr 2013 03:43:18 GMT,Thu, 19 Nov 1981 08:52:00 GMT\], \[Cache-Control, max-age=180000,no-store, no-cache,
                      must-revalidate, post-check=0, pre-check=0\], \[Set-Cookie, PHPSESSID=d53d3dc62ffac241112bcfd16af36bb8; path=/\], \[Pragma, no-cache\]...}
  Images            : {}
- InputFields       : {@{innerHTML=; innerText=; outerHTML=\<INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user" 
-                     name=usernamefld\>; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld 
-                     user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=\<INPUT onchange=clearError(); onclick=clearError(); tabIndex=2 
-                     id=passwordfld class="formfld pwd" type=password value="" name=passwordfld\>; outerText=; tagName=INPUT; onchange=clearError();; 
-                     onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=; 
-                     innerText=; outerHTML=\<INPUT tabIndex=3 class=formbtn type=submit value=Login name=login\>; outerText=; tagName=INPUT; tabIndex=3; 
+ InputFields       : {@{innerHTML=; innerText=; outerHTML=\<INPUT onchange=clearError(); onclick=clearError(); tabIndex=1 id=usernamefld class="formfld user"
+                     name=usernamefld\>; outerText=; tagName=INPUT; onchange=clearError();; onclick=clearError();; tabIndex=1; id=usernamefld; class=formfld
+                     user; name=usernamefld}, @{innerHTML=; innerText=; outerHTML=\<INPUT onchange=clearError(); onclick=clearError(); tabIndex=2
+                     id=passwordfld class="formfld pwd" type=password value="" name=passwordfld\>; outerText=; tagName=INPUT; onchange=clearError();;
+                     onclick=clearError();; tabIndex=2; id=passwordfld; class=formfld pwd; type=password; value=; name=passwordfld}, @{innerHTML=;
+                     innerText=; outerHTML=\<INPUT tabIndex=3 class=formbtn type=submit value=Login name=login\>; outerText=; tagName=INPUT; tabIndex=3;
                      class=formbtn; type=submit; value=Login; name=login}}
  Links             : {}
  ParsedHtml        : mshtml.HTMLDocumentClass

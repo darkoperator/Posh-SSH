@@ -4,39 +4,39 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SCPFolder
+# Set-SCPItem
 
 ## SYNOPSIS
-Download a folder from a SSH Server using SCP.
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ### NoKey (Default)
 ```
-Get-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] -LocalFolder <String>
- -RemoteFolder <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-NoProgress]
+Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-Path] <String>
+ [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
+ [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
 ```
 
 ### Key
 ```
-Get-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- -LocalFolder <String> -RemoteFolder <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+ [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
+ [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
 ```
 
 ### KeyString
 ```
-Get-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- -LocalFolder <String> -RemoteFolder <String> [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-NoProgress]
+ [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
+ [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
 ```
 
 ## DESCRIPTION
-Download a specified folder from a SSH Server using SCP.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
@@ -49,8 +49,23 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -AcceptKey
+Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -ComputerName
-FQDN or IP Address of host to establish a SCP Session.
+FQDN or IP Address of host to establish a SSH connection.
 
 ```yaml
 Type: String[]
@@ -59,6 +74,21 @@ Aliases: HostName, Computer, IPAddress, Host
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ConnectionTimeout
+Connection timeout interval.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -80,11 +110,26 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Port
-SSH TCP Port number to use for the SCP connection.
+### -Destination
+Path on the remote system where to copy the Item.
 
 ```yaml
-Type: Int32
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ErrorOnUntrusted
+Raise an exception if the fingerprint is not trusted for the host.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -95,8 +140,53 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ProxyServer
-Proxy server name or IP Address to use for connection.
+### -Force
+Do not check the remote host fingerprint.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KeyFile
+OpenSSH format SSH private key file.
+
+```yaml
+Type: String
+Parameter Sets: Key
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KeyString
+String array of the content of a OpenSSH key file.
+
+```yaml
+Type: String[]
+Parameter Sets: KeyString
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -NewName
+New name for the item on the destination path.
 
 ```yaml
 Type: String
@@ -110,8 +200,53 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ProxyPort
-Port to connect to on proxy server to route connection.
+### -NoProgress
+Do not show upload progress.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OperationTimeout
+Timeout for execution of an operation.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Path
+Path of the item to upload.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: FullName
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Port
+SSH TCP Port number to use for the SSH connection.
 
 ```yaml
 Type: Int32
@@ -140,6 +275,36 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -ProxyPort
+Port to connect to on proxy server to route connection.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProxyServer
+Proxy server name or IP Address to use for connection.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -ProxyType
 Type of Proxy being used (HTTP, Socks4 or Socks5).
 
@@ -147,156 +312,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 Type: String
 Parameter Sets: (All)
 Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -LocalFolder
-Full path and folder name to where to download the folder on the local system.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -RemoteFolder
-Full path to folder on server that you wish to download
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -OperationTimeout
-Operation timeout interval in seconds.
-
-```yaml
-Type: Int32
-Parameter Sets: NoKey, Key
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ConnectionTimeout
-Connection attemp timeout in seconds.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -AcceptKey
-Automatically accepts a new SSH fingerprint for a host
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Force
-Do not perform any host key validation of the host.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ErrorOnUntrusted
-Throw a terminating error if the host key is not a trusted one.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -NoProgress
-Dont show a progress bar during download of the file.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -KeyFile
-OpenSSH format SSH private key file.
-
-```yaml
-Type: String
-Parameter Sets: Key
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -KeyString
-OpenSSH key in a string array to be used for authentication.
-
-```yaml
-Type: String[]
-Parameter Sets: KeyString
-Aliases: 
+Accepted values: HTTP, Socks4, Socks5
 
 Required: False
 Position: Named
@@ -308,16 +324,16 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String[]
+System.Management.Automation.PSCredential
+System.Int32
+System.String
+System.Boolean
+System.Management.Automation.SwitchParameter
 
-### System.Management.Automation.PSCredential
-
-### System.Int32
-
-### System.String
-
-### System.Boolean
 
 ## OUTPUTS
+
+### System.Object
 
 ## NOTES
 

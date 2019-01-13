@@ -450,7 +450,6 @@ function Move-SFTPItem
                 $itemInfo = $session.Session.Get($path)
                 Write-Verbose("Moving $($path) to $($Destination).")
                 $itemInfo.MoveTo($Destination)
-                Write-Verbose("Item moved succesfuly.")
             }
             else
             {

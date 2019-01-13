@@ -734,8 +734,12 @@ function Invoke-SSHStreamExpectAction
         Write-Verbose -Message "Waiting for match."
         switch ($PSCmdlet.ParameterSetName)
         {
-            'string' {$found = $ShellStream.Expect($ExpectString, (New-TimeSpan -Seconds $TimeOut))}
-            'Regex'  {$found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))}
+            'string' {
+                Write-Verbose "Matching on string $($ExpectString)"
+                $found = $ShellStream.Expect($ExpectString, (New-TimeSpan -Seconds $TimeOut))}
+            'Regex'  {
+                Write-Verbose "Matching on pattern $($ExpectRegex)"
+                $found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))}
         }
 
         if ($found -ne $null)

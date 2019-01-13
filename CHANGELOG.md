@@ -7,6 +7,7 @@
 * New cmdlet Set-SFTPItem, in the next release it will replace Set-SFTPFile and Set-SFTPFolder cmdlets.
 * New cmdlet Get-SFTPItem, in the next release it will replace Get-SFTPFile and Get-SFTPFolder cmdlets.
 * Fix NullReferenceException when using proxy credentials.
+* Added function Move-SFTPItem, this is will replace Rename-SFTPFile and will also add the functionality to move any item in a SFTP session.
 
 ## Version 2.0.2
 

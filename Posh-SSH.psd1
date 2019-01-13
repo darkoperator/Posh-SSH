@@ -67,10 +67,55 @@ FormatsToProcess = @('Format\SSHSession.Format.ps1xml','Format\SFTPSession.Forma
 NestedModules = @('PoshSSH.dll','Posh-SSH.psm1')
 
 # Functions to export from this module
-FunctionsToExport = '*'
+FunctionsToExport = 'Get-PoshSSHModVersion',
+                    'Get-SFTPChildItem',
+                    'Get-SFTPContent',
+                    'Get-SFTPLocation',
+                    'Get-SFTPPathAttribute',
+                    'Get-SFTPSession',
+                    'Get-SSHPortForward',
+                    'Get-SSHSession',
+                    'Get-SSHTrustedHost',
+                    'Invoke-SSHCommand',
+                    'Invoke-SSHCommandStream',
+                    'Invoke-SSHStreamExpectAction',
+                    'Invoke-SSHStreamExpectSecureAction',
+                    'Invoke-SSHStreamShellCommand',
+                    'Move-SFTPItem',
+                    'New-SFTPFileStream',
+                    'New-SFTPItem',
+                    'New-SFTPSymlink',
+                    'New-SSHDynamicPortForward',
+                    'New-SSHLocalPortForward',
+                    'New-SSHRemotePortForward',
+                    'New-SSHShellStream',
+                    'New-SSHTrustedHost',
+                    'Remove-SFTPItem',
+                    'Remove-SFTPSession',
+                    'Remove-SSHSession',
+                    'Remove-SSHTrustedHost',
+                    'Rename-SFTPFile',
+                    'Set-SFTPContent',
+                    'Set-SFTPLocation',
+                    'Set-SFTPPathAttribute',
+                    'Start-SSHPortForward',
+                    'Stop-SSHPortForward',
+                    'Test-SFTPPath'
 
 # Cmdlets to export from this module
-CmdletsToExport = '*'
+CmdletsToExport = 'Get-SCPFile',
+                  'Get-SCPFolder',
+                  'Get-SCPItem',
+                  'Get-SFTPFile',
+                  'Get-SFTPItem',
+                  'New-SFTPSession',
+                  'New-SSHSession',
+                  'Set-SCPFile',
+                  'Set-SCPFolder',
+                  'Set-SCPItem',
+                  'Set-SFTPFile',
+                  'Set-SFTPFolder',
+                  'Set-SFTPItem'
 
 # Variables to export from this module
 VariablesToExport = '*'

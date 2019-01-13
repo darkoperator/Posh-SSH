@@ -141,7 +141,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key",
-            HelpMessage = "Connection timeout interval.")]
+            HelpMessage = "Connection timeout interval in seconds.")]
         public int ConnectionTimeout
         {
             get { return _connectiontimeout; }
@@ -152,13 +152,7 @@ namespace SSH
         private int _operationtimeout = 5;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "KeyString")]
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "NoKey")]
+            HelpMessage = "Operation timeout interval in seconds.")]
         public int OperationTimeout
         {
             get { return _operationtimeout; }
@@ -169,7 +163,6 @@ namespace SSH
         private int _keepaliveinterval = 10;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key",
             HelpMessage = "Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server")]
         public int KeepAliveInterval
         {

@@ -58,6 +58,7 @@
     <Compile Include="NewSessionBase.cs" />
     <Compile Include="SetScpItem.cs" />
     <Compile Include="SetSftpFile.cs" />
+    <Compile Include="SetSftpFolder.cs" />
     <Compile Include="SetSftpItem.cs" />
     <Compile Include="SshModHelper.cs" />
     <Compile Include="NewSftpSession.cs" />

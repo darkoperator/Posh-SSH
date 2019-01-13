@@ -1,6 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -29,13 +29,40 @@ Create a file or directory on remote host using SFTP.
 ### -------------------------- EXAMPLE 1 --------------------------
 ```
 New-SFTPItem -SessionId 0 -Path /tmp/help -ItemType Directory
+
+FullName       : /tmp/help
+ LastAccessTime : 3/17/2015 7:58:11 PM
+ LastWriteTime  : 3/17/2015 7:58:11 PM
+ Length         : 6
+ UserId         : 1000
+
+
+ PS C:\> Get-SFTPPathAttribute 0 -Path /tmp/help
+
+
+ LastAccessTime    : 3/17/2015 7:58:11 PM
+ LastWriteTime     : 3/17/2015 7:58:11 PM
+ Size              : 6
+ UserId            : 1000
+ GroupId           : 1000
+ IsSocket          : False
+ IsSymbolicLink    : False
+ IsRegularFile     : False
+ IsBlockDevice     : False
+ IsDirectory       : True
+ IsCharacterDevice : False
+ IsNamedPipe       : False
+ OwnerCanRead      : True
+ OwnerCanWrite     : True
+ OwnerCanExecute   : True
+ GroupCanRead      : True
+ GroupCanWrite     : True
+ GroupCanExecute   : True
+ OthersCanRead     : True
+ OthersCanWrite    : False
+ OthersCanExecute  : True
+ Extensions        :
 ```
-
-FullName       : /tmp/help  LastAccessTime : 3/17/2015 7:58:11 PM  LastWriteTime  : 3/17/2015 7:58:11 PM  Length         : 6  UserId         : 1000
-
-PS C:\\\> Get-SFTPPathAttribute 0 -Path /tmp/help
-
-LastAccessTime    : 3/17/2015 7:58:11 PM  LastWriteTime     : 3/17/2015 7:58:11 PM  Size              : 6  UserId            : 1000  GroupId           : 1000  IsSocket          : False  IsSymbolicLink    : False  IsRegularFile     : False  IsBlockDevice     : False  IsDirectory       : True  IsCharacterDevice : False  IsNamedPipe       : False  OwnerCanRead      : True  OwnerCanWrite     : True  OwnerCanExecute   : True  GroupCanRead      : True  GroupCanWrite     : True  GroupCanExecute   : True  OthersCanRead     : True  OthersCanWrite    : False  OthersCanExecute  : True  Extensions        :
 
 ## PARAMETERS
 

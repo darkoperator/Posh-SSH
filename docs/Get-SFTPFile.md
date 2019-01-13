@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -29,10 +29,10 @@ Download a folder from a SSH server using SFTP against a current session.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Get-SFTPFile -SessionId 0 -RemoteFile "./.bash_history" -LocalPath "./bash_history_prod1"
 ```
 
-{{ Add example description here }}
+Download from the current session path the bash_history file and save it locally.
 
 ## PARAMETERS
 
@@ -81,6 +81,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -NoProgress
+@{Text=}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Overwrite
 If file is already present locally overwrite it.
 
@@ -107,21 +122,6 @@ Aliases:
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -NoProgress
-@{Text=}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

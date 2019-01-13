@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -14,16 +14,23 @@ Creates an SSH Session against a SSH Server
 ### NoKey (Default)
 ```
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-OperationTimeout <Int32>]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
 ```
 
 ### Key
 ```
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String[]>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
  [-ErrorOnUntrusted]
+```
+
+### KeyString
+```
+New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
 ```
 
 ## DESCRIPTION
@@ -148,12 +155,12 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -OperationTimeout
+### -ConnectionTimeout
 @{Text=}
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: Key
 Aliases: 
 
 Required: False
@@ -163,7 +170,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ConnectionTimeout
+### -OperationTimeout
 @{Text=}
 
 ```yaml
@@ -242,7 +249,7 @@ Accept wildcard characters: False
 OpenSSH format SSH private key file.
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: Key
 Aliases: 
 
@@ -251,6 +258,21 @@ Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
+```
+
+### -KeyString
+OpenSSH key in a string array to be used for authentication.
+
+```yaml
+Type: String[]
+Parameter Sets: KeyString
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: True
 ```
 
 ## INPUTS

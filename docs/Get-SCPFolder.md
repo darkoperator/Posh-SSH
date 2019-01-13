@@ -1,6 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
-online version: http://sshnet.codeplex.com/
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
@@ -25,6 +25,14 @@ Get-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <In
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  -LocalFolder <String> -RemoteFolder <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
  [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+```
+
+### KeyString
+```
+Get-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
+ -LocalFolder <String> -RemoteFolder <String> [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-NoProgress]
 ```
 
 ## DESCRIPTION
@@ -178,11 +186,11 @@ Accept wildcard characters: False
 ```
 
 ### -OperationTimeout
-@{Text=}
+Operation timeout interval in seconds.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: NoKey, Key
 Aliases: 
 
 Required: False
@@ -193,7 +201,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConnectionTimeout
-@{Text=}
+Connection attemp timeout in seconds.
 
 ```yaml
 Type: Int32
@@ -273,6 +281,21 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KeyString
+OpenSSH key in a string array to be used for authentication.
+
+```yaml
+Type: String[]
+Parameter Sets: KeyString
 Aliases: 
 
 Required: False

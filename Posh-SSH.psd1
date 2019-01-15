@@ -52,7 +52,7 @@ Description = 'Provide SSH and SCP functionality for executing commands against 
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = @('Assembly\Renci.SshNet.dll', '.\Assembly\Newtonsoft.Json.dll')
+RequiredAssemblies = @('Assembly\Asmodat Standard SSH.NET.dll', '.\Assembly\Newtonsoft.Json.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -64,7 +64,7 @@ RequiredAssemblies = @('Assembly\Renci.SshNet.dll', '.\Assembly\Newtonsoft.Json.
 FormatsToProcess = @('Format\SSHSession.Format.ps1xml','Format\SFTPSession.Format.ps1xml','Format\Renci.SshNet.SshCommand.Format.ps1xml','Format\Renci.SshNet.Sftp.SftpFile.Format.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('PoshSSH.dll','Posh-SSH.psm1')
+NestedModules = @('Posh_SSH.dll','Posh-SSH.psm1')
 
 # Functions to export from this module
 FunctionsToExport = 'Get-PoshSSHModVersion',
@@ -127,7 +127,7 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll')
+FileList = @('Posh-SSH.psm1','Posh_SSH.dll','Assembly\Asmodat Standard SSH.NET.dll', 'Assembly\Newtonsoft.Json.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 # PrivateData = ''

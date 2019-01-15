@@ -217,7 +217,9 @@ namespace SSH
                 _sshHostKeys = keymng.GetKeys();
                 if (_sshHostKeys == null)
                 {
+                    
                     _sshHostKeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+                    Console.WriteLine(_sshHostKeys);
                 }
             }
         }

@@ -239,18 +239,17 @@ namespace SSH
         }
 
         // Variable to hold the host/fingerprint information
-        private Dictionary<string, string> _sshHostKeys;
+        private TrustedHost[] _sshHostKeys;
 
         
 
         protected override void BeginProcessing()
         {
-            // Collect host/fingerprint information from the registry if connection is not forced.
+            // Collect host/fingerprint information from the trusted host file if connection is not forced.
             if (!_force)
             {
                 base.BeginProcessing();
-                var keymng = new TrustedKeyMng();
-                _sshHostKeys = keymng.GetKeys();
+                _sshHostKeys = TrustedKeyMng.GetKeys();
             }
         }
 
@@ -344,7 +343,7 @@ namespace SSH
 
                         if (_sshHostKeys.ContainsKey(computer1))
                         {
-                            if (_sshHostKeys[computer1] == fingerPrint)
+                            if (_sshHostKeys[computer1].Contains(fingerPrint))
                             {
                                 if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 {

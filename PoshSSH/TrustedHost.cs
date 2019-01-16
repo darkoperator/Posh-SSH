@@ -5,6 +5,6 @@ namespace SSH
     class TrustedHost
     {
         public string Host { get; set; }
-        public IList<string> FingerPrints { get; set; }
+        public IList<string> Fingerprint { get; set; }
     }
 }

@@ -43,12 +43,12 @@ namespace SSH
         /// Returns the trusted host and key pairs stored on the system.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> GetKeys()
+        public static Dictionary<string, List<string>> GetKeys()
         {
             var platform = System.Environment.OSVersion.Platform;
-            var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
@@ -62,20 +62,87 @@ namespace SSH
         /// <param name="host"></param>
         /// <param name="fingerprint"></param>
         /// <returns></returns>
-        public bool SetKey(string host, string fingerprint)
+        public static bool SetKey(string host, string fingerprint)
         {
-            var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
             }
-            hostkeys.Add(host, fingerprint);
+
+            if (hostkeys.ContainsKey(host))
+            {
+                hostkeys[host].Add(fingerprint);
+            }
+            else {
+                hostkeys.Add(host, fingerprint);
+            }
+            
 
             string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
             File.WriteAllText(FilePath, jsonkeys);
             return true;
+        }
+
+        /// <summary>
+        /// Remove a host from the stored trusted host on the system.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        public static bool RemoveHost(string host)
+        {
+            var hostkeys = new List<TrustedHost>();
+            var json = File.ReadAllText(FilePath);
+            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            if (currentHostkeys != null)
+            {
+                hostkeys = currentHostkeys;
+            }
+
+            bool result = false;
+            if (hostkeys.ContainsKey(host))
+            {
+                hostkeys.Remove(host);
+                result = true;
+            }
+
+            string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
+            File.WriteAllText(FilePath, jsonkeys);
+            return result;
+        }
+
+        /// <summary>
+        /// Remove a key for a host from the stored trusted host on the system.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="fingerprint"></param>
+        /// <returns></returns>
+        public static bool RemoveHostKey(string host, string fingerprint)
+        {
+            var hostkeys = new TrustedHost;
+            var json = File.ReadAllText(FilePath);
+            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            if (currentHostkeys != null)
+            {
+                hostkeys = currentHostkeys;
+            }
+
+            bool result = false;
+            if (hostkeys.ContainsKey(host))
+            {
+                if (hostkeys[host].Contains(fingerprint))
+                {
+                    hostkeys[host].Remove(fingerprint);
+                    result = true;
+                }
+                
+            }
+
+            string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
+            File.WriteAllText(FilePath, jsonkeys);
+            return result;
         }
     }
 }

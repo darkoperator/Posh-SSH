@@ -2,6 +2,7 @@
 
 ## Version 2.1
 
+* Fixed issue where help was not loading.
 * Fixed typo in Set-SFTPPathAttribute command when setting GroupCanChange.
 * Removed use of the variable $output for command execution due to scope issues.
 * New cmdlet Set-SFTPItem, in the next release it will replace Set-SFTPFile and Set-SFTPFolder cmdlets.

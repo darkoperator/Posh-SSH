@@ -1,7 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
-http://www.darkoperator.com/
 schema: 2.0.0
 ---
 
@@ -32,7 +31,7 @@ Uploads a folder to a given location using SFTP.
 PS C:\> Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFile ./Development/site_src -Overwrite
 ```
 
-Upload local folder to tmp directory with a new name. 
+Upload local folder to tmp directory with a new name.
 
 ## PARAMETERS
 
@@ -61,7 +60,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -114,10 +113,7 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.Int32[]
-SSH.SftpSession[]
-System.String
-System.String[]
-
+SSH.SftpSession\[\] System.String System.String\[\]
 
 ## OUTPUTS
 

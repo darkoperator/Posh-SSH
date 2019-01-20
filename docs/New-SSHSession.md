@@ -14,8 +14,8 @@ Creates an SSH Session against a SSH Server
 ### NoKey (Default)
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-OperationTimeout <Int32>]
- [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
 ```
 
 ### Key
@@ -30,7 +30,8 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted]
 ```
 
 ## DESCRIPTION
@@ -160,7 +161,7 @@ Accept wildcard characters: False
 
 ```yaml
 Type: Int32
-Parameter Sets: Key
+Parameter Sets: (All)
 Aliases: 
 
 Required: False

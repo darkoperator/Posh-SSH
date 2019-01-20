@@ -7,7 +7,7 @@ schema: 2.0.0
 # Set-SCPItem
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Upload an item, either file or directory to a remote system via SCP.
 
 ## SYNTAX
 
@@ -36,16 +36,22 @@ Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Upload an item, either file or directory to a remote system via SCP.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Set-SCPItem -ComputerName 192.168.1.169 -Credential carlos -Path .\testcode -Destination /tmp -Verbose
+VERBOSE: Using SSH Username and Password authentication for connection.
+VERBOSE: Fingerprint for 192.168.1.169: 5a:a3:85:c6:63:83:6b:6c:2a:8f:9b:44:20:70:eb:7c
+VERBOSE: Fingerprint matched trusted fingerprint for host 192.168.1.169
+VERBOSE: Connection successful
+VERBOSE: Uploading: C:\testcode
+VERBOSE: Destination: /tmp/testcode
 ```
 
-{{ Add example description here }}
+Uploade a directory to the target folder.
 
 ## PARAMETERS
 
@@ -135,7 +141,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -150,7 +156,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -210,7 +216,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -324,12 +330,7 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### System.String[]
-System.Management.Automation.PSCredential
-System.Int32
-System.String
-System.Boolean
-System.Management.Automation.SwitchParameter
-
+System.Management.Automation.PSCredential System.Int32 System.String System.Boolean System.Management.Automation.SwitchParameter
 
 ## OUTPUTS
 

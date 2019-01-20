@@ -140,7 +140,6 @@ namespace SSH
         private int _connectiontimeout = 10;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            ParameterSetName = "Key",
             HelpMessage = "Connection timeout interval in seconds.")]
         public int ConnectionTimeout
         {

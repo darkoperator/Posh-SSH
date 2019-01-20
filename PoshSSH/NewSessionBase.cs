@@ -204,7 +204,7 @@ namespace SSH
             set { _errorOnUntrusted = value; }
         }
         // Variable to hold the host/fingerprint information
-        private Dictionary<string, string> _sshHostKeys;
+        private TrustedHost _sshHostKeys;
 
         protected override void BeginProcessing()
         {
@@ -213,12 +213,11 @@ namespace SSH
             {
                 // Collect host/fingerprint information from the registry.
                 base.BeginProcessing();
-                var keymng = new TrustedKeyMng();
-                _sshHostKeys = keymng.GetKeys();
+                _sshHostKeys = TrustedKeyMng.GetKeys();
                 if (_sshHostKeys == null)
                 {
                     
-                    _sshHostKeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+                    _sshHostKeys = new TrustedHost[];
                     Console.WriteLine(_sshHostKeys);
                 }
             }
@@ -317,6 +316,10 @@ namespace SSH
 
                         if (_sshHostKeys.ContainsKey(computer1))
                         {
+                            if (_sshHostKeys[computer1].Contains(fingerPrint))
+                            {
+                                if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                                {
                             e.CanTrust = _sshHostKeys[computer1] == fingerPrint;
                             if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);

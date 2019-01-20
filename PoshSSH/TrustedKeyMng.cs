@@ -121,7 +121,7 @@ namespace SSH
         /// <returns></returns>
         public static bool RemoveHostKey(string host, string fingerprint)
         {
-            var hostkeys = new TrustedHost;
+            var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
             var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
             if (currentHostkeys != null)
@@ -143,6 +143,66 @@ namespace SSH
             string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
             File.WriteAllText(FilePath, jsonkeys);
             return result;
+        }
+
+        /// <summary>
+        /// Checks if host and fingerprint are in the stored Trusted Host file, and returns true.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="fingerprint"></param>
+        /// <returns></returns>
+        public static bool HostTrusted(string host, string fingerprint, bool verbose)
+        {
+            _sshHostKeys = TrustedKeyMng.GetKeys();
+
+            bool trusted = false;
+
+            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+            {
+                Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
+            }
+
+            // Check if trusted host file contains host/fingerprint.
+            if (_sshHostKeys.ContainsKey(computer1))
+            {
+                if (_sshHostKeys[computer1].Contains(fingerPrint))
+                {
+                    if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                    {
+                        Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                    }
+                    trusted = true;
+
+                }
+                else
+                {
+                    
+                    //Host.UI.WriteWarningLine("WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!")
+                }
+            }
+            // Otherwise, prompt user to accept the host/fingerprint.
+            else if ( AcceptKey(host, fingerprint) )
+            {
+                TrustedKeyMng.SetKey(host, fingerPrint);
+                trusted = true;
+            }
+        }
+
+        /// <summary>
+        /// Prompts user to accept a new fingerprint for a host.
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="fingerprint"></param>
+        /// <returns></returns>
+        public static bool AcceptKey(string host, string fingerprint, bool verbose)
+        {
+            var choices = new Collection<ChoiceDescription>
+            {
+                new ChoiceDescription("Y"),
+                new ChoiceDescription("N")
+            };
+
+            choice = Host.UI.PromptForChoice("Server SSH Fingerprint - " + host, "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
         }
     }
 }

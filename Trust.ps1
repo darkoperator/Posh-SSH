@@ -25,16 +25,18 @@ function New-SSHTrustedHost
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    Position=1)]
-        [ValidatePattern({ ($_ -split "-|:").count -eq 16 })]
-        $FingerPrint
+        [ValidateScript({ ($_ -split "-|:").count -eq 16 })]
+        $Fingerprint
     )
 
-    if ($FingerPrint -match "\-")
+    if ($Fingerprint -match "\-")
     {
-       $FingerPrint = $FingerPrint -replace "-", ":"
+       $Fingerprint = $Fingerprint -replace "-", ":"
     }
 
-    [SSH.TrustedKeyMng]::SetKey($SSHHost, $FingerPrint)
+    Write-Verbose "Value to be used: $SSHHost - $fingerprint"
+
+    [SSH.TrustedKeyMng]::SetKey($SSHHost, $Fingerprint)
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
@@ -54,15 +56,15 @@ function Remove-SSHTrustedHostFingerprint
                    ValueFromPipelineByPropertyName=$true,
                    Position=1)]
         [ValidatePattern({ ($_ -split "-|:").count -eq 16 })]
-        $FingerPrint
+        $Fingerprint
     )
 
-    if ($FingerPrint -match "\-")
+    if ($Fingerprint -match "\-")
     {
-       $FingerPrint = $FingerPrint -replace "-", ":"
+       $Fingerprint = $Fingerprint -replace "-", ":"
     }
 
-    [SSH.TrustedKeyMng]::RemoveHostKey($SSHHost, $FingerPrint)
+    [SSH.TrustedKeyMng]::RemoveHostKey($SSHHost, $Fingerprint)
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

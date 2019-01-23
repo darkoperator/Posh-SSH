@@ -2,16 +2,26 @@
 using System;
 using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
+using System.Management.Automation;
+using System.Text;
 
 namespace SSH
 {
     // Class for managing the keys 
     public class TrustedKeyMng
     {
+
+        public enum HostAcceptOptions {
+            None,
+            AutoAccept,
+            ErrorOnUntrusted
+        }
+
         /// <summary>
         /// Returns the proper path to the trusted hosts file for the platform.
         /// </summary>
-        protected string FilePath
+        protected static string FilePath
         {
             get
             {
@@ -21,7 +31,7 @@ namespace SSH
 
                 if (platform == PlatformID.Win32NT)
                 {
-                    path = Environment.GetEnvironmentVariable("HOMEPATH");
+                    path = Environment.GetEnvironmentVariable("USERPROFILE");
                 }
                 else if (platform == PlatformID.Unix || platform == PlatformID.MacOSX)
                 {
@@ -39,16 +49,36 @@ namespace SSH
             }
         }
 
+        public static string GetTrustedHostFile()
+        {
+            return FilePath;
+        }
+
+        public static bool InitializeTrustedHostFile(PSHostUserInterface PSHostUI)
+        {
+            var hostkeys = new List<TrustedHost>(){};
+            hostkeys.Add(new TrustedHost("Server1","a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0:a0"));
+            try {
+                string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
+                File.WriteAllText(FilePath, jsonkeys);
+                return true;
+            } catch (Exception e) {
+                PSHostUI.WriteVerbose(e.ToString());
+                return false;
+            }
+
+        }
+
         /// <summary>
         /// Returns the trusted host and key pairs stored on the system.
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<string, List<string>> GetKeys()
+        public static List<TrustedHost> GetKeys()
         {
-            var platform = System.Environment.OSVersion.Platform;
             var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            List<TrustedHost> currentHostkeys = new List<TrustedHost>();
+            currentHostkeys.AddRange(JsonConvert.DeserializeObject<List<TrustedHost>>(json));
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
@@ -62,28 +92,46 @@ namespace SSH
         /// <param name="host"></param>
         /// <param name="fingerprint"></param>
         /// <returns></returns>
-        public static bool SetKey(string host, string fingerprint)
+        public static bool SetKey(string host, string fingerprint, PSHostUserInterface PSHostUI)
         {
-            var hostkeys = new List<TrustedHost>();
+
+            PSHostUI.WriteVerbose("Using: " + host + " - " + fingerprint);
+
+            bool keySet = false;
+            var hostkeys = new List<TrustedHost>(){};
+            PSHostUI.WriteVerbose("Host Key Count - " + hostkeys.Count);
+
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            PSHostUI.WriteVerbose("File content: " + json.ToString());
+
+            var currentHostkeys = JsonConvert.DeserializeObject<List<TrustedHost>>(json);
+            PSHostUI.WriteVerbose("Trusted Host Key Count - " + currentHostkeys.Count);
+
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
             }
 
-            if (hostkeys.ContainsKey(host))
+            TrustedHost hostMatch;
+            if ( (hostMatch = hostkeys.AsQueryable().SingleOrDefault(x => x.Host == host)) != null )
             {
-                hostkeys[host].Add(fingerprint);
+                if ( !(hostMatch.Fingerprint.Contains(fingerprint)) )
+                {
+                    hostMatch.Fingerprint.Add(fingerprint);
+                    keySet = true;
+                }
+                
             }
-            else {
-                hostkeys.Add(host, fingerprint);
+            else
+            {
+                hostkeys.Add(new TrustedHost(host, fingerprint));
+                keySet = true;
             }
             
 
             string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
             File.WriteAllText(FilePath, jsonkeys);
-            return true;
+            return keySet;
         }
 
         /// <summary>
@@ -93,24 +141,24 @@ namespace SSH
         /// <returns></returns>
         public static bool RemoveHost(string host)
         {
+            bool hostRemoved = false;
             var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            var currentHostkeys = JsonConvert.DeserializeObject<List<TrustedHost>>(json);
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
             }
 
-            bool result = false;
-            if (hostkeys.ContainsKey(host))
+            
+            if ( hostkeys.RemoveAll(x => x.Host == host) > 0 )
             {
-                hostkeys.Remove(host);
-                result = true;
+                hostRemoved = true;
             }
 
             string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
             File.WriteAllText(FilePath, jsonkeys);
-            return result;
+            return hostRemoved;
         }
 
         /// <summary>
@@ -121,28 +169,28 @@ namespace SSH
         /// <returns></returns>
         public static bool RemoveHostKey(string host, string fingerprint)
         {
+            bool keyRemoved = false;
             var hostkeys = new List<TrustedHost>();
             var json = File.ReadAllText(FilePath);
-            var currentHostkeys = JsonConvert.DeserializeObject<TrustedHost>>(json);
+            var currentHostkeys = JsonConvert.DeserializeObject<List<TrustedHost>>(json);
             if (currentHostkeys != null)
             {
                 hostkeys = currentHostkeys;
             }
 
-            bool result = false;
-            if (hostkeys.ContainsKey(host))
+            TrustedHost hostMatch;
+            if ( (hostMatch = hostkeys.AsQueryable().SingleOrDefault(x => x.Host == host)) != null )
             {
-                if (hostkeys[host].Contains(fingerprint))
+                if (hostMatch.Fingerprint.RemoveAll(x => x == fingerprint) > 0 )
                 {
-                    hostkeys[host].Remove(fingerprint);
-                    result = true;
+                    keyRemoved = true;
                 }
                 
             }
 
             string jsonkeys = JsonConvert.SerializeObject(hostkeys, Formatting.Indented);
             File.WriteAllText(FilePath, jsonkeys);
-            return result;
+            return keyRemoved;
         }
 
         /// <summary>
@@ -151,41 +199,54 @@ namespace SSH
         /// <param name="host"></param>
         /// <param name="fingerprint"></param>
         /// <returns></returns>
-        public static bool HostTrusted(string host, string fingerprint, bool verbose)
-        {
-            _sshHostKeys = TrustedKeyMng.GetKeys();
-
+        /// <exception cref="KeyNotFoundException">Thrown when host is known but key is not. Possible MITM attack!</exception>
+        /// <exception cref="OperationCanceledException">Thrown when -ErrorOnUntrusted param is used.</exception>
+        public static bool HostTrusted(string host, string fingerprint, TrustedKeyMng.HostAcceptOptions policy, PSHostUserInterface PSHostUI )
+        {   
             bool trusted = false;
-
-            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
-            {
-                Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
-            }
+            List<TrustedHost> sshHostKeys = TrustedKeyMng.GetKeys();
 
             // Check if trusted host file contains host/fingerprint.
-            if (_sshHostKeys.ContainsKey(computer1))
+            TrustedHost hostMatch;
+            if ( (hostMatch = sshHostKeys.AsQueryable().SingleOrDefault(x => x.Host == host)) != null )
             {
-                if (_sshHostKeys[computer1].Contains(fingerPrint))
+                if (hostMatch.Fingerprint.Contains(fingerprint))
                 {
-                    if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
-                    {
-                        Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
-                    }
                     trusted = true;
-
+                }
+                else if (policy == HostAcceptOptions.AutoAccept)
+                {
+                    SetKey(host, fingerprint, PSHostUI);
                 }
                 else
                 {
                     
-                    //Host.UI.WriteWarningLine("WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!")
+                    string message = "Remote Host identification has changed. Possible MITM attack. If you understand the reason for this, you can add the host key with New-SSHTrustedHost.";
+                    
+                    PSHostUI.WriteWarning(message);
+                    
+                    throw new KeyNotFoundException();
                 }
             }
-            // Otherwise, prompt user to accept the host/fingerprint.
-            else if ( AcceptKey(host, fingerprint) )
+            else if (policy == HostAcceptOptions.ErrorOnUntrusted)
             {
-                TrustedKeyMng.SetKey(host, fingerPrint);
+                StringBuilder message = new StringBuilder("Host not trusted. Use one of the following options:" + Environment.NewLine);
+
+                message.Append("- Use New-SSHTrustedHost" + Environment.NewLine);
+                message.Append("- Remove -ErrorOnUntrusted parameter" + Environment.NewLine);
+
+                PSHostUI.WriteWarning(message.ToString());
+
+                throw new OperationCanceledException(message.ToString());
+            }
+            // Otherwise, prompt user to accept the host/fingerprint.
+            else if ( AcceptKey(host, fingerprint, PSHostUI) )
+            {
+                TrustedKeyMng.SetKey(host, fingerprint, PSHostUI);
                 trusted = true;
             }
+
+            return trusted;
         }
 
         /// <summary>
@@ -194,15 +255,33 @@ namespace SSH
         /// <param name="host"></param>
         /// <param name="fingerprint"></param>
         /// <returns></returns>
-        public static bool AcceptKey(string host, string fingerprint, bool verbose)
+        public static bool AcceptKey(string host, string fingerprint, PSHostUserInterface PSHostUI)
         {
-            var choices = new Collection<ChoiceDescription>
-            {
-                new ChoiceDescription("Y"),
-                new ChoiceDescription("N")
-            };
 
-            choice = Host.UI.PromptForChoice("Server SSH Fingerprint - " + host, "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+            return PSHostUI.PromptYesNo(string.Format("Host \"{0}\" has key ({1}), accept new key?", host, fingerprint));
+        }
+
+        public sealed class PSHostUserInterface
+        {
+            private readonly ICommandRuntime _commandRuntime;
+            public bool _yesToAll = false;
+            public bool _noToAll = false;
+
+            public PSHostUserInterface(ICommandRuntime commandRuntime)
+            {
+                if (commandRuntime == null)
+                {
+                    throw new ArgumentNullException("commandRuntime","Please pass Powershell command runtime and try again.");
+                }
+
+                _commandRuntime = commandRuntime;
+            }
+
+            public bool PromptYesNo(string prompt) => _commandRuntime.ShouldContinue(prompt, "Posh-SSH", ref _yesToAll, ref _noToAll);
+
+            public void WriteWarning(string message) => _commandRuntime.WriteWarning(message);
+
+            public void WriteVerbose(string message) => _commandRuntime.WriteVerbose(message);
         }
     }
 }

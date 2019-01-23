@@ -4,14 +4,37 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
-            "command": "dotnet build .\\PoshSSH\\",
+            "label": "PreBuild",
+            "command": "dotnet build",
+            "type": "shell",
+            "group": "none",
+            "options": {
+                "cwd": "${workspaceFolder}/PoshSSH"
+            },
+            "presentation": {
+                "reveal": "always",
+                "clear": true
+            },
+            "problemMatcher": {
+                "base": "$msCompile",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/PoshSSH"
+                ]
+            }
+        },
+        {
+            "label": "PostBuild",
+            "command": "Copy-Item -Path ${workspaceFolder}/PoshSSH/bin/Debug/netstandard2.0/Posh_SSH.dll -Destination ${workspaceFolder} -Force",
             "type": "shell",
             "group": "build",
+            "dependsOn": "PreBuild",
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": [
+                "$pester"
+            ]
         }
     ]
 }

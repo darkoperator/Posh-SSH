@@ -51,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemotePath
-Remote path where to upload the item to, including its name.
+Remote path of directory to which the item will be uploaded. Should not include the filename nor the trailing slash.
 
 ```yaml
 Type: String

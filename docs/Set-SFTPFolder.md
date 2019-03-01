@@ -28,7 +28,7 @@ Uploads a folder to a given location using SFTP.
 
 ### Example 1
 ```
-PS C:\> Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFile ./Development/site_src -Overwrite
+PS C:\> Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFolder ./Development/site_src -Overwrite
 ```
 
 Upload local folder to tmp directory with a new name.

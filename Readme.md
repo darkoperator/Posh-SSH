@@ -15,6 +15,8 @@ To install the module including all source code you can just run in a PowerShell
 Install-Module -Name Posh-SSH
 ```
 
+[![Install and New Sessions](https://www.youtube.com/watch?v=aZT5L_0aepE&list=PLFAOQ2hOvfsSL0N2kD_CyqHKlIA0byDL3/hqdefault.jpg)](https://www.youtube.com/watch?v=aZT5L_0aepE&list=PLFAOQ2hOvfsSL0N2kD_CyqHKlIA0byDL3)
+
 ## Support
 
 * Provides functionality for automating SSH, SFTP and SCP actions.

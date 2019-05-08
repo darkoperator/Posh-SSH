@@ -196,6 +196,7 @@ namespace SSH
 
                                         }
                                     });
+                                    Directory.CreateDirectory(fileFullPath);
                                     DownloadDirectory(sftpSession.Session, remotepath, fileFullPath, _skipsymlink, res);
                                 }
                                 else

@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Renci.SshNet">
-      <HintPath>..\..\Assembly\Renci.SshNet.dll</HintPath>
+      <HintPath>..\..\..\Release\Assembly\Renci.SshNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

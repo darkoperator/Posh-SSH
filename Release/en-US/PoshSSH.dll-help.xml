@@ -1998,11 +1998,11 @@
 <command:details><command:name>Get-SFTPItem</command:name>
 <command:verb>Get</command:verb>
 <command:noun>SFTPItem</command:noun>
-<maml:description><maml:para>Downloads via SCP an item from a SSH server.
+<maml:description><maml:para>Downloads via SFTP an item from a SSH server.
 </maml:para>
 </maml:description>
 </command:details>
-<maml:description><maml:para>Downloads via SCP an item from a SSH server. One must specify if the item is a file or a direcotry.
+<maml:description><maml:para>Downloads via SFTP an item from a SSH server. An Item can be a directory or a file.
 </maml:para>
 </maml:description>
 <command:syntax><command:syntaxItem><maml:name>Get-SFTPItem</maml:name>
@@ -2034,7 +2034,7 @@
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>Force</maml:name>
-<maml:Description><maml:para>Overrite item on remote host if it already pressent.
+<maml:Description><maml:para>Overrite item on the local host if it already pressent.
 </maml:para>
 </maml:Description>
 <dev:type><maml:name>SwitchParameter</maml:name>
@@ -2087,7 +2087,7 @@
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>Force</maml:name>
-<maml:Description><maml:para>Overrite item on remote host if it already pressent.
+<maml:Description><maml:para>Overrite item on the local host if it already pressent.
 </maml:para>
 </maml:Description>
 <dev:type><maml:name>SwitchParameter</maml:name>
@@ -2122,7 +2122,7 @@
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>Force</maml:name>
-<maml:Description><maml:para>Overrite item on remote host if it already pressent.
+<maml:Description><maml:para>Overrite item on the local host if it already pressent.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
@@ -2195,14 +2195,8 @@
 </maml:alert>
 </maml:alertSet>
 <command:examples><command:example><maml:title>Example 1</maml:title>
-<dev:code>PS C:\&gt; Get-SCPItem -ComputerName 192.168.1.169 -Credential carlos -Path "/tmp/tmp_salesreport.pdf" -Destination ./ -Verbose -PathType file -NewName sales_report.pdf</dev:code>
-<dev:remarks><maml:para>Downloads via SCP a file and saves the file under a new name.
-</maml:para>
-</dev:remarks>
-</command:example>
-<command:example><maml:title>Example 2</maml:title>
-<dev:code>PS C:\&gt; Get-SCPItem -ComputerName 192.168.1.169 -Credential carlos -Path "/tmp/logs1" -Destination ./logs_app -Verbose -PathType Directory</dev:code>
-<dev:remarks><maml:para>Downloads via SCP a directory and saves the directory under a new name.
+<dev:code>PS C:\&gt;Get-SFTPItem -SessionId 0 -Path .ssh -Destination ./ -Verbose</dev:code>
+<dev:remarks><maml:para>Downloads the .ssh folder from the server to the current directory.
 </maml:para>
 </dev:remarks>
 </command:example>
@@ -4505,7 +4499,7 @@ VERBOSE: Destination: /tmp/testcode</dev:code>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none"><maml:name>RemotePath</maml:name>
-<maml:Description><maml:para>Remote path where to upload the item to, including its name.
+<maml:Description><maml:para>Remote path of directory to which the item will be uploaded. Should not include the filename nor the trailing slash.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -4542,7 +4536,7 @@ VERBOSE: Destination: /tmp/testcode</dev:code>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none"><maml:name>RemotePath</maml:name>
-<maml:Description><maml:para>Remote path where to upload the item to, including its name.
+<maml:Description><maml:para>Remote path of directory to which the item will be uploaded. Should not include the filename nor the trailing slash.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -4570,7 +4564,7 @@ VERBOSE: Destination: /tmp/testcode</dev:code>
 <dev:defaultValue>None</dev:defaultValue>
 </command:parameter>
 <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none"><maml:name>RemotePath</maml:name>
-<maml:Description><maml:para>Remote path where to upload the item to, including its name.
+<maml:Description><maml:para>Remote path of directory to which the item will be uploaded. Should not include the filename nor the trailing slash.
 </maml:para>
 </maml:Description>
 <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -4793,7 +4787,7 @@ VERBOSE: Destination: /tmp/testcode</dev:code>
 </maml:alert>
 </maml:alertSet>
 <command:examples><command:example><maml:title>Example 1</maml:title>
-<dev:code>PS C:\&gt; Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFile ./Development/site_src -Overwrite</dev:code>
+<dev:code>PS C:\&gt; Set-SFTPFolder -SessionId 0 -RemotePath "/tmp/site_test" -LocalFolder ./Development/site_src -Overwrite</dev:code>
 <dev:remarks><maml:para>Upload local folder to tmp directory with a new name.
 </maml:para>
 </dev:remarks>

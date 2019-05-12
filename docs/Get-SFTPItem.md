@@ -7,7 +7,7 @@ schema: 2.0.0
 # Get-SFTPItem
 
 ## SYNOPSIS
-Downloads via SCP an item from a SSH server.
+Downloads via SFTP an item from a SSH server.
 
 ## SYNTAX
 
@@ -24,24 +24,17 @@ Get-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String[]> [-Destination] <S
 ```
 
 ## DESCRIPTION
-Downloads via SCP an item from a SSH server.
-One must specify if the item is a file or a direcotry.
+Downloads via SFTP an item from a SSH server. An Item can be a directory or a file.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> Get-SCPItem -ComputerName 192.168.1.169 -Credential carlos -Path "/tmp/tmp_salesreport.pdf" -Destination ./ -Verbose -PathType file -NewName sales_report.pdf
+PS C:\>Get-SFTPItem -SessionId 0 -Path .ssh -Destination ./ -Verbose
 ```
 
-Downloads via SCP a file and saves the file under a new name.
+Downloads the .ssh folder from the server to the current directory.
 
-### Example 2
-```
-PS C:\> Get-SCPItem -ComputerName 192.168.1.169 -Credential carlos -Path "/tmp/logs1" -Destination ./logs_app -Verbose -PathType Directory
-```
-
-Downloads via SCP a directory and saves the directory under a new name.
 
 ## PARAMETERS
 
@@ -61,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Overrite item on remote host if it already pressent.
+Overrite item on the local host if it already pressent.
 
 ```yaml
 Type: SwitchParameter

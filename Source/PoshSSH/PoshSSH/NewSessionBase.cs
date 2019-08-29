@@ -174,7 +174,7 @@ namespace SSH
         private bool _acceptkey;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-             HelpMessage = "Auto add host key fingerprint to the list of trusted host/gingerprint pairs.")]
+             HelpMessage = "Auto add host key fingerprint to the list of trusted host/fingerprint pairs.")]
         public SwitchParameter AcceptKey
         {
             get { return _acceptkey; }

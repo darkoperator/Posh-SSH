@@ -28,7 +28,7 @@ Copy a local file to a remote host using an existing SFTP Session.
 
 ### Example 1
 ```
-PS C:\> Set-SFTPFile -SessionId 0 -RemotePath "/tmp/dns_validator.py" -LocalFile ./Development/dns_validator.py -Overwrite
+PS C:\> Set-SFTPFile -SessionId 0 -RemotePath "/tmp" -LocalFile ./Development/dns_validator.py -Overwrite
 ```
 
 Upload script to target system and overrite it if already present.

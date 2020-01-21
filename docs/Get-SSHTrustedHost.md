@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -12,7 +13,7 @@ List Host and Fingerprint pairs that Posh-SSH trusts.
 ## SYNTAX
 
 ```
-Get-SSHTrustedHost
+Get-SSHTrustedHost [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -20,7 +21,7 @@ List Host and Fingerprint pairs that Posh-SSH trusts.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-SSHTrustedHost
 SSHHost                                                     Fingerprint
@@ -36,13 +37,14 @@ SSHHost                                                     Fingerprint
 
 ## PARAMETERS
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
 
 ### System.Int32
-
 ## NOTES
 
 ## RELATED LINKS
-

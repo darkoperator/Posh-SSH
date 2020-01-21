@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,17 +15,18 @@ Downloads via SFTP an item from a SSH server.
 ### Index (Default)
 ```
 Get-SFTPItem [-SessionId] <Int32[]> [-Path] <String[]> [-Destination] <String> [-NoProgress] [-Force]
- [-SkipSymLink]
+ [-SkipSymLink] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Get-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String[]> [-Destination] <String> [-NoProgress] [-Force]
- [-SkipSymLink]
+ [-SkipSymLink] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Downloads via SFTP an item from a SSH server. An Item can be a directory or a file.
+Downloads via SFTP an item from a SSH server.
+An Item can be a directory or a file.
 
 ## EXAMPLES
 
@@ -34,7 +36,6 @@ PS C:\>Get-SFTPItem -SessionId 0 -Path .ssh -Destination ./ -Verbose
 ```
 
 Downloads the .ssh folder from the server to the current directory.
-
 
 ## PARAMETERS
 
@@ -59,7 +60,7 @@ Overrite item on the local host if it already pressent.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -74,7 +75,7 @@ Do not show upload progress.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -89,7 +90,7 @@ Remote path of item to download.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -104,7 +105,7 @@ Existing SFTPSession object.
 ```yaml
 Type: SftpSession[]
 Parameter Sets: Session
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -119,7 +120,7 @@ Session Id of an existing SFTPSession.
 ```yaml
 Type: Int32[]
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -134,7 +135,7 @@ Do not follow symboliclinks if present in a directory.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -142,6 +143,9 @@ Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -151,8 +155,6 @@ SSH.SftpSession\[\] System.String\[\] System.String System.Management.Automation
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-

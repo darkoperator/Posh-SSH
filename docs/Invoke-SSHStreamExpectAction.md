@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,13 +15,13 @@ Executes an action on a SSH ShellStream when output matches a desired string.
 ### String (Default)
 ```
 Invoke-SSHStreamExpectAction [-ShellStream] <ShellStream> [-Command] <String> [-ExpectString] <String>
- [-Action] <String> [[-TimeOut] <Int32>]
+ [-Action] <String> [[-TimeOut] <Int32>] [<CommonParameters>]
 ```
 
 ### Regex
 ```
 Invoke-SSHStreamExpectAction [-ShellStream] <ShellStream> [-Command] <String> [-ExpectRegex] <Regex>
- [-Action] <String> [[-TimeOut] <Int32>]
+ [-Action] <String> [[-TimeOut] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,7 +45,7 @@ SSH Shell Stream.
 ```yaml
 Type: ShellStream
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -59,7 +60,7 @@ Initial command that will generate the output to be evaluated by the expect patt
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -74,7 +75,7 @@ String on what to trigger the action on.
 ```yaml
 Type: String
 Parameter Sets: String
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -89,7 +90,7 @@ Command to execute once an expression is matched.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -104,7 +105,7 @@ Number of seconds to wait for a match.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -119,7 +120,7 @@ Regular expression on what to trigger the action on.
 ```yaml
 Type: Regex
 Parameter Sets: Regex
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -128,21 +129,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### Renci.SshNet.ShellStream
-
 ### System.String
-
 ### System.Int32
-
 ### System.Text.RegularExpressions.Regex
-
 ## OUTPUTS
 
 ### System.Boolean
-
 ## NOTES
 
 ## RELATED LINKS
-

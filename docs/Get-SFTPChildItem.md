@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Gets the items and child items in a specified path.
 
 ### Index (Default)
 ```
-Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recursive]
+Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recursive]
+Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Gets the items and child items in a specified path.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-SFTPChildItem -SessionId 0
 
@@ -103,7 +104,7 @@ Path of directory whose content will be enumerated.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -118,7 +119,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -142,15 +143,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

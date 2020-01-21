@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Get current SSH Session that are available for interaction.
 
 ### Index (Default)
 ```
-Get-SSHSession [[-SessionId] <Int32[]>]
+Get-SSHSession [[-SessionId] <Int32[]>] [<CommonParameters>]
 ```
 
 ### ComputerName
 ```
-Get-SSHSession [[-ComputerName] <String[]>] [-ExactMatch]
+Get-SSHSession [[-ComputerName] <String[]>] [-ExactMatch] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Get current SSH Session that are available for interaction.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-SSHSession
 
@@ -73,7 +74,7 @@ Only exact match when searching by ComputerName.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: ComputerName
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -81,6 +82,9 @@ Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -90,4 +94,3 @@ Accept wildcard characters: False
 AUTHOR: Carlos Perez carlos_perez@darkoprator.com
 
 ## RELATED LINKS
-

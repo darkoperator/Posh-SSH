@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,13 @@ Create a file or directory on remote host using SFTP.
 
 ### Index (Default)
 ```
-New-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [[-ItemType] <String>] [-Recurse]
+New-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [[-ItemType] <String>] [-Recurse] [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [[-ItemType] <String>] [-Recurse]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +28,7 @@ Create a file or directory on remote host using SFTP.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-SFTPItem -SessionId 0 -Path /tmp/help -ItemType Directory
 
@@ -87,7 +89,7 @@ Path on remote host to create the item.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -105,7 +107,7 @@ Options are: * File
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -120,7 +122,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -144,15 +146,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

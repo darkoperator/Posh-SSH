@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -16,7 +17,7 @@ Download a File from a SSH Server using SCP
 Get-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-LocalFile <String>]
  [-RemoteFile <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-NoProgress]
+ [-ErrorOnUntrusted] [-NoProgress] [<CommonParameters>]
 ```
 
 ### Key
@@ -24,7 +25,7 @@ Get-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 Get-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-LocalFile <String>] [-RemoteFile <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-NoProgress] [<CommonParameters>]
 ```
 
 ### KeyString
@@ -32,7 +33,7 @@ Get-SCPFile [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 Get-SCPFile [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>] [-ProxyPort <Int32>]
  [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>] [-LocalFile <String>]
  [-RemoteFile <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-NoProgress]
+ [-ErrorOnUntrusted] [-NoProgress] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,7 +72,7 @@ If a key file is used the password field is used for the Key pass phrase.
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -86,7 +87,7 @@ SSH TCP Port number to use for the SCP connection
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -101,7 +102,7 @@ Proxy server name or IP Address to use for connection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +117,7 @@ Port to connect to on proxy server to route connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +132,7 @@ PowerShell Credential Object with the credentials for use to connect to proxy se
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -146,7 +147,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -161,7 +162,7 @@ Full path and file name to where to download the file on the local system.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -176,7 +177,7 @@ Full path to file on server that you wish to download.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -191,7 +192,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -206,7 +207,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -221,7 +222,7 @@ Automatically accepts a new SSH fingerprint for a host
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -236,7 +237,7 @@ Do not perform any host key validation of the host.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -251,7 +252,7 @@ Throw a terminating error if the host key is not a trusted one.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -266,7 +267,7 @@ Dont show a progress bar during download of the file.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -281,7 +282,7 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -296,7 +297,7 @@ OpenSSH key in a string array to be used for authentication.
 ```yaml
 Type: String[]
 Parameter Sets: KeyString
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -305,21 +306,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.String[]
-
 ### System.Management.Automation.PSCredential
-
 ### System.Int32
-
 ### System.String
-
 ### System.Boolean
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

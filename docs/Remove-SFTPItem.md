@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Deletes the specified item on a SFTP session.
 
 ### Index (Default)
 ```
-Remove-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Force]
+Remove-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Force] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Remove-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Force]
+Remove-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,7 +57,7 @@ Path of item to be removed on remote host.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -71,7 +72,7 @@ Force the deletion of a none empty directory by recursively deleting all files i
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,15 +96,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

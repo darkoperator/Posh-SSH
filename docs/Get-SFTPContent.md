@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,11 +15,13 @@ Gets the content of the item at the specified location over SFTP.
 ### Index (Default)
 ```
 Get-SFTPContent [-SessionId] <Int32[]> [-Path] <String> [[-ContentType] <String>] [-Encoding <String>]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Get-SFTPContent [-SFTPSession] <SftpSession[]> [-Path] <String> [[-ContentType] <String>] [-Encoding <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +29,7 @@ Gets the content of the item at the specified location over SFTP.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-SFTPContent -SessionId 0 -Path  /etc/system-release
 CentOS Linux release 7.0.1406 (Core)
@@ -55,7 +58,7 @@ Path to file to get content from.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -74,7 +77,7 @@ How should the content be retured for the file being read.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -89,7 +92,7 @@ What type of encoding to use when content type is String or MultiLine.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -113,17 +116,16 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

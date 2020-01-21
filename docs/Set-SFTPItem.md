@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,13 @@ Upload a scefied item to a remote server though a SFTP Session.
 
 ### Index (Default)
 ```
-Set-SFTPItem [-SessionId] <Int32[]> [-Destination] <String> [-Path] <String[]> [-Force]
+Set-SFTPItem [-SessionId] <Int32[]> [-Destination] <String> [-Path] <String[]> [-Force] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Set-SFTPItem [-SFTPSession] <SftpSession[]> [-Destination] <String> [-Path] <String[]> [-Force]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,7 +42,7 @@ Remote path where to upload the item to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -55,7 +57,7 @@ Overrite item on remote host if it already pressent.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -85,7 +87,7 @@ Existing SFTPSession object.
 ```yaml
 Type: SftpSession[]
 Parameter Sets: Session
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -100,7 +102,7 @@ Session Id of an existing SFTPSession.
 ```yaml
 Type: Int32[]
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -108,6 +110,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -117,8 +122,6 @@ SSH.SftpSession\[\] System.String System.String\[\]
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Change current location of the SFTP session.
 
 ### Index (Default)
 ```
-Set-SFTPLocation [-SessionId] <Int32[]> [-Path] <String>
+Set-SFTPLocation [-SessionId] <Int32[]> [-Path] <String> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Set-SFTPLocation [-SFTPSession] <SftpSession[]> [-Path] <String>
+Set-SFTPLocation [-SFTPSession] <SftpSession[]> [-Path] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,7 +59,7 @@ Remote path to change current location of the SFTP session.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -82,15 +83,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

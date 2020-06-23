@@ -277,7 +277,7 @@ namespace SSH
                         break;
                 }
 
-                //Ceate instance of SSH Client with connection info
+                //Create instance of SSH Client with connection info
                 BaseClient client;
                 if (Protocol == "SSH")
                     client = new SshClient(connectInfo);

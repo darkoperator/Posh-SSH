@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -16,7 +17,7 @@ Upload an item, either file or directory to a remote system via SCP.
 Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-Path] <String>
  [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+ [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore> [<CommonParameters>]
 ```
 
 ### Key
@@ -24,7 +25,8 @@ Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+ [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
+ [<CommonParameters>]
 ```
 
 ### KeyString
@@ -32,7 +34,8 @@ Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int3
 Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress]
+ [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,7 +64,7 @@ Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -91,7 +94,7 @@ Connection timeout interval.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +110,7 @@ If a key file is used the password field is used for the Key pass phrase.
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -122,7 +125,7 @@ Path on the remote system where to copy the Item.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -137,7 +140,7 @@ Raise an exception if the fingerprint is not trusted for the host.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +155,7 @@ Do not check the remote host fingerprint.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +170,7 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +185,7 @@ String array of the content of a OpenSSH key file.
 ```yaml
 Type: String[]
 Parameter Sets: KeyString
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -197,7 +200,7 @@ New name for the item on the destination path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +215,7 @@ Do not show upload progress.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -227,7 +230,7 @@ Timeout for execution of an operation.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +260,7 @@ SSH TCP Port number to use for the SSH connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +275,7 @@ PowerShell Credential Object with the credentials for use to connect to proxy se
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -287,7 +290,7 @@ Port to connect to on proxy server to route connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -302,7 +305,7 @@ Proxy server name or IP Address to use for connection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -317,7 +320,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: HTTP, Socks4, Socks5
 
 Required: False
@@ -327,6 +330,24 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Store
+{{ Fill Store Description }}
+
+```yaml
+Type: IStore
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.String[]
@@ -335,8 +356,6 @@ System.Management.Automation.PSCredential System.Int32 System.String System.Bool
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoshSSH", "PoshSSH\PoshSSH.csproj", "{53EECC51-0E89-4C1D-BEDF-AB981DAD4967}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoshSSH.Core", "PoshSSH.Core\PoshSSH.Core.csproj", "{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{53EECC51-0E89-4C1D-BEDF-AB981DAD4967}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53EECC51-0E89-4C1D-BEDF-AB981DAD4967}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53EECC51-0E89-4C1D-BEDF-AB981DAD4967}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A607EFEC-3956-4EA7-90A9-28BE94EDAFBF}
 	EndGlobalSection
 EndGlobal

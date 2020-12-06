@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,13 +15,13 @@ Executes a given command on a remote SSH host.
 ### Index (Default)
 ```
 Invoke-SSHCommand [-Command] <String> [-SessionId] <Int32[]> [-EnsureConnection] [[-TimeOut] <Int32>]
- [[-ThrottleLimit] <Int32>]
+ [[-ThrottleLimit] <Int32>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Invoke-SSHCommand [-Command] <String> [-SSHSession] <SshSession[]> [-EnsureConnection] [[-TimeOut] <Int32>]
- [[-ThrottleLimit] <Int32>]
+ [[-ThrottleLimit] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +29,7 @@ Executes a given command on a remote SSH host given credentials to the host or u
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Invoke-SSHCommand -Command "uname -a" -SessionId 0,2,3
 
@@ -57,7 +58,7 @@ Command to execute in remote host.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -87,7 +88,7 @@ Ensures a connection is made by reconnecting before command.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +103,7 @@ Time out in seconds to wait for the command to return a value.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -117,7 +118,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -141,14 +142,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### SSH.SshSession[]
-
 ## OUTPUTS
 
 ## NOTES
 AUTHOR: Carlos Perez carlos_perez@darkoprator.com
 
 ## RELATED LINKS
-

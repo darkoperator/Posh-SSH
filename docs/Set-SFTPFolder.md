@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,11 +15,13 @@ Uploads a folder to a given location using SFTP.
 ### Index (Default)
 ```
 Set-SFTPFolder [-SessionId] <Int32[]> [-RemotePath] <String> [-LocalFolder] <String[]> [-Overwrite]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Set-SFTPFolder [-SFTPSession] <SftpSession[]> [-RemotePath] <String> [-LocalFolder] <String[]> [-Overwrite]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,7 +59,7 @@ Overrite folder on target if it already exists.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -71,7 +74,7 @@ Remote path where to upload the item to, including name.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -86,7 +89,7 @@ Existing SFTPSession object.
 ```yaml
 Type: SftpSession[]
 Parameter Sets: Session
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -101,7 +104,7 @@ Session Id of an existing SFTPSession.
 ```yaml
 Type: Int32[]
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -109,6 +112,9 @@ Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -118,8 +124,6 @@ SSH.SftpSession\[\] System.String System.String\[\]
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-

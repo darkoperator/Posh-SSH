@@ -1,5 +1,6 @@
 ﻿using Renci.SshNet;
 using Renci.SshNet.Common;
+using SSH.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -152,6 +153,13 @@ namespace SSH
         }
         private int _operationtimeout = 5;
 
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = false)]
+        [ValidateNotNullOrEmpty]
+        public IStore Store
+        {
+            get; set;
+        }
+
         // ConnectionTimeout Parameter
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true)]
@@ -205,14 +213,13 @@ namespace SSH
 
 
         // Variable to hold the host/fingerprint information
-        private Dictionary<string, string> _sshHostKeys;
+        private IDictionary<string, string> _sshHostKeys;
 
         protected override void BeginProcessing()
         {
             // Collect host/fingerprint information from the registry.
             base.BeginProcessing();
-            var keymng = new TrustedKeyMng();
-            _sshHostKeys = keymng.GetKeys();
+            _sshHostKeys = Store.GetKeys();
         }
 
         protected override void ProcessRecord()
@@ -338,8 +345,7 @@ namespace SSH
                             }
                             if (choice == 0)
                             {
-                                var keymng = new TrustedKeyMng();
-                                keymng.SetKey(computer1, fingerPrint);
+                                Store.SetKey(computer1, fingerPrint);
                                 e.CanTrust = true;
                             }
                             else

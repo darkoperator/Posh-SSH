@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Win32;
-using System;
 
-namespace SSH
+namespace SSH.Stores
 {
-    // Class for managing the keys 
-    public class TrustedKeyMng
+    public class RegistryStore : Stores.IStore
     {
-        public Dictionary<string, string> GetKeys()
+        public IDictionary<string, string> GetKeys()
         {
             var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var poshSoftKey = Registry.CurrentUser.OpenSubKey(@"Software\PoshSSH", true);

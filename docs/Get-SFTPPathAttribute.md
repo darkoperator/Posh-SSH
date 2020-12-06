@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Get the attributes for a specified path in a SFTP session.
 
 ### Index
 ```
-Get-SFTPPathAttribute [-SessionId] <Int32[]> [-Path] <String>
+Get-SFTPPathAttribute [-SessionId] <Int32[]> [-Path] <String> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPPathAttribute [-SFTPSession] <SftpSession[]> [-Path] <String>
+Get-SFTPPathAttribute [-SFTPSession] <SftpSession[]> [-Path] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Get the attributes for a specified path in a SFTP session.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-SFTPPathAttribute -SessionId 0 -Path "/tmp"
 
@@ -77,7 +78,7 @@ Path to get information on.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -101,19 +102,17 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ### Renci.SshNet.Sftp.SftpFileAttributes
-
 ## NOTES
 
 ## RELATED LINKS
-

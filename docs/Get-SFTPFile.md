@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,12 +15,13 @@ Download a filefrom a SSH Server using SFTP.
 ### Index (Default)
 ```
 Get-SFTPFile [-SessionId] <Int32[]> [-RemoteFile] <String> [-LocalPath] <String> [-NoProgress] [-Overwrite]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Get-SFTPFile [-SFTPSession] <SftpSession[]> [-RemoteFile] <String> [-LocalPath] <String> [-NoProgress]
- [-Overwrite]
+ [-Overwrite] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,7 +44,7 @@ Session Id number of an exiting SFTP Session.
 ```yaml
 Type: Int32[]
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -57,7 +59,7 @@ Full path on of file to download on the remote host.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -87,7 +89,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +104,7 @@ If file is already present locally overwrite it.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -117,7 +119,7 @@ SFTP Session Object of a currently connected session.
 ```yaml
 Type: SftpSession[]
 Parameter Sets: Session
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -126,17 +128,16 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

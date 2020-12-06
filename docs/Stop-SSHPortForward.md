@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Stops a configured port forward configured for a SSH Session
 
 ### Index (Default)
 ```
-Stop-SSHPortForward [-SessionId] <Int32> [-BoundPort] <Int32> [-BoundHost] <String>
+Stop-SSHPortForward [-SessionId] <Int32> [-BoundPort] <Int32> [-BoundHost] <String> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Stop-SSHPortForward [-SSHSession] <SshSession> [-BoundPort] <Int32> [-BoundHost] <String>
+Stop-SSHPortForward [-SSHSession] <SshSession> [-BoundPort] <Int32> [-BoundHost] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Stops a configured port forward configured for  a SSH Session given the session 
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Stop a currently working port forward thru a SSH Session
 ```
@@ -54,7 +55,7 @@ C:\Users\Carlos\> Get-SSHPortForward -Index 0
 ## PARAMETERS
 
 ### -SSHSession
-{{Fill SSHSession Description}}
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -69,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{Fill SessionId Description}}
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -84,12 +85,12 @@ Accept wildcard characters: False
 ```
 
 ### -BoundPort
-{{Fill BoundPort Description}}
+{{ Fill BoundPort Description }}
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -99,12 +100,12 @@ Accept wildcard characters: False
 ```
 
 ### -BoundHost
-{{Fill BoundHost Description}}
+{{ Fill BoundHost Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -113,6 +114,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -120,4 +124,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

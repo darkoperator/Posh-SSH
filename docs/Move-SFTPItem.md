@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Move or rename a specified item in a SFTP session.
 
 ### Index (Default)
 ```
-Move-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Destination] <String>
+Move-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [-Destination] <String> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Move-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Destination] <String>
+Move-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [-Destination] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,7 +87,7 @@ New destination full path.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -95,6 +96,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -102,4 +106,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

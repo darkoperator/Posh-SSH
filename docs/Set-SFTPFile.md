@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,11 +15,13 @@ Copy a local file to a remote host using an existing SFTP Session.
 ### Index (Default)
 ```
 Set-SFTPFile [-SessionId] <Int32[]> [-RemotePath] <String> [-LocalFile] <String[]> [-Overwrite]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Set-SFTPFile [-SFTPSession] <SftpSession[]> [-RemotePath] <String> [-LocalFile] <String[]> [-Overwrite]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +44,7 @@ Session Id of an existing SFTPSession.
 ```yaml
 Type: Int32[]
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -51,12 +54,13 @@ Accept wildcard characters: False
 ```
 
 ### -RemotePath
-Remote path of directory to which the item will be uploaded. Should not include the filename nor the trailing slash.
+Remote path of directory to which the item will be uploaded.
+Should not include the filename nor the trailing slash.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -86,7 +90,7 @@ Overrite item on remote host if it already pressent.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -101,7 +105,7 @@ Existing SFTPSession object.
 ```yaml
 Type: SftpSession[]
 Parameter Sets: Session
-Aliases: 
+Aliases:
 
 Required: True
 Position: 0
@@ -110,17 +114,16 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

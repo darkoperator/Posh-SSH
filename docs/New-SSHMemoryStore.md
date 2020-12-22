@@ -1,34 +1,32 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: PoshSSH.dll-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-PoshSSHModVersion
+# New-SSHMemoryStore
 
 ## SYNOPSIS
-Gets the current installed version and the latest version of Posh-SSH.
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ```
-Get-PoshSSHModVersion [<CommonParameters>]
+New-SSHMemoryStore [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the current installed version and the latest version of Posh-SSH.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
-Get-PoshSSHModVersion
 
-InstalledVersion                                  CurrentVersion
-----------------                                  --------------
-1.7                                               1.6
-```
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -37,9 +35,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### None
+
 ## OUTPUTS
 
-### System.Management.Automation.PSObject
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

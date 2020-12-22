@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,13 +15,13 @@ Redirects traffic from a local port to a remote host and port via a SSH Session.
 ### Index (Default)
 ```
 New-SSHLocalPortForward [-BoundHost] <String> [-BoundPort] <Int32> [-RemoteAddress] <String>
- [-RemotePort] <Int32> [-SessionId] <Int32>
+ [-RemotePort] <Int32> [-SessionId] <Int32> [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SSHLocalPortForward [-BoundHost] <String> [-BoundPort] <Int32> [-RemoteAddress] <String>
- [-RemotePort] <Int32> [-SSHSession] <SshSession>
+ [-RemotePort] <Int32> [-SSHSession] <SshSession> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +29,7 @@ Redirects TCP traffic from a local port to a remote host and port via a SSH Sess
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Forward traffic from 0.0.0.0:8081 to 10.10.10.1:80 thru a SSH Session
 ```
@@ -73,12 +74,12 @@ PS C:\\\> New-SSHLocalPortForward -Index 0 -LocalAdress 0.0.0.0 -LocalPort 8081 
 ## PARAMETERS
 
 ### -BoundHost
-{{Fill BoundHost Description}}
+{{ Fill BoundHost Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -88,12 +89,12 @@ Accept wildcard characters: False
 ```
 
 ### -BoundPort
-{{Fill BoundPort Description}}
+{{ Fill BoundPort Description }}
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -103,12 +104,12 @@ Accept wildcard characters: False
 ```
 
 ### -RemoteAddress
-{{Fill RemoteAddress Description}}
+{{ Fill RemoteAddress Description }}
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 4
@@ -118,12 +119,12 @@ Accept wildcard characters: False
 ```
 
 ### -RemotePort
-{{Fill RemotePort Description}}
+{{ Fill RemotePort Description }}
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 5
@@ -133,7 +134,7 @@ Accept wildcard characters: False
 ```
 
 ### -SSHSession
-{{Fill SSHSession Description}}
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -148,7 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{Fill SessionId Description}}
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -162,6 +163,9 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -169,4 +173,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

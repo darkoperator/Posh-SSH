@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -16,7 +17,7 @@ Copies a folder to a SSH server using SCP.
 Set-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] -LocalFolder <String>
  -RemoteFolder <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>] [-AcceptKey]
- [-ErrorOnUntrusted] [-NoProgress] [-Force]
+ [-ErrorOnUntrusted] [-NoProgress] [-Force] -Store <IStore> [<CommonParameters>]
 ```
 
 ### Key
@@ -24,7 +25,7 @@ Set-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <In
 Set-SCPFolder [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  -LocalFolder <String> -RemoteFolder <String> [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey] [-ErrorOnUntrusted] [-NoProgress] [-Force]
+ [-AcceptKey] [-ErrorOnUntrusted] [-NoProgress] [-Force] -Store <IStore> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,7 +64,7 @@ If a key file is used the password field is used for the Key pass phrase.
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -78,7 +79,7 @@ SSH TCP Port number to use for the SCP connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -93,7 +94,7 @@ Proxy server name or IP Address to use for connection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -108,7 +109,7 @@ Port to connect to on proxy server to route connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -123,7 +124,7 @@ PowerShell Credential Object with the credentials for use to connect to proxy se
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -138,7 +139,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -153,7 +154,7 @@ Full path and folder name of local file to upload using SCP.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -168,7 +169,7 @@ Full path and name of folder to copy as the local folder on the remote system.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -183,7 +184,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -198,7 +199,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -213,7 +214,7 @@ Automatically accepts a new SSH fingerprint for a host.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -228,7 +229,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -243,7 +244,7 @@ Dont show a progress bar during uploading of the file.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -258,7 +259,7 @@ Do not perform any host key validation of the host.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -273,7 +274,7 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -282,21 +283,33 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Store
+{{ Fill Store Description }}
+
+```yaml
+Type: IStore
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.String[]
-
 ### System.Management.Automation.PSCredential
-
 ### System.Int32
-
 ### System.String
-
 ### System.Boolean
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

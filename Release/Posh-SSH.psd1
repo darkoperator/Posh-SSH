@@ -115,7 +115,9 @@ CmdletsToExport = 'Get-SCPFile',
                   'Set-SCPItem',
                   'Set-SFTPFile',
                   'Set-SFTPFolder',
-                  'Set-SFTPItem'
+                  'Set-SFTPItem',
+                  'New-SSHMemoryStore',
+                  'New-SSHRegistryStore'
 
 # Variables to export from this module
 VariablesToExport = '*'

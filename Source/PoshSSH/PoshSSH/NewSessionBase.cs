@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Text;
+using System.IO;
 
 namespace SSH
 {
@@ -206,7 +207,7 @@ namespace SSH
         // Variable to hold the host/fingerprint information
         private IDictionary<string, string> _sshHostKeys;
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = false)]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false)]
         [ValidateNotNullOrEmpty]
         public IStore Store
         {
@@ -218,9 +219,28 @@ namespace SSH
             // no need to validate keys if the force parameter is selected.
             if ( !_force)
             {
-                // Collect host/fingerprint information from the registry.
-                base.BeginProcessing();
-                _sshHostKeys = Store.GetKeys();
+                // check is a IStore was specified.
+                bool storeSpecified = MyInvocation.BoundParameters.ContainsKey("Store");
+
+                if (storeSpecified)
+                {
+                    // Collect host/fingerprint information from the IStore specified.
+                    base.BeginProcessing();
+                    _sshHostKeys = Store.GetKeys();
+                }
+                else
+                {
+                    var homeFolder = GetVariableValue("HOME").ToString();
+                    var pathSeparator = Path.DirectorySeparatorChar.ToString();
+                    var configPath = homeFolder + pathSeparator + ".poshssh" + pathSeparator + "hosts.json";
+                    if (!File.Exists(configPath))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(configPath));
+                    }
+                    Store = new Stores.JsonStore(configPath);
+                    base.BeginProcessing();
+                    _sshHostKeys = Store.GetKeys();
+                }
             }
         }
 

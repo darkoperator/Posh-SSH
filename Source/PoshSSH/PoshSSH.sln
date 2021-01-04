@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoshSSH", "PoshSSH\PoshSSH.csproj", "{53EECC51-0E89-4C1D-BEDF-AB981DAD4967}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1CD51FF4-05B2-4D86-A7AD-336080DEE09F} = {1CD51FF4-05B2-4D86-A7AD-336080DEE09F}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoshSSH.Core", "PoshSSH.Core\PoshSSH.Core.csproj", "{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoshSSH.Core", "PoshSSH.Core\PoshSSH.Core.csproj", "{1CD51FF4-05B2-4D86-A7AD-336080DEE09F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

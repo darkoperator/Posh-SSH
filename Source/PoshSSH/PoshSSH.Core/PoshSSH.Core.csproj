@@ -27,16 +27,16 @@
 
     <Compile Include="..\PoshSSH\Stores\IStore.cs" Link="Stores\IStore.cs" />
     <Compile Include="..\PoshSSH\Stores\MemoryStore.cs" Link="Stores\MemoryStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\RegistryStore.cs" Link="Stores\RegistryStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\JsonStore.cs" Link="Stores\JsonStore.cs" />
 
     <Compile Include="..\PoshSSH\NewMemoryStore.cs" Link="NewMemoryStore.cs" />
-    <Compile Include="..\PoshSSH\NewRegistryStore.cs" Link="NewRegistryStore.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="PowerShellStandard.Library" Version="7.0.0-preview.1" />
-    <PackageReference Include="SSH.NET" Version="2020.0.0-beta1" />
+    <PackageReference Include="SSH.NET" Version="2020.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

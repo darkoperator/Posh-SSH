@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '2.2'
+ModuleVersion = '3.0'
 
 
 # ID used to uniquely identify this module
@@ -25,13 +25,13 @@ Author = 'Carlos Perez'
 CompanyName = 'www.darkoperator.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2019 Carlos Perez. All rights reserved.'
+Copyright = '(c) 2021 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '7.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -52,7 +52,7 @@ DotNetFrameworkVersion = '4.0'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = @('Assembly\Renci.SshNet.dll')
+RequiredAssemblies = @('Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -103,21 +103,14 @@ FunctionsToExport = 'Get-PoshSSHModVersion',
                     'Test-SFTPPath'
 
 # Cmdlets to export from this module
-CmdletsToExport = 'Get-SCPFile',
-                  'Get-SCPFolder',
-                  'Get-SCPItem',
-                  'Get-SFTPFile',
+CmdletsToExport = 'Get-SCPItem',
                   'Get-SFTPItem',
                   'New-SFTPSession',
                   'New-SSHSession',
-                  'Set-SCPFile',
-                  'Set-SCPFolder',
                   'Set-SCPItem',
-                  'Set-SFTPFile',
-                  'Set-SFTPFolder',
                   'Set-SFTPItem',
                   'New-SSHMemoryStore',
-                  'New-SSHRegistryStore'
+                  'New-SSHJsonStore'
 
 # Variables to export from this module
 VariablesToExport = '*'
@@ -129,7 +122,7 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll')
+FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 # PrivateData = ''

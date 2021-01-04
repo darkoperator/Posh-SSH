@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace SSH.Stores
@@ -9,47 +11,49 @@ namespace SSH.Stores
     {
         public Dictionary<string, string> Keys { get; set; } = new Dictionary<string, string>();
     }
-    public class JsonStore : IStore
+    public class JsonStore : MemoryStore
     {
-        public String FileName;
+        private readonly string FileName;
 
-        public JsonStore(String fileName)
+        public JsonStore(string fileName)
         {
             FileName = fileName;
         }
 
-        private ConfigFileStruct _settings = new ConfigFileStruct();
-        public IDictionary<string, string> GetKeys()
-        {
-            LoadFromDisk();
-            return _settings.Keys;
-        }
-
-        public bool SetKey(string host, string fingerprint)
-        {
-            _settings.Keys.Remove(host);
-            _settings.Keys.Add(host, fingerprint);
-            WriteToDisk();
-            return true;
-        }
-
+       
         public void LoadFromDisk()
         {
             if (File.Exists(FileName))
             {
                 var jsonString = File.ReadAllText(FileName);
-                _settings = JsonSerializer.Deserialize<ConfigFileStruct>(jsonString);
+                var keys = JsonSerializer.Deserialize<ConfigFileStruct>(jsonString).Keys;
+                HostKeys = new ConcurrentDictionary<string, string>(keys);
             }
         }
 
         private void WriteToDisk()
         {
             var jsonString = JsonSerializer
-                .Serialize<ConfigFileStruct>(_settings, new JsonSerializerOptions
+                .Serialize<ConfigFileStruct>(
+                new ConfigFileStruct()
+                {
+                    Keys = HostKeys.ToDictionary(x => x.Key,x => x.Value)
+                }, new JsonSerializerOptions
                 {
                     WriteIndented = true
-                });
+                }) ;
             File.WriteAllText(FileName, jsonString);
+        }
+
+        protected override void OnGetKeys()
+        {
+            LoadFromDisk();
+        }
+
+        protected override bool OnKeyUpdated()
+        {
+            WriteToDisk();
+            return true;
         }
     }
 }

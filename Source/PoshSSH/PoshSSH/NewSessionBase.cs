@@ -204,8 +204,6 @@ namespace SSH
             get { return _errorOnUntrusted; }
             set { _errorOnUntrusted = value; }
         }
-        // Variable to hold the host/fingerprint information
-        private IDictionary<string, string> _sshHostKeys;
 
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false)]
         [ValidateNotNullOrEmpty]
@@ -226,7 +224,6 @@ namespace SSH
                 {
                     // Collect host/fingerprint information from the IStore specified.
                     base.BeginProcessing();
-                    _sshHostKeys = Store.GetKeys();
                 }
                 else
                 {
@@ -239,7 +236,6 @@ namespace SSH
                     }
                     Store = new Stores.JsonStore(configPath);
                     base.BeginProcessing();
-                    _sshHostKeys = Store.GetKeys();
                 }
             }
         }
@@ -335,9 +331,9 @@ namespace SSH
                             Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
                         }
 
-                        if (_sshHostKeys.ContainsKey(computer1))
+                        if (Store.GetKey(computer1) != default)
                         {
-                            e.CanTrust = _sshHostKeys[computer1] == fingerPrint;
+                            e.CanTrust = Store.GetKey(computer1) == fingerPrint;
                             if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
                                 Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
                         }

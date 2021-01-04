@@ -15,7 +15,7 @@ namespace SSH
         /// <summary>
         /// Desired Protocol. Should be SSH or SFTP
         /// </summary>
-        internal abstract string Protocol { get; }
+        internal abstract PoshSessionType Protocol { get; }
 
         /// <summary>
         /// Hosts to conect to 
@@ -250,7 +250,7 @@ namespace SSH
 
                 //Ceate instance of SSH Client with connection info
                 BaseClient client;
-                if (Protocol == "SSH")
+                if (Protocol == PoshSessionType.SSH )
                     client = new SshClient(connectInfo);
                 else
                     client = new SftpClient(connectInfo);
@@ -326,7 +326,7 @@ namespace SSH
                     // Connect to host using Connection info
                     client.Connect();
 
-                    if (Protocol == "SSH")
+                    if (Protocol == PoshSessionType.SSH )
                         WriteObject(SshModHelper.AddToSshSessionCollection(client as SshClient, SessionState), true);
                     else
                         WriteObject(SshModHelper.AddToSftpSessionCollection(client as SftpClient, SessionState), true);

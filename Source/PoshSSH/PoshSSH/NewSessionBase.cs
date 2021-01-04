@@ -2,7 +2,6 @@
 using Renci.SshNet.Common;
 using SSH.Stores;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Host;
@@ -18,204 +17,153 @@ namespace SSH
         /// </summary>
         internal abstract string Protocol { get; }
 
-        // Hosts to conect to
+        /// <summary>
+        /// Hosts to conect to 
+        /// </summary>
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 0,
             HelpMessage = "FQDN or IP Address of host to establish a SSH connection.")]
         [Alias("HostName", "Computer", "IPAddress", "Host")]
-        public string[] ComputerName
-        {
-            get { return _computername; }
-            set { _computername = value; }
-        }
-        private string[] _computername;
+        public string[] ComputerName { get; set; }
 
-        // Credentials for Connection
+        /// <summary>
+        /// Credentials for Connection
+        /// </summary>
         [ValidateNotNullOrEmpty]
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 1,
             HelpMessage = "SSH Credentials to use for connecting to a server. If a key file is used the password field is used for the Key pass phrase.")]
         [Credential()]
-        public PSCredential Credential
-        {
-            get { return _credential; }
-            set { _credential = value; }
-        }
-        private PSCredential _credential;
+        public PSCredential Credential { get; set; }        
 
-        // Port for SSH
-        private Int32 _port = 22;
-
+        /// <summary>
+        /// Port for SSH
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "SSH TCP Port number to use for the SSH connection.")]
-        public Int32 Port
-        {
-            get { return _port; }
-            set { _port = value; }
-        }
+        public Int32 Port { get; set; } = 22;
 
 
-        //Proxy Server to use
-        private String _proxyserver = "";
-
+        /// <summary>
+        /// Proxy Server to use
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Proxy server name or IP Address to use for connection.")]
-        public String ProxyServer
-        {
-            get { return _proxyserver; }
-            set { _proxyserver = value; }
-        }
+        public String ProxyServer { get; set; } = "";
 
-
-        // Proxy Port
-        private Int32 _proxyport = 8080;
-
+        /// <summary>
+        /// Proxy Port 
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Port to connect to on proxy server to route connection.")]
-        public Int32 ProxyPort
-        {
-            get { return _proxyport; }
-            set { _proxyport = value; }
-        }
+        public Int32 ProxyPort { get; set; } = 8080;
 
 
-        // Proxy Credentials
-        private PSCredential _proxycredential;
-
+        /// <summary>
+        /// Proxy Credentials
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "PowerShell Credential Object with the credentials for use to connect to proxy server if required.")]
         [ValidateNotNullOrEmpty]
         [System.Management.Automation.CredentialAttribute()]
-        public PSCredential ProxyCredential
-        {
-            get { return _proxycredential; }
-            set { _proxycredential = value; }
-        }
+        public PSCredential ProxyCredential { get; set; }
 
 
-        // Proxy Type
-        private string _proxytype = "HTTP";
+        /// <summary>
+        /// Proxy Type
+        /// </summary>
         [ValidateSet("HTTP", "Socks4", "Socks5", IgnoreCase = true)]
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Type of Proxy being used (HTTP, Socks4 or Socks5).")]
-        public string ProxyType
-        {
-            get { return _proxytype; }
-            set { _proxytype = value; }
-        }
+        public string ProxyType { get; set; } = "HTTP";
 
-        //SSH Key File
-        private string _keyfile = null;
-
+        /// <summary>
+        /// SSH Key File
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "Key",
             HelpMessage = "OpenSSH format SSH private key file.")]
-        public string KeyFile
-        {
-            get { return _keyfile; }
-            set { _keyfile = value; }
-        }
+        public string KeyFile { get; set; } = null;
 
-        //SSH Key Content
-        private string[] _keystring = new string[] { };
-
+        /// <summary>
+        /// SSH Key Content
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             ParameterSetName = "KeyString",
             HelpMessage = "String array of the content of a OpenSSH key file.")]
-        public string[] KeyString
-        {
-            get { return _keystring; }
-            set { _keystring = value; }
-        }
+        public string[] KeyString { get; set; } = new string[] { };
 
-        // ConnectionTimeout Parameter
-        private int _connectiontimeout = 10;
+        /// <summary>
+        /// ConnectionTimeout Parameter
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Connection timeout interval in seconds.")]
-        public int ConnectionTimeout
-        {
-            get { return _connectiontimeout; }
-            set { _connectiontimeout = value; }
-        }
+        public int ConnectionTimeout { get; set; } = 10;
 
-        // OperationTimeout Parameter
-        private int _operationtimeout = 5;
+        /// <summary>
+        /// OperationTimeout Parameter
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Operation timeout interval in seconds.")]
-        public int OperationTimeout
-        {
-            get { return _operationtimeout; }
-            set { _operationtimeout = value; }
-        }
+        public int OperationTimeout { get; set; } = 5;
 
-        // KeepAliveInterval Parameter
-        private int _keepaliveinterval = 10;
+        /// <summary>
+        /// KeepAliveInterval Parameter 
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server")]
-        public int KeepAliveInterval
-        {
-            get { return _keepaliveinterval; }
-            set { _keepaliveinterval = value; }
-        }
+        public int KeepAliveInterval { get; set; } = 10;
 
 
-        // Auto Accept key fingerprint
-        private bool _acceptkey;
+        /// <summary>
+        /// Auto Accept key fingerprint 
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
              HelpMessage = "Auto add host key fingerprint to the list of trusted host/fingerprint pairs.")]
-        public SwitchParameter AcceptKey
-        {
-            get { return _acceptkey; }
-            set { _acceptkey = value; }
-        }
+        public SwitchParameter AcceptKey { get; set; } = false;
 
-        // Do not check server fingerprint.
-        private bool _force;
+        /// <summary>
+        /// Do not check server fingerprint.
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Do not check the remote host fingerprint.")]
-        public SwitchParameter Force
-        {
-            get { return _force; }
-            set { _force = value; }
-        }
+        public SwitchParameter Force { get; set; } = false;
 
-        // Automatically error if key is not trusted.
-        private bool _errorOnUntrusted;
+
+        /// <summary>
+        /// Automatically error if key is not trusted.
+        /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Raise an exception if the fingerprint is not trusted for the host.")]
-        public SwitchParameter ErrorOnUntrusted
-        {
-            get { return _errorOnUntrusted; }
-            set { _errorOnUntrusted = value; }
-        }
-
+        public SwitchParameter ErrorOnUntrusted { get; set; } = false;
+        
+        /// <summary>
+        /// Place where fingerprint can persist
+        /// </summary>
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false)]
         [ValidateNotNullOrEmpty]
-        public IStore Store
-        {
-            get; set;
-        }
+        public IStore Store { get; set; }
 
         protected override void BeginProcessing()
         {
             // no need to validate keys if the force parameter is selected.
-            if ( !_force)
+            if (!Force)
             {
                 // check is a IStore was specified.
                 bool storeSpecified = MyInvocation.BoundParameters.ContainsKey("Store");
@@ -242,21 +190,21 @@ namespace SSH
 
         protected override void ProcessRecord()
         {
-            foreach (var computer in _computername)
+            foreach (var computer in ComputerName)
             {
                 ConnectionInfo connectInfo = null;
                 switch (ParameterSetName)
                 {
                     case "NoKey":
                         WriteVerbose("Using SSH Username and Password authentication for connection.");
-                        var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(_credential.UserName);
+                        var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(Credential.UserName);
                         connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
-                            _port,
-                            _credential,
-                            _proxyserver,
-                            _proxytype,
-                            _proxyport,
-                            _proxycredential,
+                            Port,
+                            Credential,
+                            ProxyServer,
+                            ProxyType,
+                            ProxyPort,
+                            ProxyCredential,
                             kIconnectInfo);
 
                         // Event Handler for interactive Authentication
@@ -265,35 +213,35 @@ namespace SSH
                             foreach (var prompt in e.Prompts)
                             {
                                 if (prompt.Request.Contains("Password"))
-                                    prompt.Response = _credential.GetNetworkCredential().Password;
+                                    prompt.Response = Credential.GetNetworkCredential().Password;
                             }
                         };
                         break;
 
                     case "Key":
                         ProviderInfo provider;
-                        var pathinfo = GetResolvedProviderPathFromPSPath(_keyfile, out provider);
+                        var pathinfo = GetResolvedProviderPathFromPSPath(KeyFile, out provider);
                         var localfullPath = pathinfo[0];
                         connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
-                            _port,
+                            Port,
                             localfullPath,
-                            _credential,
-                            _proxyserver,
-                            _proxytype,
-                            _proxyport,
-                            _proxycredential);
+                            Credential,
+                            ProxyServer,
+                            ProxyType,
+                            ProxyPort,
+                            ProxyCredential);
                         break;
 
                     case "KeyString":
                         WriteVerbose("Using SSH Key authentication for connection.");
                         connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
-                            _port,
-                            _keystring,
-                            _credential,
-                            _proxyserver,
-                            _proxytype,
-                            _proxyport,
-                            _proxycredential);
+                            Port,
+                            KeyString,
+                            Credential,
+                            ProxyServer,
+                            ProxyType,
+                            ProxyPort,
+                            ProxyCredential);
                         break;
 
                     default:
@@ -309,7 +257,7 @@ namespace SSH
 
 
                 // Handle host key
-                if (_force)
+                if (Force)
                 {
                     WriteWarning("Host key is not being verified since Force switch is used.");
                 }
@@ -339,13 +287,13 @@ namespace SSH
                         }
                         else
                         {
-                            if (_errorOnUntrusted)
+                            if (ErrorOnUntrusted)
                             {
                                 e.CanTrust = false;
                             }
                             else
                             {
-                                if (!_acceptkey)
+                                if (!AcceptKey)
                                 {
                                     var choices = new Collection<ChoiceDescription>
                                     {
@@ -362,7 +310,7 @@ namespace SSH
                                 {
                                     Store.SetKey(computer1, fingerPrint);
                                 }
-                                    
+
                             }
                         }
                     };
@@ -370,10 +318,10 @@ namespace SSH
                 try
                 {
                     // Set the connection timeout
-                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(_connectiontimeout);
+                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(ConnectionTimeout);
 
                     // Set Keepalive for connections
-                    client.KeepAliveInterval = TimeSpan.FromSeconds(_keepaliveinterval);
+                    client.KeepAliveInterval = TimeSpan.FromSeconds(KeepAliveInterval);
 
                     // Connect to host using Connection info
                     client.Connect();

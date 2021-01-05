@@ -176,8 +176,7 @@ namespace SSH
                 else
                 {
                     var homeFolder = GetVariableValue("HOME").ToString();
-                    var pathSeparator = Path.DirectorySeparatorChar.ToString();
-                    var configPath = homeFolder + pathSeparator + ".poshssh" + pathSeparator + "hosts.json";
+                    var configPath = Path.Combine(homeFolder, ".poshssh", "hosts.json");
                     if (!File.Exists(configPath))
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath));

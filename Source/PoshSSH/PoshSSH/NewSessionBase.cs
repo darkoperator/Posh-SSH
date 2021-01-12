@@ -245,11 +245,18 @@ namespace SSH
 
                 //Ceate instance of SSH Client with connection info
                 BaseClient client;
-                if (Protocol == PoshSessionType.SSH )
-                    client = new SshClient(connectInfo);
-                else
-                    client = new SftpClient(connectInfo);
-
+                switch (Protocol) 
+                {
+                    case PoshSessionType.SFTP:
+                        client = new SftpClient(connectInfo);
+                        break;
+                    case PoshSessionType.SCP:
+                        client = new ScpClient(connectInfo);
+                        break;
+                    default:
+                        client = new SshClient(connectInfo);
+                        break;
+                }
 
                 // Handle host key
                 if (Force)

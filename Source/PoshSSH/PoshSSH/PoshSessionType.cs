@@ -3,6 +3,7 @@
     public enum PoshSessionType
     {
         SFTP,
-        SSH
+        SSH,
+        SCP
     }
 }

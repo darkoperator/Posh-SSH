@@ -186,11 +186,7 @@ namespace SSH
                 }
             }
         }
-
-        protected override void ProcessRecord()
-        {
-            foreach (var computer in ComputerName)
-            {
+        protected BaseClient CreateConnection(string computer) {
                 ConnectionInfo connectInfo = null;
                 switch (ParameterSetName)
                 {
@@ -249,11 +245,18 @@ namespace SSH
 
                 //Ceate instance of SSH Client with connection info
                 BaseClient client;
-                if (Protocol == PoshSessionType.SSH )
-                    client = new SshClient(connectInfo);
-                else
-                    client = new SftpClient(connectInfo);
-
+                switch (Protocol) 
+                {
+                    case PoshSessionType.SFTP:
+                        client = new SftpClient(connectInfo);
+                        break;
+                    case PoshSessionType.SCP:
+                        client = new ScpClient(connectInfo);
+                        break;
+                    default:
+                        client = new SshClient(connectInfo);
+                        break;
+                }
 
                 // Handle host key
                 if (Force)
@@ -325,10 +328,7 @@ namespace SSH
                     // Connect to host using Connection info
                     client.Connect();
 
-                    if (Protocol == PoshSessionType.SSH )
-                        WriteObject(SshModHelper.AddToSshSessionCollection(client as SshClient, SessionState), true);
-                    else
-                        WriteObject(SshModHelper.AddToSftpSessionCollection(client as SftpClient, SessionState), true);
+                    return client;
                 }
                 catch (SshConnectionException e)
                 {
@@ -350,10 +350,24 @@ namespace SSH
                     ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
                     WriteError(erec);
                 }
+                return default;
 
                 // Renci.SshNet.Common.SshOperationTimeoutException when host is not alive or connection times out.
                 // Renci.SshNet.Common.SshConnectionException when fingerprint mismatched
                 // Renci.SshNet.Common.SshAuthenticationException Bad password
+        }
+
+        protected override void ProcessRecord()
+        {
+            foreach (var computer in ComputerName)
+            {
+                var client = CreateConnection(computer);
+                if (client != default) {
+                    if (Protocol == PoshSessionType.SSH)
+                        WriteObject(SshModHelper.AddToSshSessionCollection(client as SshClient, SessionState), true);
+                    else
+                        WriteObject(SshModHelper.AddToSftpSessionCollection(client as SftpClient, SessionState), true);
+                }
             }
 
         } // End process record

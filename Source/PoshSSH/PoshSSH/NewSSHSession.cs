@@ -8,11 +8,11 @@ namespace SSH
     [Cmdlet(VerbsCommon.New, "SSHSession", DefaultParameterSetName = "NoKey")]
     public class NewSshSession : NewSessionBase
     {
-        internal override string Protocol
+        internal override PoshSessionType Protocol
         {
             get
             {
-                return "SSH";
+                return PoshSessionType.SSH;
             }
         }
     } //end of the class for the New-SSHSession

@@ -6,6 +6,13 @@ namespace SSH.Stores
 {
     public class RegistryStore : Stores.IStore
     {
+        public string GetKey(string host)
+        {
+            string key = "";
+            var found = GetKeys()?.TryGetValue(host, out key);
+            return found == true ? key : default;
+        }
+
         public IDictionary<string, string> GetKeys()
         {
             var hostkeys = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);

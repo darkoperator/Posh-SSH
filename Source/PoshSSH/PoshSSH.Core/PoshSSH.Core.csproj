@@ -16,6 +16,7 @@
     <Compile Include="..\PoshSSH\NewSessionBase.cs" Link="NewSessionBase.cs" />
     <Compile Include="..\PoshSSH\NewSftpSession.cs" Link="NewSftpSession.cs" />
     <Compile Include="..\PoshSSH\NewSSHSession.cs" Link="NewSSHSession.cs" />
+    <Compile Include="..\PoshSSH\PoshSessionType.cs" Link="PoshSessionType.cs" />
     <Compile Include="..\PoshSSH\SessionObject.cs" Link="SessionObject.cs" />
     <Compile Include="..\PoshSSH\SetScpFile.cs" Link="SetScpFile.cs" />
     <Compile Include="..\PoshSSH\SetScpFolder.cs" Link="SetScpFolder.cs" />

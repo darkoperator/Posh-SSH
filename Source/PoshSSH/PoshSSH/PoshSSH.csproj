@@ -65,6 +65,7 @@
     <Compile Include="NewMemoryStore.cs" />
     <Compile Include="NewSessionBase.cs" />
     <Compile Include="NewSshJsonStore.cs" />
+    <Compile Include="PoshSessionType.cs" />
     <Compile Include="SetScpItem.cs" />
     <Compile Include="SetSftpFile.cs" />
     <Compile Include="SetSftpFolder.cs" />

@@ -5,27 +5,21 @@ namespace SSH.Stores
 {
     public class MemoryStore : IStore
     {
-        protected static ConcurrentDictionary<string, string> hostKeys;
-
-        public static ConcurrentDictionary<string, string> HostKeys
+        protected bool loaded;
+        protected ConcurrentDictionary<string, string> hostKeys;
+        protected ConcurrentDictionary<string, string> HostKeys
         {
             get
             {
                 return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, string>());
             }
-            protected set
+            set
             {
                 hostKeys = value;
             }
         }
         protected virtual void OnGetKeys() { }
         protected virtual bool OnKeyUpdated() => true;
-
-        public IDictionary<string, string> GetKeys()
-        {
-            OnGetKeys();
-            return new Dictionary<string, string>(HostKeys);
-        }
 
         public bool SetKey(string host, string fingerprint)
         {
@@ -41,6 +35,10 @@ namespace SSH.Stores
         /// <returns></returns>
         public string GetKey(string host)
         {
+            if (!loaded) {
+                OnGetKeys();
+                loaded = true;
+            }
             var found = HostKeys.TryGetValue(host, out string fingerprint);
             return found?fingerprint: default;
         }

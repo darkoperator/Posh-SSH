@@ -65,6 +65,7 @@ local.properties
 
 ## TODO: If you have NuGet Package Restore enabled, uncomment this
 #packages/
+Source/PoshSSH/packages/
 
 # Visual C++ cache files
 ipch/

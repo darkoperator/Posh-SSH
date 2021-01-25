@@ -7,6 +7,7 @@ using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace SSH
 {
@@ -243,6 +244,19 @@ namespace SSH
                         break;
                 }
 
+                var savedHostKey = Store.GetKey(computer);
+                // filter out unsupported hostkeynames
+                if (savedHostKey != default && savedHostKey.Item1 != string.Empty)
+                {
+                    foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
+                    {
+                        if (keyName != savedHostKey.Item1)
+                        {
+                            connectInfo.HostKeyAlgorithms.Remove(keyName);
+                        }
+                    }
+                }
+
                 //Ceate instance of SSH Client with connection info
                 BaseClient client;
                 switch (Protocol) 
@@ -276,16 +290,12 @@ namespace SSH
                         }
                         var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
-                        {
-                            Host.UI.WriteVerboseLine("Fingerprint for " + computer1 + ": " + fingerPrint);
-                        }
+                        WriteVerbose(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
 
-                        if (Store.GetKey(computer1) != default)
+                        if (savedHostKey != default)
                         {
-                            e.CanTrust = Store.GetKey(computer1) == fingerPrint;
-                            if (e.CanTrust && MyInvocation.BoundParameters.ContainsKey("Verbose"))
-                                Host.UI.WriteVerboseLine("Fingerprint matched trusted fingerprint for host " + computer1);
+                            e.CanTrust = savedHostKey.Item2 == fingerPrint && (savedHostKey.Item1 == e.HostKeyName || savedHostKey.Item1 == string.Empty);
+                            WriteVerbose("Fingerprint "+ (e.CanTrust?"":"not ") + "matched trusted "+ savedHostKey.Item1 + " fingerprint for host " + computer1);
                         }
                         else
                         {
@@ -310,7 +320,8 @@ namespace SSH
                                 }
                                 if (e.CanTrust)
                                 {
-                                    Store.SetKey(computer1, fingerPrint);
+                                    if (! Store.SetKey(computer1, e.HostKeyName, fingerPrint))
+                                        WriteWarning("Host key is not saved to store.");
                                 }
 
                             }

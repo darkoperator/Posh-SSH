@@ -3,13 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace SSH.Stores
 {
     public class ConfigFileStruct
     {
-        public Dictionary<string, string> Keys { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, Tuple<string, string>> Keys { get; set; } = new Dictionary<string, Tuple<string, string>>();
     }
     public class JsonStore : MemoryStore
     {
@@ -26,22 +26,19 @@ namespace SSH.Stores
             if (File.Exists(FileName))
             {
                 var jsonString = File.ReadAllText(FileName);
-                var keys = JsonSerializer.Deserialize<ConfigFileStruct>(jsonString).Keys;
-                HostKeys = new ConcurrentDictionary<string, string>(keys);
+                var keys = JsonConvert.DeserializeObject<ConfigFileStruct>(jsonString).Keys;
+                HostKeys = new ConcurrentDictionary<string, Tuple<string, string>>(keys);
             }
         }
 
         private void WriteToDisk()
         {
-            var jsonString = JsonSerializer
-                .Serialize<ConfigFileStruct>(
-                new ConfigFileStruct()
+            var jsonString = JsonConvert.SerializeObject(new ConfigFileStruct()
                 {
-                    Keys = HostKeys.ToDictionary(x => x.Key,x => x.Value)
-                }, new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                }) ;
+                    Keys = HostKeys.ToDictionary(x => x.Key, x => x.Value)
+                },
+                Formatting.Indented
+            );
             File.WriteAllText(FileName, jsonString);
         }
 

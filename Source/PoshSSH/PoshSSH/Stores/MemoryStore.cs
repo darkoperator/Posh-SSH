@@ -1,19 +1,20 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SSH.Stores
 {
     public class MemoryStore : IStore
     {
-        protected static ConcurrentDictionary<string, string> hostKeys;
-
-        public static ConcurrentDictionary<string, string> HostKeys
+        protected bool loaded;
+        protected ConcurrentDictionary<string, Tuple<string, string>> hostKeys;
+        protected ConcurrentDictionary<string, Tuple<string, string>> HostKeys
         {
             get
             {
-                return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, string>());
+                return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, Tuple<string, string>>());
             }
-            protected set
+            set
             {
                 hostKeys = value;
             }
@@ -21,28 +22,27 @@ namespace SSH.Stores
         protected virtual void OnGetKeys() { }
         protected virtual bool OnKeyUpdated() => true;
 
-        public IDictionary<string, string> GetKeys()
+        public bool SetKey(string Host, string HostKeyName, string Fingerprint)
         {
-            OnGetKeys();
-            return new Dictionary<string, string>(HostKeys);
-        }
-
-        public bool SetKey(string host, string fingerprint)
-        {
-            HostKeys.AddOrUpdate(host, fingerprint, (key, oldValue) => {
-                return fingerprint;
+            var hostData = new Tuple<string, string>(HostKeyName, Fingerprint);
+            HostKeys.AddOrUpdate(Host, hostData, (key, oldValue) => {
+                return hostData;
             });
             return OnKeyUpdated();
         }
         /// <summary>
         /// If IStore is updated this can be the implementation
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="Host"></param>
         /// <returns></returns>
-        public string GetKey(string host)
+        public Tuple<string, string> GetKey(string Host)
         {
-            var found = HostKeys.TryGetValue(host, out string fingerprint);
-            return found?fingerprint: default;
+            if (!loaded) {
+                OnGetKeys();
+                loaded = true;
+            }
+            var found = HostKeys.TryGetValue(Host, out Tuple<string, string> hostData);
+            return found?hostData: default;
         }
     }
 }

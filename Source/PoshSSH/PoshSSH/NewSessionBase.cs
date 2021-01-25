@@ -290,15 +290,12 @@ namespace SSH
                         }
                         var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
-                        {
-                            Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
-                        }
+                        WriteVerbose(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
 
                         if (savedHostKey != default)
                         {
                             e.CanTrust = savedHostKey.Item2 == fingerPrint && (savedHostKey.Item1 == e.HostKeyName || savedHostKey.Item1 == string.Empty);
-                            Host.UI.WriteVerboseLine("Fingerprint "+ (e.CanTrust?"":"not ") + "matched trusted "+ savedHostKey.Item1 + " fingerprint for host " + computer1);
+                            WriteVerbose("Fingerprint "+ (e.CanTrust?"":"not ") + "matched trusted "+ savedHostKey.Item1 + " fingerprint for host " + computer1);
                         }
                         else
                         {

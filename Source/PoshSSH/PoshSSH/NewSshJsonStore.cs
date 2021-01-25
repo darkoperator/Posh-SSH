@@ -25,7 +25,7 @@ namespace SSH
         {
             if (string.IsNullOrEmpty(_localfile)) {
                 var homeFolder = GetVariableValue("HOME").ToString();
-                this._localfile = Path.Combine(homeFolder, ".poshssh", "hosts.json");
+                _localfile = Path.Combine(homeFolder, ".poshssh", "hosts.json");
             }
             var store = new Stores.JsonStore(_localfile);
 

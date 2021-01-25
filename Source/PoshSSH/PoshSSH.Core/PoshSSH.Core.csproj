@@ -31,9 +31,11 @@
     <Compile Include="..\PoshSSH\Stores\IStore.cs" Link="Stores\IStore.cs" />
     <Compile Include="..\PoshSSH\Stores\MemoryStore.cs" Link="Stores\MemoryStore.cs" />
     <Compile Include="..\PoshSSH\Stores\JsonStore.cs" Link="Stores\JsonStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\OpenSSHStore.cs" Link="Stores\OpenSSHStore.cs" />
 
     <Compile Include="..\PoshSSH\NewMemoryStore.cs" Link="NewMemoryStore.cs" />
     <Compile Include="..\PoshSSH\NewSshJsonStore.cs" Link="NewSshJsonStore.cs" />
+    <Compile Include="..\PoshSSH\NewSshOpenSSHStore.cs" Link="NewSshOpenSSHStore.cs" />
   </ItemGroup>
 
   <ItemGroup>

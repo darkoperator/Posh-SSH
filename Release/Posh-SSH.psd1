@@ -110,7 +110,8 @@ CmdletsToExport = 'Get-SCPItem',
                   'Set-SCPItem',
                   'Set-SFTPItem',
                   'New-SSHMemoryStore',
-                  'New-SSHJsonStore'
+                  'New-SSHJsonStore',
+                  'New-SSHOpenSSHStore'
 
 # Variables to export from this module
 VariablesToExport = '*'

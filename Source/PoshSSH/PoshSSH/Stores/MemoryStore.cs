@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace SSH.Stores
@@ -6,12 +7,12 @@ namespace SSH.Stores
     public class MemoryStore : IStore
     {
         protected bool loaded;
-        protected ConcurrentDictionary<string, string> hostKeys;
-        protected ConcurrentDictionary<string, string> HostKeys
+        protected ConcurrentDictionary<string, Tuple<string, string>> hostKeys;
+        protected ConcurrentDictionary<string, Tuple<string, string>> HostKeys
         {
             get
             {
-                return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, string>());
+                return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, Tuple<string, string>>());
             }
             set
             {
@@ -21,26 +22,27 @@ namespace SSH.Stores
         protected virtual void OnGetKeys() { }
         protected virtual bool OnKeyUpdated() => true;
 
-        public bool SetKey(string host, string fingerprint)
+        public bool SetKey(string Host, string HostKeyName, string Fingerprint)
         {
-            HostKeys.AddOrUpdate(host, fingerprint, (key, oldValue) => {
-                return fingerprint;
+            var hostData = new Tuple<string, string>(HostKeyName, Fingerprint);
+            HostKeys.AddOrUpdate(Host, hostData, (key, oldValue) => {
+                return hostData;
             });
             return OnKeyUpdated();
         }
         /// <summary>
         /// If IStore is updated this can be the implementation
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="Host"></param>
         /// <returns></returns>
-        public string GetKey(string host)
+        public Tuple<string, string> GetKey(string Host)
         {
             if (!loaded) {
                 OnGetKeys();
                 loaded = true;
             }
-            var found = HostKeys.TryGetValue(host, out string fingerprint);
-            return found?fingerprint: default;
+            var found = HostKeys.TryGetValue(Host, out Tuple<string, string> hostData);
+            return found?hostData: default;
         }
     }
 }

@@ -33,6 +33,7 @@
     <Compile Include="..\PoshSSH\Stores\JsonStore.cs" Link="Stores\JsonStore.cs" />
 
     <Compile Include="..\PoshSSH\NewMemoryStore.cs" Link="NewMemoryStore.cs" />
+    <Compile Include="..\PoshSSH\NewSshJsonStore.cs" Link="NewSshJsonStore.cs" />
   </ItemGroup>
 
   <ItemGroup>

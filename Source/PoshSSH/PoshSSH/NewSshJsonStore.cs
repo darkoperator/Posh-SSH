@@ -1,8 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
-using Renci.SshNet.Common;
 using System;
-using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace SSH
@@ -14,7 +11,7 @@ namespace SSH
         /// The local file to be uploaded.
         /// </summary>
         private String _localfile;
-        [Parameter(Mandatory = true,
+        [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             Position = 1)]
         [Alias("PSPath")]
@@ -26,6 +23,10 @@ namespace SSH
 
         protected override void BeginProcessing()
         {
+            if (string.IsNullOrEmpty(_localfile)) {
+                var homeFolder = GetVariableValue("HOME").ToString();
+                this._localfile = Path.Combine(homeFolder, ".poshssh", "hosts.json");
+            }
             var store = new Stores.JsonStore(_localfile);
 
             WriteObject(store);

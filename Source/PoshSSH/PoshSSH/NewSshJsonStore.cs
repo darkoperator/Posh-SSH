@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.New, "SSHJsonKnowHost")]
+    [Cmdlet(VerbsCommon.Get, "SSHJsonKnowHost")]
     public class SSHJsonStore : PSCmdlet
     { 
         /// <summary>
@@ -13,7 +13,8 @@ namespace SSH
         private String _localfile;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            Position = 1)]
+            Position = 1,
+            HelpMessage = "JSON known_hosts file. If none is specified %HOME%/.poshssh/hosts.json is used.")]
         [Alias("PSPath")]
         public String LocalFile
         {

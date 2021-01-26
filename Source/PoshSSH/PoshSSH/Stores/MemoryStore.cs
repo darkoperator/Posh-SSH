@@ -45,7 +45,7 @@ namespace SSH.Stores
             return found?hostData: default;
         }
 
-        public Tuple<string, string> RemoveKey(string Host)
+        public Boolean RemoveKey(string Host)
         {
             if (!loaded)
             {
@@ -53,7 +53,7 @@ namespace SSH.Stores
                 loaded = true;
             }
             var found = HostKeys.TryRemove(Host, out Tuple<string, string> hostData);
-            return found ? hostData : default;
+            return found;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.New, "SSHJsonStore")]
+    [Cmdlet(VerbsCommon.New, "SSHJsonKnowHost")]
     public class SSHJsonStore : PSCmdlet
     { 
         /// <summary>

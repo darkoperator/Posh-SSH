@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.New, "SSHOpenSSHStore")]
+    [Cmdlet(VerbsCommon.New, "SSHOpenSSHKnownHost")]
     public class SshOpenSSHStore : PSCmdlet
     { 
         /// <summary>

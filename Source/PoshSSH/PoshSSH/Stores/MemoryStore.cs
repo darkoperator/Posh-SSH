@@ -44,5 +44,16 @@ namespace SSH.Stores
             var found = HostKeys.TryGetValue(Host, out Tuple<string, string> hostData);
             return found?hostData: default;
         }
+
+        public Tuple<string, string> RemoveKey(string Host)
+        {
+            if (!loaded)
+            {
+                OnGetKeys();
+                loaded = true;
+            }
+            var found = HostKeys.TryRemove(Host, out Tuple<string, string> hostData);
+            return found ? hostData : default;
+        }
     }
 }

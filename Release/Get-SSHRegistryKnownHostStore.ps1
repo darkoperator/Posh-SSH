@@ -19,8 +19,13 @@ function Get-SSHRegistryKnownHostStore {
               }
           }
           [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
-             Write-Warning "Set Keys not supported in registry store"
              return $false
+          }
+          [bool]RemoveByHost(string Host) {
+              return false
+          }
+          [bool]RemoveByFingerprint(string Fingerprint) {
+              return false
           }
     }
 

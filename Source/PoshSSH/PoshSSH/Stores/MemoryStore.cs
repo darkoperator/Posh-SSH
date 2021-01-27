@@ -50,7 +50,7 @@ namespace SSH.Stores
 
         public virtual bool RemoveByHost(string Host)
         {
-            return HostKeys.TryRemove(Host, out var value);
+            return (HostKeys.TryRemove(Host, out var value)) ? OnKeyUpdated() : false;
         }
 
         public virtual bool RemoveByFingerprint(string Fingerprint)

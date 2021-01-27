@@ -100,7 +100,9 @@ FunctionsToExport = 'Get-PoshSSHModVersion',
                     'Set-SFTPPathAttribute',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
-                    'Test-SFTPPath'
+                    'Test-SFTPPath',
+                    'Convert-SSHRegistryToJSonKhownHostStore',
+                    'Get-SSHRegistryKhownHostStore'
 
 # Cmdlets to export from this module
 CmdletsToExport = 'Get-SCPItem',

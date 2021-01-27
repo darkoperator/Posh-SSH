@@ -5,7 +5,7 @@
        Get KnownHosts from registry (readonly)
        It is windows-only compatibility cmdlet
 #>
-function Get-SSHRegistryKhownHostStore {
+function Get-SSHRegistryKnownHostStore {
     class SSHRegistryKeyStore: SSH.Stores.MemoryStore {
           [void] OnGetKeys() {
               $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH

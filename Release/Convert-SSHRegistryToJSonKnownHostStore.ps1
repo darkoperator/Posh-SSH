@@ -5,7 +5,7 @@
        Convert windows registry key storage to JSon
        It is windows-only compatibility cmdlet
 #>
-function Convert-SSHRegistryToJSonKhownHostStore {
+function Convert-SSHRegistryToJSonKnownHostStore {
     $JsonStore = New-SSHJSonStore
     $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
     $p | Get-Member -MemberType NoteProperty |

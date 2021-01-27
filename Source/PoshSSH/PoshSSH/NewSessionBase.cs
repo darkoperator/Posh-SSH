@@ -246,7 +246,7 @@ namespace SSH
                     break;
             }
 
-            var savedHostKey = Store.GetKey(computer);
+            var savedHostKey = KnownHost.GetKey(computer);
             // filter out unsupported hostkeynames
             if (savedHostKey != default && ! string.IsNullOrEmpty(savedHostKey.HostKeyName))
             {
@@ -326,7 +326,7 @@ namespace SSH
                             }
                             if (e.CanTrust)
                             {
-                                if (!Store.SetKey(computer1, e.HostKeyName, fingerPrint))
+                                if (!KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
                                 {
                                     Host.UI.WriteWarningLine("Host key is not saved to store.");
                                 }

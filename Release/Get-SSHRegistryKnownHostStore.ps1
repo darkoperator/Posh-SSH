@@ -21,11 +21,11 @@ function Get-SSHRegistryKnownHostStore {
           [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
              return $false
           }
-          [bool]RemoveByHost(string Host) {
-              return false
+          [bool]RemoveByHost([string] $Host) {
+              return $false
           }
-          [bool]RemoveByFingerprint(string Fingerprint) {
-              return false
+          [bool]RemoveByFingerprint([string] $Fingerprint) {
+              return $false
           }
     }
 

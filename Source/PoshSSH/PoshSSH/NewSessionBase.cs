@@ -215,6 +215,7 @@ namespace SSH
                         break;
 
                     case "Key":
+                        WriteVerbose("Using SSH Key authentication for connection (file).");
                         ProviderInfo provider;
                         var pathinfo = GetResolvedProviderPathFromPSPath(KeyFile, out provider);
                         var localfullPath = pathinfo[0];
@@ -246,18 +247,17 @@ namespace SSH
 
                 var savedHostKey = Store.GetKey(computer);
                 // filter out unsupported hostkeynames
-                if (savedHostKey != default && savedHostKey.Item1 != string.Empty)
+                if (savedHostKey != default && savedHostKey.HostKeyName != string.Empty)
                 {
                     foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
                     {
-                        if (keyName != savedHostKey.Item1)
+                        if (keyName != savedHostKey.HostKeyName)
                         {
                             connectInfo.HostKeyAlgorithms.Remove(keyName);
                         }
                     }
                 }
-
-                //Ceate instance of SSH Client with connection info
+                //Create instance of SSH Client with connection info
                 BaseClient client;
                 switch (Protocol) 
                 {
@@ -282,7 +282,6 @@ namespace SSH
                     var computer1 = computer;
                     client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                     {
-
                         var sb = new StringBuilder();
                         foreach (var b in e.FingerPrint)
                         {
@@ -290,12 +289,18 @@ namespace SSH
                         }
                         var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                        WriteVerbose(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
+                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                        {
+                            Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
+                        }
 
                         if (savedHostKey != default)
                         {
-                            e.CanTrust = savedHostKey.Item2 == fingerPrint && (savedHostKey.Item1 == e.HostKeyName || savedHostKey.Item1 == string.Empty);
-                            WriteVerbose("Fingerprint "+ (e.CanTrust?"":"not ") + "matched trusted "+ savedHostKey.Item1 + " fingerprint for host " + computer1);
+                            e.CanTrust = savedHostKey.Fingerprint == fingerPrint && (savedHostKey.HostKeyName == e.HostKeyName || savedHostKey.HostKeyName == string.Empty);
+                            if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                            {
+                                Host.UI.WriteVerboseLine("Fingerprint " + (e.CanTrust ? "" : "not ") + "matched trusted " + savedHostKey.HostKeyName + " fingerprint for host " + computer1);
+                            }
                         }
                         else
                         {
@@ -321,7 +326,9 @@ namespace SSH
                                 if (e.CanTrust)
                                 {
                                     if (! Store.SetKey(computer1, e.HostKeyName, fingerPrint))
-                                        WriteWarning("Host key is not saved to store.");
+                                    {
+                                        Host.UI.WriteWarningLine("Host key is not saved to store.");
+                                    }
                                 }
 
                             }

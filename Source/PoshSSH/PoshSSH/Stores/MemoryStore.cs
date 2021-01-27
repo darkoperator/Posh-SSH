@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace SSH.Stores
 {
     public class MemoryStore : IStore
     {
-        protected bool loaded;
-        protected ConcurrentDictionary<string, Tuple<string, string>> hostKeys;
-        protected ConcurrentDictionary<string, Tuple<string, string>> HostKeys
+        protected ConcurrentDictionary<string, KnownHostValue> hostKeys;
+        protected ConcurrentDictionary<string, KnownHostValue> HostKeys
         {
             get
             {
-                return hostKeys ?? (hostKeys = new ConcurrentDictionary<string, Tuple<string, string>>());
+                if (hostKeys == default)
+                {
+                    hostKeys = new ConcurrentDictionary<string, KnownHostValue>();
+                    OnGetKeys();
+                }
+                return hostKeys;
             }
             set
             {
@@ -22,9 +26,12 @@ namespace SSH.Stores
         protected virtual void OnGetKeys() { }
         protected virtual bool OnKeyUpdated() => true;
 
-        public bool SetKey(string Host, string HostKeyName, string Fingerprint)
+        public virtual bool SetKey(string Host, string HostKeyName, string Fingerprint)
         {
-            var hostData = new Tuple<string, string>(HostKeyName, Fingerprint);
+            var hostData = new KnownHostValue() {
+                HostKeyName = HostKeyName,
+                Fingerprint = Fingerprint,
+            };
             HostKeys.AddOrUpdate(Host, hostData, (key, oldValue) => {
                 return hostData;
             });
@@ -35,14 +42,32 @@ namespace SSH.Stores
         /// </summary>
         /// <param name="Host"></param>
         /// <returns></returns>
-        public Tuple<string, string> GetKey(string Host)
+        public virtual KnownHostValue GetKey(string Host)
         {
-            if (!loaded) {
-                OnGetKeys();
-                loaded = true;
-            }
-            var found = HostKeys.TryGetValue(Host, out Tuple<string, string> hostData);
+            var found = HostKeys.TryGetValue(Host, out var hostData);
             return found?hostData: default;
+        }
+
+        public virtual bool RemoveByHost(string Host)
+        {
+            return HostKeys.TryRemove(Host, out var value);
+        }
+
+        public virtual bool RemoveByFingerprint(string Fingerprint)
+        {
+            var hostRecord = HostKeys.Where(kv => kv.Value.Fingerprint.Equals(Fingerprint));
+            return (hostRecord.Any()) ? RemoveByHost(hostRecord.First().Key) : false;
+        }
+
+        public virtual KnownHostRecord[] GetAllKeys()
+        {
+            return HostKeys.Select(kv => new KnownHostRecord()
+            {
+                HostName = kv.Key,
+                HostKeyName = kv.Value.HostKeyName,
+                Fingerprint = kv.Value.Fingerprint
+            }
+            ).ToArray();
         }
     }
 }

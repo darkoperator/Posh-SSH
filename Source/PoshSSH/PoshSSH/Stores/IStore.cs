@@ -2,6 +2,17 @@
 
 namespace SSH.Stores
 {
+    public class KnownHostRecord
+    {
+        public string HostName { get; set; }
+        public string HostKeyName { get; set; }
+        public string Fingerprint { get; set; }
+    }
+    public class KnownHostValue
+    {
+        public string HostKeyName { get; set; }
+        public string Fingerprint { get; set; }
+    }
     public interface IStore
     {
         /// <summary>
@@ -17,6 +28,11 @@ namespace SSH.Stores
         /// </summary>
         /// <param name="Host"></param>
         /// <returns>returns tuple from keyName and fingerprint if found or default if not</returns>
-        Tuple<string, string> GetKey(string Host);
+        KnownHostValue GetKey(string Host);
+
+        bool RemoveByHost(string Host);
+        bool RemoveByFingerprint(string Fingerprint);
+
+        KnownHostRecord[] GetAllKeys();
     }
 }

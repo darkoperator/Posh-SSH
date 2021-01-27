@@ -2,7 +2,7 @@
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.New, "SSHMemoryStore")]
+    [Cmdlet(VerbsCommon.New, "SSHMemoryKnownHost")]
     public class NewMemoryStore : PSCmdlet
     {
         protected override void ProcessRecord()

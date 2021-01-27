@@ -7,7 +7,7 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.New, "SSHOpenSSHStore")]
+    [Cmdlet(VerbsCommon.Get, "SSHOpenSSHKnownHost")]
     public class SshOpenSSHStore : PSCmdlet
     { 
         /// <summary>
@@ -16,7 +16,8 @@ namespace SSH
         private String _localfile;
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
-            Position = 1)]
+            Position = 1,
+            HelpMessage = "OpenSSH known_hosts file. If none is specified %HOME%/.ssh/known_hosts is used." )]
         [Alias("PSPath")]
         public String LocalFile
         {

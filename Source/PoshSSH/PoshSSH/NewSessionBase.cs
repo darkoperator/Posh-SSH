@@ -159,7 +159,7 @@ namespace SSH
         /// </summary>
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false)]
         [ValidateNotNullOrEmpty]
-        public IStore Store { get; set; }
+        public IStore KnownHost { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -167,7 +167,7 @@ namespace SSH
             if (!Force)
             {
                 // check is a IStore was specified.
-                bool storeSpecified = MyInvocation.BoundParameters.ContainsKey("Store");
+                bool storeSpecified = MyInvocation.BoundParameters.ContainsKey("KnownHost");
 
                 if (storeSpecified)
                 {
@@ -182,7 +182,7 @@ namespace SSH
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath));
                     }
-                    Store = new Stores.JsonStore(configPath);
+                    KnownHost = new Stores.JsonStore(configPath);
                     base.BeginProcessing();
                 }
             }
@@ -248,7 +248,7 @@ namespace SSH
 
             var savedHostKey = Store.GetKey(computer);
             // filter out unsupported hostkeynames
-            if (savedHostKey != default && savedHostKey.HostKeyName != string.Empty)
+            if (savedHostKey != default && ! string.IsNullOrEmpty(savedHostKey.HostKeyName))
             {
                 foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
                 {

@@ -10,6 +10,12 @@ if (!(Test-Path variable:Global:SFTPSessions ))
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
 
+# Import PS additional functions
+##############################################################################################
+
+. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHostStore.ps1"
+. "$PSScriptRoot/Get-SSHRegistryKnownHostStore.ps1"
+
 # SSH Functions
 ##############################################################################################
 

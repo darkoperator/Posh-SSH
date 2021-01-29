@@ -2,13 +2,14 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace SSH.Stores
 {
-    public class OpenSSHStore : IStore
+    public class OpenSSHStore : MemoryStore
     {
         private class HashedKeysStruct
         {
@@ -26,15 +27,12 @@ namespace SSH.Stores
         }
 
         private readonly string FileName;
-        private ConcurrentDictionary<string, Tuple<string, string>> hostKeys;
         private readonly ConcurrentBag<HashedKeysStruct> hashedKeys;
         private readonly ConcurrentBag<WildcardKeysStruct> wildcardKeys;
-        private bool loaded;
 
         public OpenSSHStore(string fileName)
         {
             FileName = fileName;
-            hostKeys = new ConcurrentDictionary<string, Tuple<string, string>>();
             hashedKeys = new ConcurrentBag<HashedKeysStruct>();
             wildcardKeys = new ConcurrentBag<WildcardKeysStruct>();
         }
@@ -116,8 +114,12 @@ namespace SSH.Stores
                             // simple host
                             else
                             {
-                                var hostData = new Tuple<string, string>(keyName, tmpFingerprint);
-                                hostKeys.AddOrUpdate(tmpHost, hostData, (key, oldValue) => {
+                                var hostData = new KnownHostValue()
+                                {
+                                    HostKeyName = keyName,
+                                    Fingerprint = tmpFingerprint,
+                                };
+                                HostKeys.AddOrUpdate(tmpHost, hostData, (key, oldValue) => {
                                     return hostData;
                                 });
                             }
@@ -125,18 +127,20 @@ namespace SSH.Stores
                     }
                 }
             }
-            loaded = true;
         }
 
-        public bool SetKey(string Host, string HostKeyName, string Fingerprint)
+        protected override void OnGetKeys()
+        {
+            LoadFromDisk();
+        }
+        public override bool SetKey(string Host, string HostKeyName, string Fingerprint)
         {
             // It is read-only collection
             return false;
         }
 
-        public Tuple<string, string> GetKey(string Host)
+        public override KnownHostValue GetKey(string Host)
         {
-            if (! loaded) { LoadFromDisk(); }
             var hostbytes = Encoding.ASCII.GetBytes(Host);
             foreach (var hashedKey in hashedKeys)
             {
@@ -145,11 +149,14 @@ namespace SSH.Stores
                     var hostHash = Convert.ToBase64String(hmac.ComputeHash(hostbytes));
                     if (hostHash.Equals(hashedKey.HostHash))
                     {
-                        return new Tuple<string, string>(hashedKey.KeyName, hashedKey.Fingerprint);
+                        return new KnownHostValue() {
+                            HostKeyName =hashedKey.KeyName,
+                            Fingerprint = hashedKey.Fingerprint
+                        };
                     }
                 }
             }
-            if (hostKeys.TryGetValue(Host, out Tuple<string, string> keyData))
+            if (HostKeys.TryGetValue(Host, out var keyData))
             {
                 return keyData;
             }
@@ -157,11 +164,44 @@ namespace SSH.Stores
             {
                 if (wildcardKey.Pattern.IsMatch(Host))
                 {
-                    return new Tuple<string, string>(wildcardKey.KeyName, wildcardKey.Fingerprint);
+                    return new KnownHostValue()
+                    {
+                        HostKeyName = wildcardKey.KeyName,
+                        Fingerprint = wildcardKey.Fingerprint,
+                    };
                 }
             }
             return default;
         }
 
+        public override bool RemoveByHost(string Host)
+        {
+            return false;
+        }
+
+        public override bool RemoveByFingerprint(string Fingerprint)
+        {
+            return false;
+        }
+
+        public override KnownHostRecord[] GetAllKeys()
+        {
+            var keys = new List<KnownHostRecord>(base.GetAllKeys());
+            keys.AddRange(hashedKeys.Select(v => new KnownHostRecord()
+            {
+                HostName = v.HostHash,
+                HostKeyName = v.KeyName,
+                Fingerprint = v.Fingerprint,
+            }
+            ));
+            keys.AddRange(wildcardKeys.Select(v => new KnownHostRecord()
+            {
+                HostName = v.Pattern.ToString(),
+                HostKeyName = v.KeyName,
+                Fingerprint = v.Fingerprint,
+            }
+            ));
+            return keys.ToArray();
+        }
     }
 }

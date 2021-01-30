@@ -403,7 +403,7 @@ function Invoke-SSHCommand
            Write-Warning 'Could not retrieve the current version.'
        }
 
-       if ( $installed -eq $null )
+       if ( $null -eq $installed )
        {
            Write-Error 'Unable to locate Posh-SSH.'
        }
@@ -742,7 +742,7 @@ function Invoke-SSHStreamExpectAction
                 $found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))}
         }
 
-        if ($found -ne $null)
+        if ($null -ne $found)
         {
             Write-Verbose -Message "Executing action: $($Action)."
             $ShellStream.WriteLine($Action)
@@ -834,7 +834,7 @@ function Invoke-SSHStreamExpectSecureAction
              }
         }
 
-        if ($found -ne $null)
+        if ($null -ne $found)
         {
             Write-Verbose -Message "Executing action."
             $ShellStream.WriteLine([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureAction)))
@@ -2671,7 +2671,7 @@ function New-SSHRemotePortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [String]$LocalAdress = '127.0.0.1',
 
     [Parameter(Mandatory=$true)]
@@ -2760,7 +2760,7 @@ function New-SSHDynamicPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-        [Parameter(Mandatory=$true,
+        [Parameter(Mandatory=$false,
             Position=1)]
         [String]
         $BoundHost = 'localhost',

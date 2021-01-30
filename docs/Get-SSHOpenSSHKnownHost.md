@@ -5,45 +5,43 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHJsonKnowHost
+# Get-SSHOpenSSHKnownHost
 
 ## SYNOPSIS
-Get known hosts stored in a JSON file created by Posh-SSH.
-If a file is not specified it will default to $HOME\.poshssh\hosts.json.
+Get known_hosts stored in a OpenSSH file.
+If a file is not specified it will default to $HOME\.ssh\known_hosts.
 If the file specified is not present it will be created.
 
 ## SYNTAX
 
 ```
-Get-SSHJsonKnowHost [[-LocalFile] <String>] [<CommonParameters>]
+Get-SSHOpenSSHKnownHost [[-LocalFile] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get known hosts stored in a JSON file created by Posh-SSH.
-If a file is not specified it will default to $HOME\.poshssh\hosts.json.
+Get known_hosts stored in a OpenSSH file.
+If a file is not specified it will default to $HOME\.ssh\known_hosts.
 If the file specified is not present it will be created.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> $jsontest = Get-SSHJsonKnowHost -LocalFile .\test.json
-PS C:\> $jsontest.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
-True
-PS C:\> $jsontest.GetAllKeys()
+PS C:\> $SSHKnown = Get-SSHOpenSSHKnownHost
+PS C:\> $SSHKnown.GetAllKeys()
 
-HostName    HostKeyName Fingerprint
---------    ----------- -----------
-192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
+HostName      HostKeyName         Fingerprint
+--------      -----------         -----------
+192.168.1.165 ecdsa-sha2-nistp256 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4
 ```
 
-Create a JSON Kmnown Host Store object and using its methods add a new entry.
+Get known hosts already stored by the Windows 10 OpenSSH client in the users home folder.
 
 ## PARAMETERS
 
 ### -LocalFile
-JSON known_hosts file.
-If none is specified %HOME%/.poshssh/hosts.json is used.
+OpenSSH known_hosts file.
+If none is specified %HOME%/.ssh/known_hosts is used.
 
 ```yaml
 Type: String

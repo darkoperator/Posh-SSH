@@ -1806,12 +1806,11 @@
           <maml:description>
             <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>ConnectionTimeout</maml:name>
@@ -1999,10 +1998,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>KeepAliveInterval</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -2043,12 +2054,11 @@
           <maml:description>
             <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>ConnectionTimeout</maml:name>
@@ -2236,10 +2246,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>KeepAliveInterval</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -2256,12 +2278,12 @@
         <maml:description>
           <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="HostName, Computer, IPAddress, Host">
         <maml:name>ComputerName</maml:name>
@@ -2479,10 +2501,22 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Store</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>KeepAliveInterval</maml:name>
         <maml:description>
-          <maml:para>{{ Fill Store Description }}</maml:para>
+          <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHost</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill KnownHost Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
         <dev:type>
@@ -3085,6 +3119,186 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-SSHJsonKnowHost</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SSHJsonKnowHost</command:noun>
+      <maml:description>
+        <maml:para>Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SSHJsonKnowHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
+          <maml:name>LocalFile</maml:name>
+          <maml:description>
+            <maml:para>JSON known_hosts file. If none is specified %HOME%/.poshssh/hosts.json is used.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
+        <maml:name>LocalFile</maml:name>
+        <maml:description>
+          <maml:para>JSON known_hosts file. If none is specified %HOME%/.poshssh/hosts.json is used.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; $jsontest = Get-SSHJsonKnowHost -LocalFile .\test.json
+PS C:\&gt; $jsontest.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
+True
+PS C:\&gt; $jsontest.GetAllKeys()
+
+HostName    HostKeyName Fingerprint
+--------    ----------- -----------
+192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53</dev:code>
+        <dev:remarks>
+          <maml:para>Create a JSON Kmnown Host Store object and using its methods add a new entry.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SSHOpenSSHKnownHost</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SSHOpenSSHKnownHost</command:noun>
+      <maml:description>
+        <maml:para>Get known_hosts stored in a OpenSSH file. If a file is not specified it will default to $HOME\.ssh\known_hosts. If the file specified is not present it will be created.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get known_hosts stored in a OpenSSH file. If a file is not specified it will default to $HOME\.ssh\known_hosts. If the file specified is not present it will be created.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SSHOpenSSHKnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
+          <maml:name>LocalFile</maml:name>
+          <maml:description>
+            <maml:para>OpenSSH known_hosts file. If none is specified %HOME%/.ssh/known_hosts is used.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
+        <maml:name>LocalFile</maml:name>
+        <maml:description>
+          <maml:para>OpenSSH known_hosts file. If none is specified %HOME%/.ssh/known_hosts is used.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; $SSHKnown = Get-SSHOpenSSHKnownHost
+PS C:\&gt; $SSHKnown.GetAllKeys()
+
+HostName      HostKeyName         Fingerprint
+--------      -----------         -----------
+192.168.1.165 ecdsa-sha2-nistp256 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4</dev:code>
+        <dev:remarks>
+          <maml:para>Get known hosts already stored by the Windows 10 OpenSSH client in the users home folder.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>New-SFTPSession</command:name>
       <command:verb>New</command:verb>
       <command:noun>SFTPSession</command:noun>
@@ -3263,10 +3477,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -3431,7 +3645,7 @@
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>KeyString</maml:name>
           <maml:description>
             <maml:para>OpenSSH key in a string array to be used for authentication.</maml:para>
@@ -3443,10 +3657,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -3626,7 +3840,7 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>KeyString</maml:name>
         <maml:description>
           <maml:para>OpenSSH key in a string array to be used for authentication.</maml:para>
@@ -3638,10 +3852,10 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Store</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHost</maml:name>
         <maml:description>
-          <maml:para>{{ Fill Store Description }}</maml:para>
+          <maml:para>{{ Fill KnownHost Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
         <dev:type>
@@ -3705,6 +3919,72 @@
         <dev:code>PS C:\&gt; New-SFTPSession -ComputerName 192.168.1.155 -Credential (Get-Credential) -Verbose</dev:code>
         <dev:remarks>
           <maml:para>Create a new SFTP Session to a remote hosts using credentials.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>New-SSHMemoryKnownHost</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>SSHMemoryKnownHost</command:noun>
+      <maml:description>
+        <maml:para>Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-SSHMemoryKnownHost</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
+PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+True
+PS C:\&gt; $inmem.GetAllKeys()
+
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 Pi          3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4</dev:code>
+        <dev:remarks>
+          <maml:para>Create and in-memory known host store and add a entry to it.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4013,10 +4293,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost &lt;IStore&gt;</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
           <maml:description>
-            <maml:para>A known host IStore created from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -4193,10 +4473,10 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost &lt;IStore&gt;</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
           <maml:description>
-            <maml:para>A known host IStore created from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -4388,10 +4668,10 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnownHost &lt;IStore&gt;</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHost</maml:name>
         <maml:description>
-          <maml:para>A known host IStore created from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+          <maml:para>{{ Fill KnownHost Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
         <dev:type>
@@ -5724,12 +6004,11 @@
           <maml:description>
             <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>ConnectionTimeout</maml:name>
@@ -5877,10 +6156,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>KeepAliveInterval</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -5945,12 +6236,11 @@
           <maml:description>
             <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
-            <maml:name>Boolean</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>ConnectionTimeout</maml:name>
@@ -6098,10 +6388,22 @@
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Store</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>KeepAliveInterval</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Store Description }}</maml:para>
+            <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHost</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill KnownHost Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
           <dev:type>
@@ -6118,12 +6420,12 @@
         <maml:description>
           <maml:para>Auto add host key fingerprint to the list of trusted host/gingerprint pairs.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="HostName, Computer, IPAddress, Host">
         <maml:name>ComputerName</maml:name>
@@ -6329,10 +6631,22 @@
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Store</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>KeepAliveInterval</maml:name>
         <maml:description>
-          <maml:para>{{ Fill Store Description }}</maml:para>
+          <maml:para>Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHost</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill KnownHost Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
         <dev:type>

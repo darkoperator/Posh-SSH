@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SSHMemoryKnownHost
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.
 
 ## SYNTAX
 
@@ -17,16 +17,23 @@ New-SSHMemoryKnownHost [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.
 
 ## EXAMPLES
 
 ### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+```
+PS C:\> $inmem = New-SSHMemoryKnownHost
+PS C:\> New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+True
+PS C:\> $inmem.GetAllKeys()
+
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 Pi          3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4
 ```
 
-{{ Add example description here }}
+Create and in-memory known host store and add a entry to it.
 
 ## PARAMETERS
 
@@ -36,7 +43,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### None
-
 ## OUTPUTS
 
 ### System.Object

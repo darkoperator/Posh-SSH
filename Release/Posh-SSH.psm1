@@ -203,7 +203,7 @@ function Invoke-SSHCommand
                    Position=0)]
         [Alias('Index')]
         [int32[]]
-        $SessionId = $null,
+        $SessionId,
 
         # Ensures a connection is made by reconnecting before command.
         [Parameter(Mandatory=$false)]

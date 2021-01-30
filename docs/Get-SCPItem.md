@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConnectionTimeout
-Connection timeout interval.
+Connection timeout interval in seconds.
 
 ```yaml
 Type: Int32
@@ -364,7 +364,7 @@ Accept wildcard characters: False
 ```
 
 ### -KnownHost
-{{ Fill KnownHost Description }}
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ```yaml
 Type: IStore

@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: Posh-SSH-help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,38 +8,37 @@ schema: 2.0.0
 # New-SSHTrustedHost
 
 ## SYNOPSIS
-Adds a new SSH Host and Fingerprint pait to the list of trusted SSH Hosts.
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ### Local (Default)
 ```
-New-SSHTrustedHost -HostName <Object> -Name <String> [-FingerPrint] <Object> [<CommonParameters>]
+New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> [<CommonParameters>]
 ```
 
 ### Store
 ```
-New-SSHTrustedHost -HostName <Object> -Name <String> [-FingerPrint] <Object> -KnowHostStore <Object>
+New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> -KnowHostStore <Object>
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds a new SSH Host and Fingerprint pait to the list of trusted SSH Hosts.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-New-SSHTrustedHost -SSHHost 192.168.10.20 -FingerPrint a4:6e:80:33:3f:31:4:cb:be:e9:a0:80:fb:38:fd:3b -Verbose
-VERBOSE: Adding to trusted SSH Host list 192.168.10.20 with a fingerprint of
-a4:6e:80:33:3f:31:4:cb:be:e9:a0:80:fb:38:fd:3b
-VERBOSE: SSH Host has been added.
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -FingerPrint
-SSH Server Fingerprint.
+{{ Fill FingerPrint Description }}
 
 ```yaml
 Type: Object
@@ -62,7 +61,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -106,6 +105,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.Object
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

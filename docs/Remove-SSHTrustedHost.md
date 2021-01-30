@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: Posh-SSH-help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,31 +8,31 @@ schema: 2.0.0
 # Remove-SSHTrustedHost
 
 ## SYNOPSIS
-Removes a given SSH Host from the list of trusted hosts.
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ### Local (Default)
 ```
-Remove-SSHTrustedHost -HostName <String> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> [<CommonParameters>]
 ```
 
 ### Store
 ```
-Remove-SSHTrustedHost -HostName <String> -KnowHostStore <Object> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes a given SSH Host from the list of trusted hosts.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-Remove-SSHTrustedHost -SSHHost 192.168.10.20 -Verbose
-VERBOSE: Removing SSH Host 192.168.10.20 from the list of trusted hosts.
-VERBOSE: SSH Host has been removed.
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -45,7 +45,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -74,6 +74,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.String
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

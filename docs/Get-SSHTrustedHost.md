@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: Posh-SSH-help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SSHTrustedHost
 
 ## SYNOPSIS
-List Host and Fingerprint pairs that Posh-SSH trusts.
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
@@ -19,27 +19,20 @@ Get-SSHTrustedHost [-HostName <String>] [<CommonParameters>]
 
 ### Store
 ```
-Get-SSHTrustedHost -KnowHostStore <Object> [-HostName <String>] [<CommonParameters>]
+Get-SSHTrustedHost [-KnowHostStore] <Object> [-HostName <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-List Host and Fingerprint pairs that Posh-SSH trusts.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-Get-SSHTrustedHost
-SSHHost                                                     Fingerprint
-
--------                                                     -----------
-
-192.168.1.143                                               a4:6e:80:33:3f:32:4:cb:be:e9:a0:80:1b:38:fd:3b
-
-192.168.10.3                                                27:ca:f8:39:7e:ba:a:ff:a3:2d:ff:75:16:a6:bc:18
-
-192.168.1.225                                               ea:8c:ec:93:1e:9d:ad:2e:41:bc:d0:b3:d8:a9:98:80
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -67,7 +60,7 @@ Parameter Sets: Store
 Aliases:
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,9 +71,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### None
 ## OUTPUTS
 
-### System.Int32
+### SSH.Stores.KnownHostRecord
 ## NOTES
 
 ## RELATED LINKS

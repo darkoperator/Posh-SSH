@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SSHJsonKnowHost
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\\.poshssh\hosts.json. If the file specified is not present it will be created. 
 
 ## SYNTAX
 
@@ -17,16 +17,23 @@ Get-SSHJsonKnowHost [[-LocalFile] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\\.poshssh\hosts.json. If the file specified is not present it will be created. 
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> $jsontest = Get-SSHJsonKnowHost -LocalFile .\test.json
+PS C:\> $jsontest.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
+True
+PS C:\> $jsontest.GetAllKeys()
+
+HostName    HostKeyName Fingerprint
+--------    ----------- -----------
+192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
 ```
 
-{{ Add example description here }}
+Create a JSON Kmnown Host Store object and using its methods add a new entry.
 
 ## PARAMETERS
 

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-SSHTrustedHost
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Get the current known hosts either from those trusted by Posh-SSH or from a IStore.
 
 ## SYNTAX
 
@@ -23,21 +23,40 @@ Get-SSHTrustedHost [-KnowHostStore] <Object> [-HostName <String>] [<CommonParame
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Get the current known hosts either from those trusted by Posh-SSH, also from a Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\>  Get-SSHTrustedHost
+
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 ssh-ed25519 7a:da:ab:88:55:95:5b:34:89:f6:46:7f:13:c5:65:c1
+
 ```
 
-{{ Add example description here }}
+Get currently stored known hosts.
+
+### Example 2
+```
+PS C:\> $inmem = New-SSHMemoryKnownHost
+PS C:\> $inmem.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
+True
+PS C:\> Get-SSHTrustedHost -KnowHostStore $inmem
+
+HostName    HostKeyName Fingerprint
+--------    ----------- -----------
+192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
+```
+
+Get stored known hosts from an Memory Known Host store.
 
 ## PARAMETERS
 
 ### -HostName
-{{ Fill HostName Description }}
+HostName as stored by Posh-SSH or in a IStore.
 
 ```yaml
 Type: String
@@ -52,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -KnowHostStore
-{{ Fill KnowHostStore Description }}
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ```yaml
 Type: Object

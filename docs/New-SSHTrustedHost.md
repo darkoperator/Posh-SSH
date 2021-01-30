@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-SSHTrustedHost
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Add a new trusted host for Posh-SSH to use. 
 
 ## SYNTAX
 
@@ -24,21 +24,22 @@ New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> -
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Add a new trusted host for Posh-SSH to use. By default it will store the new host in the default Posh-SSH hosts.json file unless a KnownHost store is specified.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> $inmem = New-SSHMemoryKnownHost
+PS C:\> New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
 ```
 
-{{ Add example description here }}
+Add new host entry to a store. 
 
 ## PARAMETERS
 
 ### -FingerPrint
-{{ Fill FingerPrint Description }}
+SSH finger print for the the host to be added. 
 
 ```yaml
 Type: Object
@@ -53,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -HostName
-{{ Fill HostName Description }}
+FQDN or IP address of the host.
 
 ```yaml
 Type: Object
@@ -68,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -KnowHostStore
-{{ Fill KnowHostStore Description }}
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ```yaml
 Type: Object
@@ -83,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-{{ Fill Name Description }}
+Friendly name for the key, in the case of OpenSSH it is the ciphers used.
 
 ```yaml
 Type: String

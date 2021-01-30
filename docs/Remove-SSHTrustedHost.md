@@ -8,7 +8,7 @@ schema: 2.0.0
 # Remove-SSHTrustedHost
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Remove a KnwonHost entry from the default user location or from a KnownHost store. 
 
 ## SYNTAX
 
@@ -23,21 +23,16 @@ Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParam
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Remove a KnwonHost entry from the default user location or from a KnownHost store. 
 
 ## EXAMPLES
 
-### Example 1
-```
-PS C:\> {{ Add example code here }}
-```
 
-{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -HostName
-{{ Fill HostName Description }}
+Host name of the entry to remove. 
 
 ```yaml
 Type: String
@@ -52,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -KnowHostStore
-{{ Fill KnowHostStore Description }}
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ```yaml
 Type: Object

@@ -3125,13 +3125,18 @@ function Start-SSHPortForward
 function Get-SSHTrustedHost
 {
     [CmdletBinding(DefaultParameterSetName = "Local")]
-    [OutputType()]
+    [OutputType("SSH.Stores.KnownHostRecord")]
     Param(
         # Known Host Store
         [Parameter(Mandatory = $true,
            ParameterSetName = "Store",
            Position = 0)]
-        $KnowHostStore
+        $KnowHostStore,
+
+        # Host name the key fingerprint is associated with.
+        [Parameter(Mandatory = $false)]
+        [String]
+        $HostName
     )
 
     Begin{
@@ -3141,16 +3146,19 @@ function Get-SSHTrustedHost
     {
        if ($PSCmdlet.ParameterSetName -eq "Local") {
            if (Test-Path -PathType Leaf $Default) {
-                $jStore = Get-SSHJsonKnowHost
-                $jStore.GetAllKeys()
+                $Store = Get-SSHJsonKnowHost
            } else {
                Write-Warning -Message "No known host file found, $($Default)"
            }
        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-           
+            $Store = $KnowHostStore
        }
 
-       
+       if ($PSBoundParameters.Keys -contains "HostName") {
+            $Store.GetKey($HostName) | Add-Member -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+       } else {
+            $Store.GetAllKeys() 
+       }
     }
     End
     {}

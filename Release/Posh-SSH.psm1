@@ -3116,40 +3116,39 @@ function Start-SSHPortForward
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
- function Get-SSHTrustedHost
- {
-     [CmdletBinding()]
-     [OutputType([int])]
-     Param()
+function Get-SSHTrustedHost
+{
+    [CmdletBinding(DefaultParameterSetName = "Local")]
+    [OutputType()]
+    Param(
+        # Known Host Store
+        [Parameter(Mandatory = $true,
+           ParameterSetName = "Store",
+           Position = 0)]
+        $KnowHostStore
+    )
 
-     Begin{}
-     Process
-     {
-        $Test_Path_Result = Test-Path -Path "hkcu:\Software\PoshSSH"
-        if ($Test_Path_Result -eq $false)
-        {
-            Write-Verbose -Message 'No previous trusted keys have been configured on this system.'
-            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
-            return
-        }
-        $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+   }
+    Process
+    {
+       if ($PSCmdlet.ParameterSetName -eq "Local") {
+           if (Test-Path -PathType Leaf $Default) {
+                $jStore = Get-SSHJsonKnowHost
+                $jStore.GetAllKeys()
+           } else {
+               Write-Warning -Message "No known host file found, $($Default)"
+           }
+       } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+           
+       }
 
-        $hostnames = $poshsshkey.GetValueNames()
-        $TrustedHosts = @()
-        foreach($h in $hostnames)
-        {
-            $TrustedHost = @{
-                SSHHost        = $h
-                Fingerprint = $poshsshkey.GetValue($h)
-            }
-            $TrustedHosts += New-Object -TypeName psobject -Property $TrustedHost
-        }
-     }
-     End
-     {
-        $TrustedHosts
-     }
- }
+       
+    }
+    End
+    {}
+}
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

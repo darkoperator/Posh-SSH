@@ -3121,7 +3121,6 @@ function Start-SSHPortForward
     End{}
 }
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SSHTrustedHost
 {
     [CmdletBinding(DefaultParameterSetName = "Local")]
@@ -3165,10 +3164,9 @@ function Get-SSHTrustedHost
 }
 
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
  function New-SSHTrustedHost
  {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Local")]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
@@ -3212,45 +3210,37 @@ function Get-SSHTrustedHost
      End {}
  }
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
+
  function Remove-SSHTrustedHost
  {
-    [CmdletBinding()]
-     Param
-     (
-         # Param1 help description
-         [Parameter(Mandatory=$true,
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=0)]
-         [string]
-         $SSHHost
+    [CmdletBinding(DefaultParameterSetName = "Local")]
+    Param(
+        # IP Address of FQDN of host to add to trusted list.
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [string]
+        $HostName,
+
+        # Known Host Store
+        [Parameter(Mandatory = $true,
+        ParameterSetName = "Store")]
+        $KnowHostStore
      )
 
-     Begin
-     {
-     }
-     Process
-     {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
-        if ($softkey.GetSubKeyNames() -contains 'PoshSSH' )
-        {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+     Begin{}
+     Process{
+        if ($PSCmdlet.ParameterSetName -eq "Local") {
+            if (Test-Path -PathType Leaf $Default) {
+                 $Store = Get-SSHJsonKnowHost
+            } else {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
+        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+             $Store = $KnowHostStore
         }
-        else
-        {
-            Write-warning 'PoshSSH Registry key is not present for this user.'
-            return
-        }
-        Write-Verbose "Removing SSH Host $($SSHHost) from the list of trusted hosts."
-        if ($poshsshkey.GetValueNames() -contains $SSHHost)
-        {
-            $poshsshkey.DeleteValue($SSHHost)
-            Write-Verbose 'SSH Host has been removed.'
-        }
-        else
-        {
-            Write-Warning "SSH Hosts $($SSHHost) was not present in the list of trusted hosts."
-        }
+ 
+        $Store.RemoveByHost($HostName)
      }
      End{}
  }

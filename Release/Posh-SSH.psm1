@@ -3175,39 +3175,41 @@ function Get-SSHTrustedHost
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=0)]
-         $SSHHost,
+         $HostName,
+
+         # Friendly Name for the entry. On OpenSSH this is the key cipher.
+         [Parameter(Mandatory = $true)]
+         [string]
+         $Name,
 
          # SSH Server Fingerprint.
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
-         $FingerPrint
+         $FingerPrint,
+
+         # Known Host Store
+        [Parameter(Mandatory = $true,
+        ParameterSetName = "Store")]
+        $KnowHostStore
      )
 
-     Begin
-     {
-     }
+     Begin {}
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
-        if ( $softkey.GetSubKeyNames() -contains 'PoshSSH')
-        {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+        if ($PSCmdlet.ParameterSetName -eq "Local") {
+            if (Test-Path -PathType Leaf $Default) {
+                 $Store = Get-SSHJsonKnowHost
+            } else {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
+        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+             $Store = $KnowHostStore
         }
-        else
-        {
-            Write-Verbose 'PoshSSH Registry key is not present for this user.'
-            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
-            Write-Verbose 'PoshSSH Key created.'
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
-        }
-        Write-Verbose "Adding to trusted SSH Host list $($SSHHost) with a fingerprint of $($FingerPrint)"
-        $poshsshkey.SetValue($SSHHost, $FingerPrint)
-        Write-Verbose 'SSH Host has been added.'
+ 
+        $Store.SetKey($HostName, $Name, $FingerPrint)
      }
-     End
-     {
-     }
+     End {}
  }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml

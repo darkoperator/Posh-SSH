@@ -31,6 +31,10 @@ namespace SSH
             {
                 var homeFolder = GetVariableValue("HOME").ToString();
                 _localfile = Path.Combine(homeFolder, ".ssh", "known_hosts");
+            } 
+            else
+            {
+                _localfile = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
             }
             var store = new Stores.OpenSSHStore(_localfile);
 

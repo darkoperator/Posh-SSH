@@ -28,6 +28,10 @@ namespace SSH
                 var homeFolder = GetVariableValue("HOME").ToString();
                 _localfile = Path.Combine(homeFolder, ".poshssh", "hosts.json");
             }
+            else
+            {
+                _localfile = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
+            }
             var store = new Stores.JsonStore(_localfile);
 
             WriteObject(store);

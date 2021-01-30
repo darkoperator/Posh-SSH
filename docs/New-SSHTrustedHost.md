@@ -12,8 +12,15 @@ Adds a new SSH Host and Fingerprint pait to the list of trusted SSH Hosts.
 
 ## SYNTAX
 
+### Local (Default)
 ```
-New-SSHTrustedHost [-SSHHost] <Object> [-FingerPrint] <Object> [<CommonParameters>]
+New-SSHTrustedHost -HostName <Object> -Name <String> [-FingerPrint] <Object> [<CommonParameters>]
+```
+
+### Store
+```
+New-SSHTrustedHost -HostName <Object> -Name <String> [-FingerPrint] <Object> -KnowHostStore <Object>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,21 +38,6 @@ VERBOSE: SSH Host has been added.
 
 ## PARAMETERS
 
-### -SSHHost
-IP Address of FQDN of host to add to trusted list.
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -FingerPrint
 SSH Server Fingerprint.
 
@@ -58,6 +50,51 @@ Required: True
 Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -HostName
+{{ Fill HostName Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KnowHostStore
+{{ Fill KnowHostStore Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Store
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+{{ Fill Name Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

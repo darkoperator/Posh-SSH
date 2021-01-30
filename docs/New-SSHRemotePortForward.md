@@ -14,13 +14,13 @@ Port forward a local port as a port on a remote server.
 
 ### Index (Default)
 ```
-New-SSHRemotePortForward -LocalAdress <String> -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
+New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
  -Index <Int32> [<CommonParameters>]
 ```
 
 ### Session
 ```
-New-SSHRemotePortForward -LocalAdress <String> -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
+New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
  -SSHSession <SshSession> [<CommonParameters>]
 ```
 
@@ -62,7 +62,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

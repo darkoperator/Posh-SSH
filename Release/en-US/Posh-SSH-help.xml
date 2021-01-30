@@ -17,9 +17,9 @@
         <maml:name>Get-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -32,9 +32,9 @@
         <maml:name>Get-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SessionId Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -47,9 +47,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -59,9 +59,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SessionId Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -112,9 +112,9 @@
         <maml:name>New-SSHDynamicPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -124,9 +124,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -136,9 +136,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -151,9 +151,9 @@
         <maml:name>New-SSHDynamicPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SessionId Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -163,9 +163,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -175,9 +175,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -190,9 +190,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundHost Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -202,9 +202,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundPort Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -214,9 +214,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -226,9 +226,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SessionId Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -247,9 +247,14 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose</dev:code>
+        <dev:code>New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose
+VERBOSE: Finding session with Index 0
+VERBOSE: 0
+VERBOSE: Adding Forward Port Configuration to session 0
+VERBOSE: Starting the Port Forward.
+VERBOSE: Forwarding has been started.</dev:code>
         <dev:remarks>
-          <maml:para>VERBOSE: Finding session with Index 0 VERBOSE: 0 VERBOSE: Adding Forward Port Configuration to session 0 VERBOSE: Starting the Port Forward. VERBOSE: Forwarding has been started.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -277,9 +282,9 @@
         <maml:name>New-SSHLocalPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -289,9 +294,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -301,9 +306,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -313,9 +318,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>RemoteAddress</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -325,9 +330,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>RemotePort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill RemotePort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill RemotePort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -340,9 +345,9 @@
         <maml:name>New-SSHLocalPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SessionId Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -352,9 +357,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -364,9 +369,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -376,9 +381,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>RemoteAddress</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -388,9 +393,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>RemotePort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill RemotePort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill RemotePort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -403,9 +408,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundHost Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -415,9 +420,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundPort Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -427,9 +432,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>RemoteAddress</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -439,9 +444,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>RemotePort</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill RemotePort Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill RemotePort Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -451,9 +456,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -463,9 +468,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SessionId Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -517,9 +522,9 @@
         <maml:name>New-SSHRemotePortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>Index</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Index Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -529,9 +534,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalAdress</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill LocalAdress Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -541,9 +546,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalPort</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill LocalPort Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -553,9 +558,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemoteAddress</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -565,9 +570,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemotePort</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill RemotePort Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -580,9 +585,9 @@
         <maml:name>New-SSHRemotePortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalAdress</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill LocalAdress Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -592,9 +597,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalPort</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill LocalPort Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -604,9 +609,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemoteAddress</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -616,9 +621,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemotePort</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill RemotePort Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -628,9 +633,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -643,9 +648,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>Index</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill Index Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -655,9 +660,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LocalAdress</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill LocalAdress Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -667,9 +672,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LocalPort</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill LocalPort Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -679,9 +684,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RemoteAddress</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill RemoteAddress Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -691,9 +696,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RemotePort</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill RemotePort Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -703,9 +708,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -772,9 +777,9 @@
         <maml:name>Start-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -784,9 +789,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -796,9 +801,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -811,9 +816,9 @@
         <maml:name>Start-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SessionId Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -823,9 +828,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -835,9 +840,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -850,9 +855,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -862,9 +867,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SessionId Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -874,9 +879,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundPort Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -886,9 +891,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundHost Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -944,9 +949,9 @@
         <maml:name>Stop-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -956,9 +961,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -968,9 +973,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -983,9 +988,9 @@
         <maml:name>Stop-SSHPortForward</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill SessionId Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -995,9 +1000,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundHost Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1007,9 +1012,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
-          <maml:Description>
-            <maml:para>{{Fill BoundPort Description}}</maml:para>
-          </maml:Description>
+          <maml:description>
+            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1022,9 +1027,9 @@
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -1034,9 +1039,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill SessionId Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1046,9 +1051,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundPort Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1058,9 +1063,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
-        <maml:Description>
-          <maml:para>{{Fill BoundHost Description}}</maml:para>
-        </maml:Description>
+        <maml:description>
+          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>

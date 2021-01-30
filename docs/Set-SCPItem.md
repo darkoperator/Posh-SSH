@@ -14,28 +14,29 @@ Upload an item, either file or directory to a remote system via SCP.
 
 ### NoKey (Default)
 ```
-Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-Path] <String>
- [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore> [<CommonParameters>]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### Key
 ```
-Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
- [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### KeyString
 ```
-Set-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-Path] <String> [-Destination] <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
- [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -62,7 +63,7 @@ Uploade a directory to the target folder.
 Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
@@ -330,15 +331,30 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Store
-{{ Fill Store Description }}
+### -KeepAliveInterval
+Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KnownHost
+{{ Fill KnownHost Description }}
 
 ```yaml
 Type: IStore
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

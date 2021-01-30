@@ -12,8 +12,14 @@ Removes a given SSH Host from the list of trusted hosts.
 
 ## SYNTAX
 
+### Local (Default)
 ```
-Remove-SSHTrustedHost [-SSHHost] <String> [<CommonParameters>]
+Remove-SSHTrustedHost -HostName <String> [<CommonParameters>]
+```
+
+### Store
+```
+Remove-SSHTrustedHost -HostName <String> -KnowHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,8 +36,8 @@ VERBOSE: SSH Host has been removed.
 
 ## PARAMETERS
 
-### -SSHHost
-IP Address of FQDN of host to add to trusted list.
+### -HostName
+{{ Fill HostName Description }}
 
 ```yaml
 Type: String
@@ -39,9 +45,24 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KnowHostStore
+{{ Fill KnowHostStore Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Store
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

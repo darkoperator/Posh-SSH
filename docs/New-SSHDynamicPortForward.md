@@ -14,12 +14,13 @@ Establishes a Dynamic Port Forward thru a stablished SSH Session.
 
 ### Index (Default)
 ```
-New-SSHDynamicPortForward [-BoundHost] <String> [-BoundPort] <Int32> [-SessionId] <Int32> [<CommonParameters>]
+New-SSHDynamicPortForward [[-BoundHost] <String>] [-BoundPort] <Int32> [-SessionId] <Int32>
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
-New-SSHDynamicPortForward [-BoundHost] <String> [-BoundPort] <Int32> [-SSHSession] <SshSession>
+New-SSHDynamicPortForward [[-BoundHost] <String>] [-BoundPort] <Int32> [-SSHSession] <SshSession>
  [<CommonParameters>]
 ```
 
@@ -51,7 +52,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
 Default value: Localhost
 Accept pipeline input: False

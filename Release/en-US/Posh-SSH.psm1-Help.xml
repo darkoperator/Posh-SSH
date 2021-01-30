@@ -71,9 +71,9 @@ InstalledVersion                                  CurrentVersion
         <maml:name>Get-SFTPChildItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -83,9 +83,9 @@ InstalledVersion                                  CurrentVersion
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of directory whose content will be enumerated.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -95,9 +95,9 @@ InstalledVersion                                  CurrentVersion
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Recursive</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -109,9 +109,9 @@ InstalledVersion                                  CurrentVersion
         <maml:name>Get-SFTPChildItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -121,9 +121,9 @@ InstalledVersion                                  CurrentVersion
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of directory whose content will be enumerated.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -133,9 +133,9 @@ InstalledVersion                                  CurrentVersion
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Recursive</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -147,9 +147,9 @@ InstalledVersion                                  CurrentVersion
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -159,9 +159,9 @@ InstalledVersion                                  CurrentVersion
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path of directory whose content will be enumerated.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -171,9 +171,9 @@ InstalledVersion                                  CurrentVersion
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Recursive</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -183,9 +183,9 @@ InstalledVersion                                  CurrentVersion
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -300,9 +300,9 @@ UserId         : 1000</dev:code>
         <maml:name>Get-SFTPContent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -312,9 +312,9 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path to file to get content from.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -324,11 +324,11 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ContentType</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
             <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
             <maml:para>* String - returns a string with all the contents of the file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -338,9 +338,9 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>What type of encoding to use when content type is String or MultiLine.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -353,9 +353,9 @@ UserId         : 1000</dev:code>
         <maml:name>Get-SFTPContent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -365,9 +365,9 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path to file to get content from.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -377,11 +377,11 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ContentType</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
             <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
             <maml:para>* String - returns a string with all the contents of the file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -391,9 +391,9 @@ UserId         : 1000</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>What type of encoding to use when content type is String or MultiLine.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -406,9 +406,9 @@ UserId         : 1000</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -418,9 +418,9 @@ UserId         : 1000</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path to file to get content from.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -430,11 +430,11 @@ UserId         : 1000</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ContentType</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
           <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
           <maml:para>* String - returns a string with all the contents of the file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -444,9 +444,9 @@ UserId         : 1000</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Encoding</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>What type of encoding to use when content type is String or MultiLine.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -456,9 +456,9 @@ UserId         : 1000</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -533,9 +533,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         <maml:name>Get-SFTPLocation</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -548,9 +548,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         <maml:name>Get-SFTPLocation</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -563,9 +563,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -575,9 +575,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -644,9 +644,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         <maml:name>Get-SFTPPathAttribute</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -656,9 +656,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path to get information on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -671,9 +671,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         <maml:name>Get-SFTPPathAttribute</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -683,9 +683,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path to get information on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -698,9 +698,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -710,9 +710,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path to get information on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -722,9 +722,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -830,9 +830,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
         <maml:name>Get-SFTPSession</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Id for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -845,9 +845,9 @@ CentOS Linux release 7.0.1406 (Core)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Id for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -900,9 +900,9 @@ SessionId  Host                                            Connected
         <maml:name>Get-SSHSession</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Session Id for an exiting SSH session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -915,9 +915,9 @@ SessionId  Host                                            Connected
         <maml:name>Get-SSHSession</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Server, HostName, Host">
           <maml:name>ComputerName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>ComputerName for an exiting SSH session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -927,9 +927,9 @@ SessionId  Host                                            Connected
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>ExactMatch</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Only exact match when searching by ComputerName.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -941,9 +941,9 @@ SessionId  Host                                            Connected
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Session Id for an exiting SSH session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -953,9 +953,9 @@ SessionId  Host                                            Connected
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Server, HostName, Host">
         <maml:name>ComputerName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>ComputerName for an exiting SSH session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -965,9 +965,9 @@ SessionId  Host                                            Connected
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>ExactMatch</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Only exact match when searching by ComputerName.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1079,9 +1079,9 @@ SSHHost                                                     Fingerprint
         <maml:name>Invoke-SSHCommand</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -1091,9 +1091,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Command to execute in remote host.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1103,9 +1103,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1115,9 +1115,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1127,9 +1127,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1141,9 +1141,9 @@ SSHHost                                                     Fingerprint
         <maml:name>Invoke-SSHCommand</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session object.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SshSession[]</maml:name>
@@ -1153,9 +1153,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Command to execute in remote host.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1165,9 +1165,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1177,9 +1177,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1189,9 +1189,9 @@ SSHHost                                                     Fingerprint
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1203,9 +1203,9 @@ SSHHost                                                     Fingerprint
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Command</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Command to execute in remote host.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1215,9 +1215,9 @@ SSHHost                                                     Fingerprint
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -1227,9 +1227,9 @@ SSHHost                                                     Fingerprint
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>EnsureConnection</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1239,9 +1239,9 @@ SSHHost                                                     Fingerprint
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>TimeOut</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1251,9 +1251,9 @@ SSHHost                                                     Fingerprint
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>ThrottleLimit</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1263,9 +1263,9 @@ SSHHost                                                     Fingerprint
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session object.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SshSession[]</maml:name>
@@ -1339,9 +1339,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHCommandStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Session Id for an exiting SSH session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1351,9 +1351,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1363,9 +1363,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1375,9 +1375,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1386,9 +1386,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>HostVariable</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1398,9 +1398,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ExitStatusVariable</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1413,9 +1413,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHCommandStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -1425,9 +1425,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1437,9 +1437,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1449,9 +1449,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1460,9 +1460,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>HostVariable</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1472,9 +1472,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ExitStatusVariable</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1487,9 +1487,9 @@ ExitStatus : 0</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Command</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1499,9 +1499,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Session Id for an exiting SSH session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1511,9 +1511,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>EnsureConnection</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1523,9 +1523,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>TimeOut</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1535,9 +1535,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>HostVariable</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1547,9 +1547,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ExitStatusVariable</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1559,9 +1559,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -1628,9 +1628,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHStreamExpectAction</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
           <maml:name>ShellStream</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Shell Stream.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
           <dev:type>
             <maml:name>ShellStream</maml:name>
@@ -1640,9 +1640,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1652,9 +1652,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ExpectString</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>String on what to trigger the action on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1664,9 +1664,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Action</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Command to execute once an expression is matched.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1676,9 +1676,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Number of seconds to wait for a match.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1691,9 +1691,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHStreamExpectAction</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
           <maml:name>ShellStream</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Shell Stream.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
           <dev:type>
             <maml:name>ShellStream</maml:name>
@@ -1703,9 +1703,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1715,9 +1715,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ExpectRegex</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Regular expression on what to trigger the action on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
           <dev:type>
             <maml:name>Regex</maml:name>
@@ -1727,9 +1727,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Action</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Command to execute once an expression is matched.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1739,9 +1739,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Number of seconds to wait for a match.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1754,9 +1754,9 @@ ExitStatus : 0</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
         <maml:name>ShellStream</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Shell Stream.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
         <dev:type>
           <maml:name>ShellStream</maml:name>
@@ -1766,9 +1766,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Command</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1778,9 +1778,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectString</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>String on what to trigger the action on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1790,9 +1790,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>Action</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Command to execute once an expression is matched.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1802,9 +1802,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
         <maml:name>TimeOut</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Number of seconds to wait for a match.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -1814,9 +1814,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectRegex</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Regular expression on what to trigger the action on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
         <dev:type>
           <maml:name>Regex</maml:name>
@@ -1907,9 +1907,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHStreamExpectSecureAction</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
           <maml:name>ShellStream</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Shell Stream.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
           <dev:type>
             <maml:name>ShellStream</maml:name>
@@ -1919,9 +1919,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1931,9 +1931,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ExpectString</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>String on what to trigger the action on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1943,9 +1943,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>SecureAction</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SecureString representation of action once an expression is matched.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
           <dev:type>
             <maml:name>SecureString</maml:name>
@@ -1955,9 +1955,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Number of seconds to wait for a match.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -1970,9 +1970,9 @@ ExitStatus : 0</dev:code>
         <maml:name>Invoke-SSHStreamExpectSecureAction</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
           <maml:name>ShellStream</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Shell Stream.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
           <dev:type>
             <maml:name>ShellStream</maml:name>
@@ -1982,9 +1982,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1994,9 +1994,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ExpectRegex</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Regular expression on what to trigger the action on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
           <dev:type>
             <maml:name>Regex</maml:name>
@@ -2006,9 +2006,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>SecureAction</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SecureString representation of action once an expression is matched.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
           <dev:type>
             <maml:name>SecureString</maml:name>
@@ -2018,9 +2018,9 @@ ExitStatus : 0</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
           <maml:name>TimeOut</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Number of seconds to wait for a match.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -2033,9 +2033,9 @@ ExitStatus : 0</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="none">
         <maml:name>ShellStream</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Shell Stream.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
         <dev:type>
           <maml:name>ShellStream</maml:name>
@@ -2045,9 +2045,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Command</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Initial command that will generate the output to be evaluated by the expect pattern.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2057,9 +2057,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectString</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>String on what to trigger the action on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2069,9 +2069,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>SecureAction</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SecureString representation of action once an expression is matched.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
         <dev:type>
           <maml:name>SecureString</maml:name>
@@ -2081,9 +2081,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
         <maml:name>TimeOut</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Number of seconds to wait for a match.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -2093,9 +2093,9 @@ ExitStatus : 0</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectRegex</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Regular expression on what to trigger the action on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Regex</command:parameterValue>
         <dev:type>
           <maml:name>Regex</maml:name>
@@ -2245,9 +2245,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <maml:name>Invoke-SSHStreamShellCommand</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>ShellStream</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH stream to use for command execution.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
           <dev:type>
             <maml:name>ShellStream</maml:name>
@@ -2257,9 +2257,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Command</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Command to execute on SSHStream.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2269,9 +2269,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>PrompPattern</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill PrompPattern Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2284,9 +2284,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>ShellStream</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH stream to use for command execution.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">ShellStream</command:parameterValue>
         <dev:type>
           <maml:name>ShellStream</maml:name>
@@ -2296,9 +2296,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>Command</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Command to execute on SSHStream.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2308,9 +2308,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>PrompPattern</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill PrompPattern Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2368,9 +2368,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <maml:name>Move-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Session Id of an existing SFTPSession.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -2380,9 +2380,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="FullName">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Full path of item to be moved.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2392,9 +2392,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>Destination</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>New destination full path.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2407,9 +2407,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <maml:name>Move-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Existing SFTPSession object.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -2419,9 +2419,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="FullName">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Full path of item to be moved.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2431,9 +2431,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>Destination</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>New destination full path.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2446,9 +2446,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Session Id of an existing SFTPSession.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -2458,9 +2458,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Existing SFTPSession object.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -2470,9 +2470,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="FullName">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Full path of item to be moved.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2482,9 +2482,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>Destination</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>New destination full path.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2533,9 +2533,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <maml:name>New-SFTPFileStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Id for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -2545,9 +2545,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of file to create a stream for.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2557,7 +2557,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>FileMode</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
             <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
             <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
@@ -2565,7 +2565,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
             <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
             <maml:para></maml:para>
             <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2575,9 +2575,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>FileAccess</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Defines constants for read, write, or read/write access to a file. * Read -  Read access to the file. Data can be read from the file. * ReadWrite - Read and write access to the file. Data can be written to and read from the file. * Write -  Write access to the file. Data can be written to the file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2590,9 +2590,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <maml:name>New-SFTPFileStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession</maml:name>
@@ -2602,9 +2602,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of file to create a stream for.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2614,7 +2614,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>FileMode</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
             <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
             <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
@@ -2622,7 +2622,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
             <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
             <maml:para></maml:para>
             <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2632,9 +2632,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>FileAccess</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Defines constants for read, write, or read/write access to a file. * Read -  Read access to the file. Data can be read from the file. * ReadWrite - Read and write access to the file. Data can be written to and read from the file. * Write -  Write access to the file. Data can be written to the file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2647,9 +2647,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Id for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -2659,9 +2659,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path of file to create a stream for.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2671,7 +2671,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>FileMode</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
           <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
           <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
@@ -2679,7 +2679,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
           <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
           <maml:para></maml:para>
           <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2689,9 +2689,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>FileAccess</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Defines constants for read, write, or read/write access to a file. * Read -  Read access to the file. Data can be read from the file. * ReadWrite - Read and write access to the file. Data can be written to and read from the file. * Write -  Write access to the file. Data can be written to the file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2701,9 +2701,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession</maml:name>
@@ -2814,9 +2814,9 @@ PS C:\&gt; $bashhistory
         <maml:name>New-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Id for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -2826,9 +2826,9 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to create the item.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2838,10 +2838,10 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>ItemType</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Type of item to create. Options are: * File</maml:para>
             <maml:para>* Directory</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2851,9 +2851,9 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Recurse</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -2865,9 +2865,9 @@ PS C:\&gt; $bashhistory
         <maml:name>New-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -2877,9 +2877,9 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to create the item.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2889,10 +2889,10 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>ItemType</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Type of item to create. Options are: * File</maml:para>
             <maml:para>* Directory</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2902,9 +2902,9 @@ PS C:\&gt; $bashhistory
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Recurse</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>@{Text=}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -2916,9 +2916,9 @@ PS C:\&gt; $bashhistory
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Id for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -2928,9 +2928,9 @@ PS C:\&gt; $bashhistory
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path on remote host to create the item.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2940,10 +2940,10 @@ PS C:\&gt; $bashhistory
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>ItemType</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Type of item to create. Options are: * File</maml:para>
           <maml:para>* Directory</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2953,9 +2953,9 @@ PS C:\&gt; $bashhistory
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Recurse</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>@{Text=}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -2965,9 +2965,9 @@ PS C:\&gt; $bashhistory
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -3066,9 +3066,9 @@ FullName       : /tmp/help
         <maml:name>New-SFTPSymlink</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -3078,9 +3078,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to link to.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3090,9 +3090,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>LinkPath</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to create as the symbolic link.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3105,9 +3105,9 @@ FullName       : /tmp/help
         <maml:name>New-SFTPSymlink</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -3117,9 +3117,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to link to.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3129,9 +3129,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>LinkPath</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to create as the symbolic link.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3144,9 +3144,9 @@ FullName       : /tmp/help
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -3156,9 +3156,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path on remote host to link to.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3168,9 +3168,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>LinkPath</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path on remote host to create as the symbolic link.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3180,9 +3180,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -3256,9 +3256,9 @@ FullName       : /tmp/help
         <maml:name>New-SSHShellStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Id for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3268,9 +3268,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>TerminalName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Name of the terminal.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3280,9 +3280,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Columns</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The columns</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3292,9 +3292,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Rows</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The rows.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3304,9 +3304,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Width</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The width.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3316,9 +3316,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Height</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The height.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3328,9 +3328,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>BufferSize</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Size of the buffer.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3343,9 +3343,9 @@ FullName       : /tmp/help
         <maml:name>New-SSHShellStream</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Object for an existing session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
             <maml:name>SshSession</maml:name>
@@ -3355,9 +3355,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>TerminalName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Name of the terminal.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3367,9 +3367,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Columns</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The columns</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3379,9 +3379,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Rows</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The rows.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3391,9 +3391,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Width</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The width.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3403,9 +3403,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Height</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The height.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3415,9 +3415,9 @@ FullName       : /tmp/help
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>BufferSize</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Size of the buffer.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -3430,9 +3430,9 @@ FullName       : /tmp/help
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Id for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3442,9 +3442,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>TerminalName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Name of the terminal.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3454,9 +3454,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Columns</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The columns</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3466,9 +3466,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Rows</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The rows.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3478,9 +3478,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Width</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The width.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3490,9 +3490,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Height</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The height.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3502,9 +3502,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>BufferSize</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Size of the buffer.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -3514,9 +3514,9 @@ FullName       : /tmp/help
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Object for an existing session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
           <maml:name>SshSession</maml:name>
@@ -3605,9 +3605,9 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
         <maml:name>New-SSHTrustedHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>SSHHost</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3617,9 +3617,9 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>FingerPrint</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Server Fingerprint.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3632,9 +3632,9 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>SSHHost</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3644,9 +3644,9 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>FingerPrint</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Server Fingerprint.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3707,9 +3707,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -3719,9 +3719,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of item to be removed on remote host.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3731,9 +3731,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Force the deletion of a none empty directory by recursively deleting all files in it.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -3745,9 +3745,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SFTPItem</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -3757,9 +3757,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path of item to be removed on remote host.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3769,9 +3769,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Force the deletion of a none empty directory by recursively deleting all files in it.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -3783,9 +3783,9 @@ VERBOSE: SSH Host has been added.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -3795,9 +3795,9 @@ VERBOSE: SSH Host has been added.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path of item to be removed on remote host.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3807,9 +3807,9 @@ VERBOSE: SSH Host has been added.</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Force</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Force the deletion of a none empty directory by recursively deleting all files in it.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -3819,9 +3819,9 @@ VERBOSE: SSH Host has been added.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -3887,9 +3887,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SFTPSession</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -3902,9 +3902,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SFTPSession</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -3917,9 +3917,9 @@ VERBOSE: SSH Host has been added.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -3929,9 +3929,9 @@ VERBOSE: SSH Host has been added.</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -4001,9 +4001,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SSHSession</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Session Id for an exiting SSH session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -4016,9 +4016,9 @@ VERBOSE: SSH Host has been added.</dev:code>
         <maml:name>Remove-SSHSession</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
           <maml:name>SSHSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SSH Session Object for an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SshSession[]</maml:name>
@@ -4031,9 +4031,9 @@ VERBOSE: SSH Host has been added.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Session Id for an exiting SSH session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -4043,9 +4043,9 @@ VERBOSE: SSH Host has been added.</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>SSHSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SSH Session Object for an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SshSession[]</maml:name>
@@ -4087,6 +4087,15 @@ True</dev:code>
           <maml:para>Remove a SSH Session specified by SessionId</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-SSHSession | Remove-SSHSession
+True
+True</dev:code>
+        <dev:remarks>
+          <maml:para>Remove all sessions</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
@@ -4112,9 +4121,9 @@ True</dev:code>
         <maml:name>Remove-SSHTrustedHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>SSHHost</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4127,9 +4136,9 @@ True</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>SSHHost</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4189,9 +4198,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Rename-SFTPFile</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -4201,9 +4210,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Full path to file to rename</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4213,9 +4222,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>NewName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>New name for file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4228,9 +4237,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Rename-SFTPFile</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Exiting SFTP Session object.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -4240,9 +4249,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Full path to file to rename</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4252,9 +4261,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>NewName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>New name for file.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4267,9 +4276,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -4279,9 +4288,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Full path to file to rename</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4291,9 +4300,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>NewName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>New name for file.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4303,9 +4312,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Exiting SFTP Session object.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -4373,9 +4382,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Set-SFTPContent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill SessionId Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -4385,9 +4394,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Path Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4397,9 +4406,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Value</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Value Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -4409,9 +4418,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Encoding Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4421,9 +4430,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Append</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Append Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -4435,9 +4444,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Set-SFTPContent</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill SFTPSession Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -4447,9 +4456,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Path Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4459,9 +4468,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Value</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Value Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -4471,9 +4480,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Encoding Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4483,9 +4492,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Append</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{Fill Append Description}}</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -4497,9 +4506,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill SessionId Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -4509,9 +4518,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill SFTPSession Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -4521,9 +4530,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill Path Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4533,9 +4542,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>Value</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill Value Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -4545,9 +4554,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Encoding</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill Encoding Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4557,9 +4566,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Append</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{Fill Append Description}}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -4617,9 +4626,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Set-SFTPLocation</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -4629,9 +4638,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Remote path to change current location of the SFTP session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4644,9 +4653,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         <maml:name>Set-SFTPLocation</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -4656,9 +4665,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Remote path to change current location of the SFTP session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4671,9 +4680,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -4683,9 +4692,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Remote path to change current location of the SFTP session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -4695,9 +4704,9 @@ VERBOSE: SSH Host has been removed.</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -4765,9 +4774,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         <maml:name>Set-SFTPPathAttribute</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Session Id of an existing SFTPSession.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -4777,9 +4786,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Remote path we want to set attribute on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4789,9 +4798,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>LastAccessTime</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the last access time.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -4801,9 +4810,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>LastWriteTime</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the last write time.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -4813,9 +4822,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set a group id.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -4825,9 +4834,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>UserId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the user id.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -4837,9 +4846,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4849,9 +4858,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4861,9 +4870,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4873,9 +4882,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4885,9 +4894,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4897,9 +4906,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4909,9 +4918,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4921,9 +4930,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4933,9 +4942,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -4948,9 +4957,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         <maml:name>Set-SFTPPathAttribute</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Existing SFTPSession object.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -4960,9 +4969,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Remote path we want to set attribute on.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4972,9 +4981,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>LastAccessTime</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the last access time.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -4984,9 +4993,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>LastWriteTime</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the last write time.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -4996,9 +5005,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set a group id.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -5008,9 +5017,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>UserId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set the user id.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -5020,9 +5029,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5032,9 +5041,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5044,9 +5053,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if the owning group can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5056,9 +5065,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5068,9 +5077,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5080,9 +5089,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OthersCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if others can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5092,9 +5101,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanExecute</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can execute.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5104,9 +5113,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanRead</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can read.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5116,9 +5125,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>OwnerCanWrite</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set if owner can write.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
             <maml:name>Boolean</maml:name>
@@ -5131,9 +5140,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Session Id of an existing SFTPSession.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -5143,9 +5152,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Remote path we want to set attribute on.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -5155,9 +5164,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>LastAccessTime</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set the last access time.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -5167,9 +5176,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>LastWriteTime</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set the last write time.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -5179,9 +5188,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>GroupId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set a group id.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -5191,9 +5200,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>UserId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set the user id.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -5203,9 +5212,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>GroupCanExecute</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if the owning group can execute.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5215,9 +5224,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>GroupCanRead</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if the owning group can read.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5227,9 +5236,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>GroupCanWrite</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if the owning group can write.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5239,9 +5248,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OthersCanExecute</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if others can execute.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5251,9 +5260,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OthersCanRead</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if others can read.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5263,9 +5272,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OthersCanWrite</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if others can write.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5275,9 +5284,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OwnerCanExecute</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if owner can execute.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5287,9 +5296,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OwnerCanRead</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if owner can read.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5299,9 +5308,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>OwnerCanWrite</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set if owner can write.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
           <maml:name>Boolean</maml:name>
@@ -5311,9 +5320,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Existing SFTPSession object.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>
@@ -5420,9 +5429,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         <maml:name>Test-SFTPPath</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
           <maml:name>SessionId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Id of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
             <maml:name>Int32[]</maml:name>
@@ -5432,9 +5441,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to test.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -5447,9 +5456,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         <maml:name>Test-SFTPPath</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
           <maml:name>SFTPSession</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>SFTP Session Object of an exiting session.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
             <maml:name>SftpSession[]</maml:name>
@@ -5459,9 +5468,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Path</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Path on remote host to test.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -5474,9 +5483,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="Index">
         <maml:name>SessionId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Id of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
           <maml:name>Int32[]</maml:name>
@@ -5486,9 +5495,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Path</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Path on remote host to test.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -5498,9 +5507,9 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>SFTP Session Object of an exiting session.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
           <maml:name>SftpSession[]</maml:name>

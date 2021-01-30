@@ -1,5 +1,5 @@
 ---
-external help file: PoshSSH.dll-Help.xml
+external help file: PoshSSH.dll-help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -14,28 +14,29 @@ Download from a remote server via SCP a file or directory.
 
 ### NoKey (Default)
 ```
-Get-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] -Destination <String>
- -Path <String> -PathType <String> [-NewName <String>] [-OperationTimeout <Int32>] [-ConnectionTimeout <Int32>]
- [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore> [<CommonParameters>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### Key
 ```
-Get-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
- [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### KeyString
 ```
-Get-SCPItem [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
+ [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-OperationTimeout <Int32>]
- [-ConnectionTimeout <Int32>] [-AcceptKey <Boolean>] [-Force] [-ErrorOnUntrusted] [-NoProgress] -Store <IStore>
- [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,7 +64,7 @@ Download in to the local path the dmesg file and give it a different name.
 Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
@@ -347,15 +348,30 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Store
-{{ Fill Store Description }}
+### -KeepAliveInterval
+Sets a timeout interval in seconds after which if no data has been received from the server, session will send a message through the encrypted channel to request a response from the server
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KnownHost
+{{ Fill KnownHost Description }}
 
 ```yaml
 Type: IStore
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

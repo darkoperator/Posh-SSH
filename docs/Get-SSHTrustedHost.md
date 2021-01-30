@@ -12,8 +12,14 @@ List Host and Fingerprint pairs that Posh-SSH trusts.
 
 ## SYNTAX
 
+### Local (Default)
 ```
-Get-SSHTrustedHost [<CommonParameters>]
+Get-SSHTrustedHost [-HostName <String>] [<CommonParameters>]
+```
+
+### Store
+```
+Get-SSHTrustedHost -KnowHostStore <Object> [-HostName <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,6 +42,36 @@ SSHHost                                                     Fingerprint
 ```
 
 ## PARAMETERS
+
+### -HostName
+{{ Fill HostName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -KnowHostStore
+{{ Fill KnowHostStore Description }}
+
+```yaml
+Type: Object
+Parameter Sets: Store
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).

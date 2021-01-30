@@ -33,9 +33,10 @@ The session can be a SSH Session object or they can be specified by Session Id
 Remove-SSHSession -SessionId 0
 True
 ```
+
 Remove a SSH Session specified by SessionId
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-SSHSession | Remove-SSHSession
 True
@@ -43,7 +44,6 @@ True
 ```
 
 Remove all sessions
-
 
 ## PARAMETERS
 

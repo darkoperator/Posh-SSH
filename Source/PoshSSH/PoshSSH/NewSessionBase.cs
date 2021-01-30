@@ -187,185 +187,193 @@ namespace SSH
                 }
             }
         }
-        protected BaseClient CreateConnection(string computer) {
-                ConnectionInfo connectInfo = null;
-                switch (ParameterSetName)
-                {
-                    case "NoKey":
-                        WriteVerbose("Using SSH Username and Password authentication for connection.");
-                        var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(Credential.UserName);
-                        connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
-                            Port,
-                            Credential,
-                            ProxyServer,
-                            ProxyType,
-                            ProxyPort,
-                            ProxyCredential,
-                            kIconnectInfo);
+        protected BaseClient CreateConnection(string computer)
+        {
+            ConnectionInfo connectInfo = null;
+            switch (ParameterSetName)
+            {
+                case "NoKey":
+                    WriteVerbose("Using SSH Username and Password authentication for connection.");
+                    var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(Credential.UserName);
+                    connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
+                        Port,
+                        Credential,
+                        ProxyServer,
+                        ProxyType,
+                        ProxyPort,
+                        ProxyCredential,
+                        kIconnectInfo);
 
-                        // Event Handler for interactive Authentication
-                        kIconnectInfo.AuthenticationPrompt += delegate (object sender, AuthenticationPromptEventArgs e)
-                        {
-                            foreach (var prompt in e.Prompts)
-                            {
-                                if (prompt.Request.Contains("Password"))
-                                    prompt.Response = Credential.GetNetworkCredential().Password;
-                            }
-                        };
-                        break;
-
-                    case "Key":
-                        ProviderInfo provider;
-                        var pathinfo = GetResolvedProviderPathFromPSPath(KeyFile, out provider);
-                        var localfullPath = pathinfo[0];
-                        connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
-                            Port,
-                            localfullPath,
-                            Credential,
-                            ProxyServer,
-                            ProxyType,
-                            ProxyPort,
-                            ProxyCredential);
-                        break;
-
-                    case "KeyString":
-                        WriteVerbose("Using SSH Key authentication for connection.");
-                        connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
-                            Port,
-                            KeyString,
-                            Credential,
-                            ProxyServer,
-                            ProxyType,
-                            ProxyPort,
-                            ProxyCredential);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                var savedHostKey = KnownHost.GetKey(computer);
-                // filter out unsupported hostkeynames
-                if (savedHostKey != default && savedHostKey.Item1 != string.Empty)
-                {
-                    foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
+                    // Event Handler for interactive Authentication
+                    kIconnectInfo.AuthenticationPrompt += delegate (object sender, AuthenticationPromptEventArgs e)
                     {
-                        if (keyName != savedHostKey.Item1)
+                        foreach (var prompt in e.Prompts)
                         {
-                            connectInfo.HostKeyAlgorithms.Remove(keyName);
+                            if (prompt.Request.Contains("Password"))
+                                prompt.Response = Credential.GetNetworkCredential().Password;
                         }
+                    };
+                    break;
+
+                case "Key":
+                    WriteVerbose("Using SSH Key authentication for connection (file).");
+                    ProviderInfo provider;
+                    var pathinfo = GetResolvedProviderPathFromPSPath(KeyFile, out provider);
+                    var localfullPath = pathinfo[0];
+                    connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
+                        Port,
+                        localfullPath,
+                        Credential,
+                        ProxyServer,
+                        ProxyType,
+                        ProxyPort,
+                        ProxyCredential);
+                    break;
+
+                case "KeyString":
+                    WriteVerbose("Using SSH Key authentication for connection.");
+                    connectInfo = ConnectionInfoGenerator.GetKeyConnectionInfo(computer,
+                        Port,
+                        KeyString,
+                        Credential,
+                        ProxyServer,
+                        ProxyType,
+                        ProxyPort,
+                        ProxyCredential);
+                    break;
+
+                default:
+                    break;
+            }
+
+            var savedHostKey = KnownHost.GetKey(computer);
+            // filter out unsupported hostkeynames
+            if (savedHostKey != default && ! string.IsNullOrEmpty(savedHostKey.HostKeyName))
+            {
+                foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
+                {
+                    if (keyName != savedHostKey.HostKeyName)
+                    {
+                        connectInfo.HostKeyAlgorithms.Remove(keyName);
                     }
                 }
+            }
+            //Create instance of SSH Client with connection info
+            BaseClient client;
+            switch (Protocol)
+            {
+                case PoshSessionType.SFTP:
+                    client = new SftpClient(connectInfo);
+                    break;
+                case PoshSessionType.SCP:
+                    client = new ScpClient(connectInfo);
+                    break;
+                default:
+                    client = new SshClient(connectInfo);
+                    break;
+            }
 
-                //Ceate instance of SSH Client with connection info
-                BaseClient client;
-                switch (Protocol) 
+            // Handle host key
+            if (Force)
+            {
+                WriteWarning("Host key is not being verified since Force switch is used.");
+            }
+            else
+            {
+                var computer1 = computer;
+                client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                 {
-                    case PoshSessionType.SFTP:
-                        client = new SftpClient(connectInfo);
-                        break;
-                    case PoshSessionType.SCP:
-                        client = new ScpClient(connectInfo);
-                        break;
-                    default:
-                        client = new SshClient(connectInfo);
-                        break;
-                }
-
-                // Handle host key
-                if (Force)
-                {
-                    WriteWarning("Host key is not being verified since Force switch is used.");
-                }
-                else
-                {
-                    var computer1 = computer;
-                    client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
+                    var sb = new StringBuilder();
+                    foreach (var b in e.FingerPrint)
                     {
+                        sb.AppendFormat("{0:x}:", b);
+                    }
+                    var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                        var sb = new StringBuilder();
-                        foreach (var b in e.FingerPrint)
+                    if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                    {
+                        Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
+                    }
+
+                    if (savedHostKey != default)
+                    {
+                        e.CanTrust = savedHostKey.Fingerprint == fingerPrint && (savedHostKey.HostKeyName == e.HostKeyName || savedHostKey.HostKeyName == string.Empty);
+                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
                         {
-                            sb.AppendFormat("{0:x}:", b);
+                            Host.UI.WriteVerboseLine("Fingerprint " + (e.CanTrust ? "" : "not ") + "matched trusted " + savedHostKey.HostKeyName + " fingerprint for host " + computer1);
                         }
-                        var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-
-                        WriteVerbose(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
-
-                        if (savedHostKey != default)
+                    }
+                    else
+                    {
+                        if (ErrorOnUntrusted)
                         {
-                            e.CanTrust = savedHostKey.Item2 == fingerPrint && (savedHostKey.Item1 == e.HostKeyName || savedHostKey.Item1 == string.Empty);
-                            WriteVerbose("Fingerprint "+ (e.CanTrust?"":"not ") + "matched trusted "+ savedHostKey.Item1 + " fingerprint for host " + computer1);
+                            e.CanTrust = false;
                         }
                         else
                         {
-                            if (ErrorOnUntrusted)
+                            if (!AcceptKey)
                             {
-                                e.CanTrust = false;
-                            }
-                            else
-                            {
-                                if (!AcceptKey)
-                                {
-                                    var choices = new Collection<ChoiceDescription>
+                                var choices = new Collection<ChoiceDescription>
                                     {
                                         new ChoiceDescription("Y"),
                                         new ChoiceDescription("N")
                                     };
-                                    e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
-                                }
-                                else // User specified he would accept the key so we can just add it to our list.
-                                {
-                                    e.CanTrust = true;
-                                }
-                                if (e.CanTrust)
-                                {
-                                    if (!KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
-                                        WriteWarning("Host key is not saved to KnownHost store.");
-                                }
-
+                                e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
                             }
+                            else // User specified he would accept the key so we can just add it to our list.
+                            {
+                                e.CanTrust = true;
+                            }
+                            if (e.CanTrust)
+                            {
+                                if (!KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
+                                {
+                                    Host.UI.WriteWarningLine("Host key is not saved to store.");
+                                }
+                            }
+
                         }
-                    };
-                }
-                try
-                {
-                    // Set the connection timeout
-                    client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(ConnectionTimeout);
+                    }
+                };
+            }
+            try
+            {
+                // Set the connection timeout
+                client.ConnectionInfo.Timeout = TimeSpan.FromSeconds(ConnectionTimeout);
 
-                    // Set Keepalive for connections
-                    client.KeepAliveInterval = TimeSpan.FromSeconds(KeepAliveInterval);
+                // Set Keepalive for connections
+                client.KeepAliveInterval = TimeSpan.FromSeconds(KeepAliveInterval);
 
-                    // Connect to host using Connection info
-                    client.Connect();
+                // Connect to host using Connection info
+                client.Connect();
 
-                    return client;
-                }
-                catch (SshConnectionException e)
-                {
-                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
-                    WriteError(erec);
-                }
-                catch (SshOperationTimeoutException e)
-                {
-                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
-                    WriteError(erec);
-                }
-                catch (SshAuthenticationException e)
-                {
-                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
-                    WriteError(erec);
-                }
-                catch (Exception e)
-                {
-                    ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
-                    WriteError(erec);
-                }
-                return default;
+                return client;
+            }
+            catch (SshConnectionException e)
+            {
+                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                WriteError(erec);
+            }
+            catch (SshOperationTimeoutException e)
+            {
+                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.OperationTimeout, client);
+                WriteError(erec);
+            }
+            catch (SshAuthenticationException e)
+            {
+                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                WriteError(erec);
+            }
+            catch (Exception e)
+            {
+                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                WriteError(erec);
+            }
+            return default;
 
-                // Renci.SshNet.Common.SshOperationTimeoutException when host is not alive or connection times out.
-                // Renci.SshNet.Common.SshConnectionException when fingerprint mismatched
-                // Renci.SshNet.Common.SshAuthenticationException Bad password
+            // Renci.SshNet.Common.SshOperationTimeoutException when host is not alive or connection times out.
+            // Renci.SshNet.Common.SshConnectionException when fingerprint mismatched
+            // Renci.SshNet.Common.SshAuthenticationException Bad password
         }
 
         protected override void ProcessRecord()

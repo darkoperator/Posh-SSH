@@ -9,7 +9,7 @@ namespace SSH.Stores
 {
     public class ConfigFileStruct
     {
-        public Dictionary<string, Tuple<string, string>> Keys { get; set; } = new Dictionary<string, Tuple<string, string>>();
+        public Dictionary<string, KnownHostValue> Keys { get; set; } = new Dictionary<string, KnownHostValue>();
     }
     public class JsonStore : MemoryStore
     {
@@ -19,7 +19,6 @@ namespace SSH.Stores
         {
             FileName = fileName;
         }
-
        
         public void LoadFromDisk()
         {
@@ -27,7 +26,7 @@ namespace SSH.Stores
             {
                 var jsonString = File.ReadAllText(FileName);
                 var keys = JsonConvert.DeserializeObject<ConfigFileStruct>(jsonString).Keys;
-                HostKeys = new ConcurrentDictionary<string, Tuple<string, string>>(keys);
+                HostKeys = new ConcurrentDictionary<string, KnownHostValue>(keys);
             }
         }
 

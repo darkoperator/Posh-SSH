@@ -3121,6 +3121,7 @@ function Start-SSHPortForward
     End{}
 }
 
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function Get-SSHTrustedHost
 {
     [CmdletBinding(DefaultParameterSetName = "Local")]
@@ -3164,6 +3165,7 @@ function Get-SSHTrustedHost
 }
 
 
+# .ExternalHelp Posh-SSH.psm1-Help.xml
  function New-SSHTrustedHost
  {
     [CmdletBinding(DefaultParameterSetName = "Local")]
@@ -3210,7 +3212,7 @@ function Get-SSHTrustedHost
      End {}
  }
 
-
+# .ExternalHelp Posh-SSH.psm1-Help.xml
  function Remove-SSHTrustedHost
  {
     [CmdletBinding(DefaultParameterSetName = "Local")]

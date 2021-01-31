@@ -157,7 +157,8 @@ namespace SSH
         /// <summary>
         /// Place where fingerprint can persist
         /// </summary>
-        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false)]
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false,
+             HelpMessage = "Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.")]
         [ValidateNotNullOrEmpty]
         public IStore KnownHost { get; set; }
 

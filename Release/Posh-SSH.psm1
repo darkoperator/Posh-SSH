@@ -3239,7 +3239,11 @@ function Get-SSHTrustedHost
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-             $Store = $KnowHostStore
+            if ($KnowHostStore -isnot [SSH.Stores.OpenSSHStore]) {
+                $Store = $KnowHostStore
+            } else {
+                Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop 
+            }
         }
  
         $Store.RemoveByHost($HostName)

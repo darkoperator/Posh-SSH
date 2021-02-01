@@ -130,7 +130,7 @@ AliasesToExport = '*'
 FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
-# PrivateData = ''
+PrivateData = @{ PSData = @{ ProjectUri = 'https://github.com/darkoperator/Posh-SSH' } }
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''

@@ -353,7 +353,7 @@ namespace SSH
         {
             WriteVerbose($"Downloading {file.FullName}");
             var localFullPath = System.IO.Path.Combine(localDirectory, file.Name);
-            using (Stream fileStream = File.OpenWrite(localFullPath))
+            using (Stream fileStream = File.Create(localFullPath))
             {
                 client.DownloadFile(file.FullName, fileStream, progress);
             }

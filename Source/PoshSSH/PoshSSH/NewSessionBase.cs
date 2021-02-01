@@ -210,7 +210,7 @@ namespace SSH
                     {
                         foreach (var prompt in e.Prompts)
                         {
-                            if (prompt.Request.Contains("Password"))
+                            if (prompt.Request.Contains("Password") || prompt.Request.Contains("PASSCODE") || prompt.Request.Contains("password"))
                                 prompt.Response = Credential.GetNetworkCredential().Password;
                         }
                     };

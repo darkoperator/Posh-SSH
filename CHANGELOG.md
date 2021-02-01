@@ -2,6 +2,8 @@
 
 ## Version 3.0 - Alpha
 
+This release is possible thanks to @pcatrobrouillet, @soynerdito and  @MVKozlov (Thanks you all)
+
 * Windows PowerShell 5.1 and PowerShell 7.x Only supported.
 * Cross platform support (Linux, Windows and MacOS).
 * Updated SSH.NET library fixing multiple issued with OpenSSH and Cisco version strings.

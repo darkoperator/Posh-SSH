@@ -10,6 +10,12 @@ if (!(Test-Path variable:Global:SFTPSessions ))
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
 
+# Import PS additional functions
+##############################################################################################
+
+. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHostStore.ps1"
+. "$PSScriptRoot/Get-SSHRegistryKnownHostStore.ps1"
+
 # SSH Functions
 ##############################################################################################
 
@@ -197,7 +203,7 @@ function Invoke-SSHCommand
                    Position=0)]
         [Alias('Index')]
         [int32[]]
-        $SessionId = $null,
+        $SessionId,
 
         # Ensures a connection is made by reconnecting before command.
         [Parameter(Mandatory=$false)]
@@ -397,7 +403,7 @@ function Invoke-SSHCommand
            Write-Warning 'Could not retrieve the current version.'
        }
 
-       if ( $installed -eq $null )
+       if ( $null -eq $installed )
        {
            Write-Error 'Unable to locate Posh-SSH.'
        }
@@ -736,7 +742,7 @@ function Invoke-SSHStreamExpectAction
                 $found = $ShellStream.Expect($ExpectRegex, (New-TimeSpan -Seconds $TimeOut))}
         }
 
-        if ($found -ne $null)
+        if ($null -ne $found)
         {
             Write-Verbose -Message "Executing action: $($Action)."
             $ShellStream.WriteLine($Action)
@@ -828,7 +834,7 @@ function Invoke-SSHStreamExpectSecureAction
              }
         }
 
-        if ($found -ne $null)
+        if ($null -ne $found)
         {
             Write-Verbose -Message "Executing action."
             $ShellStream.WriteLine([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureAction)))
@@ -2665,7 +2671,7 @@ function New-SSHRemotePortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [String]$LocalAdress = '127.0.0.1',
 
     [Parameter(Mandatory=$true)]
@@ -2754,7 +2760,7 @@ function New-SSHDynamicPortForward
 {
     [CmdletBinding(DefaultParameterSetName="Index")]
     param(
-        [Parameter(Mandatory=$true,
+        [Parameter(Mandatory=$false,
             Position=1)]
         [String]
         $BoundHost = 'localhost',
@@ -3116,126 +3122,131 @@ function Start-SSHPortForward
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
- function Get-SSHTrustedHost
- {
-     [CmdletBinding()]
-     [OutputType([int])]
-     Param()
+function Get-SSHTrustedHost
+{
+    [CmdletBinding(DefaultParameterSetName = "Local")]
+    [OutputType("SSH.Stores.KnownHostRecord")]
+    Param(
+        # Known Host Store
+        [Parameter(Mandatory = $true,
+           ParameterSetName = "Store",
+           Position = 0)]
+        $KnowHostStore,
 
-     Begin{}
-     Process
-     {
-        $Test_Path_Result = Test-Path -Path "hkcu:\Software\PoshSSH"
-        if ($Test_Path_Result -eq $false)
-        {
-            Write-Verbose -Message 'No previous trusted keys have been configured on this system.'
-            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
-            return
-        }
-        $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+        # Host name the key fingerprint is associated with.
+        [Parameter(Mandatory = $false)]
+        [String]
+        $HostName
+    )
 
-        $hostnames = $poshsshkey.GetValueNames()
-        $TrustedHosts = @()
-        foreach($h in $hostnames)
-        {
-            $TrustedHost = @{
-                SSHHost        = $h
-                Fingerprint = $poshsshkey.GetValue($h)
-            }
-            $TrustedHosts += New-Object -TypeName psobject -Property $TrustedHost
-        }
-     }
-     End
-     {
-        $TrustedHosts
-     }
- }
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+   }
+    Process
+    {
+       if ($PSCmdlet.ParameterSetName -eq "Local") {
+           if (Test-Path -PathType Leaf $Default) {
+                $Store = Get-SSHJsonKnowHost
+           } else {
+               Write-Warning -Message "No known host file found, $($Default)"
+           }
+       } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+            $Store = $KnowHostStore
+       }
+
+       if ($PSBoundParameters.Keys -contains "HostName") {
+            $Store.GetKey($HostName) | Add-Member -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+       } else {
+            $Store.GetAllKeys() 
+       }
+    }
+    End
+    {}
+}
 
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
  function New-SSHTrustedHost
  {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Local")]
      Param
      (
          # IP Address of FQDN of host to add to trusted list.
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=0)]
-         $SSHHost,
+         $HostName,
+
+         # Friendly Name for the entry. On OpenSSH this is the key cipher.
+         [Parameter(Mandatory = $true)]
+         [string]
+         $Name,
 
          # SSH Server Fingerprint.
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
-         $FingerPrint
+         $FingerPrint,
+
+         # Known Host Store
+        [Parameter(Mandatory = $true,
+        ParameterSetName = "Store")]
+        $KnowHostStore
      )
 
-     Begin
-     {
-     }
+     Begin {}
      Process
      {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
-        if ( $softkey.GetSubKeyNames() -contains 'PoshSSH')
-        {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+        if ($PSCmdlet.ParameterSetName -eq "Local") {
+            if (Test-Path -PathType Leaf $Default) {
+                 $Store = Get-SSHJsonKnowHost
+            } else {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
+        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+             $Store = $KnowHostStore
         }
-        else
-        {
-            Write-Verbose 'PoshSSH Registry key is not present for this user.'
-            New-Item -Path HKCU:\Software -Name PoshSSH | Out-Null
-            Write-Verbose 'PoshSSH Key created.'
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
-        }
-        Write-Verbose "Adding to trusted SSH Host list $($SSHHost) with a fingerprint of $($FingerPrint)"
-        $poshsshkey.SetValue($SSHHost, $FingerPrint)
-        Write-Verbose 'SSH Host has been added.'
+ 
+        $Store.SetKey($HostName, $Name, $FingerPrint)
      }
-     End
-     {
-     }
+     End {}
  }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
  function Remove-SSHTrustedHost
  {
-    [CmdletBinding()]
-     Param
-     (
-         # Param1 help description
-         [Parameter(Mandatory=$true,
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=0)]
-         [string]
-         $SSHHost
+    [CmdletBinding(DefaultParameterSetName = "Local")]
+    Param(
+        # IP Address of FQDN of host to add to trusted list.
+        [Parameter(Mandatory=$true,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [string]
+        $HostName,
+
+        # Known Host Store
+        [Parameter(Mandatory = $true,
+        ParameterSetName = "Store")]
+        $KnowHostStore
      )
 
-     Begin
-     {
-     }
-     Process
-     {
-        $softkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software', $true)
-        if ($softkey.GetSubKeyNames() -contains 'PoshSSH' )
-        {
-            $poshsshkey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\PoshSSH', $true)
+     Begin{}
+     Process{
+        if ($PSCmdlet.ParameterSetName -eq "Local") {
+            if (Test-Path -PathType Leaf $Default) {
+                 $Store = Get-SSHJsonKnowHost
+            } else {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
+        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
+            if ($KnowHostStore -isnot [SSH.Stores.OpenSSHStore]) {
+                $Store = $KnowHostStore
+            } else {
+                Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop 
+            }
         }
-        else
-        {
-            Write-warning 'PoshSSH Registry key is not present for this user.'
-            return
-        }
-        Write-Verbose "Removing SSH Host $($SSHHost) from the list of trusted hosts."
-        if ($poshsshkey.GetValueNames() -contains $SSHHost)
-        {
-            $poshsshkey.DeleteValue($SSHHost)
-            Write-Verbose 'SSH Host has been removed.'
-        }
-        else
-        {
-            Write-Warning "SSH Hosts $($SSHHost) was not present in the list of trusted hosts."
-        }
+ 
+        $Store.RemoveByHost($HostName)
      }
      End{}
  }

@@ -12,8 +12,13 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '2.2'
+ModuleVersion = '3.0.0'
 
+PrivateData = @{
+    PSData = @{
+       Prerelease = 'alpha'
+    }
+}
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -25,13 +30,13 @@ Author = 'Carlos Perez'
 CompanyName = 'www.darkoperator.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2019 Carlos Perez. All rights reserved.'
+Copyright = '(c) 2021 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -40,7 +45,7 @@ PowerShellVersion = '3.0'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '4.0'
+DotNetFrameworkVersion = '4.7'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'
@@ -52,7 +57,7 @@ DotNetFrameworkVersion = '4.0'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = @('Assembly\Renci.SshNet.dll')
+RequiredAssemblies = @('Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -67,7 +72,7 @@ FormatsToProcess = @('Format\SSHSession.Format.ps1xml','Format\SFTPSession.Forma
 NestedModules = @('PoshSSH.dll','Posh-SSH.psm1')
 
 # Functions to export from this module
-FunctionsToExport = 'Get-PoshSSHModVersion',
+FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Get-SFTPChildItem',
                     'Get-SFTPContent',
                     'Get-SFTPLocation',
@@ -100,22 +105,20 @@ FunctionsToExport = 'Get-PoshSSHModVersion',
                     'Set-SFTPPathAttribute',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
-                    'Test-SFTPPath'
+                    'Test-SFTPPath',
+                    'Convert-SSHRegistryToJSonKnownHostStore',
+                    'Get-SSHRegistryKnownHostStore')
 
 # Cmdlets to export from this module
-CmdletsToExport = 'Get-SCPFile',
-                  'Get-SCPFolder',
-                  'Get-SCPItem',
-                  'Get-SFTPFile',
+CmdletsToExport = @('Get-SCPItem',
                   'Get-SFTPItem',
                   'New-SFTPSession',
                   'New-SSHSession',
-                  'Set-SCPFile',
-                  'Set-SCPFolder',
                   'Set-SCPItem',
-                  'Set-SFTPFile',
-                  'Set-SFTPFolder',
-                  'Set-SFTPItem'
+                  'Set-SFTPItem',
+                  'New-SSHMemoryKnownHost',
+                  'Get-SSHJsonKnowHost',
+                  'Get-SSHOpenSSHKnownHost')
 
 # Variables to export from this module
 VariablesToExport = '*'
@@ -127,7 +130,7 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll')
+FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 # PrivateData = ''

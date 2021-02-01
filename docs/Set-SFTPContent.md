@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,13 @@ schema: 2.0.0
 ### Index (Default)
 ```
 Set-SFTPContent [-SessionId] <Int32[]> [-Path] <String> [-Value] <Object> [-Encoding <String>] [-Append]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Set-SFTPContent [-SFTPSession] <SftpSession[]> [-Path] <String> [-Value] <Object> [-Encoding <String>]
- [-Append]
+ [-Append] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,7 +73,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -86,7 +88,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -101,7 +103,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +118,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -125,13 +127,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
 
 ### Renci.SshNet.Sftp.SftpFile
-
 ## NOTES
 
 ## RELATED LINKS
-

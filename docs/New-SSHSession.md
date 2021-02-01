@@ -1,5 +1,6 @@
 ---
 external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -7,7 +8,8 @@ schema: 2.0.0
 # New-SSHSession
 
 ## SYNOPSIS
-Creates an SSH Session against a SSH Server
+Creates an SSH Session against a SSH Server.
+By default it will store known host fingerprints in $HOME\.poshss\hosts.json.
 
 ## SYNTAX
 
@@ -16,6 +18,7 @@ Creates an SSH Session against a SSH Server
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
  [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### Key
@@ -23,7 +26,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### KeyString
@@ -31,7 +34,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +44,7 @@ If a key file is specified the command will use the password in the credentials 
 
 ## EXAMPLES
 
-### --------------  Example 1  --------------
+### Example 1
 ```
 PS C:\> New-SSHSession -ComputerName 192.168.1.234 -Credential (Get-Credential) -Verbose
 ```
@@ -72,7 +75,7 @@ If a key file is used the password field is used for the Key pass phrase.
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -87,7 +90,7 @@ SSH TCP Port number to use for the SSH connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +105,7 @@ Proxy server name or IP Address to use for connection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +120,7 @@ Port to connect to on proxy server to route connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +135,7 @@ PowerShell Credential Object with the credentials for use to connect to proxy se
 ```yaml
 Type: PSCredential
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +150,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -157,12 +160,12 @@ Accept wildcard characters: False
 ```
 
 ### -ConnectionTimeout
-@{Text=}
+Connection timeout interval in seconds.
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -172,12 +175,12 @@ Accept wildcard characters: False
 ```
 
 ### -OperationTimeout
-@{Text=}
+Operation timeout interval in seconds.
 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +195,7 @@ Keep Alive interval in seconds for a connection.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -207,7 +210,7 @@ Automatically accepts a new SSH fingerprint for a host
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -222,7 +225,7 @@ Do not perform any host key validation of the host.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -237,7 +240,7 @@ Throw a terminating error if the host key is not a trusted one.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -252,7 +255,7 @@ OpenSSH format SSH private key file.
 ```yaml
 Type: String
 Parameter Sets: Key
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -267,7 +270,7 @@ OpenSSH key in a string array to be used for authentication.
 ```yaml
 Type: String[]
 Parameter Sets: KeyString
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -276,21 +279,33 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -KnownHost
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+
+```yaml
+Type: IStore
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.String[]
-
 ### System.Management.Automation.PSCredential
-
 ### System.Int32
-
 ### System.String
-
 ### System.Boolean
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

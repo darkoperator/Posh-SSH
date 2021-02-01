@@ -5,7 +5,6 @@
 *.pydevproject
 .project
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -42,7 +41,8 @@ local.properties
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
+
+#[Dd]ebug/
 [Rr]elease/
 *_i.c
 *_p.c
@@ -65,6 +65,7 @@ local.properties
 
 ## TODO: If you have NuGet Package Restore enabled, uncomment this
 #packages/
+Source/PoshSSH/packages/
 
 # Visual C++ cache files
 ipch/
@@ -97,7 +98,7 @@ DocProject/Help/html
 publish
 
 # Others
-[Bb]in
+#[Bb]in
 [Oo]bj
 sql
 TestResults

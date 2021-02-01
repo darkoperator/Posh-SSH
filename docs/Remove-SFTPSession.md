@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Close and Remove a SFTP Session
 
 ### Index (Default)
 ```
-Remove-SFTPSession [-SessionId] <Int32[]>
+Remove-SFTPSession [-SessionId] <Int32[]> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Remove-SFTPSession [[-SFTPSession] <SftpSession[]>]
+Remove-SFTPSession [[-SFTPSession] <SftpSession[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Close and Remove a SFTP Session specified by Index or SFTP Session Object.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Remove-SFTPSession -SessionId 0 -Verbose
  VERBOSE: 0
@@ -67,15 +68,15 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

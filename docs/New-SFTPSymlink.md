@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Create a Symbolic Link on the remote host via SFTP.
 
 ### Index (Default)
 ```
-New-SFTPSymlink [-SessionId] <Int32[]> [-Path] <String> [-LinkPath] <String>
+New-SFTPSymlink [-SessionId] <Int32[]> [-Path] <String> [-LinkPath] <String> [<CommonParameters>]
 ```
 
 ### Session
 ```
-New-SFTPSymlink [-SFTPSession] <SftpSession[]> [-Path] <String> [-LinkPath] <String>
+New-SFTPSymlink [-SFTPSession] <SftpSession[]> [-Path] <String> [-LinkPath] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,7 +57,7 @@ Path on remote host to link to.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -71,7 +72,7 @@ Path on remote host to create as the symbolic link.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -95,17 +96,16 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ## NOTES
 
 ## RELATED LINKS
-

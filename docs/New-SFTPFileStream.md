@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,11 +15,13 @@ Create a IO Stream over SFTP for a file on a remote host.
 ### Index (Default)
 ```
 New-SFTPFileStream [-SessionId] <Int32> [-Path] <String> [-FileMode] <String> [-FileAccess] <String>
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SFTPFileStream [-SFTPSession] <SftpSession> [-Path] <String> [-FileMode] <String> [-FileAccess] <String>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +29,7 @@ Create a IO Stream over SFTP for a file on a remote host.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 $bashhistory = New-SFTPFileStream -SessionId 0 -Path /home/admin/.bash_history -FileMode Open -FileAccess Read
 
@@ -82,7 +85,7 @@ Path of file to create a stream for.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -107,7 +110,7 @@ When the file is opened, it should be truncated so that its size is zero bytes.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -128,7 +131,7 @@ Data can be written to the file.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -152,19 +155,17 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32
-
 ### System.String
-
 ### SSH.SftpSession
-
 ## OUTPUTS
 
 ### Renci.SshNet.Sftp.SftpFileStream
-
 ## NOTES
 
 ## RELATED LINKS
-

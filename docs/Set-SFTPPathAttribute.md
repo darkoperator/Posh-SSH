@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -17,6 +18,7 @@ Set-SFTPPathAttribute [-SessionId] <Int32[]> [-Path] <String> [-LastAccessTime <
  [-LastWriteTime <DateTime>] [-GroupId <Int32>] [-UserId <Int32>] [-GroupCanExecute <Boolean>]
  [-GroupCanRead <Boolean>] [-GroupCanWrite <Boolean>] [-OthersCanExecute <Boolean>] [-OthersCanRead <Boolean>]
  [-OthersCanWrite <Boolean>] [-OwnerCanExecute <Boolean>] [-OwnerCanRead <Boolean>] [-OwnerCanWrite <Boolean>]
+ [<CommonParameters>]
 ```
 
 ### Session
@@ -25,6 +27,7 @@ Set-SFTPPathAttribute [-SFTPSession] <SftpSession[]> [-Path] <String> [-LastAcce
  [-LastWriteTime <DateTime>] [-GroupId <Int32>] [-UserId <Int32>] [-GroupCanExecute <Boolean>]
  [-GroupCanRead <Boolean>] [-GroupCanWrite <Boolean>] [-OthersCanExecute <Boolean>] [-OthersCanRead <Boolean>]
  [-OthersCanWrite <Boolean>] [-OwnerCanExecute <Boolean>] [-OwnerCanRead <Boolean>] [-OwnerCanWrite <Boolean>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -62,7 +65,7 @@ Remote path we want to set attribute on.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -77,7 +80,7 @@ Set the last access time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +95,7 @@ Set the last write time.
 ```yaml
 Type: DateTime
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +110,7 @@ Set a group id.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +125,7 @@ Set the user id.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +140,7 @@ Set if the owning group can execute.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -152,7 +155,7 @@ Set if the owning group can read.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -167,7 +170,7 @@ Set if the owning group can write.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -182,7 +185,7 @@ Set if others can execute.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -197,7 +200,7 @@ Set if others can read.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -212,7 +215,7 @@ Set if others can write.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -227,7 +230,7 @@ Set if owner can execute.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +245,7 @@ Set if owner can read.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +260,7 @@ Set if owner can write.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -281,25 +284,20 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32[]
-
 ### System.String
-
 ### System.DateTime
-
 ### System.Int32
-
 ### System.Boolean
-
 ### SSH.SftpSession[]
-
 ## OUTPUTS
 
 ### Renci.SshNet.Sftp.SftpFileAttributes
-
 ## NOTES
 
 ## RELATED LINKS
-

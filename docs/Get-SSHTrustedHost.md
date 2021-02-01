@@ -1,5 +1,6 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -7,42 +8,92 @@ schema: 2.0.0
 # Get-SSHTrustedHost
 
 ## SYNOPSIS
-List Host and Fingerprint pairs that Posh-SSH trusts.
+Get the current known hosts either from those trusted by Posh-SSH or from a IStore.
 
 ## SYNTAX
 
+### Local (Default)
 ```
-Get-SSHTrustedHost
+Get-SSHTrustedHost [-HostName <String>] [<CommonParameters>]
+```
+
+### Store
+```
+Get-SSHTrustedHost [-KnowHostStore] <Object> [-HostName <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-List Host and Fingerprint pairs that Posh-SSH trusts.
+Get the current known hosts either from those trusted by Posh-SSH, also from a Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### Example 1
 ```
-Get-SSHTrustedHost
-SSHHost                                                     Fingerprint
+PS C:\>  Get-SSHTrustedHost
 
--------                                                     -----------
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 ssh-ed25519 7a:da:ab:88:55:95:5b:34:89:f6:46:7f:13:c5:65:c1
 
-192.168.1.143                                               a4:6e:80:33:3f:32:4:cb:be:e9:a0:80:1b:38:fd:3b
-
-192.168.10.3                                                27:ca:f8:39:7e:ba:a:ff:a3:2d:ff:75:16:a6:bc:18
-
-192.168.1.225                                               ea:8c:ec:93:1e:9d:ad:2e:41:bc:d0:b3:d8:a9:98:80
 ```
+
+Get currently stored known hosts.
+
+### Example 2
+```
+PS C:\> $inmem = New-SSHMemoryKnownHost
+PS C:\> $inmem.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
+True
+PS C:\> Get-SSHTrustedHost -KnowHostStore $inmem
+
+HostName    HostKeyName Fingerprint
+--------    ----------- -----------
+192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
+```
+
+Get stored known hosts from an Memory Known Host store.
 
 ## PARAMETERS
 
+### -HostName
+HostName as stored by Posh-SSH or in a IStore.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -KnowHostStore
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+
+```yaml
+Type: Object
+Parameter Sets: Store
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
+### None
 ## OUTPUTS
 
-### System.Int32
-
+### SSH.Stores.KnownHostRecord
 ## NOTES
 
 ## RELATED LINKS
-

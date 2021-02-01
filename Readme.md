@@ -5,11 +5,11 @@
 Windows Powershell module that leverages a custom version of the [SSH.NET Library](https://github.com/sshnet/SSH.NET) to provide basic SSH functionality in Powershell.
 The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled servers.
 
-This module is for Windows PowerShell 3.0 or above. It is compiled for .NET Framework 4.5.
+This module is for Windows PowerShell 5.1 or PowerShell 7.x. 
 
 ## Install
 
-To install the module including all source code you can just run in a PowerShell v3 the following command:
+To install the module run the command command:
 
 ``` PowerShell
 Install-Module -Name Posh-SSH

@@ -1,5 +1,19 @@
 # ChangeLog
 
+## Version 3.0 - Alpha
+
+* Windows PowerShell 5.1 and PowerShell 7.x Only supported.
+* Cross platform support (Linux, Windows and MacOS).
+* Updated SSH.NET library fixing multiple issued with OpenSSH and Cisco version strings.
+* Support for more key formats. (OpenSSH ECDSA and RSA still not supported in the OpenSSH format)
+* Support for password: and PASSCODE: prompts.
+* Fix for Get-SFTPItem.
+* No more registry used to store known hosts, uses by default a hosts.json file in $HOME\\.poshssh\hosts.json.
+* Additional support for known hosts using ISotre method using a JSON KnownHosts, OpenSSH KnownHost and Memory KnownHosts in memory stores. 
+* Set-SFTPFile and Set-SFTPFolder cmdlets removed.
+* Set-SCPFile and Set-SCPFolder cmdlets removed.
+* Functions for migrating known hosts from registry to JSON added (Convert-SSHRegistryToJSonKnownHostStore, Get-SSHRegistryKnownHostStore). 
+
 ## Version 2.1
 
 * Fixed issue where help was not loading.

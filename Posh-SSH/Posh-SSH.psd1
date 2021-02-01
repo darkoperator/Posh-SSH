@@ -14,12 +14,6 @@
 # Version number of this module.
 ModuleVersion = '3.0.0'
 
-PrivateData = @{
-    PSData = @{
-       Prerelease = 'alpha'
-    }
-}
-
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
 
@@ -133,7 +127,12 @@ AliasesToExport = '*'
 FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
-# PrivateData = ''
+PrivateData = @{
+    PSData = @{
+       Prerelease = 'alpha'
+       ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
+    }
+}
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''

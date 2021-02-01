@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,12 +14,12 @@ Get a list of forwarded TCP Ports for a SSH Session
 
 ### Index (Default)
 ```
-Get-SSHPortForward [-SessionId] <Int32>
+Get-SSHPortForward [-SessionId] <Int32> [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SSHPortForward [-SSHSession] <SshSession>
+Get-SSHPortForward [-SSHSession] <SshSession> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,7 +27,7 @@ Get a list of forwarded TCP Ports for a SSH Session
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get list of configured forwarded ports
 ```
@@ -43,7 +44,7 @@ PS C:\\\> Get-SSHPortForward -Index 0
 ## PARAMETERS
 
 ### -SSHSession
-{{Fill SSHSession Description}}
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -58,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{Fill SessionId Description}}
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -72,6 +73,9 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ## OUTPUTS
@@ -79,4 +83,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

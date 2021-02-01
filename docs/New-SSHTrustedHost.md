@@ -1,5 +1,6 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -7,51 +8,43 @@ schema: 2.0.0
 # New-SSHTrustedHost
 
 ## SYNOPSIS
-Adds a new SSH Host and Fingerprint pait to the list of trusted SSH Hosts.
+Add a new trusted host for Posh-SSH to use. 
 
 ## SYNTAX
 
+### Local (Default)
 ```
-New-SSHTrustedHost [-SSHHost] <Object> [-FingerPrint] <Object>
+New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> [<CommonParameters>]
+```
+
+### Store
+```
+New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> -KnowHostStore <Object>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Adds a new SSH Host and Fingerprint pait to the list of trusted SSH Hosts.
+Add a new trusted host for Posh-SSH to use. By default it will store the new host in the default Posh-SSH hosts.json file unless a KnownHost store is specified.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### Example 1
 ```
-New-SSHTrustedHost -SSHHost 192.168.10.20 -FingerPrint a4:6e:80:33:3f:31:4:cb:be:e9:a0:80:fb:38:fd:3b -Verbose
-VERBOSE: Adding to trusted SSH Host list 192.168.10.20 with a fingerprint of
-a4:6e:80:33:3f:31:4:cb:be:e9:a0:80:fb:38:fd:3b
-VERBOSE: SSH Host has been added.
+PS C:\> $inmem = New-SSHMemoryKnownHost
+PS C:\> New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
 ```
+
+Add new host entry to a store. 
 
 ## PARAMETERS
 
-### -SSHHost
-IP Address of FQDN of host to add to trusted list.
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases: 
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -FingerPrint
-SSH Server Fingerprint.
+SSH finger print for the the host to be added. 
 
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -60,13 +53,60 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -HostName
+FQDN or IP address of the host.
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -KnowHostStore
+Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+
+```yaml
+Type: Object
+Parameter Sets: Store
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+Friendly name for the key, in the case of OpenSSH it is the ciphers used.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Object
-
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS
-

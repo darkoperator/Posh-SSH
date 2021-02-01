@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH-help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -13,14 +14,14 @@ Port forward a local port as a port on a remote server.
 
 ### Index (Default)
 ```
-New-SSHRemotePortForward -LocalAdress <String> -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
- -Index <Int32>
+New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
+ -Index <Int32> [<CommonParameters>]
 ```
 
 ### Session
 ```
-New-SSHRemotePortForward -LocalAdress <String> -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
- -SSHSession <SshSession>
+New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
+ -SSHSession <SshSession> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,7 +45,7 @@ PS C:\> {{ Add example code here }}
 ```yaml
 Type: Int32
 Parameter Sets: Index
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -59,9 +60,9 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -74,7 +75,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -89,7 +90,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +105,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -128,6 +129,9 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### SSH.SshSession
@@ -136,8 +140,6 @@ System.Int32
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
-

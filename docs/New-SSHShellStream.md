@@ -1,5 +1,6 @@
 ---
 external help file: Posh-SSH.psm1-Help.xml
+Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
@@ -14,13 +15,13 @@ Creates a SSH shell stream for a given SSH Session.
 ### Index (Default)
 ```
 New-SSHShellStream [-SessionId] <Int32> [-TerminalName <String>] [-Columns <Int32>] [-Rows <Int32>]
- [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>]
+ [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SSHShellStream [-SSHSession] <SshSession> [-TerminalName <String>] [-Columns <Int32>] [-Rows <Int32>]
- [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>]
+ [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +29,7 @@ Creates a SSH shell stream for a given SSH Session.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 $SSHStream = New-SSHShellStream -Index 0
 PS C:\> $SSHStream.WriteLine("uname -a")
@@ -62,7 +63,7 @@ Name of the terminal.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -77,7 +78,7 @@ The columns
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -92,7 +93,7 @@ The rows.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -107,7 +108,7 @@ The width.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -122,7 +123,7 @@ The height.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -137,7 +138,7 @@ Size of the buffer.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -161,19 +162,17 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### System.Int32
-
 ### System.String
-
 ### SSH.SshSession
-
 ## OUTPUTS
 
 ### Renci.SshNet.ShellStream
-
 ## NOTES
 
 ## RELATED LINKS
-

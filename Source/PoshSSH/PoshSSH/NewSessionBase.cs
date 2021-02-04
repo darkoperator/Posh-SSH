@@ -247,18 +247,7 @@ namespace SSH
                     break;
             }
 
-            var savedHostKey = KnownHost.GetKey(computer);
-            // filter out unsupported hostkeynames
-            if (savedHostKey != default && ! string.IsNullOrEmpty(savedHostKey.HostKeyName))
-            {
-                foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
-                {
-                    if (keyName != savedHostKey.HostKeyName)
-                    {
-                        connectInfo.HostKeyAlgorithms.Remove(keyName);
-                    }
-                }
-            }
+            
             //Create instance of SSH Client with connection info
             BaseClient client;
             switch (Protocol)
@@ -281,6 +270,18 @@ namespace SSH
             }
             else
             {
+                var savedHostKey = KnownHost.GetKey(computer);
+                // filter out unsupported hostkeynames
+                if (savedHostKey != default && !string.IsNullOrEmpty(savedHostKey.HostKeyName))
+                {
+                    foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
+                    {
+                        if (keyName != savedHostKey.HostKeyName)
+                        {
+                            connectInfo.HostKeyAlgorithms.Remove(keyName);
+                        }
+                    }
+                }
                 var computer1 = computer;
                 client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                 {

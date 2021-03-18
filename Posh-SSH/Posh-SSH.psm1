@@ -13,8 +13,8 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 # Import PS additional functions
 ##############################################################################################
 
-. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHostStore.ps1"
-. "$PSScriptRoot/Get-SSHRegistryKnownHostStore.ps1"
+. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHost.ps1"
+. "$PSScriptRoot/Get-SSHRegistryKnownHost.ps1"
 
 # SSH Functions
 ##############################################################################################

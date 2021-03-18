@@ -1,3 +1,4 @@
+Add-Type -Path "$PSScriptRoot/Assembly/Newtonsoft.Json.dll"
 # Set up of Session variables.
 ##############################################################################################
 if (!(Test-Path variable:Global:SshSessions ))

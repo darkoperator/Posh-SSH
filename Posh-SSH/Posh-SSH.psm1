@@ -3185,11 +3185,19 @@ function Get-SSHTrustedHost
          $FingerPrint,
 
          # This is the hostkey cipher name.
-         [Parameter(Mandatory=$true,
+         [ValidateSet(
+                    "ssh-ed25519",
+                    "ecdsa-sha2-nistp256",
+                    "ecdsa-sha2-nistp384",
+                    "ecdsa-sha2-nistp521",
+                    "ssh-rsa",
+                    "ssh-dss"
+         )]
+         [Parameter(
                     ValueFromPipelineByPropertyName=$true,
                     Position=2)]
          [string]
-         $KeyCipherName,
+         $KeyCipherName = "",
 
          # Known Host Store
         [Parameter(Mandatory = $true,

@@ -3158,7 +3158,7 @@ function Get-SSHTrustedHost
        }
 
        if ($PSBoundParameters.Keys -contains "HostName") {
-            $Store.GetKey($HostName) | Add-Member -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+            $Store.GetKey($HostName) | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
        } else {
             $Store.GetAllKeys() 
        }

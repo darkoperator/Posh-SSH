@@ -3131,12 +3131,14 @@ function Get-SSHTrustedHost
         [Parameter(Mandatory = $true,
            ParameterSetName = "Store",
            ValueFromPipeline = $true,
-           Position = 0)]
+           Position = 1)]
         [SSH.Stores.IStore]
         $KnowHostStore,
 
         # Host name the key fingerprint is associated with.
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false,
+           Position = 0)
+        ]
         [String]
         $HostName
     )

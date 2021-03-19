@@ -3197,7 +3197,8 @@ function Get-SSHTrustedHost
                     ValueFromPipelineByPropertyName=$true,
                     Position=2)]
          [string]
-         $KeyCipherName = "",
+         [Alias('KeyCipherName')]
+         $HostKeyName = "",
 
          # Known Host Store
         [Parameter(Mandatory = $true,
@@ -3219,7 +3220,7 @@ function Get-SSHTrustedHost
              $Store = $KnowHostStore
         }
  
-        $Store.SetKey($HostName, $KeyCipherName, $FingerPrint)
+        $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
      }
      End {}
  }

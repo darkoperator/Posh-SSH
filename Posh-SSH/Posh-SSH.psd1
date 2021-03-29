@@ -100,8 +100,8 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
                     'Test-SFTPPath',
-                    'Convert-SSHRegistryToJSonKnownHostStore',
-                    'Get-SSHRegistryKnownHostStore')
+                    'Convert-SSHRegistryToJsonKnownHost',
+                    'Get-SSHRegistryKnownHost')
 
 # Cmdlets to export from this module
 CmdletsToExport = @('Get-SCPItem',

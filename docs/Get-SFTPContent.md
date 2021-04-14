@@ -81,7 +81,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: String
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -96,7 +96,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: UTF8
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

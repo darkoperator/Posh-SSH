@@ -107,7 +107,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: 60
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -122,7 +122,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
+Default value: 32
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

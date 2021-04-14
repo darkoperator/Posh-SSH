@@ -99,7 +99,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 10
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -235,7 +235,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 5
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -265,7 +265,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 22
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -295,7 +295,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 8080
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -326,7 +326,7 @@ Accepted values: HTTP, Socks4, Socks5
 
 Required: False
 Position: Named
-Default value: None
+Default value: HTTP
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -341,7 +341,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 10
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

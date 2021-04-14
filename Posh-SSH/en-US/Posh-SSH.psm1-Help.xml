@@ -4525,11 +4525,11 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
       <command:verb>Set</command:verb>
       <command:noun>SFTPPathAttribute</command:noun>
       <maml:description>
-        <maml:para>Sets one or more attributes on a scefied item to a remote server though a SFTP Session.</maml:para>
+        <maml:para>Sets one or more attributes on a specified item to a remote server though a SFTP Session.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Sets one or more attributes on a scefied item to a remote server though a SFTP Session.</maml:para>
+      <maml:para>Sets one or more attributes on a specified item to a remote server though a SFTP Session.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>

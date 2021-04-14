@@ -100,8 +100,9 @@ Accept wildcard characters: False
 
 ### -ItemType
 Type of item to create.
-Options are: * File
+Options are:
 
+* File
 * Directory
 
 ```yaml
@@ -117,7 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recurse
-@{Text=}
+If ItemType is Directory, create sub directories in the path.
 
 ```yaml
 Type: SwitchParameter

@@ -84,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoProgress
-@{Text=}
+Do not show download progress.
 
 ```yaml
 Type: SwitchParameter

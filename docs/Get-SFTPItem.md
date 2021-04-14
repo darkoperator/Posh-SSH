@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoProgress
-Do not show upload progress.
+Do not show download progress.
 
 ```yaml
 Type: SwitchParameter

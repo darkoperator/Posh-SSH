@@ -142,6 +142,10 @@ namespace SSH.Stores
         public override KnownHostValue GetKey(string Host)
         {
             var hostbytes = Encoding.ASCII.GetBytes(Host);
+            if (HostKeys.TryGetValue(Host, out var keyData))
+            {
+                return keyData;
+            }
             foreach (var hashedKey in hashedKeys)
             {
                 using (HMACSHA1 hmac = new HMACSHA1(hashedKey.Salt))
@@ -155,10 +159,6 @@ namespace SSH.Stores
                         };
                     }
                 }
-            }
-            if (HostKeys.TryGetValue(Host, out var keyData))
-            {
-                return keyData;
             }
             foreach (var wildcardKey in wildcardKeys)
             {

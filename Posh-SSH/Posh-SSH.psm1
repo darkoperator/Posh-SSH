@@ -1069,8 +1069,9 @@ function Get-SFTPChildItem
         $Path,
         [Parameter(Mandatory=$false,
                    Position=2)]
+        [Alias('Recursive')]
         [switch]
-        $Recursive
+        $Recurse
 
      )
 
@@ -1129,7 +1130,7 @@ function Get-SFTPChildItem
                     throw "Specified path of $($Path) is not a directory."
                 }
             }
-            if($Recursive)
+            if($Recurse)
             {
                 Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess
             }

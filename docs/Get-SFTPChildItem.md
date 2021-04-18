@@ -14,12 +14,12 @@ Gets the items and child items in a specified path.
 
 ### Index (Default)
 ```
-Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
+Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recurse] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
+Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recurse] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -113,13 +113,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Recursive
+### -Recurse
 @{Text=}
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: Recursive
 
 Required: False
 Position: 2

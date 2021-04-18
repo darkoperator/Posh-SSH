@@ -217,7 +217,23 @@ function Invoke-SSHCommand
 
         [Parameter(Mandatory=$false, Position=3)]
         [int]
-        $ThrottleLimit = 32
+        $ThrottleLimit = 32,
+
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $ShowStandardOutputStream,
+
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $ShowErrorOutputStream,
+
+        [Parameter(Mandatory=$false)]
+        [string]
+        $StandardOutputStreamColor = "White",
+
+        [Parameter(Mandatory=$false)]
+        [string]
+        $ErrorOutputStreamColor ="Red"
     )
 
     Begin
@@ -245,6 +261,8 @@ function Invoke-SSHCommand
         # array to keep track of all the running jobs.
         $Script:AsyncProcessing = @{}
         $JobId = 0
+        $Script:IndexStandardOutputStream = 0
+        $Script:IndexErrorOutputStream = 0
         function CheckAsyncProcessing
         {
             process
@@ -257,6 +275,27 @@ function Invoke-SSHCommand
                     $_.Value
                 } |
                 ForEach-Object {
+
+                    # Output Stream
+                    if ($ShowStandardOutputStream)
+                    {
+                        if ($_.cmd.Result.Length -gt $Script:IndexStandardOutputStream)
+                        {
+                            $NewStreamData = $_.cmd.Result.Substring($Script:IndexStandardOutputStream)
+                            Write-Host $NewStreamData -ForegroundColor $StandardOutputStreamColor -NoNewline
+                            $Script:IndexStandardOutputStream = $_.cmd.Result.Length
+                        }
+                    }
+                    if ($ShowErrorOutputStream)
+                    {
+                        if ($_.cmd.Error.Length -gt $Script:IndexErrorOutputStream)
+                        {
+                            $NewStreamData = $_.cmd.Error.Substring($Script:IndexErrorOutputStream)
+                            Write-Host $NewStreamData -ForegroundColor $ErrorOutputStreamColor -NoNewline
+                            $Script:IndexErrorOutputStream = $_.cmd.Error.Length
+                        }
+                    }
+
                     # Check if it completed or is past the timeout setting.
                     if ( $_.Async.IsCompleted -or $_.Duration.Elapsed.TotalSeconds -gt $TimeOut )
                     {

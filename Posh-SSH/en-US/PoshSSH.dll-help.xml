@@ -3756,11 +3756,11 @@ VERBOSE: Destination: /tmp/testcode</dev:code>
       <command:verb>Set</command:verb>
       <command:noun>SFTPItem</command:noun>
       <maml:description>
-        <maml:para>Upload a scefied item to a remote server though a SFTP Session.</maml:para>
+        <maml:para>Upload a specified item to a remote server though a SFTP Session.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Upload a scefied item to a remote server though a SFTP Session. The item can be either a file or a folder.</maml:para>
+      <maml:para>Upload a specified item to a remote server though a SFTP Session. The item can be either a file or a folder.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>

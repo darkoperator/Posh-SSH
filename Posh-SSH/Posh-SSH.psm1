@@ -1,3 +1,6 @@
+if ($PSVersionTable.PSVersion.Major -eq 5) {
+    Add-Type -Path "$PSScriptRoot/Assembly/Newtonsoft.Json.dll"
+}
 # Set up of Session variables.
 ##############################################################################################
 if (!(Test-Path variable:Global:SshSessions ))
@@ -13,8 +16,8 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 # Import PS additional functions
 ##############################################################################################
 
-. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHostStore.ps1"
-. "$PSScriptRoot/Get-SSHRegistryKnownHostStore.ps1"
+. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHost.ps1"
+. "$PSScriptRoot/Get-SSHRegistryKnownHost.ps1"
 
 # SSH Functions
 ##############################################################################################
@@ -3130,32 +3133,38 @@ function Get-SSHTrustedHost
         # Known Host Store
         [Parameter(Mandatory = $true,
            ParameterSetName = "Store",
-           Position = 0)]
+           ValueFromPipeline = $true,
+           Position = 1)]
+        [SSH.Stores.IStore]
         $KnowHostStore,
 
         # Host name the key fingerprint is associated with.
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false,
+           Position = 0)
+        ]
         [String]
         $HostName
     )
 
     Begin{
         $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-   }
+    }
     Process
     {
        if ($PSCmdlet.ParameterSetName -eq "Local") {
-           if (Test-Path -PathType Leaf $Default) {
-                $Store = Get-SSHJsonKnowHost
-           } else {
-               Write-Warning -Message "No known host file found, $($Default)"
-           }
+           $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
             $Store = $KnowHostStore
        }
 
        if ($PSBoundParameters.Keys -contains "HostName") {
-            $Store.GetKey($HostName) | Add-Member -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+            $k = $Store.GetKey($HostName)
+            if ($k) {
+                $k | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+            }
        } else {
             $Store.GetAllKeys() 
        }
@@ -3177,16 +3186,27 @@ function Get-SSHTrustedHost
                     Position=0)]
          $HostName,
 
-         # Friendly Name for the entry. On OpenSSH this is the key cipher.
-         [Parameter(Mandatory = $true)]
-         [string]
-         $Name,
-
-         # SSH Server Fingerprint.
+         # SSH Server Fingerprint. (md5 of host public key)
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
          $FingerPrint,
+
+         # This is the hostkey cipher name.
+         [ValidateSet(
+                    "ssh-ed25519",
+                    "ecdsa-sha2-nistp256",
+                    "ecdsa-sha2-nistp384",
+                    "ecdsa-sha2-nistp521",
+                    "ssh-rsa",
+                    "ssh-dss"
+         )]
+         [Parameter(
+                    ValueFromPipelineByPropertyName=$true,
+                    Position=2)]
+         [string]
+         [Alias('KeyCipherName')]
+         $HostKeyName = "",
 
          # Known Host Store
         [Parameter(Mandatory = $true,
@@ -3194,20 +3214,21 @@ function Get-SSHTrustedHost
         $KnowHostStore
      )
 
-     Begin {}
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+    }
      Process
      {
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            if (Test-Path -PathType Leaf $Default) {
-                 $Store = Get-SSHJsonKnowHost
-            } else {
+            $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
              $Store = $KnowHostStore
         }
  
-        $Store.SetKey($HostName, $Name, $FingerPrint)
+        $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
      }
      End {}
  }
@@ -3230,12 +3251,13 @@ function Get-SSHTrustedHost
         $KnowHostStore
      )
 
-     Begin{}
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+    }
      Process{
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            if (Test-Path -PathType Leaf $Default) {
-                 $Store = Get-SSHJsonKnowHost
-            } else {
+            $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {

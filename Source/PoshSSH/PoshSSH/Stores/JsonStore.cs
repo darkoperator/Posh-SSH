@@ -38,7 +38,11 @@ namespace SSH.Stores
                 },
                 Formatting.Indented
             );
-            File.WriteAllText(FileName, jsonString);
+            var d = Directory.CreateDirectory(Path.GetDirectoryName(FileName));
+            if (d.Exists)
+            {
+                File.WriteAllText(FileName, jsonString);
+            }
         }
 
         protected override void OnGetKeys()

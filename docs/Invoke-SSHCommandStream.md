@@ -37,7 +37,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -Command
-@{Text=}
+Command to execute in remote host.
 
 ```yaml
 Type: String
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnsureConnection
-@{Text=}
+Ensures a connection is made by reconnecting before command.
 
 ```yaml
 Type: SwitchParameter
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -TimeOut
-@{Text=}
+Time out in seconds to wait for the command to return a value.
 
 ```yaml
 Type: Int32
@@ -91,7 +91,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: 60
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -127,7 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -SSHSession
-@{Text=}
+SSH Session object.
 
 ```yaml
 Type: SshSession

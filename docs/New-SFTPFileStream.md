@@ -96,16 +96,14 @@ Accept wildcard characters: False
 
 ### -FileMode
 Specifies how the operating system should open a file.
-Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.
+Options are:
 
+* Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.
 * Create - Specifies that the operating system should create a new file.
 * CreateNew - Specifies that the operating system should create a new file
 * Open - Specifies that the operating system should open an existing file.
-* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be
-
-created.
-* Truncate - Specifies that the operating system should open an existing file.
-When the file is opened, it should be truncated so that its size is zero bytes.
+* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be created.
+* Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.
 
 ```yaml
 Type: String

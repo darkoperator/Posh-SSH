@@ -71,6 +71,17 @@ namespace SSH
             set { _noProgress = value; }
         }
 
+        private string _pathTransformation;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = false,
+            HelpMessage = "Remote Path transormation to use.")]
+        [ValidateSet("ShellQuote", "None", "DoubleQuote", IgnoreCase = true)]
+        public string PathTransformation
+        {
+            get { return _pathTransformation; }
+            set { _pathTransformation = value; }
+        }
+
         protected override void ProcessRecord()
         {
             foreach (var computer in ComputerName)
@@ -80,6 +91,18 @@ namespace SSH
                 {
                     if (client != default && client.IsConnected)
                     {
+                        switch (PathTransformation.ToLower())
+                        {
+                            case "shellquote":
+                                client.RemotePathTransformation = RemotePathTransformation.ShellQuote;
+                                break;
+                            case "none":
+                                client.RemotePathTransformation = RemotePathTransformation.None;
+                                break;
+                            case "doublequote":
+                                client.RemotePathTransformation = RemotePathTransformation.DoubleQuote;
+                                break;
+                        }
                         var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
                         if (_noProgress == false)
                         {

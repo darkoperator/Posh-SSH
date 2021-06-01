@@ -39,7 +39,7 @@ PowerShellVersion = '5.1'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '4.7'
+#DotNetFrameworkVersion = '4.7'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'
@@ -129,7 +129,7 @@ FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assem
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
     PSData = @{
-       Prerelease = 'beta1'
+       Prerelease = 'beta3'
        ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
     }
 }

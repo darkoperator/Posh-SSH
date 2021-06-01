@@ -80,7 +80,7 @@ namespace SSH
             set { _noProgress = value; }
         }
 
-        private string _pathTransformation;
+        private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,
             HelpMessage = "Remote Path transormation to use.")]
@@ -91,6 +91,7 @@ namespace SSH
             set { _pathTransformation = value; }
         }
 
+      
         protected override void ProcessRecord()
         {
             foreach (var computer in ComputerName)
@@ -163,13 +164,29 @@ namespace SSH
 
                         if (String.Equals(_pathtype, "File", StringComparison.OrdinalIgnoreCase))
                         {
+                            WriteVerbose("File name " + localname);
                             WriteVerbose("Item type selected: File");
 
                             WriteVerbose("Saving as " + destinationpath);
 
                             var fil = new FileInfo(@destinationpath);
-                            // Download the file
-                            client.Download(_remotepath, fil);
+
+                            if (fil.Exists && !this.MyInvocation.BoundParameters.ContainsKey("Force"))
+                            {
+                                var e = new IOException("File " + localname + " already exists.");
+                                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                                WriteError(erec);
+                            }
+                            else
+                            {
+                                if (fil.Exists && this.MyInvocation.BoundParameters.ContainsKey("Force")) 
+                                {
+                                    WriteWarning("Overwritting " + destinationpath);
+                                    File.Delete(destinationpath);
+                                }
+                                // Download the file
+                                client.Download(_remotepath, fil);
+                            }
                         }
                         else
                         {
@@ -182,7 +199,6 @@ namespace SSH
                             client.Download(_remotepath, dirinfo);
 
                         }
-                        WriteVerbose("Finished downloading.");
                         client.Disconnect();
                     }
                 }

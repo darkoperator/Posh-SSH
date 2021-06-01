@@ -71,7 +71,7 @@ namespace SSH
             set { _noProgress = value; }
         }
 
-        private string _pathTransformation;
+        private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,
             HelpMessage = "Remote Path transormation to use.")]
@@ -102,6 +102,7 @@ namespace SSH
                             case "doublequote":
                                 client.RemotePathTransformation = RemotePathTransformation.DoubleQuote;
                                 break;
+                
                         }
                         var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
                         if (_noProgress == false)

@@ -129,7 +129,7 @@ FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assem
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
     PSData = @{
-       Prerelease = 'beta3'
+       Prerelease = 'beta5'
        ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
     }
 }

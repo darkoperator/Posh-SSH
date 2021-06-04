@@ -4,8 +4,9 @@ if ($PSVersionTable.PSVersion.Major -eq 5) {
 
 # force load Renci and dependency do to MS including Renci in Windows 2019 Storage Server.
 if ($PSVersionTable.PSVersion.Major -eq 5) {
-    Add-Type -Path "$PSScriptRoot/Assembly/Renci.SshNet.dll"
     Add-Type -Path "$PSScriptRoot/Assembly/SshNet.Security.Cryptography.dll"
+    Add-Type -Path "$PSScriptRoot/Assembly/Renci.SshNet.dll"
+    
 }
 # Set up of Session variables.
 ##############################################################################################
@@ -18,12 +19,6 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 {
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
-
-# Import PS additional functions
-##############################################################################################
-
-. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHost.ps1"
-. "$PSScriptRoot/Get-SSHRegistryKnownHost.ps1"
 
 # SSH Functions
 ##############################################################################################
@@ -3278,3 +3273,56 @@ function Get-SSHTrustedHost
      }
      End{}
  }
+
+ <#
+    .SYNOPSIS
+       Get KnownHosts from registry (readonly)
+    .DESCRIPTION
+       Get KnownHosts from registry (readonly)
+       It is windows-only compatibility cmdlet
+#>
+function Get-SSHRegistryKnownHost {
+    class SSHRegistryKeyStore: SSH.Stores.MemoryStore {
+          [void] OnGetKeys() {
+              $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
+              $HostKeys = $this.HostKeys
+              $p | Get-Member -MemberType NoteProperty |
+              Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
+              ForEach-Object {
+                 $name = $_.Name
+                 $hostData = [SSH.Stores.KnownHostValue]@{HostKeyName='ssh-rsa'; Fingerprint=$p.$name}
+                 $HostKeys.AddOrUpdate($name, $hostData, { return $hostData } )
+              }
+          }
+          [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
+             return $false
+          }
+          [bool]RemoveByHost([string] $Host) {
+              return $false
+          }
+          [bool]RemoveByFingerprint([string] $Fingerprint) {
+              return $false
+          }
+    }
+
+    New-Object SSHRegistryKeyStore
+}
+
+<#
+    .SYNOPSIS
+       Convert windows registry key storage to Json
+    .DESCRIPTION
+       Convert windows registry key storage to Json
+       It is windows-only compatibility cmdlet
+#>
+function Convert-SSHRegistryToJSonKnownHost {
+    $JsonStore = Get-SSHJsonKnowHost
+    $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
+    $p | Get-Member -MemberType NoteProperty |
+    Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
+    ForEach-Object {
+        $name = $_.Name
+        Write-Host "Save ssh-rsa key for $name"
+        [void]$JsonStore.SetKey($name, 'ssh-rsa', $p.$name)
+    }
+}

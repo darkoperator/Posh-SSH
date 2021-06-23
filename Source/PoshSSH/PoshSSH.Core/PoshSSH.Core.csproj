@@ -10,10 +10,7 @@
 
   <ItemGroup>
     <Compile Include="..\PoshSSH\ConnectionInfoGenerator.cs" Link="ConnectionInfoGenerator.cs" />
-    <Compile Include="..\PoshSSH\GetScpFile.cs" Link="GetScpFile.cs" />
-    <Compile Include="..\PoshSSH\GetScpFolder.cs" Link="GetScpFolder.cs" />
     <Compile Include="..\PoshSSH\GetScpItem.cs" Link="GetScpItem.cs" />
-    <Compile Include="..\PoshSSH\GetSftpFile.cs" Link="GetSftpFile.cs" />
     <Compile Include="..\PoshSSH\GetSftpItem.cs" Link="GetSftpItem.cs" />
     <Compile Include="..\PoshSSH\NewSessionBase.cs" Link="NewSessionBase.cs" />
     <Compile Include="..\PoshSSH\NewSftpSession.cs" Link="NewSftpSession.cs" />
@@ -21,11 +18,7 @@
     <Compile Include="..\PoshSSH\OperationProgressHelper.cs" Link="OperationProgressHelper.cs" />
     <Compile Include="..\PoshSSH\PoshSessionType.cs" Link="PoshSessionType.cs" />
     <Compile Include="..\PoshSSH\SessionObject.cs" Link="SessionObject.cs" />
-    <Compile Include="..\PoshSSH\SetScpFile.cs" Link="SetScpFile.cs" />
-    <Compile Include="..\PoshSSH\SetScpFolder.cs" Link="SetScpFolder.cs" />
     <Compile Include="..\PoshSSH\SetScpItem.cs" Link="SetScpItem.cs" />
-    <Compile Include="..\PoshSSH\SetSftpFile.cs" Link="SetSftpFile.cs" />
-    <Compile Include="..\PoshSSH\SetSftpFolder.cs" Link="SetSftpFolder.cs" />
     <Compile Include="..\PoshSSH\SetSftpItem.cs" Link="SetSftpItem.cs" />
     <Compile Include="..\PoshSSH\SshModHelper.cs" Link="SshModHelper.cs" />
 

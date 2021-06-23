@@ -113,37 +113,6 @@ namespace SSH
                                 client.RemotePathTransformation = RemotePathTransformation.DoubleQuote;
                                 break;
                         }
-                        var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
-                        if (_noProgress == false)
-                        {
-                            var counter = 0;
-                            // Print progess of download.
-
-                            client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
-                            {
-                                if (e.Size != 0)
-                                {
-                                    counter++;
-                                    if (counter > 900)
-                                    {
-                                        var percent = Convert.ToInt32((e.Downloaded * 100) / e.Size);
-                                        if (percent == 100)
-                                        {
-                                            return;
-                                        }
-
-                                        var progressRecord = new ProgressRecord(1,
-                                            "Downloading " + e.Filename,
-                                            String.Format("{0} Bytes Downloaded of {1}",
-                                            e.Downloaded, e.Size))
-                                        { PercentComplete = percent };
-
-                                        Host.UI.WriteProgress(1, progressRecord);
-                                        counter = 0;
-                                    }
-                                }
-                            };
-                        }
                         WriteVerbose("Connection successful");
 
                         WriteVerbose("Downloading " + _remotepath);
@@ -162,6 +131,19 @@ namespace SSH
                         }
                         destinationpath = (localfullPath.TrimEnd('/', '\\')) + System.IO.Path.DirectorySeparatorChar + localname;
 
+                        string curName = "";
+                        var progressHelper = new OperationProgressHelper(this, "Download", curName, 0, 1);
+                        client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
+                        {
+                            if (e.Filename != curName)
+                            {
+                                progressHelper.Complete();
+                                curName = e.Filename;
+                                progressHelper = new OperationProgressHelper(this, "Download", curName, e.Size, 1);
+                            }
+                            progressHelper.Callback((ulong)e.Downloaded);
+                        };
+
                         if (String.Equals(_pathtype, "File", StringComparison.OrdinalIgnoreCase))
                         {
                             WriteVerbose("File name " + localname);
@@ -179,13 +161,14 @@ namespace SSH
                             }
                             else
                             {
-                                if (fil.Exists && this.MyInvocation.BoundParameters.ContainsKey("Force")) 
+                                if (fil.Exists)
                                 {
                                     WriteWarning("Overwritting " + destinationpath);
                                     File.Delete(destinationpath);
                                 }
                                 // Download the file
                                 client.Download(_remotepath, fil);
+                                progressHelper.Complete();
                             }
                         }
                         else
@@ -197,6 +180,7 @@ namespace SSH
 
                             var dirinfo = new DirectoryInfo(@destinationpath);
                             client.Download(_remotepath, dirinfo);
+                            progressHelper.Complete();
 
                         }
                         client.Disconnect();

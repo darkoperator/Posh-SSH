@@ -143,30 +143,7 @@ namespace SSH
                             WriteVerbose("Uploading " + localfullPath + " to " + _remotepath);
 
                             // Setup Action object for showing download progress.
-
-                            var res = new Action<ulong>(rs =>
-                            {
-                                //if (!MyInvocation.BoundParameters.ContainsKey("Verbose")) return;
-                                if (fil.Length > 1240000)
-                                {
-                                    var percent = (int)((((double)rs) / fil.Length) * 100.0);
-                                    if (percent % 10 == 0)
-                                    {
-                                        // This will prevent the progress message from being stuck on the screen.
-                                        if (percent == 90 || percent > 90)
-                                        {
-                                            return;
-                                        }
-
-                                        var progressRecord = new ProgressRecord(1,
-                                        "Uploading " + fil.Name,
-                                        String.Format("{0} Bytes Uploaded of {1}", rs, fil.Length))
-                                        { PercentComplete = percent };
-
-                                        Host.UI.WriteProgress(1, progressRecord);
-                                    }
-                                }
-                            });
+                            var progressHelper = new OperationProgressHelper(this, "Upload", fil.Name, fil.Length, 1);
 
                             // Check that the path we are uploading to actually exists on the target.
                             if (sftpSession.Session.Exists(_remotepath))
@@ -179,23 +156,27 @@ namespace SSH
                                 }
                                 // Check if the file already exists on the target system.
                                 var present = sftpSession.Session.Exists(remoteFullpath);
-                                if ((present & _overwrite) || (!present))
+                                if (!present || _overwrite)
                                 {
-                                    var localstream = File.OpenRead(localfullPath);
-                                    try
+                                    using (var localstream = File.OpenRead(localfullPath))
                                     {
-                                        sftpSession.Session.UploadFile(localstream, remoteFullpath, res);
-                                        localstream.Close();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        localstream.Close();
-                                        WriteError(new ErrorRecord(
-                                                     ex,
-                                                     "Error while Uploading",
-                                                     ErrorCategory.InvalidOperation,
-                                                     sftpSession));
-
+                                        try
+                                        {
+                                            sftpSession.Session.UploadFile(localstream, remoteFullpath, progressHelper.Callback);
+                                            progressHelper.Complete();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            WriteError(new ErrorRecord(
+                                                         ex,
+                                                         "Error while Uploading",
+                                                         ErrorCategory.InvalidOperation,
+                                                         sftpSession));
+                                        }
+                                        finally
+                                        {
+                                            localstream.Close();
+                                        }
                                     }
                                 }
                                 else
@@ -294,37 +275,9 @@ namespace SSH
                     {
                         var fil = new FileInfo(info.FullName);
                         WriteVerbose("Uploading file: " + remotePath + "/" + info.Name);
-                        var res = new Action<ulong>(rs =>
-                        {
-
-                            if (fil.Length > 1240000)
-                            {
-                                var percent = (int)((((double)rs) / fil.Length) * 100.0);
-                                if (percent % 10 == 0)
-                                {
-                                    // This will prevent the progress message from being stuck on the screen.
-                                    if (percent == 90 || percent > 90)
-                                    {
-                                        return;
-                                    }
-
-                                    var progressRecord = new ProgressRecord(1,
-                                            "Uploading " + fil.Name,
-                                            $"{rs} Bytes Uploaded of {fil.Length}")
-                                    { PercentComplete = percent };
-
-                                    Host.UI.WriteProgress(1, progressRecord);
-                                }
-                            }
-                        });
-                        client.UploadFile(fileStream, remotePath + "/" + info.Name, res);
-
-                        // Clean any stray progress bar.
-                        var progressRecordEnd = new ProgressRecord(1,
-                                "Uploading ",
-                                "end");
-
-                        Host.UI.WriteProgress(1, progressRecordEnd);
+                        var progressHelper = new OperationProgressHelper(this, "Upload", fil.Name, fil.Length, 1);
+                        client.UploadFile(fileStream, remotePath + "/" + info.Name, progressHelper.Callback);
+                        progressHelper.Complete();
                     }
                 }
             }

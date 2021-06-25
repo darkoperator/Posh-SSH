@@ -141,7 +141,7 @@ namespace SSH
                                 curName = e.Filename;
                                 progressHelper = new OperationProgressHelper(this, "Download", curName, e.Size, 1);
                             }
-                            progressHelper.Callback((ulong)e.Downloaded);
+                            progressHelper.Callback?.Invoke((ulong)e.Downloaded);
                         };
 
                         if (String.Equals(_pathtype, "File", StringComparison.OrdinalIgnoreCase))

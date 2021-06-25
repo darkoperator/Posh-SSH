@@ -28,7 +28,7 @@ namespace SSH
             };
             if (cmdlet.SessionState.PSVariable.GetValue("ProgressPreference", "Continue").ToString().Equals("SilentlyContinue", StringComparison.OrdinalIgnoreCase))
             {
-                Callback = new Action<ulong>(bytes => { });
+                Callback = null;
                 Complete = () => {};
             }
             else

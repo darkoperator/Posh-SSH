@@ -147,7 +147,7 @@ namespace SSH
                                     curName = e.Filename;
                                     progressHelper = new OperationProgressHelper(this, "Upload", curName, e.Size, 1);
                                 }
-                                progressHelper.Callback((ulong)e.Uploaded);
+                                progressHelper.Callback?.Invoke((ulong)e.Uploaded);
                             };
 
                             if (fil.Exists)

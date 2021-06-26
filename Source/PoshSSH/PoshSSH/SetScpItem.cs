@@ -139,16 +139,19 @@ namespace SSH
                             WriteVerbose("Destination: " + remoteFullpath);
                             var progressHelper = new OperationProgressHelper(this, "Upload", "", 0, 1);
                             string curName = "";
-                            client.Uploading += delegate (object sender, ScpUploadEventArgs e)
+                            if (progressHelper.IsProgressVisible)
                             {
-                                if (e.Filename != curName)
+                                client.Uploading += delegate (object sender, ScpUploadEventArgs e)
                                 {
-                                    progressHelper.Complete();
-                                    curName = e.Filename;
-                                    progressHelper = new OperationProgressHelper(this, "Upload", curName, e.Size, 1);
-                                }
-                                progressHelper.Callback?.Invoke((ulong)e.Uploaded);
-                            };
+                                    if (e.Filename != curName)
+                                    {
+                                        progressHelper.Complete();
+                                        curName = e.Filename;
+                                        progressHelper = new OperationProgressHelper(this, "Upload", curName, e.Size, 1);
+                                    }
+                                    progressHelper.Callback?.Invoke((ulong)e.Uploaded);
+                                };
+                            }
 
                             if (fil.Exists)
                             {

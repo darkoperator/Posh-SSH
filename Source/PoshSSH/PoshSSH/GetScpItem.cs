@@ -133,17 +133,19 @@ namespace SSH
 
                         string curName = "";
                         var progressHelper = new OperationProgressHelper(this, "Download", curName, 0, 1);
-                        client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
+                        if (progressHelper.IsProgressVisible)
                         {
-                            if (e.Filename != curName)
+                            client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
                             {
-                                progressHelper.Complete();
-                                curName = e.Filename;
-                                progressHelper = new OperationProgressHelper(this, "Download", curName, e.Size, 1);
-                            }
-                            progressHelper.Callback?.Invoke((ulong)e.Downloaded);
-                        };
-
+                                if (e.Filename != curName)
+                                {
+                                    progressHelper.Complete();
+                                    curName = e.Filename;
+                                    progressHelper = new OperationProgressHelper(this, "Download", curName, e.Size, 1);
+                                }
+                                progressHelper.Callback?.Invoke((ulong)e.Downloaded);
+                            };
+                        }
                         if (String.Equals(_pathtype, "File", StringComparison.OrdinalIgnoreCase))
                         {
                             WriteVerbose("File name " + localname);

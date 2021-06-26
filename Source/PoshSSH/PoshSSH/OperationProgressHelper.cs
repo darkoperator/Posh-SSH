@@ -11,6 +11,7 @@ namespace SSH
 {
     internal class OperationProgressHelper
     {
+        public bool IsProgressVisible { get; }
         public Action<ulong> Callback { get; }
         public Action Complete { get; }
 
@@ -26,7 +27,8 @@ namespace SSH
                 SecondsRemaining = -1,
                 ParentActivityId = ParentActivityId,
             };
-            if (cmdlet.SessionState.PSVariable.GetValue("ProgressPreference", "Continue").ToString().Equals("SilentlyContinue", StringComparison.OrdinalIgnoreCase))
+            IsProgressVisible = ! cmdlet.SessionState.PSVariable.GetValue("ProgressPreference", "Continue").ToString().Equals("SilentlyContinue", StringComparison.OrdinalIgnoreCase);
+            if (! IsProgressVisible)
             {
                 Callback = null;
                 Complete = () => {};

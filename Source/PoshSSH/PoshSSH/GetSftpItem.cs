@@ -75,17 +75,6 @@ namespace SSH
             set { _localpath = value; }
         }
 
-        // Supress progress bar.
-        private bool _noProgress = false;
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Do not show upload progress.")]
-        public SwitchParameter NoProgress
-        {
-            get { return _noProgress; }
-            set { _noProgress = value; }
-        }
-
         /// <summary>
         /// If the local file exists overwrite it.
         /// </summary>

@@ -69,17 +69,6 @@ namespace SSH
             set { _newname = value; }
         }
 
-        // Supress progress bar.
-        private bool _noProgress = false;
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Do not show upload progress.")]
-        public SwitchParameter NoProgress
-        {
-            get { return _noProgress; }
-            set { _noProgress = value; }
-        }
-
         private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,

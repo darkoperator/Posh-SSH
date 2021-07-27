@@ -55,26 +55,21 @@ function Get-SSHSession
     {
         if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
+            # Can not reference SShSessions directly so as to be able
+            # to remove the sessions when Remove-SSHSession is used
             if ( $PSBoundParameters.ContainsKey('SessionId') )
             {
-                foreach($i in $SessionId)
+                $result = foreach($session in $SshSessions)
                 {
-                    foreach($session in $SshSessions)
+                    if ($session.SessionId -in $SessionId)
                     {
-                        if ($session.SessionId -eq $i)
-                        {
-                            $session
-                        }
+                        $session
                     }
                 }
             }
             else
             {
-                # Can not reference SShSessions directly so as to be able
-                # to remove the sessions when Remove-SSHSession is used
-                $return_sessions = @()
-                foreach($s in $SshSessions){$return_sessions += $s}
-                $return_sessions
+                $result = $Global:SshSessions.psobject.copy()
             }
         }
         else # ParameterSetName -eq 'ComputerName'
@@ -82,9 +77,9 @@ function Get-SSHSession
             # Only check to see if it contains ComputerName.  If it get's it without having any values somehow, then don't return anything as they did something odd.
             if ( $PSBoundParameters.ContainsKey('ComputerName') )
             {
-                foreach($s in $ComputerName)
+                $result = foreach($session in $SshSessions)
                 {
-                    foreach($session in $SshSessions)
+                    foreach($s in $ComputerName)
                     {
                         if ($session.Host -like $s -and ( -not $ExactMatch -or $session.Host -eq $s ) )
                         {
@@ -94,6 +89,7 @@ function Get-SSHSession
                 }
             }
         }
+        $result
     }
     End{}
 }
@@ -936,25 +932,21 @@ function Get-SFTPSession
     {
         if ($SessionId.Length -gt 0)
         {
-            foreach($i in $SessionId)
+            # Can not reference SFTPSessions directly so as to be able
+            # to remove the sessions when Remove-Sftpession is used
+            $result = foreach($session in $global:SFTPSessions)
             {
-                foreach($session in $global:SFTPSessions)
+                if ($session.SessionId -in $SessionId)
                 {
-                    if ($session.SessionId -eq $i)
-                    {
-                        $session
-                    }
+                    $session
                 }
             }
         }
         else
         {
-            # Can not reference SFTPSessions directly so as to be able
-            # to remove the sessions when Remove-Sftpession is used
-            $return_sessions = @()
-            foreach($s in $Global:SFTPSessions){$return_sessions += $s}
-            $return_sessions
+            $result = $Global:SFTPSessions.psobject.copy()
         }
+        $result
     }
     End{}
 }
@@ -3290,14 +3282,14 @@ function Get-SSHRegistryKnownHost {
               Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
               ForEach-Object {
                  $name = $_.Name
-                 $hostData = [SSH.Stores.KnownHostValue]@{HostKeyName='ssh-rsa'; Fingerprint=$p.$name}
+                 $hostData = [SSH.Stores.KnownHostValue]@{ HostKeyName='ssh-rsa'; Fingerprint=$p.$name }
                  $HostKeys.AddOrUpdate($name, $hostData, { return $hostData } )
               }
           }
           [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
              return $false
           }
-          [bool]RemoveByHost([string] $Host) {
+          [bool]RemoveByHost([string] $HostName) {
               return $false
           }
           [bool]RemoveByFingerprint([string] $Fingerprint) {

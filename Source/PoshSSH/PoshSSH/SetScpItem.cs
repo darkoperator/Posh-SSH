@@ -60,17 +60,6 @@ namespace SSH
             set { _newname = value; }
         }
 
-        // Supress progress bar.
-        private bool _noProgress = false;
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Do not show upload progress.")]
-        public SwitchParameter NoProgress
-        {
-            get { return _noProgress; }
-            set { _noProgress = value; }
-        }
-
         private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,
@@ -104,39 +93,7 @@ namespace SSH
                                 break;
                 
                         }
-                        var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
-                        if (_noProgress == false)
-                        {
-                            var counter = 0;
-                            // Print progess of download.
 
-                            client.Uploading += delegate (object sender, ScpUploadEventArgs e)
-                            {
-                                if (e.Size != 0)
-                                {
-                                    counter++;
-
-                                    if (counter > 900)
-                                    {
-                                        var percent = Convert.ToInt32((e.Uploaded * 100) / e.Size);
-
-                                        if (percent == 100)
-                                        {
-                                            return;
-                                        }
-
-                                        var progressRecord = new ProgressRecord(1,
-                                            "Uploading " + e.Filename,
-                                            String.Format("{0} Bytes Uploaded of {1}",
-                                            e.Uploaded, e.Size))
-                                        { PercentComplete = percent };
-
-                                        Host.UI.WriteProgress(1, progressRecord);
-                                        counter = 0;
-                                    }
-                                }
-                            };
-                        }
                         WriteVerbose("Connection successful");
 
                         ProviderInfo provider;
@@ -169,6 +126,22 @@ namespace SSH
                             }
 
                             WriteVerbose("Destination: " + remoteFullpath);
+                            var progressHelper = new OperationProgressHelper(this, "Upload", "", 0, 1);
+                            string curName = "";
+                            if (progressHelper.IsProgressVisible)
+                            {
+                                client.Uploading += delegate (object sender, ScpUploadEventArgs e)
+                                {
+                                    if (e.Filename != curName)
+                                    {
+                                        progressHelper.Complete();
+                                        curName = e.Filename;
+                                        progressHelper = new OperationProgressHelper(this, "Upload", curName, e.Size, 1);
+                                    }
+                                    progressHelper.Callback?.Invoke((ulong)e.Uploaded);
+                                };
+                            }
+
                             if (fil.Exists)
                             {
                                 client.Upload(fil, remoteFullpath);
@@ -177,6 +150,7 @@ namespace SSH
                             {
                                 client.Upload(dirinfo, remoteFullpath);
                             }
+                            progressHelper.Complete();
 
                             client.Disconnect();
                         }

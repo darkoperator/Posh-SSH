@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-help.xml
+external help file: Posh-SSH.psm1-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,38 +8,36 @@ schema: 2.0.0
 # New-SSHTrustedHost
 
 ## SYNOPSIS
-Add a new trusted host for Posh-SSH to use. 
 
 ## SYNTAX
 
 ### Local (Default)
 ```
-New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> [<CommonParameters>]
+New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>] [<CommonParameters>]
 ```
 
 ### Store
 ```
-New-SSHTrustedHost [-HostName] <Object> -Name <String> [-FingerPrint] <Object> -KnowHostStore <Object>
- [<CommonParameters>]
+New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
+ -KnowHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Add a new trusted host for Posh-SSH to use. By default it will store the new host in the default Posh-SSH hosts.json file unless a KnownHost store is specified.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> $inmem = New-SSHMemoryKnownHost
-PS C:\> New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Add new host entry to a store. 
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -FingerPrint
-SSH finger print for the the host to be added. 
+### -HostName
+IP Address of FQDN of host to add to trusted list.
 
 ```yaml
 Type: Object
@@ -53,8 +51,9 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -HostName
-FQDN or IP address of the host.
+### -FingerPrint
+SSH Server Fingerprint.
+(md5 of host public key)
 
 ```yaml
 Type: Object
@@ -62,33 +61,33 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -HostKeyName
+This is the hostkey cipher name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: KeyCipherName
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -KnowHostStore
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+Known Host Store
 
 ```yaml
 Type: Object
 Parameter Sets: Store
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Name
-Friendly name for the key, in the case of OpenSSH it is the ciphers used.
-
-```yaml
-Type: String
-Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -103,10 +102,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.Object
 ## OUTPUTS
 
-### System.Object
 ## NOTES
 
 ## RELATED LINKS

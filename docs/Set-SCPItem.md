@@ -60,7 +60,7 @@ Uploade a directory to the target folder.
 ## PARAMETERS
 
 ### -AcceptKey
-Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
+Auto add host key fingerprint to the list of trusted host/fingerprint pairs.
 
 ```yaml
 Type: SwitchParameter

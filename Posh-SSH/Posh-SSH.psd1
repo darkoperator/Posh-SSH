@@ -39,7 +39,7 @@ PowerShellVersion = '5.1'
 # PowerShellHostVersion = ''
 
 # Minimum version of the .NET Framework required by this module
-DotNetFrameworkVersion = '4.7'
+#DotNetFrameworkVersion = '4.7'
 
 # Minimum version of the common language runtime (CLR) required by this module
 #CLRVersion = '4.0'
@@ -100,8 +100,8 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
                     'Test-SFTPPath',
-                    'Convert-SSHRegistryToJSonKnownHostStore',
-                    'Get-SSHRegistryKnownHostStore')
+                    'Convert-SSHRegistryToJsonKnownHost',
+                    'Get-SSHRegistryKnownHost')
 
 # Cmdlets to export from this module
 CmdletsToExport = @('Get-SCPItem',
@@ -127,12 +127,12 @@ AliasesToExport = '*'
 FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
-PrivateData = @{
-    PSData = @{
-       Prerelease = 'alpha'
-       ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
-    }
-}
+#PrivateData = @{
+#    PSData = @{
+#       Prerelease = 'beta5'
+#       ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
+#    }
+#}
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''

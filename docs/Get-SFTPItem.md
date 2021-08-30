@@ -14,14 +14,14 @@ Downloads via SFTP an item from a SSH server.
 
 ### Index (Default)
 ```
-Get-SFTPItem [-SessionId] <Int32[]> [-Path] <String[]> [-Destination] <String> [-NoProgress] [-Force]
- [-SkipSymLink] [<CommonParameters>]
+Get-SFTPItem [-SessionId] <Int32[]> [-Path] <String[]> [-Destination] <String> [-Force] [-SkipSymLink]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String[]> [-Destination] <String> [-NoProgress] [-Force]
- [-SkipSymLink] [<CommonParameters>]
+Get-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String[]> [-Destination] <String> [-Force] [-SkipSymLink]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,21 +66,6 @@ Required: False
 Position: 3
 Default value: False
 Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoProgress
-Do not show upload progress.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

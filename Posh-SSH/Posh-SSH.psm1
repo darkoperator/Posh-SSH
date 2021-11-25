@@ -117,66 +117,53 @@ function Remove-SSHSession
         $SSHSession
         )
 
-        Begin{}
+        Begin {
+            $sessions2remove = New-Object System.Collections.ArrayList
+        }
         Process
         {
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
-                $sessions2remove = @()
-                 foreach($i in $SessionId)
+                foreach($i in $SessionId)
                 {
                     foreach($session in $Global:SshSessions)
                     {
                         if ($session.SessionId -eq $i)
                         {
-                            $sessions2remove += $session
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
             if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
-                $sessions2remove = @()
-                 foreach($i in $SSHSession)
+                foreach($i in $SSHSession)
                 {
-                    foreach($ssh in $Global:SshSessions)
+                    foreach($session in $Global:SshSessions)
                     {
-                        if ($ssh -eq $i)
+                        if ($session -eq $i)
                         {
-                            $sessions2remove += $ssh
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
         }
-        End{}
-
+        End{
+            foreach($badsession in $sessions2remove)
+            {
+                 Write-Verbose "Removing session $($badsession.SessionId)"
+                 if ($badsession.session.IsConnected)
+                 {
+                    $badsession.session.Disconnect()
+                 }
+                 $badsession.session.Dispose()
+                 $global:SshSessions.Remove($badsession)
+                 Write-Verbose "Session $($badsession.SessionId) Removed"
+            }
+        }
 }
 
 
@@ -974,67 +961,55 @@ function Remove-SFTPSession
         $SFTPSession
     )
 
-        Begin {}
+        Begin {
+            $sessions2remove = New-Object System.Collections.ArrayList
+        }
         Process
         {
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
-                $sessions2remove = @()
-                 foreach($i in $SessionId)
+                foreach($i in $SessionId)
                 {
                     Write-Verbose $i
                     foreach($session in $Global:SFTPSessions)
                     {
                         if ($session.SessionId -eq $i)
                         {
-                            $sessions2remove += $session
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
             if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
-                $sessions2remove = @()
-                 foreach($i in $SFTPSession)
+                foreach($i in $SFTPSession)
                 {
-                    foreach($ssh in $global:SFTPSessions)
+                    foreach($session in $global:SFTPSessions)
                     {
-                        if ($ssh -eq $i)
+                        if ($session -eq $i)
                         {
-                            $sessions2remove += $ssh
+                            [void]$sessions2remove.Add($session)
                         }
                     }
                 }
 
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
-                }
             }
 
         }
-        End{}
-
+        End {
+            foreach($badsession in $sessions2remove)
+            {
+                 Write-Verbose "Removing session $($badsession.SessionId)"
+                 if ($badsession.session.IsConnected)
+                 {
+                    $badsession.session.Disconnect()
+                 }
+                 $badsession.session.Dispose()
+                 $Global:SFTPSessions.Remove($badsession)
+                 Write-Verbose "Session $($badsession.SessionId) Removed"
+            }
+        }
 }
 
 

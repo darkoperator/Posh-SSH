@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SFTPItem
 
 ## SYNOPSIS
-Upload a scefied item to a remote server though a SFTP Session.
+Upload a specific item to a remote server though a SFTP Session.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Set-SFTPItem [-SFTPSession] <SftpSession[]> [-Destination] <String> [-Path] <Str
 ```
 
 ## DESCRIPTION
-Upload a scefied item to a remote server though a SFTP Session.
+Upload a specific item to a remote server though a SFTP Session.
 The item can be either a file or a folder.
 
 ## EXAMPLES
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Overrite item on remote host if it already pressent.
+Overwrite item on remote host if it already pressent.
 
 ```yaml
 Type: SwitchParameter

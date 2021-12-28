@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SFTPItem
 
 ## SYNOPSIS
-Upload a scefied item to a remote server though a SFTP Session.
+Upload a specified item to a remote server though a SFTP Session.
 
 ## SYNTAX
 

@@ -382,7 +382,7 @@ function Invoke-SSHCommand
        $webClient = New-Object System.Net.WebClient
        Try
        {
-           $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Posh-SSH.psd1')
+           $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Release/Posh-SSH.psd1')
            $CurrentVersion = [Version]$current.ModuleVersion
        }
        Catch

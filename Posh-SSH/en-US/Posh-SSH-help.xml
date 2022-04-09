@@ -178,11 +178,11 @@
       <command:verb>Get</command:verb>
       <command:noun>SSHTrustedHost</command:noun>
       <maml:description>
-        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+        <maml:para>Get the current known hosts either from those trusted by Posh-SSH or from a IStore.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
+      <maml:para>Get the current known hosts either from those trusted by Posh-SSH, also from a Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -190,7 +190,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>KnowHostStore</maml:name>
           <maml:description>
-            <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -202,7 +202,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>HostName</maml:name>
           <maml:description>
-            <maml:para>{{ Fill HostName Description }}</maml:para>
+            <maml:para>HostName as stored by Posh-SSH or in a IStore.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -217,7 +217,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>HostName</maml:name>
         <maml:description>
-          <maml:para>{{ Fill HostName Description }}</maml:para>
+          <maml:para>HostName as stored by Posh-SSH or in a IStore.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -229,7 +229,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>KnowHostStore</maml:name>
         <maml:description>
-          <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -267,9 +267,27 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt;  Get-SSHTrustedHost
+
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 ssh-ed25519 7a:da:ab:88:55:95:5b:34:89:f6:46:7f:13:c5:65:c1</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Get currently stored known hosts.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
+PS C:\&gt; $inmem.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
+True
+PS C:\&gt; Get-SSHTrustedHost -KnowHostStore $inmem
+
+HostName    HostKeyName Fingerprint
+--------    ----------- -----------
+192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53</dev:code>
+        <dev:remarks>
+          <maml:para>Get stored known hosts from an Memory Known Host store.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -951,11 +969,11 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:verb>New</command:verb>
       <command:noun>SSHTrustedHost</command:noun>
       <maml:description>
-        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+        <maml:para>Add a new trusted host for Posh-SSH to use.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
+      <maml:para>Add a new trusted host for Posh-SSH to use. By default it will store the new host in the default Posh-SSH hosts.json file unless a KnownHost store is specified.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -963,7 +981,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>HostName</maml:name>
           <maml:description>
-            <maml:para>{{ Fill HostName Description }}</maml:para>
+            <maml:para>FQDN or IP address of the host.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -975,7 +993,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>FingerPrint</maml:name>
           <maml:description>
-            <maml:para>{{ Fill FingerPrint Description }}</maml:para>
+            <maml:para>SSH finger print for the the host to be added.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -987,7 +1005,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>KnowHostStore</maml:name>
           <maml:description>
-            <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -999,7 +1017,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Name</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Name Description }}</maml:para>
+            <maml:para>Friendly name for the key, in the case of OpenSSH it is the ciphers used.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1014,7 +1032,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>FingerPrint</maml:name>
         <maml:description>
-          <maml:para>{{ Fill FingerPrint Description }}</maml:para>
+          <maml:para>SSH finger print for the the host to be added.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -1026,7 +1044,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>HostName</maml:name>
         <maml:description>
-          <maml:para>{{ Fill HostName Description }}</maml:para>
+          <maml:para>FQDN or IP address of the host.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -1038,7 +1056,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>KnowHostStore</maml:name>
         <maml:description>
-          <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -1050,7 +1068,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Name</maml:name>
         <maml:description>
-          <maml:para>{{ Fill Name Description }}</maml:para>
+          <maml:para>Friendly name for the key, in the case of OpenSSH it is the ciphers used.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1088,9 +1106,10 @@ VERBOSE: Forwarding has been started.</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
+PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Add new host entry to a store.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1107,11 +1126,11 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:verb>Remove</command:verb>
       <command:noun>SSHTrustedHost</command:noun>
       <maml:description>
-        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+        <maml:para>Remove a KnwonHost entry from the default user location or from a KnownHost store.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
+      <maml:para>Remove a KnwonHost entry from the default user location or from a KnownHost store.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1119,7 +1138,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
           <maml:name>HostName</maml:name>
           <maml:description>
-            <maml:para>{{ Fill HostName Description }}</maml:para>
+            <maml:para>Host name of the entry to remove.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1131,7 +1150,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>KnowHostStore</maml:name>
           <maml:description>
-            <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -1146,7 +1165,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
         <maml:name>HostName</maml:name>
         <maml:description>
-          <maml:para>{{ Fill HostName Description }}</maml:para>
+          <maml:para>Host name of the entry to remove.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1158,7 +1177,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>KnowHostStore</maml:name>
         <maml:description>
-          <maml:para>{{ Fill KnowHostStore Description }}</maml:para>
+          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -1193,15 +1212,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <maml:para></maml:para>
       </maml:alert>
     </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
-        <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
+    <command:examples />
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>

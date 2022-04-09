@@ -1,3 +1,13 @@
+if ($PSVersionTable.PSVersion.Major -eq 5) {
+    Add-Type -Path "$PSScriptRoot/Assembly/Newtonsoft.Json.dll"
+}
+
+# force load Renci and dependency do to MS including Renci in Windows 2019 Storage Server.
+if ($PSVersionTable.PSVersion.Major -eq 5) {
+    Add-Type -Path "$PSScriptRoot/Assembly/SshNet.Security.Cryptography.dll"
+    Add-Type -Path "$PSScriptRoot/Assembly/Renci.SshNet.dll"
+    
+}
 # Set up of Session variables.
 ##############################################################################################
 if (!(Test-Path variable:Global:SshSessions ))
@@ -9,12 +19,6 @@ if (!(Test-Path variable:Global:SFTPSessions ))
 {
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
-
-# Import PS additional functions
-##############################################################################################
-
-. "$PSScriptRoot/Convert-SSHRegistryToJSonKnownHostStore.ps1"
-. "$PSScriptRoot/Get-SSHRegistryKnownHostStore.ps1"
 
 # SSH Functions
 ##############################################################################################
@@ -51,26 +55,21 @@ function Get-SSHSession
     {
         if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
+            # Can not reference SShSessions directly so as to be able
+            # to remove the sessions when Remove-SSHSession is used
             if ( $PSBoundParameters.ContainsKey('SessionId') )
             {
-                foreach($i in $SessionId)
+                $result = foreach($session in $SshSessions)
                 {
-                    foreach($session in $SshSessions)
+                    if ($session.SessionId -in $SessionId)
                     {
-                        if ($session.SessionId -eq $i)
-                        {
-                            $session
-                        }
+                        $session
                     }
                 }
             }
             else
             {
-                # Can not reference SShSessions directly so as to be able
-                # to remove the sessions when Remove-SSHSession is used
-                $return_sessions = @()
-                foreach($s in $SshSessions){$return_sessions += $s}
-                $return_sessions
+                $result = $Global:SshSessions.psobject.copy()
             }
         }
         else # ParameterSetName -eq 'ComputerName'
@@ -78,9 +77,9 @@ function Get-SSHSession
             # Only check to see if it contains ComputerName.  If it get's it without having any values somehow, then don't return anything as they did something odd.
             if ( $PSBoundParameters.ContainsKey('ComputerName') )
             {
-                foreach($s in $ComputerName)
+                $result = foreach($session in $SshSessions)
                 {
-                    foreach($session in $SshSessions)
+                    foreach($s in $ComputerName)
                     {
                         if ($session.Host -like $s -and ( -not $ExactMatch -or $session.Host -eq $s ) )
                         {
@@ -90,6 +89,7 @@ function Get-SSHSession
                 }
             }
         }
+        $result
     }
     End{}
 }
@@ -117,66 +117,53 @@ function Remove-SSHSession
         $SSHSession
         )
 
-        Begin{}
+        Begin {
+            $sessions2remove = New-Object System.Collections.ArrayList
+        }
         Process
         {
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
-                $sessions2remove = @()
-                 foreach($i in $SessionId)
+                foreach($i in $SessionId)
                 {
                     foreach($session in $Global:SshSessions)
                     {
                         if ($session.SessionId -eq $i)
                         {
-                            $sessions2remove += $session
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
             if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
-                $sessions2remove = @()
-                 foreach($i in $SSHSession)
+                foreach($i in $SSHSession)
                 {
-                    foreach($ssh in $Global:SshSessions)
+                    foreach($session in $Global:SshSessions)
                     {
-                        if ($ssh -eq $i)
+                        if ($session -eq $i)
                         {
-                            $sessions2remove += $ssh
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SshSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
         }
-        End{}
-
+        End{
+            foreach($badsession in $sessions2remove)
+            {
+                 Write-Verbose "Removing session $($badsession.SessionId)"
+                 if ($badsession.session.IsConnected)
+                 {
+                    $badsession.session.Disconnect()
+                 }
+                 $badsession.session.Dispose()
+                 $global:SshSessions.Remove($badsession)
+                 Write-Verbose "Session $($badsession.SessionId) Removed"
+            }
+        }
 }
 
 
@@ -395,7 +382,7 @@ function Invoke-SSHCommand
        $webClient = New-Object System.Net.WebClient
        Try
        {
-           $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Posh-SSH.psd1')
+           $current = Invoke-Expression  $webClient.DownloadString('https://raw.github.com/darkoperator/Posh-SSH/master/Release/Posh-SSH.psd1')
            $CurrentVersion = [Version]$current.ModuleVersion
        }
        Catch
@@ -932,25 +919,21 @@ function Get-SFTPSession
     {
         if ($SessionId.Length -gt 0)
         {
-            foreach($i in $SessionId)
+            # Can not reference SFTPSessions directly so as to be able
+            # to remove the sessions when Remove-Sftpession is used
+            $result = foreach($session in $global:SFTPSessions)
             {
-                foreach($session in $global:SFTPSessions)
+                if ($session.SessionId -in $SessionId)
                 {
-                    if ($session.SessionId -eq $i)
-                    {
-                        $session
-                    }
+                    $session
                 }
             }
         }
         else
         {
-            # Can not reference SFTPSessions directly so as to be able
-            # to remove the sessions when Remove-Sftpession is used
-            $return_sessions = @()
-            foreach($s in $Global:SFTPSessions){$return_sessions += $s}
-            $return_sessions
+            $result = $Global:SFTPSessions.psobject.copy()
         }
+        $result
     }
     End{}
 }
@@ -978,67 +961,55 @@ function Remove-SFTPSession
         $SFTPSession
     )
 
-        Begin {}
+        Begin {
+            $sessions2remove = New-Object System.Collections.ArrayList
+        }
         Process
         {
             if ($PSCmdlet.ParameterSetName -eq 'Index')
             {
-                $sessions2remove = @()
-                 foreach($i in $SessionId)
+                foreach($i in $SessionId)
                 {
                     Write-Verbose $i
                     foreach($session in $Global:SFTPSessions)
                     {
                         if ($session.SessionId -eq $i)
                         {
-                            $sessions2remove += $session
+                            [void]$sessions2remove.Add($session)
                         }
                     }
-                }
-
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
                 }
             }
 
             if ($PSCmdlet.ParameterSetName -eq 'Session')
             {
-                $sessions2remove = @()
-                 foreach($i in $SFTPSession)
+                foreach($i in $SFTPSession)
                 {
-                    foreach($ssh in $global:SFTPSessions)
+                    foreach($session in $global:SFTPSessions)
                     {
-                        if ($ssh -eq $i)
+                        if ($session -eq $i)
                         {
-                            $sessions2remove += $ssh
+                            [void]$sessions2remove.Add($session)
                         }
                     }
                 }
 
-                foreach($badsession in $sessions2remove)
-                {
-                     Write-Verbose "Removing session $($badsession.SessionId)"
-                     if ($badsession.session.IsConnected)
-                     {
-                        $badsession.session.Disconnect()
-                     }
-                     $badsession.session.Dispose()
-                     $Global:SFTPSessions.Remove($badsession)
-                     Write-Verbose "Session $($badsession.SessionId) Removed"
-                }
             }
 
         }
-        End{}
-
+        End {
+            foreach($badsession in $sessions2remove)
+            {
+                 Write-Verbose "Removing session $($badsession.SessionId)"
+                 if ($badsession.session.IsConnected)
+                 {
+                    $badsession.session.Disconnect()
+                 }
+                 $badsession.session.Dispose()
+                 $Global:SFTPSessions.Remove($badsession)
+                 Write-Verbose "Session $($badsession.SessionId) Removed"
+            }
+        }
 }
 
 
@@ -3130,32 +3101,38 @@ function Get-SSHTrustedHost
         # Known Host Store
         [Parameter(Mandatory = $true,
            ParameterSetName = "Store",
-           Position = 0)]
+           ValueFromPipeline = $true,
+           Position = 1)]
+        [SSH.Stores.IStore]
         $KnowHostStore,
 
         # Host name the key fingerprint is associated with.
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $false,
+           Position = 0)
+        ]
         [String]
         $HostName
     )
 
     Begin{
         $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-   }
+    }
     Process
     {
        if ($PSCmdlet.ParameterSetName -eq "Local") {
-           if (Test-Path -PathType Leaf $Default) {
-                $Store = Get-SSHJsonKnowHost
-           } else {
-               Write-Warning -Message "No known host file found, $($Default)"
-           }
+           $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
+                Write-Warning -Message "No known host file found, $($Default)"
+            }
        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
             $Store = $KnowHostStore
        }
 
        if ($PSBoundParameters.Keys -contains "HostName") {
-            $Store.GetKey($HostName) | Add-Member -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+            $k = $Store.GetKey($HostName)
+            if ($k) {
+                $k | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
+            }
        } else {
             $Store.GetAllKeys() 
        }
@@ -3177,16 +3154,27 @@ function Get-SSHTrustedHost
                     Position=0)]
          $HostName,
 
-         # Friendly Name for the entry. On OpenSSH this is the key cipher.
-         [Parameter(Mandatory = $true)]
-         [string]
-         $Name,
-
-         # SSH Server Fingerprint.
+         # SSH Server Fingerprint. (md5 of host public key)
          [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
          $FingerPrint,
+
+         # This is the hostkey cipher name.
+         [ValidateSet(
+                    "ssh-ed25519",
+                    "ecdsa-sha2-nistp256",
+                    "ecdsa-sha2-nistp384",
+                    "ecdsa-sha2-nistp521",
+                    "ssh-rsa",
+                    "ssh-dss"
+         )]
+         [Parameter(
+                    ValueFromPipelineByPropertyName=$true,
+                    Position=2)]
+         [string]
+         [Alias('KeyCipherName')]
+         $HostKeyName = "",
 
          # Known Host Store
         [Parameter(Mandatory = $true,
@@ -3194,20 +3182,21 @@ function Get-SSHTrustedHost
         $KnowHostStore
      )
 
-     Begin {}
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+    }
      Process
      {
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            if (Test-Path -PathType Leaf $Default) {
-                 $Store = Get-SSHJsonKnowHost
-            } else {
+            $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
              $Store = $KnowHostStore
         }
  
-        $Store.SetKey($HostName, $Name, $FingerPrint)
+        $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
      }
      End {}
  }
@@ -3230,12 +3219,13 @@ function Get-SSHTrustedHost
         $KnowHostStore
      )
 
-     Begin{}
+    Begin{
+        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
+    }
      Process{
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            if (Test-Path -PathType Leaf $Default) {
-                 $Store = Get-SSHJsonKnowHost
-            } else {
+            $Store = Get-SSHJsonKnowHost
+            if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
@@ -3250,3 +3240,56 @@ function Get-SSHTrustedHost
      }
      End{}
  }
+
+ <#
+    .SYNOPSIS
+       Get KnownHosts from registry (readonly)
+    .DESCRIPTION
+       Get KnownHosts from registry (readonly)
+       It is windows-only compatibility cmdlet
+#>
+function Get-SSHRegistryKnownHost {
+    class SSHRegistryKeyStore: SSH.Stores.MemoryStore {
+          [void] OnGetKeys() {
+              $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
+              $HostKeys = $this.HostKeys
+              $p | Get-Member -MemberType NoteProperty |
+              Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
+              ForEach-Object {
+                 $name = $_.Name
+                 $hostData = [SSH.Stores.KnownHostValue]@{ HostKeyName='ssh-rsa'; Fingerprint=$p.$name }
+                 $HostKeys.AddOrUpdate($name, $hostData, { return $hostData } )
+              }
+          }
+          [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
+             return $false
+          }
+          [bool]RemoveByHost([string] $HostName) {
+              return $false
+          }
+          [bool]RemoveByFingerprint([string] $Fingerprint) {
+              return $false
+          }
+    }
+
+    New-Object SSHRegistryKeyStore
+}
+
+<#
+    .SYNOPSIS
+       Convert windows registry key storage to Json
+    .DESCRIPTION
+       Convert windows registry key storage to Json
+       It is windows-only compatibility cmdlet
+#>
+function Convert-SSHRegistryToJSonKnownHost {
+    $JsonStore = Get-SSHJsonKnowHost
+    $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
+    $p | Get-Member -MemberType NoteProperty |
+    Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
+    ForEach-Object {
+        $name = $_.Name
+        Write-Host "Save ssh-rsa key for $name"
+        [void]$JsonStore.SetKey($name, 'ssh-rsa', $p.$name)
+    }
+}

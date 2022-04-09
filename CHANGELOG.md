@@ -1,20 +1,28 @@
 # ChangeLog
 
-## Version 3.0 - Alpha
+## Version 3.0
 
-This release is possible thanks to @pcatrobrouillet, @soynerdito and  @MVKozlov (Thanks you all)
+This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @MVKozlov for all the fixes and improvements, would have not been possible without his contributions (Thanks you all)
 
 * Windows PowerShell 5.1 and PowerShell 7.x Only supported.
 * Cross platform support (Linux, Windows and MacOS).
 * Updated SSH.NET library fixing multiple issued with OpenSSH and Cisco version strings.
-* Support for more key formats. (OpenSSH ECDSA and RSA still not supported in the OpenSSH format)
+* Support for more key formats. (OpenSSH ECDSA still not supported in the OpenSSH format)
 * Support for password: and PASSCODE: prompts.
 * Fix for Get-SFTPItem.
 * No more registry used to store known hosts, uses by default a hosts.json file in $HOME\\.poshssh\hosts.json.
 * Additional support for known hosts using ISotre method using a JSON KnownHosts, OpenSSH KnownHost and Memory KnownHosts in memory stores. 
-* Set-SFTPFile and Set-SFTPFolder cmdlets removed.
-* Set-SCPFile and Set-SCPFolder cmdlets removed.
+* Set-SFTPFile and Set-SFTPFolder cmdlets removed (use Set-SFTPItem instead).
+* Set-SCPFile and Set-SCPFolder cmdlets removed (use Set-SFTPItem instead).
+* Get-SCPFile and Get-SCPFolder cmdlets removed (use Get-SCPItem instead).
+* Get-SFTPFile cmdlet removed (use Get-SFTPItem instead).
 * Functions for migrating known hosts from registry to JSON added (Convert-SSHRegistryToJSonKnownHostStore, Get-SSHRegistryKnownHostStore). 
+* Refactor to avoid using the $HOST variable
+* Now new progress bar obey $ProgressPreference, so switch is not used. -NoProgress param removed.
+* Fixed PowerCLI Co-existence issues. 
+* RemotePathTransformation for SCPItem noun parameters with the new parameter -PathTransformation.
+
+
 
 ## Version 2.1
 

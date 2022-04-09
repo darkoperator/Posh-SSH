@@ -14,7 +14,7 @@ Upload an item, either file or directory to a remote system via SCP.
 
 ### NoKey (Default)
 ```
-Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathTransformation <String>]
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
  [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
@@ -23,7 +23,7 @@ Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoPro
 
 ### Key
 ```
-Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathTransformation <String>]
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
@@ -32,7 +32,7 @@ Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoPro
 
 ### KeyString
 ```
-Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-NoProgress]
+Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathTransformation <String>]
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
@@ -60,7 +60,7 @@ Uploade a directory to the target folder.
 ## PARAMETERS
 
 ### -AcceptKey
-Auto add host key fingerprint to the list of trusted host/gingerprint pairs.
+Auto add host key fingerprint to the list of trusted host/fingerprint pairs.
 
 ```yaml
 Type: SwitchParameter
@@ -210,21 +210,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -NoProgress
-Do not show upload progress.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -OperationTimeout
 Timeout for execution of an operation.
 
@@ -351,6 +336,21 @@ Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Ge
 
 ```yaml
 Type: IStore
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PathTransformation
+Remote Path transormation to use.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 

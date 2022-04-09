@@ -69,18 +69,7 @@ namespace SSH
             set { _newname = value; }
         }
 
-        // Supress progress bar.
-        private bool _noProgress = false;
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Do not show upload progress.")]
-        public SwitchParameter NoProgress
-        {
-            get { return _noProgress; }
-            set { _noProgress = value; }
-        }
-
-        private string _pathTransformation;
+        private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,
             HelpMessage = "Remote Path transormation to use.")]
@@ -91,6 +80,7 @@ namespace SSH
             set { _pathTransformation = value; }
         }
 
+      
         protected override void ProcessRecord()
         {
             foreach (var computer in ComputerName)
@@ -112,37 +102,6 @@ namespace SSH
                                 client.RemotePathTransformation = RemotePathTransformation.DoubleQuote;
                                 break;
                         }
-                        var _progresspreference = (ActionPreference)this.SessionState.PSVariable.GetValue("ProgressPreference");
-                        if (_noProgress == false)
-                        {
-                            var counter = 0;
-                            // Print progess of download.
-
-                            client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
-                            {
-                                if (e.Size != 0)
-                                {
-                                    counter++;
-                                    if (counter > 900)
-                                    {
-                                        var percent = Convert.ToInt32((e.Downloaded * 100) / e.Size);
-                                        if (percent == 100)
-                                        {
-                                            return;
-                                        }
-
-                                        var progressRecord = new ProgressRecord(1,
-                                            "Downloading " + e.Filename,
-                                            String.Format("{0} Bytes Downloaded of {1}",
-                                            e.Downloaded, e.Size))
-                                        { PercentComplete = percent };
-
-                                        Host.UI.WriteProgress(1, progressRecord);
-                                        counter = 0;
-                                    }
-                                }
-                            };
-                        }
                         WriteVerbose("Connection successful");
 
                         WriteVerbose("Downloading " + _remotepath);
@@ -161,15 +120,47 @@ namespace SSH
                         }
                         destinationpath = (localfullPath.TrimEnd('/', '\\')) + System.IO.Path.DirectorySeparatorChar + localname;
 
+                        string curName = "";
+                        var progressHelper = new OperationProgressHelper(this, "Download", curName, 0, 1);
+                        if (progressHelper.IsProgressVisible)
+                        {
+                            client.Downloading += delegate (object sender, ScpDownloadEventArgs e)
+                            {
+                                if (e.Filename != curName)
+                                {
+                                    progressHelper.Complete();
+                                    curName = e.Filename;
+                                    progressHelper = new OperationProgressHelper(this, "Download", curName, e.Size, 1);
+                                }
+                                progressHelper.Callback?.Invoke((ulong)e.Downloaded);
+                            };
+                        }
                         if (String.Equals(_pathtype, "File", StringComparison.OrdinalIgnoreCase))
                         {
+                            WriteVerbose("File name " + localname);
                             WriteVerbose("Item type selected: File");
 
                             WriteVerbose("Saving as " + destinationpath);
 
                             var fil = new FileInfo(@destinationpath);
-                            // Download the file
-                            client.Download(_remotepath, fil);
+
+                            if (fil.Exists && !this.MyInvocation.BoundParameters.ContainsKey("Force"))
+                            {
+                                var e = new IOException("File " + localname + " already exists.");
+                                ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
+                                WriteError(erec);
+                            }
+                            else
+                            {
+                                if (fil.Exists)
+                                {
+                                    WriteWarning("Overwritting " + destinationpath);
+                                    File.Delete(destinationpath);
+                                }
+                                // Download the file
+                                client.Download(_remotepath, fil);
+                                progressHelper.Complete();
+                            }
                         }
                         else
                         {
@@ -180,9 +171,9 @@ namespace SSH
 
                             var dirinfo = new DirectoryInfo(@destinationpath);
                             client.Download(_remotepath, dirinfo);
+                            progressHelper.Complete();
 
                         }
-                        WriteVerbose("Finished downloading.");
                         client.Disconnect();
                     }
                 }

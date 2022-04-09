@@ -14,29 +14,29 @@ Download from a remote server via SCP a file or directory.
 
 ### NoKey (Default)
 ```
-Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
- [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [<CommonParameters>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
+ [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
+ [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### Key
 ```
-Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
- [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
+ [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
+ [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
+ [-KeyFile <String>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ### KeyString
 ```
-Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>] [-NoProgress]
- [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
+ [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
+ [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
+ [-KeyString <String[]>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -211,21 +211,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -NoProgress
-Do not show download progress.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -OperationTimeout
 Timeout for execution of an operation.
 
@@ -368,6 +353,21 @@ Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Ge
 
 ```yaml
 Type: IStore
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PathTransformation
+Remote Path transormation to use.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 

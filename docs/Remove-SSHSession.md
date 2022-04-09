@@ -33,6 +33,7 @@ The session can be a SSH Session object or they can be specified by Session Id
 Remove-SSHSession -SessionId 0
 True
 ```
+
 Remove a SSH Session specified by SessionId
 
 ### EXAMPLE 2

@@ -75,17 +75,6 @@ namespace SSH
             set { _localpath = value; }
         }
 
-        // Supress progress bar.
-        private bool _noProgress = false;
-        [Parameter(Mandatory = false,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Do not show upload progress.")]
-        public SwitchParameter NoProgress
-        {
-            get { return _noProgress; }
-            set { _noProgress = value; }
-        }
-
         /// <summary>
         /// If the local file exists overwrite it.
         /// </summary>
@@ -171,33 +160,10 @@ namespace SSH
                                 var fileFullPath = $"{@localfullPath}{System.IO.Path.DirectorySeparatorChar}{dirName}";
 
                                 var present = Directory.Exists(fileFullPath);
-                                if ((present & _overwrite) || (!present))
+                                if (!present || _overwrite)
                                 {
-                                    var res = new Action<ulong>(rs =>
-                                    {
-                                        if (attribs.Size != 0)
-                                        {
-                                            var percent = (int)((((double)rs) / attribs.Size) * 100.0);
-                                            if (percent % 10 == 0)
-                                            {
-                                                // This should prevent the progress message from being stuck on the screen.
-                                                if (percent == 100)
-                                                {
-                                                    return;
-                                                }
-
-                                                var progressRecord = new ProgressRecord(1,
-                                                "Downloading " + remotepath,
-                                                String.Format("{0} Bytes Downloaded of {1}", rs, attribs.Size))
-                                                { PercentComplete = percent };
-
-                                                Host.UI.WriteProgress(1, progressRecord);
-                                            }
-
-                                        }
-                                    });
                                     Directory.CreateDirectory(fileFullPath);
-                                    DownloadDirectory(sftpSession.Session, remotepath, fileFullPath, _skipsymlink, res);
+                                    DownloadDirectory(sftpSession.Session, remotepath, fileFullPath, _skipsymlink);
                                 }
                                 else
                                 {
@@ -212,59 +178,35 @@ namespace SSH
                             else if (attribs.IsRegularFile)
                             {
                                 var fileName = new FileInfo(remotepath).Name;
-                                // Setup Action object for showing download progress.
-                                var res = new Action<ulong>(rs =>
-                                {
-                                    if (attribs.Size != 0)
-                                    {
-                                        var percent = (int)((((double)rs) / attribs.Size) * 100.0);
-                                        if (percent % 10 == 0)
-                                        {
-                                            // This should prevent the progress message from being stuck on the screen.
-                                            if (percent == 100)
-                                            {
-                                                return;
-                                            }
-
-                                            var progressRecord = new ProgressRecord(1,
-                                            "Downloading: " + fileName,
-                                            String.Format("{0} Bytes Downloaded of {1}", rs, attribs.Size))
-                                            { PercentComplete = percent };
-
-                                            Host.UI.WriteProgress(1, progressRecord);
-                                        }
-
-                                    }
-                                });
 
                                 var fileFullPath = $"{@localfullPath}{System.IO.Path.DirectorySeparatorChar}{fileName}";
 
                                 var present = File.Exists(fileFullPath);
 
-                                if ((present & _overwrite) || (!present))
+                                if (!present || _overwrite)
                                 {
-                                    var localstream = File.Create(fileFullPath);
-                                    try
+                                    using (var localstream = File.Create(fileFullPath))
                                     {
-                                        WriteVerbose($"Downloading: {remotepath}");
-                                        sftpSession.Session.DownloadFile(remotepath, localstream, res);
-                                        localstream.Close();
-                                        var progressRecord = new ProgressRecord(1,
-                                            "Downloading: " + remotepath,
-                                            String.Format("{0} Bytes Downloaded of {1}",attribs.Size, attribs.Size))
-                                        { PercentComplete = 100 };
-
-                                        WriteProgress(progressRecord);
-                                    }
-                                    catch
-                                    {
-                                        localstream.Close();
-                                        var ex = new SftpPermissionDeniedException($"Unable to download {remotepath} from host.");
-                                        WriteError(new ErrorRecord(
-                                            ex,
-                                           $"Unable to download {remotepath} from host.",
-                                            ErrorCategory.InvalidOperation,
-                                            sftpSession));
+                                        try
+                                        {
+                                            WriteVerbose($"Downloading: {remotepath}");
+                                            var progressHelper = new OperationProgressHelper(this, "Download", remotepath, attribs.Size, 1);
+                                            sftpSession.Session.DownloadFile(remotepath, localstream, progressHelper.Callback);
+                                            progressHelper.Complete();
+                                        }
+                                        catch
+                                        {
+                                            var ex = new SftpPermissionDeniedException($"Unable to download {remotepath} from host.");
+                                            WriteError(new ErrorRecord(
+                                                ex,
+                                               $"Unable to download {remotepath} from host.",
+                                                ErrorCategory.InvalidOperation,
+                                                sftpSession));
+                                        }
+                                        finally
+                                        {
+                                            localstream.Close();
+                                        }
                                     }
                                 }
                                 else
@@ -309,14 +251,14 @@ namespace SSH
             }
         }
 
-        private void DownloadDirectory(SftpClient client, string source, string localPath, bool skipsymlink, Action<ulong> progress)
+        private void DownloadDirectory(SftpClient client, string source, string localPath, bool skipsymlink)
         {
             var files = client.ListDirectory(source);
             foreach (var file in files)
             {
                 if (!file.IsDirectory && !file.IsSymbolicLink)
                 {
-                    DownloadFile(client, file, localPath, progress);
+                    DownloadFile(client, file, localPath);
                 }
                 else if (file.IsSymbolicLink)
                 {
@@ -331,11 +273,11 @@ namespace SSH
                         {
                             var localFullPath = System.IO.Path.Combine(localPath, file.Name);
                             var dir = Directory.CreateDirectory(localFullPath);
-                            DownloadDirectory(client, file.FullName, dir.FullName, skipsymlink, progress);
+                            DownloadDirectory(client, file.FullName, dir.FullName, skipsymlink);
                         }
                         else if (attribs.IsRegularFile)
                         {
-                            DownloadFile(client, file, localPath, progress);
+                            DownloadFile(client, file, localPath);
                         }
                     }
 
@@ -344,18 +286,21 @@ namespace SSH
                 {
                     var localFullPath = System.IO.Path.Combine(localPath, file.Name);
                     var dir = Directory.CreateDirectory(localFullPath);
-                    DownloadDirectory(client, file.FullName, dir.FullName, skipsymlink, progress);
+                    DownloadDirectory(client, file.FullName, dir.FullName, skipsymlink);
                 }
             }
         }
 
-        private void DownloadFile(SftpClient client, SftpFile file, string localDirectory, Action<ulong> progress)
+        private void DownloadFile(SftpClient client, SftpFile file, string localDirectory)
         {
             WriteVerbose($"Downloading {file.FullName}");
             var localFullPath = System.IO.Path.Combine(localDirectory, file.Name);
+            // Setup Action object for showing download progress.
+            var progressHelper = new OperationProgressHelper(this, "Download", file.Name, file.Length, 1);
             using (Stream fileStream = File.Create(localFullPath))
             {
-                client.DownloadFile(file.FullName, fileStream, progress);
+                client.DownloadFile(file.FullName, fileStream, progressHelper.Callback);
+                progressHelper.Complete();
             }
         }
     }

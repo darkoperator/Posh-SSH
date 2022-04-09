@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-help.xml
+external help file: Posh-SSH.psm1-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,7 +8,6 @@ schema: 2.0.0
 # Remove-SSHTrustedHost
 
 ## SYNOPSIS
-Remove a KnwonHost entry from the default user location or from a KnownHost store. 
 
 ## SYNTAX
 
@@ -23,16 +22,21 @@ Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParam
 ```
 
 ## DESCRIPTION
-Remove a KnwonHost entry from the default user location or from a KnownHost store. 
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
+```
 
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -HostName
-Host name of the entry to remove. 
+IP Address of FQDN of host to add to trusted list.
 
 ```yaml
 Type: String
@@ -40,14 +44,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 0
+Position: 1
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -KnowHostStore
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+Known Host Store
 
 ```yaml
 Type: Object
@@ -66,10 +70,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### System.String
 ## OUTPUTS
 
-### System.Object
 ## NOTES
 
 ## RELATED LINKS

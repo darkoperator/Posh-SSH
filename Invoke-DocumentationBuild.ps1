@@ -8,9 +8,9 @@ else {
 }
 
 Write-Host "Turning markdown documents to External Help files" -ForegroundColor green
-New-ExternalHelp .\docs -OutputPath .\Release\en-US -Force -verbose
+New-ExternalHelp .\docs -OutputPath .\Posh-SSH\en-US -Force -verbose
 Write-Host "Updates markdown files" -ForegroundColor Green
 Write-Host "Importing release version of module." -ForegroundColor Green
-Import-Module .\Release\Posh-SSH.psd1 -verbose -Force
+Import-Module .\Posh-SSH\Posh-SSH.psd1 -verbose -Force
 Write-Host "Updating Markdown" -ForegroundColor Green
 New-MarkdownHelp -Module Posh-ssh -Force -OutputFolder .\docs

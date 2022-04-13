@@ -93,7 +93,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 22
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -123,7 +123,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 8080
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -153,13 +153,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: HTTP
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -ConnectionTimeout
-@{Text=}
+Connection timeout interval in seconds.
 
 ```yaml
 Type: Int32
@@ -168,13 +168,13 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 10
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -OperationTimeout
-@{Text=}
+Operation timeout interval in seconds.
 
 ```yaml
 Type: Int32
@@ -183,7 +183,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 5
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -198,7 +198,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: 10
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

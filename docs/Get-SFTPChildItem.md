@@ -114,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recursive
-@{Text=}
+Gets the items in the specified locations and in all child items of the locations.
 
 ```yaml
 Type: SwitchParameter

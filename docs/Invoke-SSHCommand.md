@@ -107,13 +107,13 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: 60
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ThrottleLimit
-@{Text=}
+Specifies the maximum number of concurrent connections that can be established to run this command.
 
 ```yaml
 Type: Int32
@@ -122,7 +122,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
+Default value: 32
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

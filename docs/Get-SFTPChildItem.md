@@ -115,8 +115,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Recurse
-@{Text=}
+### -Recursive
+Gets the items in the specified locations and in all child items of the locations.
 
 ```yaml
 Type: SwitchParameter

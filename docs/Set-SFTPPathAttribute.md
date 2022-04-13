@@ -8,7 +8,7 @@ schema: 2.0.0
 # Set-SFTPPathAttribute
 
 ## SYNOPSIS
-Sets one or more attributes on a scefied item to a remote server though a SFTP Session.
+Sets one or more attributes on a specified item to a remote server though a SFTP Session.
 
 ## SYNTAX
 
@@ -31,7 +31,7 @@ Set-SFTPPathAttribute [-SFTPSession] <SftpSession[]> [-Path] <String> [-LastAcce
 ```
 
 ## DESCRIPTION
-Sets one or more attributes on a scefied item to a remote server though a SFTP Session.
+Sets one or more attributes on a specified item to a remote server though a SFTP Session.
 
 ## EXAMPLES
 
@@ -114,7 +114,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
@@ -129,7 +129,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```

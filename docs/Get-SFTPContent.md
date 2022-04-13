@@ -68,9 +68,9 @@ Accept wildcard characters: False
 ```
 
 ### -ContentType
-How should the content be retured for the file being read. 
-* Byte - returns a byte array.
+How should the content be retured for the file being read.
 
+* Byte - returns a byte array.
 * MultiLine - Retuns a string array where each element represents a line in the file.
 * String - returns a string with all the contents of the file.
 
@@ -81,7 +81,7 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: String
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -96,7 +96,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: UTF8
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

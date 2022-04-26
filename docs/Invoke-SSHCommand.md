@@ -15,13 +15,15 @@ Executes a given command on a remote SSH host.
 ### Index (Default)
 ```
 Invoke-SSHCommand [-Command] <String> [-SessionId] <Int32[]> [-EnsureConnection] [[-TimeOut] <Int32>]
- [[-ThrottleLimit] <Int32>] [<CommonParameters>]
+ [[-ThrottleLimit] <Int32>] [-ShowStandardOutputStream] [-ShowErrorOutputStream]
+ [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Invoke-SSHCommand [-Command] <String> [-SSHSession] <SshSession[]> [-EnsureConnection] [[-TimeOut] <Int32>]
- [[-ThrottleLimit] <Int32>] [<CommonParameters>]
+ [[-ThrottleLimit] <Int32>] [-ShowStandardOutputStream] [-ShowErrorOutputStream]
+ [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,13 +109,13 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
+Default value: 60
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -ThrottleLimit
-@{Text=}
+Specifies the maximum number of concurrent connections that can be established to run this command.
 
 ```yaml
 Type: Int32
@@ -122,7 +124,7 @@ Aliases:
 
 Required: False
 Position: 3
-Default value: None
+Default value: 32
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -139,6 +141,68 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ShowStandardOutputStream
+Displays the result of the standard output of the command in live
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowErrorOutputStream
+Displays the result of the error output of the command in live
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StandardOutputStreamColor
+Display color of the standard output.
+Works only with -ShowStandardOutputStream
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: White
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ErrorOutputStreamColor
+Display color of the error output.
+Works only with -ShowErrorOutputStream
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Red
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

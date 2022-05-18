@@ -32,10 +32,16 @@ namespace SSH.Stores
                 HostKeyName = HostKeyName,
                 Fingerprint = Fingerprint,
             };
+            bool skip_update = false;
             HostKeys.AddOrUpdate(Host, hostData, (key, oldValue) => {
+                skip_update = oldValue.HostKeyName.Equals(hostData.HostKeyName, StringComparison.OrdinalIgnoreCase) &&
+                        oldValue.Fingerprint.Equals(hostData.Fingerprint, StringComparison.OrdinalIgnoreCase);
                 return hostData;
             });
-            return OnKeyUpdated();
+            if (skip_update)
+                return true;
+            else
+                return OnKeyUpdated();
         }
         /// <summary>
         /// If IStore is updated this can be the implementation

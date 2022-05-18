@@ -328,9 +328,12 @@ namespace SSH
                             }
                             if (e.CanTrust)
                             {
-                                if (!KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
+                                if (KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
                                 {
-                                    Host.UI.WriteWarningLine("Host key is not saved to store.");
+                                    Host.UI.WriteVerboseLine(string.Format("Set host key for {0} to {1}", computer1, fingerPrint));
+                                }
+                                else {
+                                    Host.UI.WriteVerboseLine("Host key is not updated in store.");
                                 }
                             }
 

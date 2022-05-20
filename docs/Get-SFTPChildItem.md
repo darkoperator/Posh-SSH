@@ -14,12 +14,14 @@ Gets the items and child items in a specified path.
 
 ### Index (Default)
 ```
-Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
+Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recurse] [-Directory] [-File]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recursive] [<CommonParameters>]
+Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recurse] [-Directory] [-File]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -119,7 +121,7 @@ Gets the items in the specified locations and in all child items of the location
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: Recursive
 
 Required: False
 Position: 2
@@ -140,6 +142,36 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Directory
+To get a list of directories.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -File
+To get a list of files.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

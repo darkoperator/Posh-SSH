@@ -1079,8 +1079,17 @@ function Get-SFTPChildItem
         $Path,
         [Parameter(Mandatory=$false,
                    Position=2)]
+        [Alias('Recursive')]
         [switch]
-        $Recursive
+        $Recurse,
+        [Parameter(Mandatory=$false,
+                   Position=3)]
+        [switch]
+        $Directory,
+        [Parameter(Mandatory=$false,
+                   Position=4)]
+        [switch]
+        $File
 
      )
 
@@ -1091,14 +1100,27 @@ function Get-SFTPChildItem
         {
             param($Path,$SFTPSession)
 
-            $total = $Sess.Session.ListDirectory($Path)
-
-            #List Files
-            $total | Where-Object {$_.IsDirectory -eq $false}
-
-            #Get items in a path
-            $total | Where-Object {$_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name } |
-            ForEach-Object {$_; Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess}
+            $Sess.Session.ListDirectory($Path) | ForEach-Object {
+                if ($File -and $Directory)
+                {
+                    # Item cannot be a file AND a directory
+                }
+                elseif ((!$File -and !$Directory) -or ($File -and !$_.IsDirectory) -or ($Directory -and $_.IsDirectory))
+                {
+                    if (@('.','..') -notcontains $_.Name)
+                    {
+                        # Item to keep
+                        $_
+                    }
+                }
+                if ($Recurse)
+                {
+                    if ($_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name)
+                    {
+                        Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess
+                    }
+                }
+            }
 
         }
 
@@ -1139,14 +1161,7 @@ function Get-SFTPChildItem
                     throw "Specified path of $($Path) is not a directory."
                 }
             }
-            if($Recursive)
-            {
-                Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess
-            }
-            else
-            {
-                $Sess.Session.ListDirectory($Path)
-            }
+            Get-SFTPDirectoryRecursive -Path $Path -SFTPSession $Sess
         }
      }
      End{}

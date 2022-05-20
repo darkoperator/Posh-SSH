@@ -13,7 +13,7 @@ This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @
 * No more registry used to store known hosts, uses by default a hosts.json file in $HOME\\.poshssh\hosts.json.
 * Additional support for known hosts using ISotre method using a JSON KnownHosts, OpenSSH KnownHost and Memory KnownHosts in memory stores. 
 * Set-SFTPFile and Set-SFTPFolder cmdlets removed (use Set-SFTPItem instead).
-* Set-SCPFile and Set-SCPFolder cmdlets removed (use Set-SFTPItem instead).
+* Set-SCPFile and Set-SCPFolder cmdlets removed (use Set-SCPItem instead).
 * Get-SCPFile and Get-SCPFolder cmdlets removed (use Get-SCPItem instead).
 * Get-SFTPFile cmdlet removed (use Get-SFTPItem instead).
 * Functions for migrating known hosts from registry to JSON added (Convert-SSHRegistryToJSonKnownHostStore, Get-SSHRegistryKnownHostStore). 

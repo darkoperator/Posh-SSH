@@ -258,7 +258,7 @@ namespace SSH
             {
                 if (!file.IsDirectory && !file.IsSymbolicLink)
                 {
-                    DownloadFile(client, file, localPath);
+                    DownloadFile(client, (SftpFile)file, localPath);
                 }
                 else if (file.IsSymbolicLink)
                 {
@@ -277,7 +277,7 @@ namespace SSH
                         }
                         else if (attribs.IsRegularFile)
                         {
-                            DownloadFile(client, file, localPath);
+                            DownloadFile(client, (SftpFile)file, localPath);
                         }
                     }
 

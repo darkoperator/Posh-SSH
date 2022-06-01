@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '3.0.2'
+ModuleVersion = '3.0.4'
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -24,7 +24,7 @@ Author = 'Carlos Perez'
 CompanyName = 'www.darkoperator.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2021 Carlos Perez. All rights reserved.'
+Copyright = '(c) 2022 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'

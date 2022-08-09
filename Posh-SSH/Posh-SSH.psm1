@@ -1,13 +1,18 @@
-if ($PSVersionTable.PSVersion.Major -eq 5) {
-    Add-Type -Path "$PSScriptRoot/Assembly/Newtonsoft.Json.dll"
+$importModule = Get-Command -Name Import-Module -Module Microsoft.PowerShell.Core
+if (-not ('SSH.NewSessionBase' -as [type])) {
+    $framework = if ($PSVersionTable.PSVersion.Major -eq 5) {
+        'net472'
+    }
+    else {
+        'netcoreapp3.1'
+    }
+
+    &$importModule ([IO.Path]::Combine($PSScriptRoot, 'bin', $framework, 'PoshSSH.dll')) -ErrorAction Stop
+}
+else {
+    &$importModule -Force -Assembly ([SSH.NewSessionBase].Assembly)
 }
 
-# force load Renci and dependency do to MS including Renci in Windows 2019 Storage Server.
-if ($PSVersionTable.PSVersion.Major -eq 5) {
-    Add-Type -Path "$PSScriptRoot/Assembly/SshNet.Security.Cryptography.dll"
-    Add-Type -Path "$PSScriptRoot/Assembly/Renci.SshNet.dll"
-    
-}
 # Set up of Session variables.
 ##############################################################################################
 if (!(Test-Path variable:Global:SshSessions ))
@@ -909,9 +914,9 @@ function Invoke-SSHStreamShellCommand {
     }
     Process {
         # Discard any banner or previous command output
-        do { 
+        do {
             $ShellStream.read() | Out-Null
-    
+
         } while ($ShellStream.DataAvailable)
 
         $ShellStream.writeline($Command)
@@ -923,9 +928,9 @@ function Invoke-SSHStreamShellCommand {
         $out = ''
 
         # read all output until there is no more
-        do { 
+        do {
             $out += $ShellStream.read()
-    
+
         } while ($ShellStream.DataAvailable)
 
         $outputLines = $out.Split("`n")
@@ -3188,7 +3193,7 @@ function Get-SSHTrustedHost
                 $k | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
             }
        } else {
-            $Store.GetAllKeys() 
+            $Store.GetAllKeys()
        }
     }
     End
@@ -3249,7 +3254,7 @@ function Get-SSHTrustedHost
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
              $Store = $KnowHostStore
         }
- 
+
         $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
      }
      End {}
@@ -3286,10 +3291,10 @@ function Get-SSHTrustedHost
             if ($KnowHostStore -isnot [SSH.Stores.OpenSSHStore]) {
                 $Store = $KnowHostStore
             } else {
-                Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop 
+                Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop
             }
         }
- 
+
         $Store.RemoveByHost($HostName)
      }
      End{}
@@ -3303,30 +3308,7 @@ function Get-SSHTrustedHost
        It is windows-only compatibility cmdlet
 #>
 function Get-SSHRegistryKnownHost {
-    class SSHRegistryKeyStore: SSH.Stores.MemoryStore {
-          [void] OnGetKeys() {
-              $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
-              $HostKeys = $this.HostKeys
-              $p | Get-Member -MemberType NoteProperty |
-              Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
-              ForEach-Object {
-                 $name = $_.Name
-                 $hostData = [SSH.Stores.KnownHostValue]@{ HostKeyName='ssh-rsa'; Fingerprint=$p.$name }
-                 $HostKeys.AddOrUpdate($name, $hostData, { return $hostData } )
-              }
-          }
-          [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
-             return $false
-          }
-          [bool]RemoveByHost([string] $HostName) {
-              return $false
-          }
-          [bool]RemoveByFingerprint([string] $Fingerprint) {
-              return $false
-          }
-    }
-
-    New-Object SSHRegistryKeyStore
+    New-Object SSH.SSHRegistryKeyStore
 }
 
 <#

@@ -1,0 +1,49 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "pwsh",
+            "type": "shell",
+            "args": [
+                "-File",
+                "${workspaceFolder}/build.ps1"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "update docs",
+            "command": "pwsh",
+            "type": "shell",
+            "args": [
+                "-Command",
+                "Import-Module ${workspaceFolder}/output/Posh-SSH; Import-Module platyPS; Update-MarkdownHelpModule ${workspaceFolder}/docs -AlphabeticParamsOrder -RefreshModulePage -UpdateInputOutput"
+            ],
+            "problemMatcher": [],
+            "dependsOn": [
+                "build"
+            ]
+        },
+        {
+            "label": "test",
+            "command": "pwsh",
+            "type": "shell",
+            "args": [
+                "-File",
+                "${workspaceFolder}/build.ps1",
+                "-Task",
+                "Test"
+            ],
+            "problemMatcher": [],
+            "dependsOn": [
+                "build"
+            ]
+        }
+    ]
+}

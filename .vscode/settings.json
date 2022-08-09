@@ -1,0 +1,20 @@
+{
+    //-------- Files configuration --------
+    // When enabled, will trim trailing whitespace when you save a file.
+    "files.trimTrailingWhitespace": true,
+    // When enabled, insert a final new line at the end of the file when saving it.
+    "files.insertFinalNewline": true,
+    "search.exclude": {
+        "Release": true,
+        "tools/ResGen": true,
+        "tools/dotnet": true,
+    },
+    "editor.rulers": [
+        120,
+    ],
+    //-------- PowerShell configuration --------
+    // Binary modules cannot be unloaded so running in separate processes solves that problem
+    //"powershell.debugging.createTemporaryIntegratedConsole": true,
+    // We use Pester v5 so we don't need the legacy code lens
+    "powershell.pester.useLegacyCodeLens": false,
+}

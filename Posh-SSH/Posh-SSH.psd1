@@ -112,7 +112,8 @@ CmdletsToExport = @('Get-SCPItem',
                   'Set-SFTPItem',
                   'New-SSHMemoryKnownHost',
                   'Get-SSHJsonKnowHost',
-                  'Get-SSHOpenSSHKnownHost')
+                  'Get-SSHOpenSSHKnownHost',
+                  'Get-SSHHostKey')
 
 # Variables to export from this module
 VariablesToExport = '*'

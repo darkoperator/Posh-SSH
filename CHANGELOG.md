@@ -1,5 +1,10 @@
 # ChangeLog
 
+## Version 3.0.7
+
+* New command `Get-SSHHostKey` for getting a host SSH key fingerprint. 
+* Forked copy of SSH.Net with patch https://github.com/sshnet/SSH.NET/pull/972 to allow connection to some Cisco devices.
+
 ## Version 3.0
 
 This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @MVKozlov for all the fixes and improvements, would have not been possible without his contributions (Thanks you all)

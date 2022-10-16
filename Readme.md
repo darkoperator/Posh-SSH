@@ -3,9 +3,11 @@
 ## Description
 
 Windows Powershell module that leverages a custom version of the [SSH.NET Library](https://github.com/sshnet/SSH.NET) to provide basic SSH functionality in Powershell.
-The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled servers.
+The main purpose of the module is to facilitate automating actions against one or multiple SSH enabled Linux servers from a Windows Host. As of version 3.x the module can be used in Linux and Mac OS using .Net Standard.
 
 This module is for Windows PowerShell 5.1 or PowerShell 7.x., On Windows Server, version 1709 or older .Net Framework 4.8 or above is required for the proper loading of the module. 
+
+Except as represented in this agreement, all work product by Developer is provided ​“AS IS”. Developer makes no other warranties, express or implied, and hereby disclaims all implied warranties, including any warranty of merchantability and warranty of fitness for a particular purpose.
 
 ## Install
 

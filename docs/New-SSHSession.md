@@ -17,7 +17,7 @@ By default it will store known host fingerprints in $HOME\.poshss\hosts.json.
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
  [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
@@ -25,7 +25,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
  [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
@@ -33,7 +33,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
  [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
 ```
 
@@ -170,21 +170,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: 10
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -OperationTimeout
-Operation timeout interval in seconds.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 5
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

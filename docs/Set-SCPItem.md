@@ -212,6 +212,7 @@ Accept wildcard characters: False
 
 ### -OperationTimeout
 Timeout for execution of an operation.
+Zero or below disables timeout
 
 ```yaml
 Type: Int32
@@ -220,7 +221,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 5
+Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

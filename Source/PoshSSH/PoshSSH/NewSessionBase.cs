@@ -118,7 +118,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Operation timeout interval in seconds.")]
-        public int OperationTimeout { get; set; } = 5;
+        public int OperationTimeout { get; set; } = 0;
 
         /// <summary>
         /// KeepAliveInterval Parameter 
@@ -190,6 +190,9 @@ namespace SSH
         }
         protected BaseClient CreateConnection(string computer)
         {
+            var isVerboseEnabled = MyInvocation.BoundParameters.ContainsKey("Verbose") ||
+                (ActionPreference)this.SessionState.PSVariable.GetValue("VerbosePreference") != ActionPreference.SilentlyContinue;
+
             ConnectionInfo connectInfo = null;
             switch (ParameterSetName)
             {
@@ -254,9 +257,13 @@ namespace SSH
             {
                 case PoshSessionType.SFTP:
                     client = new SftpClient(connectInfo);
+                    if (OperationTimeout > 0)
+                        (client as SftpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 case PoshSessionType.SCP:
                     client = new ScpClient(connectInfo);
+                    if (OperationTimeout > 0)
+                        (client as ScpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 default:
                     client = new SshClient(connectInfo);
@@ -292,7 +299,7 @@ namespace SSH
                     }
                     var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
 
-                    if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                    if (isVerboseEnabled)
                     {
                         Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
                     }
@@ -300,7 +307,7 @@ namespace SSH
                     if (savedHostKey != default)
                     {
                         e.CanTrust = savedHostKey.Fingerprint == fingerPrint && (savedHostKey.HostKeyName == e.HostKeyName || savedHostKey.HostKeyName == string.Empty);
-                        if (MyInvocation.BoundParameters.ContainsKey("Verbose"))
+                        if (isVerboseEnabled)
                         {
                             Host.UI.WriteVerboseLine("Fingerprint " + (e.CanTrust ? "" : "not ") + "matched trusted " + savedHostKey.HostKeyName + " fingerprint for host " + computer1);
                         }
@@ -328,12 +335,15 @@ namespace SSH
                             }
                             if (e.CanTrust)
                             {
-                                if (KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint))
-                                {
-                                    Host.UI.WriteVerboseLine(string.Format("Set host key for {0} to {1}", computer1, fingerPrint));
-                                }
-                                else {
-                                    Host.UI.WriteVerboseLine("Host key is not updated in store.");
+                                bool keySaved = KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint);
+                                if (isVerboseEnabled) {
+                                    Host.UI.WriteVerboseLine(
+                                        string.Format("Host key for {0} ({1}) {2} to store",
+                                            computer1,
+                                            fingerPrint,
+                                            (keySaved) ? "saved" : "not saved"
+                                        )
+                                    );
                                 }
                             }
 

@@ -254,9 +254,11 @@ namespace SSH
             {
                 case PoshSessionType.SFTP:
                     client = new SftpClient(connectInfo);
+                    (client as SftpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 case PoshSessionType.SCP:
                     client = new ScpClient(connectInfo);
+                    (client as ScpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 default:
                     client = new SshClient(connectInfo);

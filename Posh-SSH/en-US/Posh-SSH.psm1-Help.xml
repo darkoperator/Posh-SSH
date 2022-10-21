@@ -1862,7 +1862,7 @@ ExitStatus : 0</dev:code>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; 0,1,2 | Invoke-SSHCommandStream -Command 'cat /etc/passwd'</dev:code>
         <dev:remarks>
           <maml:para>Invoke a command cat /etc/passwd in sessions 0,1,2</maml:para>

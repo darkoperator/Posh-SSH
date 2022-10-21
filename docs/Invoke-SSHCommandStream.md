@@ -34,7 +34,7 @@ PS C:\> Invoke-SSHCommandStream -Command 'cat /etc/passwd' -SSHSession $session
 
 Invoke a command cat /etc/passwd in session $session
 
-### Example 1
+### Example 2
 ```
 PS C:\> 0,1,2 | Invoke-SSHCommandStream -Command 'cat /etc/passwd'
 ```

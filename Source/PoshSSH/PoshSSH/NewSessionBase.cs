@@ -118,7 +118,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Operation timeout interval in seconds.")]
-        public int OperationTimeout { get; set; } = 5;
+        public int OperationTimeout { get; set; } = 0;
 
         /// <summary>
         /// KeepAliveInterval Parameter 
@@ -257,9 +257,13 @@ namespace SSH
             {
                 case PoshSessionType.SFTP:
                     client = new SftpClient(connectInfo);
+                    if (OperationTimeout > 0)
+                        (client as SftpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 case PoshSessionType.SCP:
                     client = new ScpClient(connectInfo);
+                    if (OperationTimeout > 0)
+                        (client as ScpClient).OperationTimeout = new TimeSpan(0, 0, OperationTimeout);
                     break;
                 default:
                     client = new SshClient(connectInfo);

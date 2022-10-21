@@ -15,6 +15,7 @@ namespace SSH
                 return PoshSessionType.SSH;
             }
         }
+        private new int OperationTimeout { get; set; }
     } //end of the class for the New-SSHSession
     //###################################################
 }

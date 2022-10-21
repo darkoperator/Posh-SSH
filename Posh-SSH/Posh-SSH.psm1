@@ -2717,7 +2717,8 @@ function New-SSHRemotePortForward
     [Parameter(Mandatory=$true,
         ParameterSetName = "Index",
         ValueFromPipeline=$true)]
-    [Int32]$Index = $null
+    [Alias("Index")]
+    [Int32]$SessionId = $null
     )
 
     Begin
@@ -2729,14 +2730,14 @@ function New-SSHRemotePortForward
     {
         if ($PSCmdlet.ParameterSetName -eq 'Index')
         {
-            Write-Verbose "Finding session with Index $Index"
+            Write-Verbose "Finding session with Index $SessionId"
             foreach($session in $Global:SshSessions)
             {
                 Write-Verbose $session.index
-                if ($session.index -eq $Index)
+                if ($session.index -eq $SessionId)
                 {
                     # Add the forward port object to the session
-                    Write-Verbose "Adding Forward Port Configuration to session $Index"
+                    Write-Verbose "Adding Forward Port Configuration to session $SessionId"
                     $session.session.AddForwardedPort($SSHFWP)
                     Write-Verbose "Starting the Port Forward."
                     $SSHFWP.start()

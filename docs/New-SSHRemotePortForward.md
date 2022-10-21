@@ -15,7 +15,7 @@ Port forward a local port as a port on a remote server.
 ### Index (Default)
 ```
 New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
- -Index <Int32> [<CommonParameters>]
+ -SessionId <Int32> [<CommonParameters>]
 ```
 
 ### Session
@@ -39,13 +39,13 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -Index
+### -SessionId
 {{Fill Index Description}}
 
 ```yaml
 Type: Int32
 Parameter Sets: Index
-Aliases:
+Aliases: Index
 
 Required: True
 Position: Named

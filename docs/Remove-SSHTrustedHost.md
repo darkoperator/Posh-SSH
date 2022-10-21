@@ -22,16 +22,16 @@ Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParam
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Remove trusted host record from KnownHost store
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Remove-SSHTrustedHost -HostName server1
 ```
 
-{{ Add example description here }}
+Remove known host record for server1
 
 ## PARAMETERS
 

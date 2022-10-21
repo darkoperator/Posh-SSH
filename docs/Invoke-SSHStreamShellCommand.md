@@ -17,16 +17,16 @@ Invoke-SSHStreamShellCommand [-ShellStream] <ShellStream> [-Command] <String> [-
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Invoke command in SSH stream shell
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Invoke-SSHStreamShellCommand -ShellStream $stream -Command 'cat /etc/passwd'
 ```
 
-{{ Add example description here }}
+Invoke 'cat /etc/passwd' in $shell shell stream
 
 ## PARAMETERS
 
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -PrompPattern
-{{Fill PrompPattern Description}}
+Put lines to output until PromtPattern meet
 
 ```yaml
 Type: String

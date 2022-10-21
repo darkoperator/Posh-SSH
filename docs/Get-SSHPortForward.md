@@ -44,7 +44,7 @@ PS C:\\\> Get-SSHPortForward -Index 0
 ## PARAMETERS
 
 ### -SSHSession
-{{ Fill SSHSession Description }}
+SSH Session object.
 
 ```yaml
 Type: SshSession
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{ Fill SessionId Description }}
+Session Id for an exiting SSH session.
 
 ```yaml
 Type: Int32

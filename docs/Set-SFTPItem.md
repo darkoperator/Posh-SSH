@@ -24,7 +24,7 @@ Set-SFTPItem [-SFTPSession] <SftpSession[]> [-Destination] <String> [-Path] <Str
 ```
 
 ## DESCRIPTION
-Upload a specific item to a remote server though a SFTP Session.
+Upload a specific item to a remote server through a SFTP Session.
 The item can be either a file or a folder.
 
 ## EXAMPLES
@@ -117,7 +117,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### System.Int32[]
-SSH.SftpSession\[\] System.String System.String\[\]
+SSH.SftpSession[] System.String System.String[]
 
 ## OUTPUTS
 

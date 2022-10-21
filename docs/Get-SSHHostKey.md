@@ -12,10 +12,9 @@ Returns host key record
 
 ## SYNTAX
 
-### (Default)
 ```
-Get-SSHHostKey [-ComputerName] <string[]> [-Port <int>] [-ProxyServer <string>] [-ProxyPort <int>] [-ProxyCredential <pscredential>] [-
-    ProxyType {HTTP | Socks4 | Socks5}] [<CommonParameters>]
+Get-SSHHostKey [-ComputerName] <String[]> [[-Port] <Int32>] [[-ProxyServer] <String>] [[-ProxyPort] <Int32>]
+ [[-ProxyCredential] <PSCredential>] [[-ProxyType] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,7 +51,7 @@ Aliases: HostName, Computer, IPAddress, Host
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByPropertyName)
+Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
@@ -123,6 +122,7 @@ Type of Proxy being used (HTTP, Socks4 or Socks5).
 Type: String
 Parameter Sets: (All)
 Aliases:
+Accepted values: HTTP, Socks4, Socks5
 
 Required: False
 Position: Named
@@ -136,8 +136,17 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.String[]
+
+### System.Int32
+
+### System.String
+
+### System.Management.Automation.PSCredential
+
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

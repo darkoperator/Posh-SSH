@@ -23,16 +23,23 @@ New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] 
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Add new trusted host record to KnownHost store
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> New-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'
 ```
 
-{{ Add example description here }}
+Add new Trusted Host record for server1
+
+### Example 2
+```powershell
+PS C:\> Get-SSHHostKey -ComputerName server2 | New-SSHTrustedHost
+```
+
+Add new Trusted Host record for server2 from scanned one
 
 ## PARAMETERS
 

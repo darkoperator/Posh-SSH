@@ -29,10 +29,10 @@ Deletes the specified item on a SFTP session.
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Remove-SFTPItem -SessionId 0 -Path /tmp/example.txt
 ```
 
-{{ Add example description here }}
+Remove /tmp/example.txt in sftp session 0
 
 ## PARAMETERS
 

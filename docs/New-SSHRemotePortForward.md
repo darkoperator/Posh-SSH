@@ -15,7 +15,7 @@ Port forward a local port as a port on a remote server.
 ### Index (Default)
 ```
 New-SSHRemotePortForward [-LocalAdress <String>] -LocalPort <Int32> -RemoteAddress <String> -RemotePort <Int32>
- -Index <Int32> [<CommonParameters>]
+ -SessionId <Int32> [<CommonParameters>]
 ```
 
 ### Session
@@ -32,20 +32,21 @@ A connection on the remote host to the forwarded port will be redirected to the 
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> New-SSHRemotePortForward -LocalAdress localhost -LocalPort 5678 -RemoteAddress server1 -RemotePort 8765
+ -SessionId 0
 ```
+Setup Port forward a localhost:5678 as a port 8765 on a remote server server1.
 
-{{ Add example description here }}
 
 ## PARAMETERS
 
-### -Index
-{{Fill Index Description}}
+### -SessionId
+SSH Session Id of an exiting session.
 
 ```yaml
 Type: Int32
 Parameter Sets: Index
-Aliases:
+Aliases: Index
 
 Required: True
 Position: Named
@@ -55,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -LocalAdress
-{{Fill LocalAdress Description}}
+Local Hostname/Address to forward
 
 ```yaml
 Type: String
@@ -70,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -LocalPort
-{{Fill LocalPort Description}}
+Local port to forward
 
 ```yaml
 Type: Int32
@@ -85,7 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoteAddress
-{{Fill RemoteAddress Description}}
+Remote Hostname/Address to forward
 
 ```yaml
 Type: String
@@ -100,7 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemotePort
-{{Fill RemotePort Description}}
+Remote port to forward
 
 ```yaml
 Type: Int32
@@ -115,7 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -SSHSession
-{{Fill SSHSession Description}}
+SSH Session object.
 
 ```yaml
 Type: SshSession

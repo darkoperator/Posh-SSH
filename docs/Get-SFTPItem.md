@@ -135,7 +135,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## INPUTS
 
 ### System.Int32[]
-SSH.SftpSession\[\] System.String\[\] System.String System.Management.Automation.SwitchParameter
+SSH.SftpSession[] System.String[] System.String System.Management.Automation.SwitchParameter
 
 ## OUTPUTS
 

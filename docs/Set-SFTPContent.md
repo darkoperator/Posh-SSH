@@ -24,21 +24,22 @@ Set-SFTPContent [-SFTPSession] <SftpSession[]> [-Path] <String> [-Value] <Object
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+Set the content of a specific item on a remote server through an SFTP session.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"
 ```
 
-{{ Add example description here }}
+Set the content of /tmp/example.txt to "My example message`n" in sftp sesison 0
+
 
 ## PARAMETERS
 
 ### -SessionId
-{{Fill SessionId Description}}
+Session Id of an existing SFTPSession.
 
 ```yaml
 Type: Int32[]
@@ -53,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -SFTPSession
-{{Fill SFTPSession Description}}
+Existing SFTPSession object.
 
 ```yaml
 Type: SftpSession[]
@@ -68,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-{{Fill Path Description}}
+Path to existing remote file
 
 ```yaml
 Type: String
@@ -83,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -Value
-{{Fill Value Description}}
+Content to upload
 
 ```yaml
 Type: Object
@@ -98,7 +99,7 @@ Accept wildcard characters: False
 ```
 
 ### -Encoding
-{{Fill Encoding Description}}
+Content encoding
 
 ```yaml
 Type: String
@@ -110,10 +111,11 @@ Position: Named
 Default value: UTF8
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
+Accepted values: ASCII, Unicode, UTF7, UTF8, UTF32, BigEndianUnicode
 ```
 
 ### -Append
-{{Fill Append Description}}
+Append content to file
 
 ```yaml
 Type: SwitchParameter

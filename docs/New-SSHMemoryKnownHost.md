@@ -24,7 +24,7 @@ Creates a new in-memory known host IStore for temporary use when creating new SS
 ### Example 1
 ```
 PS C:\> $inmem = New-SSHMemoryKnownHost
-PS C:\> New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+PS C:\> New-SSHTrustedHost -KnownHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
 True
 PS C:\> $inmem.GetAllKeys()
 

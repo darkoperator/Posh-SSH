@@ -55,7 +55,7 @@ C:\Users\Carlos\> Get-SSHPortForward -Index 0
 ## PARAMETERS
 
 ### -SSHSession
-{{ Fill SSHSession Description }}
+SSH Session object.
 
 ```yaml
 Type: SshSession
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{ Fill SessionId Description }}
+SSH Session Id of an exiting session.
 
 ```yaml
 Type: Int32
@@ -84,23 +84,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -BoundPort
-{{ Fill BoundPort Description }}
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -BoundHost
-{{ Fill BoundHost Description }}
+Hostname/Address for the associated session
 
 ```yaml
 Type: String
@@ -110,6 +95,21 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BoundPort
+Port number for the associated session
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

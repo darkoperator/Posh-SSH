@@ -29,10 +29,17 @@ Invoke-SSHCommandStream [-Command] <String> [-SSHSession] <SshSession> [-EnsureC
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Invoke-SSHCommandStream -Command 'cat /etc/passwd' -SSHSession $session
 ```
 
-{{ Add example description here }}
+Invoke a command cat /etc/passwd in session $session
+
+### Example 2
+```
+PS C:\> 0,1,2 | Invoke-SSHCommandStream -Command 'cat /etc/passwd'
+```
+
+Invoke a command cat /etc/passwd in sessions 0,1,2
 
 ## PARAMETERS
 

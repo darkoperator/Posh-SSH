@@ -2,19 +2,19 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Convert-SSHRegistryToJSonKnownHostStore</command:name>
+      <command:name>Convert-SSHRegistryToJSonKnownHost</command:name>
       <command:verb>Convert</command:verb>
-      <command:noun>SSHRegistryToJSonKnownHostStore</command:noun>
+      <command:noun>SSHRegistryToJSonKnownHost</command:noun>
       <maml:description>
-        <maml:para>Convert windows registry key storage to JSon</maml:para>
+        <maml:para>Convert windows registry key storage to Json</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Convert windows registry key storage to JSon It is windows-only compatibility cmdlet</maml:para>
+      <maml:para>Convert windows registry key storage to Json It is windows-only compatibility cmdlet</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Convert-SSHRegistryToJSonKnownHostStore</maml:name>
+        <maml:name>Convert-SSHRegistryToJSonKnownHost</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -28,9 +28,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Convert-SSHRegistryToJSonKnownHost</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Convert deprecated (v2) windows registry key storage to v3 Json storage</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -54,7 +54,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -69,7 +69,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SessionId Description }}</maml:para>
+            <maml:para>Session Id for an exiting SSH session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -84,7 +84,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -96,7 +96,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SessionId Description }}</maml:para>
+          <maml:para>Session Id for an exiting SSH session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -133,9 +133,9 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-SSHRegistryKnownHostStore</command:name>
+      <command:name>Get-SSHRegistryKnownHost</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>SSHRegistryKnownHostStore</command:noun>
+      <command:noun>SSHRegistryKnownHost</command:noun>
       <maml:description>
         <maml:para>Get KnownHosts from registry (readonly)</maml:para>
       </maml:description>
@@ -145,7 +145,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-SSHRegistryKnownHostStore</maml:name>
+        <maml:name>Get-SSHRegistryKnownHost</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -159,135 +159,9 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Get-SSHRegistryKnownHost</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
-      <command:name>Get-SSHTrustedHost</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>SSHTrustedHost</command:noun>
-      <maml:description>
-        <maml:para>Get the current known hosts either from those trusted by Posh-SSH or from a IStore.</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>Get the current known hosts either from those trusted by Posh-SSH, also from a Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-SSHTrustedHost</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
-          <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>HostName</maml:name>
-          <maml:description>
-            <maml:para>HostName as stored by Posh-SSH or in a IStore.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>HostName</maml:name>
-        <maml:description>
-          <maml:para>HostName as stored by Posh-SSH or in a IStore.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
-        <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>None</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>SSH.Stores.KnownHostRecord</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para></maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt;  Get-SSHTrustedHost
-
-HostName      HostKeyName Fingerprint
---------      ----------- -----------
-192.168.1.165 ssh-ed25519 7a:da:ab:88:55:95:5b:34:89:f6:46:7f:13:c5:65:c1</dev:code>
-        <dev:remarks>
-          <maml:para>Get currently stored known hosts.</maml:para>
-        </dev:remarks>
-      </command:example>
-      <command:example>
-        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
-PS C:\&gt; $inmem.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
-True
-PS C:\&gt; Get-SSHTrustedHost -KnowHostStore $inmem
-
-HostName    HostKeyName Fingerprint
---------    ----------- -----------
-192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53</dev:code>
-        <dev:remarks>
-          <maml:para>Get stored known hosts from an Memory Known Host store.</maml:para>
+          <maml:para>Get deprecated (v2) registry KnownHost storage</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -316,7 +190,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -328,7 +202,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -340,7 +214,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -355,7 +229,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SessionId Description }}</maml:para>
+            <maml:para>SSH Session Id of an exiting session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -367,7 +241,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -379,7 +253,7 @@ HostName    HostKeyName Fingerprint
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -394,7 +268,7 @@ HostName    HostKeyName Fingerprint
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          <maml:para>Hostname/Address for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -406,7 +280,7 @@ HostName    HostKeyName Fingerprint
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          <maml:para>Port number for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -418,7 +292,7 @@ HostName    HostKeyName Fingerprint
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -430,7 +304,7 @@ HostName    HostKeyName Fingerprint
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SessionId Description }}</maml:para>
+          <maml:para>SSH Session Id of an exiting session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -486,7 +360,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -498,7 +372,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -510,7 +384,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -522,7 +396,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>RemoteAddress</maml:name>
           <maml:description>
-            <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+            <maml:para>Hostname/Address for the remote session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -534,7 +408,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>RemotePort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill RemotePort Description }}</maml:para>
+            <maml:para>Port number for the remote session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -549,7 +423,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SessionId Description }}</maml:para>
+            <maml:para>SSH Session Id of an exiting session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -561,7 +435,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -573,7 +447,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -585,7 +459,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>RemoteAddress</maml:name>
           <maml:description>
-            <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+            <maml:para>Hostname/Address for the remote session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -597,7 +471,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>RemotePort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill RemotePort Description }}</maml:para>
+            <maml:para>Port number for the remote session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -612,7 +486,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          <maml:para>Hostname/Address for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -624,7 +498,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BoundPort</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          <maml:para>Port number for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -636,7 +510,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>RemoteAddress</maml:name>
         <maml:description>
-          <maml:para>{{ Fill RemoteAddress Description }}</maml:para>
+          <maml:para>Hostname/Address for the remote session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -648,7 +522,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>RemotePort</maml:name>
         <maml:description>
-          <maml:para>{{ Fill RemotePort Description }}</maml:para>
+          <maml:para>Port number for the remote session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -660,7 +534,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -672,7 +546,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SessionId Description }}</maml:para>
+          <maml:para>SSH Session Id of an exiting session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -723,10 +597,10 @@ VERBOSE: Forwarding has been started.</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>New-SSHRemotePortForward</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
-          <maml:name>Index</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Index">
+          <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{Fill Index Description}}</maml:para>
+            <maml:para>SSH Session Id of an exiting session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -738,19 +612,19 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalAdress</maml:name>
           <maml:description>
-            <maml:para>{{Fill LocalAdress Description}}</maml:para>
+            <maml:para>Local Hostname/Address to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>127.0.0.1</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalPort</maml:name>
           <maml:description>
-            <maml:para>{{Fill LocalPort Description}}</maml:para>
+            <maml:para>Local port to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -762,7 +636,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemoteAddress</maml:name>
           <maml:description>
-            <maml:para>{{Fill RemoteAddress Description}}</maml:para>
+            <maml:para>Remote Hostname/Address to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -774,7 +648,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemotePort</maml:name>
           <maml:description>
-            <maml:para>{{Fill RemotePort Description}}</maml:para>
+            <maml:para>Remote port to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -789,19 +663,19 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalAdress</maml:name>
           <maml:description>
-            <maml:para>{{Fill LocalAdress Description}}</maml:para>
+            <maml:para>Local Hostname/Address to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>127.0.0.1</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>LocalPort</maml:name>
           <maml:description>
-            <maml:para>{{Fill LocalPort Description}}</maml:para>
+            <maml:para>Local port to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -813,7 +687,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemoteAddress</maml:name>
           <maml:description>
-            <maml:para>{{Fill RemoteAddress Description}}</maml:para>
+            <maml:para>Remote Hostname/Address to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -825,7 +699,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>RemotePort</maml:name>
           <maml:description>
-            <maml:para>{{Fill RemotePort Description}}</maml:para>
+            <maml:para>Remote port to forward</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -837,7 +711,7 @@ VERBOSE: Forwarding has been started.</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{Fill SSHSession Description}}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -849,10 +723,10 @@ VERBOSE: Forwarding has been started.</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
-        <maml:name>Index</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Index">
+        <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{Fill Index Description}}</maml:para>
+          <maml:para>SSH Session Id of an exiting session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -864,19 +738,19 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LocalAdress</maml:name>
         <maml:description>
-          <maml:para>{{Fill LocalAdress Description}}</maml:para>
+          <maml:para>Local Hostname/Address to forward</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>127.0.0.1</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>LocalPort</maml:name>
         <maml:description>
-          <maml:para>{{Fill LocalPort Description}}</maml:para>
+          <maml:para>Local port to forward</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -888,7 +762,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RemoteAddress</maml:name>
         <maml:description>
-          <maml:para>{{Fill RemoteAddress Description}}</maml:para>
+          <maml:para>Remote Hostname/Address to forward</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -900,7 +774,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>RemotePort</maml:name>
         <maml:description>
-          <maml:para>{{Fill RemotePort Description}}</maml:para>
+          <maml:para>Remote port to forward</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -912,7 +786,7 @@ VERBOSE: Forwarding has been started.</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{Fill SSHSession Description}}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -950,269 +824,13 @@ VERBOSE: Forwarding has been started.</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; New-SSHRemotePortForward -LocalAdress localhost -LocalPort 5678 -RemoteAddress server1 -RemotePort 8765
+ -SessionId 0</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Setup Port forward a localhost:5678 as a port 8765 on a remote server server1.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
-      <command:name>New-SSHTrustedHost</command:name>
-      <command:verb>New</command:verb>
-      <command:noun>SSHTrustedHost</command:noun>
-      <maml:description>
-        <maml:para>Add a new trusted host for Posh-SSH to use.</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>Add a new trusted host for Posh-SSH to use. By default it will store the new host in the default Posh-SSH hosts.json file unless a KnownHost store is specified.</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>New-SSHTrustedHost</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
-          <maml:name>HostName</maml:name>
-          <maml:description>
-            <maml:para>FQDN or IP address of the host.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-          <maml:name>FingerPrint</maml:name>
-          <maml:description>
-            <maml:para>SSH finger print for the the host to be added.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
-          <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Name</maml:name>
-          <maml:description>
-            <maml:para>Friendly name for the key, in the case of OpenSSH it is the ciphers used.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-        <maml:name>FingerPrint</maml:name>
-        <maml:description>
-          <maml:para>SSH finger print for the the host to be added.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
-        <maml:name>HostName</maml:name>
-        <maml:description>
-          <maml:para>FQDN or IP address of the host.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
-        <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Name</maml:name>
-        <maml:description>
-          <maml:para>Friendly name for the key, in the case of OpenSSH it is the ciphers used.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>System.Object</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>System.Object</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para></maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
-PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi</dev:code>
-        <dev:remarks>
-          <maml:para>Add new host entry to a store.</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
-      <command:name>Remove-SSHTrustedHost</command:name>
-      <command:verb>Remove</command:verb>
-      <command:noun>SSHTrustedHost</command:noun>
-      <maml:description>
-        <maml:para>Remove a KnwonHost entry from the default user location or from a KnownHost store.</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>Remove a KnwonHost entry from the default user location or from a KnownHost store.</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Remove-SSHTrustedHost</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
-          <maml:name>HostName</maml:name>
-          <maml:description>
-            <maml:para>Host name of the entry to remove.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
-          <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="none">
-        <maml:name>HostName</maml:name>
-        <maml:description>
-          <maml:para>Host name of the entry to remove.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
-        <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>System.String</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>System.Object</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para></maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples />
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
@@ -1238,7 +856,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -1250,7 +868,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1262,7 +880,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1277,7 +895,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SessionId Description }}</maml:para>
+            <maml:para>SSH Session Id of an exiting session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1289,7 +907,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1301,7 +919,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1316,7 +934,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -1328,19 +946,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SessionId Description }}</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>BoundPort</maml:name>
-        <maml:description>
-          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          <maml:para>SSH Session Id of an exiting session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -1352,7 +958,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          <maml:para>Hostname/Address for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1360,6 +966,18 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>BoundPort</maml:name>
+        <maml:description>
+          <maml:para>Port number for the associated session</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1410,7 +1028,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SSHSession Description }}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -1422,7 +1040,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1434,7 +1052,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1449,7 +1067,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SessionId Description }}</maml:para>
+            <maml:para>SSH Session Id of an exiting session.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1461,7 +1079,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>BoundHost</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundHost Description }}</maml:para>
+            <maml:para>Hostname/Address for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1473,7 +1091,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BoundPort</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BoundPort Description }}</maml:para>
+            <maml:para>Port number for the associated session</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1488,7 +1106,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SSHSession Description }}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -1500,19 +1118,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SessionId Description }}</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>BoundPort</maml:name>
-        <maml:description>
-          <maml:para>{{ Fill BoundPort Description }}</maml:para>
+          <maml:para>SSH Session Id of an exiting session.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -1524,7 +1130,7 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>BoundHost</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BoundHost Description }}</maml:para>
+          <maml:para>Hostname/Address for the associated session</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1532,6 +1138,18 @@ PS C:\&gt; New-SSHTrustedHost -KnowHostStore $inmem -HostName 192.168.1.165 -Fin
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>BoundPort</maml:name>
+        <maml:description>
+          <maml:para>Port number for the associated session</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />

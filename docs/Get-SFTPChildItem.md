@@ -115,7 +115,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Recursive
+### -Recurse
 Gets the items in the specified locations and in all child items of the locations.
 
 ```yaml

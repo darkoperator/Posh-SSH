@@ -18,20 +18,20 @@ Remove-SSHTrustedHost [-HostName] <String> [<CommonParameters>]
 
 ### Store
 ```
-Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> -KnownHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Remove trusted host record from KnownHost store
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> {{ Add example code here }}
+PS C:\> Remove-SSHTrustedHost -HostName server1
 ```
 
-{{ Add example description here }}
+Remove known host record for server1
 
 ## PARAMETERS
 
@@ -50,7 +50,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnowHostStore
+### -KnownHostStore
 Known Host Store
 
 ```yaml

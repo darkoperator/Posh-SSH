@@ -93,10 +93,32 @@ InstalledVersion                                  CurrentVersion
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-          <maml:name>Recursive</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="Recursive">
+          <maml:name>Recurse</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Gets the items in the specified locations and in all child items of the locations.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Directory</maml:name>
+          <maml:description>
+            <maml:para>To get a list of directories.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>File</maml:name>
+          <maml:description>
+            <maml:para>To get a list of files.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -131,10 +153,32 @@ InstalledVersion                                  CurrentVersion
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-          <maml:name>Recursive</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="Recursive">
+          <maml:name>Recurse</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Gets the items in the specified locations and in all child items of the locations.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Directory</maml:name>
+          <maml:description>
+            <maml:para>To get a list of directories.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>File</maml:name>
+          <maml:description>
+            <maml:para>To get a list of files.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -169,10 +213,10 @@ InstalledVersion                                  CurrentVersion
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
-        <maml:name>Recursive</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="Recursive">
+        <maml:name>Recurse</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>Gets the items in the specified locations and in all child items of the locations.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -192,6 +236,30 @@ InstalledVersion                                  CurrentVersion
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Directory</maml:name>
+        <maml:description>
+          <maml:para>To get a list of directories.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>File</maml:name>
+        <maml:description>
+          <maml:para>To get a list of files.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
@@ -325,7 +393,8 @@ UserId         : 1000</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ContentType</maml:name>
           <maml:description>
-            <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
+            <maml:para>How should the content be retured for the file being read.</maml:para>
+            <maml:para>* Byte - returns a byte array.</maml:para>
             <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
             <maml:para>* String - returns a string with all the contents of the file.</maml:para>
           </maml:description>
@@ -334,7 +403,7 @@ UserId         : 1000</dev:code>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>String</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
@@ -346,7 +415,7 @@ UserId         : 1000</dev:code>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>UTF8</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
       <command:syntaxItem>
@@ -378,7 +447,8 @@ UserId         : 1000</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>ContentType</maml:name>
           <maml:description>
-            <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
+            <maml:para>How should the content be retured for the file being read.</maml:para>
+            <maml:para>* Byte - returns a byte array.</maml:para>
             <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
             <maml:para>* String - returns a string with all the contents of the file.</maml:para>
           </maml:description>
@@ -387,7 +457,7 @@ UserId         : 1000</dev:code>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>String</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
@@ -399,7 +469,7 @@ UserId         : 1000</dev:code>
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>UTF8</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -431,7 +501,8 @@ UserId         : 1000</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ContentType</maml:name>
         <maml:description>
-          <maml:para>How should the content be retured for the file being read.  * Byte - returns a byte array.</maml:para>
+          <maml:para>How should the content be retured for the file being read.</maml:para>
+          <maml:para>* Byte - returns a byte array.</maml:para>
           <maml:para>* MultiLine - Retuns a string array where each element represents a line in the file.</maml:para>
           <maml:para>* String - returns a string with all the contents of the file.</maml:para>
         </maml:description>
@@ -440,7 +511,7 @@ UserId         : 1000</dev:code>
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>String</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Encoding</maml:name>
@@ -452,7 +523,7 @@ UserId         : 1000</dev:code>
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>UTF8</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Session">
         <maml:name>SFTPSession</maml:name>
@@ -1005,6 +1076,112 @@ SessionId  Host                                            Connected
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-SSHTrustedHost</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para></maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Trusted Host record from KnownHostStore</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SSHTrustedHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>Host name the key fingerprint is associated with.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="2" aliases="none">
+          <maml:name>KnownHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host Store</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <dev:type>
+            <maml:name>IStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="2" aliases="none">
+        <maml:name>KnownHostStore</maml:name>
+        <maml:description>
+          <maml:para>Known Host Store</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+        <dev:type>
+          <maml:name>IStore</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>Host name the key fingerprint is associated with.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>SSH.Stores.KnownHostRecord</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1'</dev:code>
+        <dev:remarks>
+          <maml:para>Get Trusted Host record for server1 from default KnownHostStore</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)</dev:code>
+        <dev:remarks>
+          <maml:para>Get Trusted Host record for server1 from registry(deprecated) KnownHostStore</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Invoke-SSHCommand</command:name>
       <command:verb>Invoke</command:verb>
       <command:noun>SSHCommand</command:noun>
@@ -1052,19 +1229,19 @@ SessionId  Host                                            Connected
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>60</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Specifies the maximum number of concurrent connections that can be established to run this command.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>32</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
@@ -1076,6 +1253,52 @@ SessionId  Host                                            Connected
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ShowStandardOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Displays the result of the standard output of the command in live</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ShowErrorOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Displays the result of the error output of the command in live</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StandardOutputStreamColor</maml:name>
+          <maml:description>
+            <maml:para>Display color of the standard output. Works only with -ShowStandardOutputStream</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>White</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ErrorOutputStreamColor</maml:name>
+          <maml:description>
+            <maml:para>Display color of the error output. Works only with -ShowErrorOutputStream</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Red</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
       <command:syntaxItem>
@@ -1114,19 +1337,19 @@ SessionId  Host                                            Connected
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>60</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Specifies the maximum number of concurrent connections that can be established to run this command.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>32</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
@@ -1138,6 +1361,52 @@ SessionId  Host                                            Connected
             <maml:uri />
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ShowStandardOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Displays the result of the standard output of the command in live</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ShowErrorOutputStream</maml:name>
+          <maml:description>
+            <maml:para>Displays the result of the error output of the command in live</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StandardOutputStreamColor</maml:name>
+          <maml:description>
+            <maml:para>Display color of the standard output. Works only with -ShowStandardOutputStream</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>White</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ErrorOutputStreamColor</maml:name>
+          <maml:description>
+            <maml:para>Display color of the error output. Works only with -ShowErrorOutputStream</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Red</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -1188,19 +1457,19 @@ SessionId  Host                                            Connected
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>60</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>ThrottleLimit</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>Specifies the maximum number of concurrent connections that can be established to run this command.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>32</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>SSHSession</maml:name>
@@ -1213,6 +1482,54 @@ SessionId  Host                                            Connected
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ShowStandardOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Displays the result of the standard output of the command in live</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ShowErrorOutputStream</maml:name>
+        <maml:description>
+          <maml:para>Displays the result of the error output of the command in live</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>StandardOutputStreamColor</maml:name>
+        <maml:description>
+          <maml:para>Display color of the standard output. Works only with -ShowStandardOutputStream</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>White</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ErrorOutputStreamColor</maml:name>
+        <maml:description>
+          <maml:para>Display color of the error output. Works only with -ShowErrorOutputStream</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Red</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>
@@ -1293,7 +1610,7 @@ ExitStatus : 0</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Command to execute in remote host.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1305,19 +1622,19 @@ ExitStatus : 0</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>60</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1355,7 +1672,7 @@ ExitStatus : 0</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
           <maml:name>SSHSession</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>SSH Session object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
           <dev:type>
@@ -1367,7 +1684,7 @@ ExitStatus : 0</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Command</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Command to execute in remote host.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -1379,19 +1696,19 @@ ExitStatus : 0</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>TimeOut</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>60</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>EnsureConnection</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1429,7 +1746,7 @@ ExitStatus : 0</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Command</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>Command to execute in remote host.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -1453,7 +1770,7 @@ ExitStatus : 0</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>EnsureConnection</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>Ensures a connection is made by reconnecting before command.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -1465,14 +1782,14 @@ ExitStatus : 0</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>TimeOut</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>Time out in seconds to wait for the command to return a value.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>60</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>HostVariable</maml:name>
@@ -1501,7 +1818,7 @@ ExitStatus : 0</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Name">
         <maml:name>SSHSession</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>SSH Session object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SshSession</command:parameterValue>
         <dev:type>
@@ -1539,9 +1856,16 @@ ExitStatus : 0</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Invoke-SSHCommandStream -Command 'cat /etc/passwd' -SSHSession $session</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Invoke a command cat /etc/passwd in session $session</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; 0,1,2 | Invoke-SSHCommandStream -Command 'cat /etc/passwd'</dev:code>
+        <dev:remarks>
+          <maml:para>Invoke a command cat /etc/passwd in sessions 0,1,2</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1625,7 +1949,7 @@ ExitStatus : 0</dev:code>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
       <command:syntaxItem>
@@ -1688,7 +2012,7 @@ ExitStatus : 0</dev:code>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -1751,7 +2075,7 @@ ExitStatus : 0</dev:code>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>10</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectRegex</maml:name>
@@ -1904,7 +2228,7 @@ ExitStatus : 0</dev:code>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
       <command:syntaxItem>
@@ -1967,7 +2291,7 @@ ExitStatus : 0</dev:code>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
@@ -2030,7 +2354,7 @@ ExitStatus : 0</dev:code>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>10</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>ExpectRegex</maml:name>
@@ -2179,7 +2503,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{Fill in the Description}}</maml:para>
+      <maml:para>Invoke command in SSH stream shell</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -2211,7 +2535,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>PrompPattern</maml:name>
           <maml:description>
-            <maml:para>{{Fill PrompPattern Description}}</maml:para>
+            <maml:para>Put lines to output until PromtPattern meet</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2250,7 +2574,7 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>PrompPattern</maml:name>
         <maml:description>
-          <maml:para>{{Fill PrompPattern Description}}</maml:para>
+          <maml:para>Put lines to output until PromtPattern meet</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2279,9 +2603,9 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Invoke-SSHStreamShellCommand -ShellStream $stream -Command 'cat /etc/passwd'</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Invoke 'cat /etc/passwd' in $shell shell stream</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2499,13 +2823,13 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>FileMode</maml:name>
           <maml:description>
-            <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
+            <maml:para>Specifies how the operating system should open a file. Options are:</maml:para>
+            <maml:para>* Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
             <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
             <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
             <maml:para>* Open - Specifies that the operating system should open an existing file.</maml:para>
-            <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
-            <maml:para></maml:para>
-            <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
+            <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be created.</maml:para>
+            <maml:para>* Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2556,13 +2880,13 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>FileMode</maml:name>
           <maml:description>
-            <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
+            <maml:para>Specifies how the operating system should open a file. Options are:</maml:para>
+            <maml:para>* Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
             <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
             <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
             <maml:para>* Open - Specifies that the operating system should open an existing file.</maml:para>
-            <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
-            <maml:para></maml:para>
-            <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
+            <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be created.</maml:para>
+            <maml:para>* Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2613,13 +2937,13 @@ lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>FileMode</maml:name>
         <maml:description>
-          <maml:para>Specifies how the operating system should open a file. Options are: * Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
+          <maml:para>Specifies how the operating system should open a file. Options are:</maml:para>
+          <maml:para>* Append - Opens the file if it exists and seeks to the end of the file, or creates a new file.</maml:para>
           <maml:para>* Create - Specifies that the operating system should create a new file.</maml:para>
           <maml:para>* CreateNew - Specifies that the operating system should create a new file</maml:para>
           <maml:para>* Open - Specifies that the operating system should open an existing file.</maml:para>
-          <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be</maml:para>
-          <maml:para></maml:para>
-          <maml:para>created. * Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
+          <maml:para>* OpenOrCreate - pecifies that the operating system should open a file if it exists; otherwise, a new file should be created.</maml:para>
+          <maml:para>* Truncate - Specifies that the operating system should open an existing file. When the file is opened, it should be truncated so that its size is zero bytes.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2780,7 +3104,8 @@ PS C:\&gt; $bashhistory
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>ItemType</maml:name>
           <maml:description>
-            <maml:para>Type of item to create. Options are: * File</maml:para>
+            <maml:para>Type of item to create. Options are:</maml:para>
+            <maml:para>* File</maml:para>
             <maml:para>* Directory</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2788,12 +3113,12 @@ PS C:\&gt; $bashhistory
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>File</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Recurse</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>If ItemType is Directory, create sub directories in the path.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -2831,7 +3156,8 @@ PS C:\&gt; $bashhistory
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>ItemType</maml:name>
           <maml:description>
-            <maml:para>Type of item to create. Options are: * File</maml:para>
+            <maml:para>Type of item to create. Options are:</maml:para>
+            <maml:para>* File</maml:para>
             <maml:para>* Directory</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2839,12 +3165,12 @@ PS C:\&gt; $bashhistory
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>File</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Recurse</maml:name>
           <maml:description>
-            <maml:para>@{Text=}</maml:para>
+            <maml:para>If ItemType is Directory, create sub directories in the path.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -2882,7 +3208,8 @@ PS C:\&gt; $bashhistory
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>ItemType</maml:name>
         <maml:description>
-          <maml:para>Type of item to create. Options are: * File</maml:para>
+          <maml:para>Type of item to create. Options are:</maml:para>
+          <maml:para>* File</maml:para>
           <maml:para>* Directory</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
@@ -2890,12 +3217,12 @@ PS C:\&gt; $bashhistory
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>File</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Recurse</maml:name>
         <maml:description>
-          <maml:para>@{Text=}</maml:para>
+          <maml:para>If ItemType is Directory, create sub directories in the path.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -3217,7 +3544,7 @@ FullName       : /tmp/help
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>dumb</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Columns</maml:name>
@@ -3304,7 +3631,7 @@ FullName       : /tmp/help
             <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>dumb</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Columns</maml:name>
@@ -3391,7 +3718,7 @@ FullName       : /tmp/help
           <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>dumb</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Columns</maml:name>
@@ -3519,6 +3846,151 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
 [admin@localhost ~]$</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>New-SSHTrustedHost</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para></maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Add new trusted host record to KnownHost store</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+          <maml:name>FingerPrint</maml:name>
+          <maml:description>
+            <maml:para>SSH Server Fingerprint. (md5 of host public key)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="KeyCipherName">
+          <maml:name>HostKeyName</maml:name>
+          <maml:description>
+            <maml:para>This is the hostkey cipher name.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host Store</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>FingerPrint</maml:name>
+        <maml:description>
+          <maml:para>SSH Server Fingerprint. (md5 of host public key)</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="KeyCipherName">
+        <maml:name>HostKeyName</maml:name>
+        <maml:description>
+          <maml:para>This is the hostkey cipher name.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHostStore</maml:name>
+        <maml:description>
+          <maml:para>Known Host Store</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; New-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'</dev:code>
+        <dev:remarks>
+          <maml:para>Add new Trusted Host record for server1</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHHostKey -ComputerName server2 | New-SSHTrustedHost</dev:code>
+        <dev:remarks>
+          <maml:para>Add new Trusted Host record for server2 from scanned one</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3696,9 +4168,9 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Remove-SFTPItem -SessionId 0 -Path /tmp/example.txt</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Remove /tmp/example.txt in sftp session 0</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3945,6 +4417,96 @@ True</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Remove-SSHTrustedHost</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para></maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Remove trusted host record from KnownHost store</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KnownHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host Store</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>IP Address of FQDN of host to add to trusted list.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KnownHostStore</maml:name>
+        <maml:description>
+          <maml:para>Known Host Store</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-SSHTrustedHost -HostName server1</dev:code>
+        <dev:remarks>
+          <maml:para>Remove known host record for server1</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Rename-SFTPFile</command:name>
       <command:verb>Rename</command:verb>
       <command:noun>SFTPFile</command:noun>
@@ -4137,7 +4699,7 @@ True</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>{{Fill in the Description}}</maml:para>
+      <maml:para>Set the content of a specific item on a remote server through an SFTP session.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -4145,7 +4707,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
           <maml:name>SessionId</maml:name>
           <maml:description>
-            <maml:para>{{Fill SessionId Description}}</maml:para>
+            <maml:para>Session Id of an existing SFTPSession.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
           <dev:type>
@@ -4157,7 +4719,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>{{Fill Path Description}}</maml:para>
+            <maml:para>Path to existing remote file</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -4169,7 +4731,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Value</maml:name>
           <maml:description>
-            <maml:para>{{Fill Value Description}}</maml:para>
+            <maml:para>Content to upload</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -4181,8 +4743,16 @@ True</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
           <maml:description>
-            <maml:para>{{Fill Encoding Description}}</maml:para>
+            <maml:para>Content encoding</maml:para>
           </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">ASCII</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Unicode</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF7</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF8</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF32</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">BigEndianUnicode</command:parameterValue>
+          </command:parameterValueGroup>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4193,7 +4763,7 @@ True</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Append</maml:name>
           <maml:description>
-            <maml:para>{{Fill Append Description}}</maml:para>
+            <maml:para>Append content to file</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -4207,7 +4777,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
           <maml:name>SFTPSession</maml:name>
           <maml:description>
-            <maml:para>{{Fill SFTPSession Description}}</maml:para>
+            <maml:para>Existing SFTPSession object.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
           <dev:type>
@@ -4219,7 +4789,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>Path</maml:name>
           <maml:description>
-            <maml:para>{{Fill Path Description}}</maml:para>
+            <maml:para>Path to existing remote file</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -4231,7 +4801,7 @@ True</dev:code>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Value</maml:name>
           <maml:description>
-            <maml:para>{{Fill Value Description}}</maml:para>
+            <maml:para>Content to upload</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -4243,8 +4813,16 @@ True</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
           <maml:description>
-            <maml:para>{{Fill Encoding Description}}</maml:para>
+            <maml:para>Content encoding</maml:para>
           </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">ASCII</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Unicode</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF7</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF8</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">UTF32</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">BigEndianUnicode</command:parameterValue>
+          </command:parameterValueGroup>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -4255,7 +4833,7 @@ True</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Append</maml:name>
           <maml:description>
-            <maml:para>{{Fill Append Description}}</maml:para>
+            <maml:para>Append content to file</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -4269,7 +4847,7 @@ True</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="Index">
         <maml:name>SessionId</maml:name>
         <maml:description>
-          <maml:para>{{Fill SessionId Description}}</maml:para>
+          <maml:para>Session Id of an existing SFTPSession.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
         <dev:type>
@@ -4281,7 +4859,7 @@ True</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
         <maml:name>SFTPSession</maml:name>
         <maml:description>
-          <maml:para>{{Fill SFTPSession Description}}</maml:para>
+          <maml:para>Existing SFTPSession object.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">SftpSession[]</command:parameterValue>
         <dev:type>
@@ -4293,7 +4871,7 @@ True</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>Path</maml:name>
         <maml:description>
-          <maml:para>{{Fill Path Description}}</maml:para>
+          <maml:para>Path to existing remote file</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -4305,7 +4883,7 @@ True</dev:code>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>Value</maml:name>
         <maml:description>
-          <maml:para>{{Fill Value Description}}</maml:para>
+          <maml:para>Content to upload</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -4317,7 +4895,7 @@ True</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Encoding</maml:name>
         <maml:description>
-          <maml:para>{{Fill Encoding Description}}</maml:para>
+          <maml:para>Content encoding</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -4329,7 +4907,7 @@ True</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Append</maml:name>
         <maml:description>
-          <maml:para>{{Fill Append Description}}</maml:para>
+          <maml:para>Append content to file</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -4358,9 +4936,9 @@ True</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:code>PS C:\&gt; Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Set the content of /tmp/example.txt to "My example message`n" in sftp sesison 0</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4592,7 +5170,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>UserId</maml:name>
@@ -4604,7 +5182,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanExecute</maml:name>
@@ -4775,7 +5353,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>UserId</maml:name>
@@ -4787,7 +5365,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>GroupCanExecute</maml:name>
@@ -4958,7 +5536,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>UserId</maml:name>
@@ -4970,7 +5548,7 @@ PS C:\&gt; Get-SFTPLocation -SessionId 0
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>GroupCanExecute</maml:name>

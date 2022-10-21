@@ -45,7 +45,7 @@ VERBOSE: Forwarding has been started.
 ## PARAMETERS
 
 ### -BoundHost
-{{ Fill BoundHost Description }}
+Hostname/Address for the associated session
 
 ```yaml
 Type: String
@@ -60,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -BoundPort
-{{ Fill BoundPort Description }}
+Port number for the associated session
 
 ```yaml
 Type: Int32
@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -SSHSession
-{{ Fill SSHSession Description }}
+SSH Session object.
 
 ```yaml
 Type: SshSession
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-{{ Fill SessionId Description }}
+SSH Session Id of an exiting session.
 
 ```yaml
 Type: Int32

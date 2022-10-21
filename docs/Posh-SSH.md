@@ -41,7 +41,7 @@ Get current SFTP Sessions that are available for interaction.
 ### [Get-SSHHostKey](Get-SSHHostKey.md)
 Returns host key record
 
-### [Get-SSHJsonKnowHost](Get-SSHJsonKnowHost.md)
+### [Get-SSHJsonKnownHost](Get-SSHJsonKnownHost.md)
 Get known hosts stored in a JSON file created by Posh-SSH.
 If a file is not specified it will default to $HOME\.poshssh\hosts.json.
 If the file specified is not present it will be created.

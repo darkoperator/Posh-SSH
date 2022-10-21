@@ -19,7 +19,7 @@ New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] 
 ### Store
 ```
 New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
- -KnowHostStore <Object> [<CommonParameters>]
+ -KnownHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,7 +89,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnowHostStore
+### -KnownHostStore
 Known Host Store
 
 ```yaml

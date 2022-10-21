@@ -18,7 +18,7 @@ Remove-SSHTrustedHost [-HostName] <String> [<CommonParameters>]
 
 ### Store
 ```
-Remove-SSHTrustedHost [-HostName] <String> -KnowHostStore <Object> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> -KnownHostStore <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -50,7 +50,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnowHostStore
+### -KnownHostStore
 Known Host Store
 
 ```yaml

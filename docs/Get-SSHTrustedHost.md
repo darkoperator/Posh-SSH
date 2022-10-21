@@ -18,11 +18,11 @@ Get-SSHTrustedHost [[-HostName] <String>] [<CommonParameters>]
 
 ### Store
 ```
-Get-SSHTrustedHost [-KnowHostStore] <IStore> [[-HostName] <String>] [<CommonParameters>]
+Get-SSHTrustedHost [-KnownHostStore] <IStore> [[-HostName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get Trusted Host record from KnowHostStore
+Get Trusted Host record from KnownHostStore
 
 ## EXAMPLES
 
@@ -31,18 +31,18 @@ Get Trusted Host record from KnowHostStore
 PS C:\> Get-SSHTrustedHost -HostName 'server1'
 ```
 
-Get Trusted Host record for server1 from default KnowHostStore
+Get Trusted Host record for server1 from default KnownHostStore
 
 ### Example 2
 ```powershell
 PS C:\> Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)
 ```
 
-Get Trusted Host record for server1 from registry(deprecated) KnowHostStore
+Get Trusted Host record for server1 from registry(deprecated) KnownHostStore
 
 ## PARAMETERS
 
-### -KnowHostStore
+### -KnownHostStore
 Known Host Store
 
 ```yaml

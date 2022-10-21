@@ -111,7 +111,7 @@ CmdletsToExport = @('Get-SCPItem',
                   'Set-SCPItem',
                   'Set-SFTPItem',
                   'New-SSHMemoryKnownHost',
-                  'Get-SSHJsonKnowHost',
+                  'Get-SSHJsonKnownHost',
                   'Get-SSHOpenSSHKnownHost',
                   'Get-SSHHostKey')
 

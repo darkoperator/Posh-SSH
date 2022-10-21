@@ -20,6 +20,8 @@ if (!(Test-Path variable:Global:SFTPSessions ))
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
 
+New-Alias -Name 'Get-SSHJsonKnowHost' -Value 'Get-SSHJsonKnownHost' -Force
+
 # SSH Functions
 ##############################################################################################
 
@@ -3022,8 +3024,9 @@ function Get-SSHTrustedHost
            ParameterSetName = "Store",
            ValueFromPipeline = $true,
            Position = 1)]
+        [Alias('KnowHostStore')]
         [SSH.Stores.IStore]
-        $KnowHostStore,
+        $KnownHostStore,
 
         # Host name the key fingerprint is associated with.
         [Parameter(Mandatory = $false,
@@ -3039,12 +3042,12 @@ function Get-SSHTrustedHost
     Process
     {
        if ($PSCmdlet.ParameterSetName -eq "Local") {
-           $Store = Get-SSHJsonKnowHost
+           $Store = Get-SSHJsonKnownHost
             if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-            $Store = $KnowHostStore
+            $Store = $KnownHostStore
        }
 
        if ($PSBoundParameters.Keys -contains "HostName") {
@@ -3098,7 +3101,9 @@ function Get-SSHTrustedHost
          # Known Host Store
         [Parameter(Mandatory = $true,
         ParameterSetName = "Store")]
-        $KnowHostStore
+        [Alias('KnowHostStore')]
+        [SSH.Stores.IStore]
+        $KnownHostStore
      )
 
     Begin{
@@ -3107,12 +3112,12 @@ function Get-SSHTrustedHost
      Process
      {
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            $Store = Get-SSHJsonKnowHost
+            $Store = Get-SSHJsonKnownHost
             if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-             $Store = $KnowHostStore
+             $Store = $KnownHostStore
         }
  
         $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
@@ -3135,7 +3140,9 @@ function Get-SSHTrustedHost
         # Known Host Store
         [Parameter(Mandatory = $true,
         ParameterSetName = "Store")]
-        $KnowHostStore
+        [Alias('KnowHostStore')]
+        [SSH.Stores.IStore]
+        $KnownHostStore
      )
 
     Begin{
@@ -3143,13 +3150,13 @@ function Get-SSHTrustedHost
     }
      Process{
         if ($PSCmdlet.ParameterSetName -eq "Local") {
-            $Store = Get-SSHJsonKnowHost
+            $Store = Get-SSHJsonKnownHost
             if (-not (Test-Path -PathType Leaf $Default)) {
                 Write-Warning -Message "No known host file found, $($Default)"
             }
         } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-            if ($KnowHostStore -isnot [SSH.Stores.OpenSSHStore]) {
-                $Store = $KnowHostStore
+            if ($KnownHostStore -isnot [SSH.Stores.OpenSSHStore]) {
+                $Store = $KnownHostStore
             } else {
                 Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop 
             }
@@ -3202,7 +3209,7 @@ function Get-SSHRegistryKnownHost {
        It is windows-only compatibility cmdlet
 #>
 function Convert-SSHRegistryToJSonKnownHost {
-    $JsonStore = Get-SSHJsonKnowHost
+    $JsonStore = Get-SSHJsonKnownHost
     $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
     $p | Get-Member -MemberType NoteProperty |
     Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |

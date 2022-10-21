@@ -1084,7 +1084,7 @@ SessionId  Host                                            Connected
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Get Trusted Host record from KnowHostStore</maml:para>
+      <maml:para>Get Trusted Host record from KnownHostStore</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1102,7 +1102,7 @@ SessionId  Host                                            Connected
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="2" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
+          <maml:name>KnownHostStore</maml:name>
           <maml:description>
             <maml:para>Known Host Store</maml:para>
           </maml:description>
@@ -1117,7 +1117,7 @@ SessionId  Host                                            Connected
     </command:syntax>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="2" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
+        <maml:name>KnownHostStore</maml:name>
         <maml:description>
           <maml:para>Known Host Store</maml:para>
         </maml:description>
@@ -1162,14 +1162,14 @@ SessionId  Host                                            Connected
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1'</dev:code>
         <dev:remarks>
-          <maml:para>Get Trusted Host record for server1 from default KnowHostStore</maml:para>
+          <maml:para>Get Trusted Host record for server1 from default KnownHostStore</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- Example 2 --------------------------</maml:title>
         <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)</dev:code>
         <dev:remarks>
-          <maml:para>Get Trusted Host record for server1 from registry(deprecated) KnowHostStore</maml:para>
+          <maml:para>Get Trusted Host record for server1 from registry(deprecated) KnownHostStore</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3908,7 +3908,7 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
+          <maml:name>KnownHostStore</maml:name>
           <maml:description>
             <maml:para>Known Host Store</maml:para>
           </maml:description>
@@ -3959,7 +3959,7 @@ Linux localhost.localdomain 3.10.0-123.el7.x86_64 #1 SMP Mon Jun 30 12:09:22 UTC
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
+        <maml:name>KnownHostStore</maml:name>
         <maml:description>
           <maml:para>Known Host Store</maml:para>
         </maml:description>
@@ -4443,7 +4443,7 @@ True</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnowHostStore</maml:name>
+          <maml:name>KnownHostStore</maml:name>
           <maml:description>
             <maml:para>Known Host Store</maml:para>
           </maml:description>
@@ -4470,7 +4470,7 @@ True</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnowHostStore</maml:name>
+        <maml:name>KnownHostStore</maml:name>
         <maml:description>
           <maml:para>Known Host Store</maml:para>
         </maml:description>

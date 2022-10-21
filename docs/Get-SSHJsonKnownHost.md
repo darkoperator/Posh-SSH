@@ -5,7 +5,7 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHJsonKnowHost
+# Get-SSHJsonKnownHost
 
 ## SYNOPSIS
 Get known hosts stored in a JSON file created by Posh-SSH.
@@ -15,7 +15,7 @@ If the file specified is not present it will be created.
 ## SYNTAX
 
 ```
-Get-SSHJsonKnowHost [[-LocalFile] <String>] [<CommonParameters>]
+Get-SSHJsonKnownHost [[-LocalFile] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ If the file specified is not present it will be created.
 
 ### Example 1
 ```
-PS C:\> $jsontest = Get-SSHJsonKnowHost -LocalFile .\test.json
+PS C:\> $jsontest = Get-SSHJsonKnownHost -LocalFile .\test.json
 PS C:\> $jsontest.SetKey("192.168.1.1","Router","12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53")
 True
 PS C:\> $jsontest.GetAllKeys()
@@ -37,7 +37,7 @@ HostName    HostKeyName Fingerprint
 192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
 ```
 
-Create a JSON Kmnown Host Store object and using its methods add a new entry.
+Create a JSON Known Host Store object and using its methods add a new entry.
 
 ## PARAMETERS
 

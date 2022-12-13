@@ -190,8 +190,24 @@ namespace SSH
         }
         protected BaseClient CreateConnection(string computer)
         {
-            var isVerboseEnabled = MyInvocation.BoundParameters.ContainsKey("Verbose") ||
-                (ActionPreference)this.SessionState.PSVariable.GetValue("VerbosePreference") != ActionPreference.SilentlyContinue;
+            var isVerboseEnabled = MyInvocation.BoundParameters.ContainsKey("Verbose");
+            if (!isVerboseEnabled)
+            {
+                switch (this.SessionState.PSVariable.GetValue("VerbosePreference"))
+                {
+                    case ActionPreference apVp:
+                        isVerboseEnabled = (apVp != ActionPreference.SilentlyContinue);
+                        break;
+
+                    case string strVp:
+                        isVerboseEnabled = Enum.TryParse<ActionPreference>(strVp, true, out ActionPreference vp) &&
+                         (vp != ActionPreference.SilentlyContinue);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
             ConnectionInfo connectInfo = null;
             switch (ParameterSetName)

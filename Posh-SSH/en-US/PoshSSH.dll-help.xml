@@ -123,14 +123,14 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Timeout for execution of an operation.</maml:para>
+            <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
@@ -372,14 +372,14 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Timeout for execution of an operation.</maml:para>
+            <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
@@ -636,14 +636,14 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>OperationTimeout</maml:name>
         <maml:description>
-          <maml:para>Timeout for execution of an operation.</maml:para>
+          <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>5</dev:defaultValue>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Path</maml:name>
@@ -1599,14 +1599,14 @@ HostName      HostKeyName         Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Operation timeout interval in seconds.</maml:para>
+            <maml:para>Operation timeout interval in seconds. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>KeepAliveInterval</maml:name>
@@ -1779,14 +1779,14 @@ HostName      HostKeyName         Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Operation timeout interval in seconds.</maml:para>
+            <maml:para>Operation timeout interval in seconds. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>KeepAliveInterval</maml:name>
@@ -1959,14 +1959,14 @@ HostName      HostKeyName         Fingerprint
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>OperationTimeout</maml:name>
         <maml:description>
-          <maml:para>Operation timeout interval in seconds.</maml:para>
+          <maml:para>Operation timeout interval in seconds. Zero or below disables timeout</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>5</dev:defaultValue>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>KeepAliveInterval</maml:name>
@@ -2631,18 +2631,6 @@ HostName      HostKeyName Fingerprint
         <dev:defaultValue>10</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>OperationTimeout</maml:name>
-        <maml:description>
-          <maml:para>Operation timeout interval in seconds.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>5</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>KeepAliveInterval</maml:name>
         <maml:description>
           <maml:para>Keep Alive interval in seconds for a connection.</maml:para>
@@ -2926,14 +2914,14 @@ HostName      HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Timeout for execution of an operation.</maml:para>
+            <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Port</maml:name>
@@ -3159,14 +3147,14 @@ HostName      HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>OperationTimeout</maml:name>
           <maml:description>
-            <maml:para>Timeout for execution of an operation.</maml:para>
+            <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>5</dev:defaultValue>
+          <dev:defaultValue>0</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Port</maml:name>
@@ -3395,14 +3383,14 @@ HostName      HostKeyName Fingerprint
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>OperationTimeout</maml:name>
         <maml:description>
-          <maml:para>Timeout for execution of an operation.</maml:para>
+          <maml:para>Timeout for execution of an operation. Zero or below disables timeout</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>5</dev:defaultValue>
+        <dev:defaultValue>0</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="FullName">
         <maml:name>Path</maml:name>

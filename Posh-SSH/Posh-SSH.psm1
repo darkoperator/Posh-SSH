@@ -1891,6 +1891,78 @@ function Set-SFTPPathAttribute
 }
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
+function Get-SFTPPathInformation
+{
+    [CmdletBinding()]
+    [OutputType([Renci.SshNet.Sftp.SftpFileSytemInformation])]
+    Param
+    (
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Index',
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=0)]
+        [Alias('Index')]
+        [Int32[]]
+        $SessionId,
+
+        [Parameter(Mandatory=$true,
+                   ParameterSetName = 'Session',
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        [Alias('Session')]
+        [SSH.SFTPSession[]]
+        $SFTPSession,
+
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=1)]
+        [string]
+        $Path
+    )
+
+    Begin
+    {
+        $ToProcess = @()
+        switch($PSCmdlet.ParameterSetName)
+        {
+            'Session'
+            {
+                $ToProcess = $SFTPSession
+            }
+
+            'Index'
+            {
+                foreach($session in $Global:SFTPSessions)
+                {
+                    if ($SessionId -contains $session.SessionId)
+                    {
+                        $ToProcess += $session
+                    }
+                }
+            }
+        }
+    }
+    Process
+    {
+        foreach($session in $ToProcess)
+        {
+
+            if (Test-SFTPPath -SFTPSession $session -Path $Path)
+            {
+                $session.Session.GetStatus($Path)
+            }
+            else
+            {
+                throw "Path $($Path) does not exist on the target host."
+            }
+        }
+    }
+    End
+    {
+    }
+}
+
+# .ExternalHelp Posh-SSH.psm1-Help.xml
 function New-SFTPSymlink
 {
     [CmdletBinding(DefaultParameterSetName='Index')]

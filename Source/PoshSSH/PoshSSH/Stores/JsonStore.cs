@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
+using System.Runtime.Serialization.Json;
 
 namespace SSH.Stores
 {
@@ -14,34 +14,48 @@ namespace SSH.Stores
     public class JsonStore : MemoryStore
     {
         private readonly string FileName;
+        private readonly DataContractJsonSerializerSettings serializationSettings;
 
         public JsonStore(string fileName)
         {
             FileName = fileName;
+            serializationSettings = new DataContractJsonSerializerSettings { UseSimpleDictionaryFormat = true };
         }
        
         public void LoadFromDisk()
         {
             if (File.Exists(FileName))
             {
-                var jsonString = File.ReadAllText(FileName);
-                var keys = JsonConvert.DeserializeObject<ConfigFileStruct>(jsonString).Keys;
-                HostKeys = new ConcurrentDictionary<string, KnownHostValue>(keys);
+                using (var stream = File.OpenRead(FileName))
+                {
+                    var serializer = new DataContractJsonSerializer(typeof(ConfigFileStruct), serializationSettings);
+                    var keys = (ConfigFileStruct)serializer.ReadObject(stream);
+                    if (Equals(keys, null)) throw new Exception();
+                    HostKeys = new ConcurrentDictionary<string, KnownHostValue>(keys.Keys);
+                }
             }
         }
 
         private void WriteToDisk()
         {
-            var jsonString = JsonConvert.SerializeObject(new ConfigFileStruct()
-                {
-                    Keys = HostKeys.ToDictionary(x => x.Key, x => x.Value)
-                },
-                Formatting.Indented
-            );
             var d = Directory.CreateDirectory(Path.GetDirectoryName(FileName));
             if (d.Exists)
             {
-                File.WriteAllText(FileName, jsonString);
+                using (var stream = File.Open(FileName, FileMode.Create, FileAccess.Write, FileShare.Read))
+                {
+                    using (var writer = JsonReaderWriterFactory.CreateJsonWriter(
+                        stream, System.Text.Encoding.UTF8, true, true, "  "))
+                    {
+                        var serializer = new DataContractJsonSerializer(typeof(ConfigFileStruct), serializationSettings);
+                        serializer.WriteObject(writer,
+                            new ConfigFileStruct()
+                            {
+                                Keys = HostKeys.ToDictionary(x => x.Key, x => x.Value)
+                            }
+                        );
+                        writer.Flush();
+                    }
+                }
             }
         }
 

@@ -20,7 +20,7 @@ if (!(Test-Path variable:Global:SFTPSessions ))
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
 
-New-Alias -Name 'Get-SSHJsonKnowHost' -Value 'Get-SSHJsonKnownHost' -Force
+
 
 # SSH Functions
 ##############################################################################################
@@ -3024,7 +3024,6 @@ function Get-SSHTrustedHost
            ParameterSetName = "Store",
            ValueFromPipeline = $true,
            Position = 1)]
-        [Alias('KnowHostStore')]
         [SSH.Stores.IStore]
         $KnownHostStore,
 
@@ -3101,7 +3100,6 @@ function Get-SSHTrustedHost
          # Known Host Store
         [Parameter(Mandatory = $true,
         ParameterSetName = "Store")]
-        [Alias('KnowHostStore')]
         [SSH.Stores.IStore]
         $KnownHostStore
      )

@@ -36,9 +36,23 @@ namespace SSH
         [Parameter(Mandatory = true,
             ValueFromPipelineByPropertyName = true,
             Position = 1,
-            HelpMessage = "SSH Credentials to use for connecting to a server. If a key file is used the password field is used for the Key pass phrase.")]
+            HelpMessage = "SSH Credentials to use for connecting to a server.")]
         [Credential()]
-        public PSCredential Credential { get; set; }        
+        public PSCredential Credential { get; set; }
+
+        /// <summary>
+        /// Credentials for Connection
+        /// </summary>
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key",
+            HelpMessage = "Passphrase for the SSH Key.")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString",
+            HelpMessage = "Passphrase for the SSH Key.")]
+        public System.Security.SecureString Passphrase { get; set; }
 
         /// <summary>
         /// Port for SSH
@@ -199,6 +213,7 @@ namespace SSH
                 case "NoKey":
                     WriteVerbose("Using SSH Username and Password authentication for connection.");
                     var kIconnectInfo = new KeyboardInteractiveAuthenticationMethod(Credential.UserName);
+
                     connectInfo = ConnectionInfoGenerator.GetCredConnectionInfo(computer,
                         Port,
                         Credential,
@@ -213,7 +228,7 @@ namespace SSH
                     {
                         foreach (var prompt in e.Prompts)
                         {
-                            if (prompt.Request.Contains("Password") || prompt.Request.Contains("PASSCODE") || prompt.Request.Contains("password"))
+                            if (prompt.Request.Contains(":"))
                                 prompt.Response = Credential.GetNetworkCredential().Password;
                         }
                     };
@@ -228,6 +243,7 @@ namespace SSH
                         Port,
                         localfullPath,
                         Credential,
+                        Passphrase,
                         ProxyServer,
                         ProxyType,
                         ProxyPort,
@@ -240,6 +256,7 @@ namespace SSH
                         Port,
                         KeyString,
                         Credential,
+                        Passphrase,
                         ProxyServer,
                         ProxyType,
                         ProxyPort,

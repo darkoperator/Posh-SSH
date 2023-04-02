@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '3.0.8'
+ModuleVersion = '4.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -24,7 +24,7 @@ Author = 'Carlos Perez'
 CompanyName = 'www.darkoperator.com'
 
 # Copyright statement for this module
-Copyright = '(c) 2022 Carlos Perez. All rights reserved.'
+Copyright = '(c) 2023 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
@@ -51,7 +51,7 @@ PowerShellVersion = '5.1'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-RequiredAssemblies = @('Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
+RequiredAssemblies = @('Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNetDev.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -128,12 +128,12 @@ AliasesToExport = '*'
 FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
-#PrivateData = @{
-#    PSData = @{
-#       Prerelease = 'beta5'
-#       ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
-#    }
-#}
+PrivateData = @{
+    PSData = @{
+       Prerelease = 'Alpha0'
+       ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
+    }
+}
 
 # HelpInfo URI of this module
 # HelpInfoURI = ''

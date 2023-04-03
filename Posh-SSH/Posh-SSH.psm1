@@ -3013,55 +3013,6 @@ function Start-SSHPortForward
     End{}
 }
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SSHTrustedHost
-{
-    [CmdletBinding(DefaultParameterSetName = "Local")]
-    [OutputType("SSH.Stores.KnownHostRecord")]
-    Param(
-        # Known Host Store
-        [Parameter(Mandatory = $true,
-           ParameterSetName = "Store",
-           ValueFromPipeline = $true,
-           Position = 1)]
-        [SSH.Stores.IStore]
-        $KnownHostStore,
-
-        # Host name the key fingerprint is associated with.
-        [Parameter(Mandatory = $false,
-           Position = 0)
-        ]
-        [String]
-        $HostName
-    )
-
-    Begin{
-        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-    }
-    Process
-    {
-       if ($PSCmdlet.ParameterSetName -eq "Local") {
-           $Store = Get-SSHJsonKnownHost
-            if (-not (Test-Path -PathType Leaf $Default)) {
-                Write-Warning -Message "No known host file found, $($Default)"
-            }
-       } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-            $Store = $KnownHostStore
-       }
-
-       if ($PSBoundParameters.Keys -contains "HostName") {
-            $k = $Store.GetKey($HostName)
-            if ($k) {
-                $k | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
-            }
-       } else {
-            $Store.GetAllKeys() 
-       }
-    }
-    End
-    {}
-}
-
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
  function New-SSHTrustedHost

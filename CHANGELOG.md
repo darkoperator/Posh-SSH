@@ -1,5 +1,16 @@
 # ChangeLog
 
+## Version 3.1.1
+
+Module now uses the 2023 version of the SSH.Net library. This library provides now:
+
+* Support for RSA-SHA256/512 signature algorithms
+* Support for parsing OpenSSH keys with ECDSA 256/384/521 and RSA
+* Added async support to SftpClient and SftpFileStream
+* Added ISftpFile interface to SftpFile
+* Improved performance and stability
+* Added the ability to set the last write and access time for Sftp file
+
 ## Version 3.0.7
 
 * New command `Get-SSHHostKey` for getting a host SSH key fingerprint. 
@@ -47,14 +58,14 @@ This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @
 
 ## Version 2.0.1
 
-* Get-SFTPCholdItem was not showinng folders when recursively listing.
-* Fixed issue when deleteting none empty folders.
+* Get-SFTPItem was not displaying folders when recursively listing.
+* Fixed issue when deleting none empty folders.
 
 ## Version 2.0
 
 * Windows PowerShell 2.0 has been deprecated by Microsoft and several major versions have been released after it, for this reason PowerShell 2.0 is no longer supported by the module.
 * New-SSHSession, New-SFTPSession, Set-SCPFile and Set-SCPFolder support the KeyString parameter, a string array of the content of a OpenSSH key for authentication.
-* For Azure users when Force parameter is used it will not look in to the resgitry for exiting keys to validate against. Usefull when ran under an account that is not a user.
+* For Azure users when Force parameter is used it will not look in to the registry for exiting keys to validate against. Useful when ran under an account that is not a user.
 * Set-SCPFile Better pipeline support when receiving objects from Get-Childitem.
 * Set-SFTPFile LocalFile Parameter accepts a string[].
 
@@ -73,7 +84,7 @@ This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @
 * New -Force parameter on New-SSHSession, New-SFTPSession, Get-SCPFolder, Set-SCPFolder, Get-SCPFile and Set-SCPFile that will disable any host key checking.
 * Better warning on Remove-SFTPItem when it is not an empty directory.
 * New function Set-SFTPPathAttribute for setting SFTP Path Attribute.
-* PSCredential attributte added to all cmdlets and functions that take credentials.
+* PSCredential attribute added to all cmdlets and functions that take credentials.
 * Added NoProgress parameter to SCP and SFTP cmdlets
 
 ## Version 1.7.4
@@ -83,13 +94,13 @@ This release is possible thanks to @pcatrobrouillet, @soynerdito and specially @
 
 ## Version 1.7.3
 
-* Made some of the SFTP cmdlets will now honor the erroraction variable with the exception of a problem during transfer where a terminating error will be raised and should be handled in a Try{}Catch{} block.
+* Made some of the SFTP cmdlets will now honor the ErrorAction variable with the exception of a problem during transfer where a terminating error will be raised and should be handled in a Try{}Catch{} block.
 * Will pass the domain during logon for those cases where SSH server is connected to an AD infrastructure.
 
 ## Version 1.7.2
 
 * Fix problem with Get-SFTPFile cmdlet. It was creating a empty file before checking if a file existed causing error or blanking a exiting file accidentally.
-* Add session and session id properties to a generated streem to address request in issue #34
+* Add session and session id properties to a generated stream to address request in issue #34
 
 ## Version 1.7.1
 

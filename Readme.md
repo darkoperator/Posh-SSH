@@ -101,5 +101,6 @@ The module supports the following MAC algorithms:
 ## Donate
 
 If you find the project useful and wish to support it.
-
-[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)]([https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4](https://www.paypal.com/donate/?hosted_button_id=AC2KRWVZGN3ME))
+<a href="https://www.paypal.com/donate/?hosted_button_id=RL9PJH2XTDKSJ">
+  <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate with PayPal" />
+</a>

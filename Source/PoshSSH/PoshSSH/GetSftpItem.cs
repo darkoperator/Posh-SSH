@@ -156,7 +156,7 @@ namespace SSH
 
                             if (attribs.IsDirectory)
                             {
-                                string dirName = new DirectoryInfo(remotepath).Name;
+                                string dirName = System.IO.Path.GetDirectoryName(remotepath);
                                 var fileFullPath = $"{@localfullPath}{System.IO.Path.DirectorySeparatorChar}{dirName}";
 
                                 var present = Directory.Exists(fileFullPath);
@@ -177,7 +177,7 @@ namespace SSH
                             }
                             else if (attribs.IsRegularFile)
                             {
-                                var fileName = new FileInfo(remotepath).Name;
+                                var fileName = System.IO.Path.GetFileName(remotepath);
 
                                 var fileFullPath = $"{@localfullPath}{System.IO.Path.DirectorySeparatorChar}{fileName}";
 

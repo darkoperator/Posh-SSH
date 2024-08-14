@@ -865,7 +865,7 @@ function Invoke-SSHStreamExpectSecureAction
         if ($null -ne $found)
         {
             Write-Verbose -Message "Executing action."
-            $ShellStream.WriteLine([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureAction)))
+            $ShellStream.WriteLine([System.Net.NetworkCredential]::new('none',$SecureAction).password)
             Write-Verbose -Message 'Action has been executed.'
             $true
         }

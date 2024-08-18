@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '3.2.1'
+ModuleVersion = '3.2.2'
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -27,7 +27,7 @@ CompanyName = 'www.darkoperator.com'
 Copyright = '(c) 2024 Carlos Perez. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Provide SSH and SCP functionality for executing commands against remote hosts.'
+Description = 'Provide SSH and SCP functionality for executing commands against remote hosts. You can also use it to transfer files over SSH. To learn more about this module, visit https://www.youtube.com/playlist?list=PLFAOQ2hOvfsQ7cQikml4ua7-CDr9r578N for video tutorials.' 
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.1'

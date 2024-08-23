@@ -903,37 +903,58 @@ function Invoke-SSHStreamShellCommand {
         [Parameter(Mandatory = $false,
                    ValueFromPipelineByPropertyName = $true)]
         [string]
-        $PrompPattern = '[\$%#>] $'
+        $PromptPattern = '[\$#]\s*$',
+
+        [Parameter(Mandatory = $false,
+                   ValueFromPipelineByPropertyName = $true)]
+        [int]
+        $TimeoutSeconds = 0
     )
 
     Begin {
-        $promptRegEx = [regex]$PrompPattern
+        $promptRegEx = [regex]$PromptPattern
     }
     Process {
         # Discard any banner or previous command output
         do { 
             $ShellStream.read() | Out-Null
-    
         } while ($ShellStream.DataAvailable)
 
         $ShellStream.writeline($Command)
 
-        #discard line with command entered
+        # Discard line with command entered
         $ShellStream.ReadLine() | Out-Null
-        Start-Sleep -Milliseconds 500
+        Start-Sleep -Seconds 1
 
         $out = ''
+        $promptFound = $false
+        $startTime = Get-Date
 
-        # read all output until there is no more
-        do { 
-            $out += $ShellStream.read()
-    
-        } while ($ShellStream.DataAvailable)
+        # Read all output until the prompt is found or timeout is reached
+        while (-not $promptFound) {
+            if ($ShellStream.DataAvailable) {
+                $newData = $ShellStream.Read()
+                $out += $newData
+
+                # Check if the prompt is in the new data
+                if ($newData -match $promptRegEx) {
+                    $promptFound = $true
+                }
+            } else {
+                Start-Sleep -Seconds 1
+            }
+
+            # Check for timeout
+            if ($TimeoutSeconds -gt 0 -and ((Get-Date) - $startTime).TotalSeconds -ge $TimeoutSeconds) {
+                Write-Warning "Timeout of $TimeoutSeconds seconds reached. Returning output collected so far."
+                break
+            }
+        }
 
         $outputLines = $out.Split("`n")
         foreach ($line in $outputLines) {
             if ($line -notmatch $promptRegEx) {
-                $line
+                $line.Trim()
             }
         }
     }

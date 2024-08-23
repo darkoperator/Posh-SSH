@@ -16,8 +16,16 @@ To install the module run the command command:
 ``` PowerShell
 Install-Module -Name Posh-SSH
 ```
+### Video Tutorials
 
-[![Install and New Sessions](https://i.ytimg.com/vi/aZT5L_0aepE/hqdefault.jpg)](https://www.youtube.com/watch?v=aZT5L_0aepE&list=PLFAOQ2hOvfsSL0N2kD_CyqHKlIA0byDL3)
+#### What is Posh-SSH and Install
+[![What is Posh-SSH and Install](https://i.ytimg.com/vi/83g6Yy6eTbo/hqdefault.jpg)](https://youtu.be/83g6Yy6eTbo?si=0s6Mx5GRzIt14BQI)
+
+#### Creating and Managing Sessions
+[![Creating and Managing Sessions](https://i.ytimg.com/vi/fNJgQT8wCOs/hqdefault.jpg)](https://youtu.be/fNJgQT8wCOs?si=uD5Vdpgs_oE843EO)
+ 
+#### Managing Known Hosts
+[![Managing Known Hosts](https://i.ytimg.com/vi/WyGPO1GPJQ4/hqdefault.jpg)](https://youtu.be/WyGPO1GPJQ4?si=DozUZlmUx1ghd1L4)
 
 ## Support
 

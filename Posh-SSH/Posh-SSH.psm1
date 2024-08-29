@@ -1122,7 +1122,7 @@ function Get-SFTPChildItem
         function Get-SFTPDirectoryRecursive
         {
             param($Path,$SFTPSession)
-
+             Write-Verbose "Attempting to list directory: $Path"
             $Sess.Session.ListDirectory($Path) | ForEach-Object {
                 if ($File -and $Directory)
                 {
@@ -1138,7 +1138,7 @@ function Get-SFTPChildItem
                 }
                 if ($Recurse)
                 {
-                    if ($_.IsDirectory -eq $true -and @('.','..') -notcontains $_.Name)
+                    if (($_.IsDirectory -and !$_.IsSocket) -eq $true -and @('.','..') -notcontains $_.Name)
                     {
                         Get-SFTPDirectoryRecursive -Path $_.FullName -SFTPSession $sess
                     }

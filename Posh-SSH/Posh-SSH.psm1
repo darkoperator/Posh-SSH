@@ -1098,7 +1098,6 @@ function Get-SFTPChildItem
 
         [Parameter(Mandatory=$false,
                    Position=1)]
-        [SupportsWildcards()] 
         [string]
         $Path,
 
@@ -1120,7 +1119,6 @@ function Get-SFTPChildItem
 
         [Parameter(Mandatory=$false,
                    Position=5)]
-        [SupportsWildcards()]           
         [string]
         $Name
     )
@@ -1147,6 +1145,12 @@ function Get-SFTPChildItem
 
                 if ($keep -and (Test-WildcardMatch $_.Name $NameFilter))
                 {
+                    # Add Extension property for files
+                    if (!$_.IsDirectory)
+                    {
+                        $extension = [System.IO.Path]::GetExtension($_.Name)
+                        $_ | Add-Member -MemberType NoteProperty -Name "Extension" -Value $extension -Force
+                    }
                     $_
                 }
 
@@ -1234,7 +1238,6 @@ function Get-SFTPChildItem
     }
     End{}
 }
-
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Test-SFTPPath

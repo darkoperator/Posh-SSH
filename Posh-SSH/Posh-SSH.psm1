@@ -1396,7 +1396,7 @@ function Remove-SFTPItem
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Move-SFTPItem
 {
-    [CmdletBinding(DefaultParameterSetName='Index')]
+    [CmdletBinding(DefaultParameterSetName='Index', SupportsShouldProcess=$true)]
     param(
         [Parameter(Mandatory=$true,
                    ParameterSetName = 'Index',
@@ -1424,8 +1424,11 @@ function Move-SFTPItem
         [Parameter(Mandatory=$true,
                    Position=2)]
         [string]
-        $Destination
+        $Destination,
 
+        [Parameter(Mandatory=$false)]
+        [switch]
+        $Force
      )
 
      Begin
@@ -1452,26 +1455,43 @@ function Move-SFTPItem
      }
      Process
      {
-
         foreach($session in $ToProcess)
         {
-
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
-                $itemInfo = $session.Session.Get($path)
-                Write-Verbose("Moving $($path) to $($Destination).")
-                $itemInfo.MoveTo($Destination)
+                $itemInfo = $session.Session.Get($Path)
+                
+                # Check if destination exists
+                if ($session.Session.Exists($Destination))
+                {
+                    if ($Force)
+                    {
+                        if ($PSCmdlet.ShouldProcess($Destination, "Delete existing file"))
+                        {
+                            Write-Verbose "Destination file exists. Deleting $Destination"
+                            $session.Session.DeleteFile($Destination)
+                        }
+                    }
+                    else
+                    {
+                        throw "Destination file $Destination already exists. Use -Force to overwrite."
+                    }
+                }
+
+                if ($PSCmdlet.ShouldProcess($Path, "Move to $Destination"))
+                {
+                    Write-Verbose "Moving $Path to $Destination"
+                    $itemInfo.MoveTo($Destination)
+                }
             }
             else
             {
-                throw "Specified path of $($Path) does not exist."
+                throw "Specified path of $Path does not exist."
             }
-
         }
      }
      End{}
 }
-
 
 # .ExternalHelp Posh-SSH.psm1-Help.xml
 function Set-SFTPLocation

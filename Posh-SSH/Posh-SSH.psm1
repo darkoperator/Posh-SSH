@@ -1384,7 +1384,8 @@ function Remove-SFTPItem
             }
             else
             {
-                throw "Specified path of $($Path) does not exist."
+                Write-Error -Message "Specified path of $($Path) does not exist." -Exception (New-Object System.IO.FileNotFoundException) -CategoryActivity "Remove-SFTPItem" 
+                #throw "Specified path of $($Path) does not exist."
             }
 
         }

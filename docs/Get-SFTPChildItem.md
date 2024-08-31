@@ -112,7 +112,7 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 ### -Recurse
@@ -173,6 +173,21 @@ Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
+```
+
+### -Name
+Name of File or Directory to filter results on.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: True
 ```
 
 ### CommonParameters

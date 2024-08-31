@@ -152,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Do not check the remote host fingerprint.
+Do not check the remote host fingerprint. When downloading if a file already exists it will overwrite the file.
 
 ```yaml
 Type: SwitchParameter

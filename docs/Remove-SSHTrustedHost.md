@@ -13,12 +13,13 @@ schema: 2.0.0
 
 ### Local (Default)
 ```
-Remove-SSHTrustedHost [-HostName] <String> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Store
 ```
-Remove-SSHTrustedHost [-HostName] <String> -KnownHostStore <Object> [<CommonParameters>]
+Remove-SSHTrustedHost [-HostName] <String> -KnownHostStore <IStore> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,7 +28,7 @@ Remove trusted host record from KnownHost store
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> Remove-SSHTrustedHost -HostName server1
 ```
 
@@ -54,11 +55,26 @@ Accept wildcard characters: False
 Known Host Store
 
 ```yaml
-Type: Object
+Type: IStore
 Parameter Sets: Store
-Aliases:
+Aliases: KnowHostStore
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

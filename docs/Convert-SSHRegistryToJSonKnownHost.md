@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-Help.xml
+external help file: Posh-SSH-help.xml
 Module Name: Posh-SSH
 online version:
 schema: 2.0.0
@@ -13,7 +13,7 @@ Convert windows registry key storage to Json
 ## SYNTAX
 
 ```
-Convert-SSHRegistryToJSonKnownHost [<CommonParameters>]
+Convert-SSHRegistryToJSonKnownHost
 ```
 
 ## DESCRIPTION
@@ -24,15 +24,12 @@ It is windows-only compatibility cmdlet
 
 ### Example 1
 ```powershell
-PS C:\> Convert-SSHRegistryToJSonKnownHost
+PS C:\> {{ Add example code here }}
 ```
 
-Convert deprecated (v2) windows registry key storage to v3 Json storage
+{{ Add example description here }}
 
 ## PARAMETERS
-
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

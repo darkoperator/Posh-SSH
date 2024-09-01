@@ -14,12 +14,12 @@ Removes and Closes an existing SSH Session.
 
 ### Index (Default)
 ```
-Remove-SSHSession [-SessionId] <Int32[]> [<CommonParameters>]
+Remove-SSHSession [-SessionId] <Int32[]> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Remove-SSHSession [[-SSHSession] <SshSession[]>] [<CommonParameters>]
+Remove-SSHSession [[-SSHSession] <SshSession[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,6 +74,21 @@ Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-help.xml
+external help file: Posh-SSH.psm1-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,54 +8,37 @@ schema: 2.0.0
 # Start-SSHPortForward
 
 ## SYNOPSIS
-Start a configured port forward configured for a SSH Session
 
 ## SYNTAX
 
 ### Index (Default)
 ```
-Start-SSHPortForward [-SessionId] <Int32> [-BoundPort] <Int32> [-BoundHost] <String> [<CommonParameters>]
+Start-SSHPortForward [-SessionId] <Int32> [-BoundPort] <Int32> [-BoundHost] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Start-SSHPortForward [-SSHSession] <SshSession> [-BoundPort] <Int32> [-BoundHost] <String> [<CommonParameters>]
+Start-SSHPortForward [-SSHSession] <SshSession> [-BoundPort] <Int32> [-BoundHost] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Stops a configured port forward configured for a SSH Session given the session and port number
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-Stop a currently working port forward thru a SSH Session
+PS C:\> {{ Add example code here }}
 ```
 
-C:\Users\Carlos\> Get-SSHPortForward -Index 0
-
-
- BoundHost : 192.168.1.158
- BoundPort : 8081
- Host      : 10.10.10.1
- Port      : 80
- IsStarted : False
-
-
-
- C:\Users\Carlos\> Start-SSHPortForward -Index 0 -BoundPort 8081
-
-
- BoundHost : 192.168.1.158
- BoundPort : 8081
- Host      : 10.10.10.1
- Port      : 80
- IsStarted : True
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -SSHSession
-SSH Session object.
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -70,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-SSH Session Id of an exiting session.
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -84,8 +67,23 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -BoundPort
+{{ Fill BoundPort Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -BoundHost
-Hostname/Address for the associated session
+{{ Fill BoundHost Description }}
 
 ```yaml
 Type: String
@@ -99,17 +97,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -BoundPort
-Port number for the associated session
+### -ProgressAction
+{{ Fill ProgressAction Description }}
 
 ```yaml
-Type: Int32
+Type: ActionPreference
 Parameter Sets: (All)
-Aliases:
+Aliases: proga
 
-Required: True
-Position: 3
-Default value: 0
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -17,24 +17,24 @@ By default it will store known host fingerprints in $HOME\.poshss\hosts.json.
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [<CommonParameters>]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Key
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### KeyString
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -271,6 +271,21 @@ Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Ge
 Type: IStore
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

@@ -14,12 +14,14 @@ Create a Symbolic Link on the remote host via SFTP.
 
 ### Index (Default)
 ```
-New-SFTPSymlink [-SessionId] <Int32[]> [-Path] <String> [-LinkPath] <String> [<CommonParameters>]
+New-SFTPSymlink [-SessionId] <Int32[]> [-Path] <String> [-LinkPath] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-New-SFTPSymlink [-SFTPSession] <SftpSession[]> [-Path] <String> [-LinkPath] <String> [<CommonParameters>]
+New-SFTPSymlink [-SFTPSession] <SftpSession[]> [-Path] <String> [-LinkPath] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -93,6 +95,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

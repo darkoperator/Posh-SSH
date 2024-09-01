@@ -18,7 +18,7 @@ Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <S
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Key
@@ -27,7 +27,8 @@ Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <S
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
  [-KeyFile <String>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### KeyString
@@ -36,7 +37,8 @@ Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <S
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
  [-KeyString <String[]>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -152,7 +154,8 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Do not check the remote host fingerprint. When downloading if a file already exists it will overwrite the file.
+Do not check the remote host fingerprint.
+When downloading if a file already exists it will overwrite the file.
 
 ```yaml
 Type: SwitchParameter
@@ -371,6 +374,21 @@ Remote Path transormation to use.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

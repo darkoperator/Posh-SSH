@@ -15,13 +15,13 @@ Executes an action stored in a SecureString on a SSH ShellStream when output mat
 ### String (Default)
 ```
 Invoke-SSHStreamExpectSecureAction [-ShellStream] <ShellStream> [-Command] <String> [-ExpectString] <String>
- [-SecureAction] <SecureString> [[-TimeOut] <Int32>] [<CommonParameters>]
+ [-SecureAction] <SecureString> [[-TimeOut] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Regex
 ```
 Invoke-SSHStreamExpectSecureAction [-ShellStream] <ShellStream> [-Command] <String> [-ExpectRegex] <Regex>
- [-SecureAction] <SecureString> [[-TimeOut] <Int32>] [<CommonParameters>]
+ [-SecureAction] <SecureString> [[-TimeOut] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -174,6 +174,21 @@ Required: True
 Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

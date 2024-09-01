@@ -14,12 +14,14 @@ Move or Rename remote file via a SFTP Session
 
 ### Index (Default)
 ```
-Rename-SFTPFile [-SessionId] <Int32[]> [-Path] <String> [-NewName] <String> [<CommonParameters>]
+Rename-SFTPFile [-SessionId] <Int32[]> [-Path] <String> [-NewName] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Rename-SFTPFile [-SFTPSession] <SftpSession[]> [-Path] <String> [-NewName] <String> [<CommonParameters>]
+Rename-SFTPFile [-SFTPSession] <SftpSession[]> [-Path] <String> [-NewName] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -93,6 +95,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -14,13 +14,14 @@ Create a file or directory on remote host using SFTP.
 
 ### Index (Default)
 ```
-New-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [[-ItemType] <String>] [-Recurse] [<CommonParameters>]
+New-SFTPItem [-SessionId] <Int32[]> [-Path] <String> [[-ItemType] <String>] [-Recurse]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SFTPItem [-SFTPSession] <SftpSession[]> [-Path] <String> [[-ItemType] <String>] [-Recurse]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -144,6 +145,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -14,12 +14,12 @@ Close and Remove a SFTP Session
 
 ### Index (Default)
 ```
-Remove-SFTPSession [-SessionId] <Int32[]> [<CommonParameters>]
+Remove-SFTPSession [-SessionId] <Int32[]> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Remove-SFTPSession [[-SFTPSession] <SftpSession[]>] [<CommonParameters>]
+Remove-SFTPSession [[-SFTPSession] <SftpSession[]>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,6 +65,21 @@ Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

@@ -13,7 +13,7 @@ Creates a new in-memory known host IStore for temporary use when creating new SS
 ## SYNTAX
 
 ```
-New-SSHMemoryKnownHost [<CommonParameters>]
+New-SSHMemoryKnownHost [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,6 +36,21 @@ HostName      HostKeyName Fingerprint
 Create and in-memory known host store and add a entry to it.
 
 ## PARAMETERS
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).

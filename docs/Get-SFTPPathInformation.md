@@ -14,12 +14,14 @@ Get the filesystem information for a specified path in a SFTP session.
 
 ### Index
 ```
-Get-SFTPPathInformation [-SessionId] <Int32[]> [-Path] <String> [<CommonParameters>]
+Get-SFTPPathInformation [-SessionId] <Int32[]> [-Path] <String> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPPathInformation [-SFTPSession] <SftpSession[]> [-Path] <String> [<CommonParameters>]
+Get-SFTPPathInformation [-SFTPSession] <SftpSession[]> [-Path] <String> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,6 +91,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

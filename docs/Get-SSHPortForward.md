@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-help.xml
+external help file: Posh-SSH.psm1-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,43 +8,35 @@ schema: 2.0.0
 # Get-SSHPortForward
 
 ## SYNOPSIS
-Get a list of forwarded TCP Ports for a SSH Session
 
 ## SYNTAX
 
 ### Index (Default)
 ```
-Get-SSHPortForward [-SessionId] <Int32> [<CommonParameters>]
+Get-SSHPortForward [-SessionId] <Int32> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SSHPortForward [-SSHSession] <SshSession> [<CommonParameters>]
+Get-SSHPortForward [-SSHSession] <SshSession> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get a list of forwarded TCP Ports for a SSH Session
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-Get list of configured forwarded ports
+PS C:\> {{ Add example code here }}
 ```
 
-PS C:\\\> Get-SSHPortForward -Index 0
-
-
- BoundHost : 0.0.0.0
- BoundPort : 8081
- Host      : 10.10.10.1
- Port      : 80
- IsStarted : True
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -SSHSession
-SSH Session object.
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -59,7 +51,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-Session Id for an exiting SSH session.
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -70,6 +62,21 @@ Required: True
 Position: 1
 Default value: 0
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

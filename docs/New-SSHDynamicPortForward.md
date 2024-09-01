@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH-help.xml
+external help file: Posh-SSH.psm1-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,44 +8,37 @@ schema: 2.0.0
 # New-SSHDynamicPortForward
 
 ## SYNOPSIS
-Establishes a Dynamic Port Forward thru a stablished SSH Session.
 
 ## SYNTAX
 
 ### Index (Default)
 ```
 New-SSHDynamicPortForward [[-BoundHost] <String>] [-BoundPort] <Int32> [-SessionId] <Int32>
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SSHDynamicPortForward [[-BoundHost] <String>] [-BoundPort] <Int32> [-SSHSession] <SshSession>
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Dynamic port forwarding is a transparent mechanism available for applications, which
-support the SOCKS4 or SOCKS5 client protoco.
-In windows for best results the local address
-to bind to should be the IP of the network interface.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-New-SSHDynamicPortForward -LocalAdress 192.168.28.131 -LocalPort 8081 -Index 0 -Verbose
-VERBOSE: Finding session with Index 0
-VERBOSE: 0
-VERBOSE: Adding Forward Port Configuration to session 0
-VERBOSE: Starting the Port Forward.
-VERBOSE: Forwarding has been started.
+PS C:\> {{ Add example code here }}
 ```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -BoundHost
-Hostname/Address for the associated session
+{{ Fill BoundHost Description }}
 
 ```yaml
 Type: String
@@ -60,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -BoundPort
-Port number for the associated session
+{{ Fill BoundPort Description }}
 
 ```yaml
 Type: Int32
@@ -75,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -SSHSession
-SSH Session object.
+{{ Fill SSHSession Description }}
 
 ```yaml
 Type: SshSession
@@ -90,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -SessionId
-SSH Session Id of an exiting session.
+{{ Fill SessionId Description }}
 
 ```yaml
 Type: Int32
@@ -101,6 +94,21 @@ Required: True
 Position: 1
 Default value: 0
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

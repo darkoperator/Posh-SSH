@@ -14,12 +14,12 @@ Get the current working location for a SFTP connection.
 
 ### Index (Default)
 ```
-Get-SFTPLocation [-SessionId] <Int32[]> [<CommonParameters>]
+Get-SFTPLocation [-SessionId] <Int32[]> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
-Get-SFTPLocation [-SFTPSession] <SftpSession[]> [<CommonParameters>]
+Get-SFTPLocation [-SFTPSession] <SftpSession[]> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +64,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

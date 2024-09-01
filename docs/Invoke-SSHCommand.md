@@ -16,14 +16,16 @@ Executes a given command on a remote SSH host.
 ```
 Invoke-SSHCommand [-Command] <String> [-SessionId] <Int32[]> [-EnsureConnection] [[-TimeOut] <Int32>]
  [[-ThrottleLimit] <Int32>] [-ShowStandardOutputStream] [-ShowErrorOutputStream]
- [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [<CommonParameters>]
+ [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 Invoke-SSHCommand [-Command] <String> [-SSHSession] <SshSession[]> [-EnsureConnection] [[-TimeOut] <Int32>]
  [[-ThrottleLimit] <Int32>] [-ShowStandardOutputStream] [-ShowErrorOutputStream]
- [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [<CommonParameters>]
+ [-StandardOutputStreamColor <String>] [-ErrorOutputStreamColor <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -202,6 +204,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: Red
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

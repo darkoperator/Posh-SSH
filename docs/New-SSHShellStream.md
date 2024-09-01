@@ -15,13 +15,15 @@ Creates a SSH shell stream for a given SSH Session.
 ### Index (Default)
 ```
 New-SSHShellStream [-SessionId] <Int32> [-TerminalName <String>] [-Columns <Int32>] [-Rows <Int32>]
- [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [<CommonParameters>]
+ [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SSHShellStream [-SSHSession] <SshSession> [-TerminalName <String>] [-Columns <Int32>] [-Rows <Int32>]
- [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [<CommonParameters>]
+ [-Width <Int32>] [-Height <Int32>] [-BufferSize <Int32>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,7 +69,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: dumb
+Default value: Dumb
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -159,6 +161,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

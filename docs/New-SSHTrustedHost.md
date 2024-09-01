@@ -13,13 +13,14 @@ schema: 2.0.0
 
 ### Local (Default)
 ```
-New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>] [<CommonParameters>]
+New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Store
 ```
 New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
- -KnownHostStore <Object> [<CommonParameters>]
+ -KnownHostStore <IStore> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,14 +29,14 @@ Add new trusted host record to KnownHost store
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> New-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'
 ```
 
 Add new Trusted Host record for server1
 
 ### Example 2
-```powershell
+```
 PS C:\> Get-SSHHostKey -ComputerName server2 | New-SSHTrustedHost
 ```
 
@@ -93,11 +94,26 @@ Accept wildcard characters: False
 Known Host Store
 
 ```yaml
-Type: Object
+Type: IStore
 Parameter Sets: Store
-Aliases:
+Aliases: KnowHostStore
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

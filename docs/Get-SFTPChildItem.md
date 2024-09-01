@@ -14,14 +14,14 @@ Gets the items and child items in a specified path.
 
 ### Index (Default)
 ```
-Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recurse] [-Directory] [-File]
- [<CommonParameters>]
+Get-SFTPChildItem [-SessionId] <Int32[]> [[-Path] <String>] [-Recurse] [-Directory] [-File] [-Name <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Get-SFTPChildItem [-SFTPSession] <SftpSession[]> [[-Path] <String>] [-Recurse] [-Directory] [-File]
- [<CommonParameters>]
+ [-Name <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -188,6 +188,21 @@ Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: True
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 ```
 
 ### CommonParameters

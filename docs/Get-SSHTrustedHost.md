@@ -13,12 +13,13 @@ schema: 2.0.0
 
 ### Local (Default)
 ```
-Get-SSHTrustedHost [[-HostName] <String>] [<CommonParameters>]
+Get-SSHTrustedHost [[-HostName] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Store
 ```
-Get-SSHTrustedHost [-KnownHostStore] <IStore> [[-HostName] <String>] [<CommonParameters>]
+Get-SSHTrustedHost [-KnownHostStore] <IStore> [[-HostName] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,14 +28,14 @@ Get Trusted Host record from KnownHostStore
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> Get-SSHTrustedHost -HostName 'server1'
 ```
 
 Get Trusted Host record for server1 from default KnownHostStore
 
 ### Example 2
-```powershell
+```
 PS C:\> Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)
 ```
 
@@ -48,7 +49,7 @@ Known Host Store
 ```yaml
 Type: IStore
 Parameter Sets: Store
-Aliases:
+Aliases: KnowHostStore
 
 Required: True
 Position: 2
@@ -67,6 +68,21 @@ Aliases:
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -18,7 +18,7 @@ Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathT
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
  [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [<CommonParameters>]
+ [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Key
@@ -27,7 +27,7 @@ Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathT
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### KeyString
@@ -36,7 +36,7 @@ Set-SCPItem [-Path] <String> [-Destination] <String> [-NewName <String>] [-PathT
  [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [<CommonParameters>]
+ [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -354,6 +354,21 @@ Remote Path transormation to use.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

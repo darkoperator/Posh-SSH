@@ -15,13 +15,13 @@ Create a IO Stream over SFTP for a file on a remote host.
 ### Index (Default)
 ```
 New-SFTPFileStream [-SessionId] <Int32> [-Path] <String> [-FileMode] <String> [-FileAccess] <String>
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 New-SFTPFileStream [-SFTPSession] <SftpSession> [-Path] <String> [-FileMode] <String> [-FileAccess] <String>
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -150,6 +150,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

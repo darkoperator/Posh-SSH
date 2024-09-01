@@ -14,13 +14,13 @@ schema: 2.0.0
 ### Index (Default)
 ```
 Set-SFTPContent [-SessionId] <Int32[]> [-Path] <String> [-Value] <Object> [-Encoding <String>] [-Append]
- [<CommonParameters>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Session
 ```
 Set-SFTPContent [-SFTPSession] <SftpSession[]> [-Path] <String> [-Value] <Object> [-Encoding <String>]
- [-Append] [<CommonParameters>]
+ [-Append] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,8 +33,7 @@ Set the content of a specific item on a remote server through an SFTP session.
 PS C:\> Set-SFTPContent -SessionId 0 -Path /tmp/example.txt -Value "My example message`n"
 ```
 
-Set the content of /tmp/example.txt to "My example message`n" in sftp sesison 0
-
+Set the content of /tmp/example.txt to "My example message\`n" in sftp sesison 0
 
 ## PARAMETERS
 
@@ -105,13 +104,13 @@ Content encoding
 Type: String
 Parameter Sets: (All)
 Aliases:
+Accepted values: ASCII, Unicode, UTF7, UTF8, UTF32, BigEndianUnicode
 
 Required: False
 Position: Named
 Default value: UTF8
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
-Accepted values: ASCII, Unicode, UTF7, UTF8, UTF32, BigEndianUnicode
 ```
 
 ### -Append
@@ -125,6 +124,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

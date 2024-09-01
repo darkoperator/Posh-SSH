@@ -12,8 +12,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Invoke-SSHStreamShellCommand [-ShellStream] <ShellStream> [-Command] <String> [-PrompPattern <String>]
- [<CommonParameters>]
+Invoke-SSHStreamShellCommand [-ShellStream] <ShellStream> [-Command] <String> [-PromptPattern <String>]
+ [-TimeoutSeconds <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,8 +60,23 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -PrompPattern
-Put lines to output until PromtPattern meet
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PromptPattern
+{{ Fill PromptPattern Description }}
 
 ```yaml
 Type: String
@@ -70,7 +85,22 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: [\$%#>] $
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -TimeoutSeconds
+{{ Fill TimeoutSeconds Description }}
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

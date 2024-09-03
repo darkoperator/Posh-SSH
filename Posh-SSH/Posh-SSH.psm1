@@ -1125,9 +1125,23 @@ function Get-SFTPChildItem
 
     Begin
     {
+        function ConvertTo-UnixPath {
+            param([string]$Path)
+            # Convert Windows path to Unix-style path
+            $Path = $Path -replace '\\', '/'
+            # Remove drive letter if present
+            $Path = $Path -replace '^[A-Za-z]:', ''
+            # Ensure the path starts with a forward slash
+            if (!$Path.StartsWith('/')) {
+                $Path = '/' + $Path
+            }
+            return $Path
+        }
+
         function Get-SFTPDirectoryRecursive
         {
             param($Path, $SFTPSession, $NameFilter)
+            $Path = ConvertTo-UnixPath -Path $Path
             Write-Verbose "Attempting to list directory: $Path"
             $Sess.Session.ListDirectory($Path) | ForEach-Object {
                 $keep = $false
@@ -1174,8 +1188,9 @@ function Get-SFTPChildItem
         function Get-MatchingPaths
         {
             param($Session, $PathPattern)
-            $directory = Split-Path -Parent $PathPattern
-            $filePattern = Split-Path -Leaf $PathPattern
+            $PathPattern = ConvertTo-UnixPath -Path $PathPattern
+            $directory = $PathPattern -replace '/[^/]+$', ''
+            $filePattern = $PathPattern -replace '^.*/(?=[^/]+$)', ''
 
             if ([string]::IsNullOrEmpty($directory))
             {
@@ -1220,6 +1235,8 @@ function Get-SFTPChildItem
             {
                 $Path = $Sess.Session.WorkingDirectory
             }
+
+            $Path = ConvertTo-UnixPath -Path $Path
 
             $matchingPaths = Get-MatchingPaths -Session $Sess -PathPattern $Path
 

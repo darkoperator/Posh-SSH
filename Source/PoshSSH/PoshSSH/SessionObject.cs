@@ -15,13 +15,13 @@ namespace SSH
             get { return Session.IsConnected; }
         }
 
-        // Method for Connecing
+        // Method for Connecting
         public void Connect()
         {
             Session.Connect();
         }
 
-        // Method for disconecting session
+        // Method for disconnecting session
         public void Disconnect()
         {
             Session.Disconnect();
@@ -43,7 +43,7 @@ namespace SSH
             Session.Disconnect();
         }
 
-        // Method for Connecing
+        // Method for Connecting
         public void Connect()
         {
             Session.Connect();

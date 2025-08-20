@@ -4,7 +4,7 @@ if ($PSVersionTable.PSVersion.Major -eq 5) {
 
 # force load Renci and dependency do to MS including Renci in Windows 2019 Storage Server.
 if ($PSVersionTable.PSVersion.Major -eq 5) {
-    Add-Type -Path "$PSScriptRoot/Assembly/SshNet.Security.Cryptography.dll"
+    Add-Type -Path "$PSScriptRoot/Assembly/BouncyCastle.Cryptography.dll"
     Add-Type -Path "$PSScriptRoot/Assembly/Renci.SshNet.dll"
     
 }

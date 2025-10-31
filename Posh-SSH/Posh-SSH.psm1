@@ -2235,7 +2235,7 @@ function Get-SFTPContent
 
                     'MultiLine' {
 
-                        $session.session.ReadAllLines($Path, $Value, $ContentEncoding)
+                        $session.session.ReadAllLines($Path, $ContentEncoding)
 
                     }
                     Default {$session.session.ReadAllBytes($Path)}

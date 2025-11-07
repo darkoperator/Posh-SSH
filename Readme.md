@@ -27,6 +27,9 @@ Install-Module -Name Posh-SSH
 #### Managing Known Hosts
 [![Managing Known Hosts](https://i.ytimg.com/vi/WyGPO1GPJQ4/hqdefault.jpg)](https://youtu.be/WyGPO1GPJQ4?si=DozUZlmUx1ghd1L4)
 
+#### Command Execution
+[![Executin Commands](https://i.ytimg.com/vi/ThOeR0kSSEY/hqdefault.jpg)](https://youtu.be/ThOeR0kSSEY)
+
 ## Support
 
 * Provides functionality for automating SSH, SFTP and SCP actions.

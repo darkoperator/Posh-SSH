@@ -166,3 +166,18 @@ Posh-SSH.zip
 
 Source/**/bin/**
 Source/**/obj/**
+
+#############
+## AI Assistant files
+#############
+
+# Claude Code configuration and generated files
+.claude/
+CLAUDE.md
+*_ANALYSIS.md
+
+# OpenAI Codex configuration and generated files
+.openai/
+CODEX.md
+.cursor/
+.github/copilot/

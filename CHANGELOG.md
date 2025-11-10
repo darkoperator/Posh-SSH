@@ -1,5 +1,9 @@
 # ChangeLog
 
+## Version 3.2.7
+
+* Fixed assembly version mismatch - corrected distribution to include compatible Renci.SshNet.dll version (2024.0.0.0) matching the compiled PoshSSH.dll binary.
+
 ## Version 3.1.1
 
 Module now uses the 2023 version of the SSH.Net library. This library provides now:

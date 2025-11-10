@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '3.2.6'
+ModuleVersion = '3.2.7'
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -126,7 +126,7 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Newtonsoft.Json.dll','Assembly\Renci.SshNet.dll', 'Assembly\SshNet.Security.Cryptography.dll')
+FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembly\BouncyCastle.Cryptography.dll')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{

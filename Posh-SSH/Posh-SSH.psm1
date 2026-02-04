@@ -366,7 +366,7 @@ function Invoke-SSHCommand
                 }
 
                 $cmd = $Connection.session.CreateCommand($Command)
-                $cmd.CommandTimeout = [timespan]::FromMilliseconds(50) #New-TimeSpan -Seconds $TimeOut
+                $cmd.CommandTimeout = [timespan]::FromSeconds($TimeOut)
 
                 # start asynchronious execution of the command.
                 $Duration = [System.Diagnostics.Stopwatch]::StartNew()

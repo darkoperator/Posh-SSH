@@ -2,6 +2,196 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Add-SSHTrustedHost</command:name>
+      <command:verb>Add</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>{{ Fill in the Description }}</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Add-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>FQDN or IP Address of host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>Fingerprint</maml:name>
+          <maml:description>
+            <maml:para>Fingerprint of hostkey for remote host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyCipherName">
+          <maml:name>HostKeyName</maml:name>
+          <maml:description>
+            <maml:para>HostKeyName (cipher name) of hostkey for remote host</maml:para>
+          </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">ssh-ed25519</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp256</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp384</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp521</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">rsa-sha2-512</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">rsa-sha2-256</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ssh-rsa</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ssh-dss</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Fingerprint</maml:name>
+        <maml:description>
+          <maml:para>Fingerprint of hostkey for remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyCipherName">
+        <maml:name>HostKeyName</maml:name>
+        <maml:description>
+          <maml:para>HostKeyName (cipher name) of hostkey for remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>FQDN or IP Address of host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
+        <maml:description>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+        <dev:type>
+          <maml:name>ITrustedHostStore</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Add-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'</dev:code>
+        <dev:remarks>
+          <maml:para>Add server1 trusted host</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-SCPItem</command:name>
       <command:verb>Get</command:verb>
       <command:noun>SCPItem</command:noun>
@@ -238,18 +428,6 @@
           <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
-          <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
-          <dev:type>
-            <maml:name>IStore</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PathTransformation</maml:name>
           <maml:description>
             <maml:para>Remote Path transormation to use.</maml:para>
@@ -257,6 +435,18 @@
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -499,18 +689,6 @@
           <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
-          <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
-          <dev:type>
-            <maml:name>IStore</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>PathTransformation</maml:name>
           <maml:description>
             <maml:para>Remote Path transormation to use.</maml:para>
@@ -518,6 +696,18 @@
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -766,18 +956,6 @@
         <dev:defaultValue>10</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnownHost</maml:name>
-        <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
-        <dev:type>
-          <maml:name>IStore</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>PathTransformation</maml:name>
         <maml:description>
           <maml:para>Remote Path transormation to use.</maml:para>
@@ -785,6 +963,18 @@
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
+        <maml:description>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+        <dev:type>
+          <maml:name>ITrustedHostStore</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -1147,7 +1337,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Returns a host key entry. The command attempts to connect to a host and returns the first host key. The command can be used to scan multiple hosts and add their keys to the known hosts file.</maml:para>
+      <maml:para>Returns a host key entry. The command attempts to connect to a host and returns the first host key. The command can be used to scan multiple hosts and add their keys to the TrustedHosts store.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1403,19 +1593,19 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-SSHJsonKnownHost</command:name>
+      <command:name>Get-SSHJsonTrustedHostStore</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>SSHJsonKnownHost</command:noun>
+      <command:noun>SSHJsonTrustedHostStore</command:noun>
       <maml:description>
-        <maml:para>Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
+        <maml:para>Get Trusted Hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Get known hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
+      <maml:para>Get Trusted Hosts stored in a JSON file created by Posh-SSH. If a file is not specified it will default to $HOME\.poshssh\hosts.json. If the file specified is not present it will be created.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-SSHJsonKnownHost</maml:name>
+        <maml:name>Get-SSHJsonTrustedHostStore</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
           <maml:name>LocalFile</maml:name>
           <maml:description>
@@ -1505,7 +1695,7 @@ HostName    HostKeyName Fingerprint
 --------    ----------- -----------
 192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53</dev:code>
         <dev:remarks>
-          <maml:para>Create a JSON Known Host Store object and using its methods add a new entry.</maml:para>
+          <maml:para>Create a JSON Trusted Host Store object and using its methods add a new entry.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1518,9 +1708,9 @@ HostName    HostKeyName Fingerprint
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-SSHOpenSSHKnownHost</command:name>
+      <command:name>Get-SSHOpenSSHTrustedHostStore</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>SSHOpenSSHKnownHost</command:noun>
+      <command:noun>SSHOpenSSHTrustedHostStore</command:noun>
       <maml:description>
         <maml:para>Get known_hosts stored in a OpenSSH file. If a file is not specified it will default to $HOME\.ssh\known_hosts. If the file specified is not present it will be created.</maml:para>
       </maml:description>
@@ -1530,7 +1720,7 @@ HostName    HostKeyName Fingerprint
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-SSHOpenSSHKnownHost</maml:name>
+        <maml:name>Get-SSHOpenSSHTrustedHostStore</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="PSPath">
           <maml:name>LocalFile</maml:name>
           <maml:description>
@@ -1619,6 +1809,145 @@ HostName      HostKeyName         Fingerprint
 192.168.1.165 ecdsa-sha2-nistp256 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4</dev:code>
         <dev:remarks>
           <maml:para>Get known hosts already stored by the Windows 10 OpenSSH client in the users home folder.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SSHTrustedHost</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para>{{ Fill in the Synopsis }}</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Trusted Host record from KnownHostStore</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SSHTrustedHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="ComputerName, IPAddress">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>FQDN or IP Address of host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="ComputerName, IPAddress">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>FQDN or IP Address of host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>TrustedHostStore</maml:name>
+        <maml:description>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+        <dev:type>
+          <maml:name>ITrustedHostStore</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>SSH.Stores.ITrustedHostStore</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1'</dev:code>
+        <dev:remarks>
+          <maml:para>Get Trusted Host record for server1 from default KnownHostStore</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)</dev:code>
+        <dev:remarks>
+          <maml:para>Get Trusted Host record for server1 from registry(deprecated) KnownHostStore</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1809,14 +2138,14 @@ HostName      HostKeyName         Fingerprint
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -2001,14 +2330,14 @@ HostName      HostKeyName         Fingerprint
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -2208,14 +2537,14 @@ HostName      HostKeyName         Fingerprint
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnownHost</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
         <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
         <dev:type>
-          <maml:name>IStore</maml:name>
+          <maml:name>ITrustedHostStore</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -2299,19 +2628,19 @@ HostName      HostKeyName         Fingerprint
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>New-SSHMemoryKnownHost</command:name>
+      <command:name>New-SSHMemoryTrustedHostStore</command:name>
       <command:verb>New</command:verb>
-      <command:noun>SSHMemoryKnownHost</command:noun>
+      <command:noun>SSHMemoryTrustedHostStore</command:noun>
       <maml:description>
-        <maml:para>Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
+        <maml:para>Creates a new in-memory Trusted Host ITrustedHostStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Creates a new in-memory known host IStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
+      <maml:para>Creates a new in-memory Trusted Host ITrustedHostStore for temporary use when creating new SSH and SFTP Sessions.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>New-SSHMemoryKnownHost</maml:name>
+        <maml:name>New-SSHMemoryTrustedHostStore</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
           <maml:description>
@@ -2368,8 +2697,8 @@ HostName      HostKeyName         Fingerprint
     <command:examples>
       <command:example>
         <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryKnownHost
-PS C:\&gt; New-SSHTrustedHost -KnownHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+        <dev:code>PS C:\&gt; $inmem = New-SSHMemoryTrustedHostStore
+PS C:\&gt; New-SSHTrustedHost -TrustedHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
 True
 PS C:\&gt; $inmem.GetAllKeys()
 
@@ -2377,7 +2706,7 @@ HostName      HostKeyName Fingerprint
 --------      ----------- -----------
 192.168.1.165 Pi          3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4</dev:code>
         <dev:remarks>
-          <maml:para>Create and in-memory known host store and add a entry to it.</maml:para>
+          <maml:para>Create and in-memory trusted host store and add a entry to it.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2556,14 +2885,14 @@ HostName      HostKeyName Fingerprint
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -2736,14 +3065,14 @@ HostName      HostKeyName Fingerprint
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -2931,14 +3260,14 @@ HostName      HostKeyName Fingerprint
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnownHost</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
         <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
         <dev:type>
-          <maml:name>IStore</maml:name>
+          <maml:name>ITrustedHostStore</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -3010,6 +3339,564 @@ HostName      HostKeyName Fingerprint
         <dev:code>PS C:\&gt; New-SSHSession -ComputerName 192.168.1.234 -Credential (Get-Credential) -Verbose</dev:code>
         <dev:remarks>
           <maml:para>Create a new SSH Session to a server.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>New-SSHTrustedHost</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para>Add new trusted host record to KnownHost store</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Add new trusted host record to KnownHost store</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>FQDN or IP Address of host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>Fingerprint</maml:name>
+          <maml:description>
+            <maml:para>Fingerprint of hostkey for remote host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyCipherName">
+          <maml:name>HostKeyName</maml:name>
+          <maml:description>
+            <maml:para>HostKeyName (cipher name) of hostkey for remote host</maml:para>
+          </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">ssh-ed25519</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp256</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp384</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ecdsa-sha2-nistp521</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">rsa-sha2-512</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">rsa-sha2-256</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ssh-rsa</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">ssh-dss</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Fingerprint</maml:name>
+        <maml:description>
+          <maml:para>Fingerprint of hostkey for remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="KeyCipherName">
+        <maml:name>HostKeyName</maml:name>
+        <maml:description>
+          <maml:para>HostKeyName (cipher name) of hostkey for remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>FQDN or IP Address of host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
+        <maml:description>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+        <dev:type>
+          <maml:name>ITrustedHostStore</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; New-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'</dev:code>
+        <dev:remarks>
+          <maml:para>Add new Trusted Host record for server1</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Remove-SSHTrustedHost</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>SSHTrustedHost</command:noun>
+      <maml:description>
+        <maml:para>Remove trusted host record from KnownHost store</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Remove trusted host record from KnownHost store</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+          <maml:name>HostName</maml:name>
+          <maml:description>
+            <maml:para>FQDN or IP Address of host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Remove-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+          <maml:name>Fingerprint</maml:name>
+          <maml:description>
+            <maml:para>Fingerprint (hostkey) of remote host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>WithHost</maml:name>
+          <maml:description>
+            <maml:para>Remove the host to which the selected fingerprint belongs</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Remove-SSHTrustedHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>TrustedHostRecord</maml:name>
+          <maml:description>
+            <maml:para>TrustedHostRecord of remote host</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">TrustedHostRecord[]</command:parameterValue>
+          <dev:type>
+            <maml:name>TrustedHostRecord[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>TrustedHostStore</maml:name>
+          <maml:description>
+            <maml:para>Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+          <dev:type>
+            <maml:name>ITrustedHostStore</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="ComputerName, IPAddress">
+        <maml:name>HostName</maml:name>
+        <maml:description>
+          <maml:para>FQDN or IP Address of host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Fingerprint</maml:name>
+        <maml:description>
+          <maml:para>Fingerprint (hostkey) of remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>TrustedHostRecord</maml:name>
+        <maml:description>
+          <maml:para>TrustedHostRecord of remote host</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">TrustedHostRecord[]</command:parameterValue>
+        <dev:type>
+          <maml:name>TrustedHostRecord[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>WithHost</maml:name>
+        <maml:description>
+          <maml:para>Remove the host to which the selected fingerprint belongs</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>TrustedHostStore</maml:name>
+        <maml:description>
+          <maml:para>Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
+        <dev:type>
+          <maml:name>ITrustedHostStore</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-SSHTrustedHost -HostName server1</dev:code>
+        <dev:remarks>
+          <maml:para>Remove trusted host server1 from TrustedStore</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-SSHTrustedHost -Fingerprint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69'</dev:code>
+        <dev:remarks>
+          <maml:para>Remove trusted host record with selected finterprint</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-SSHTrustedHost -Fingerprint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -WithHost</dev:code>
+        <dev:remarks>
+          <maml:para>Remove trusted host with selected finterprint</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHTrustedHost server1 | Remove-SSHTrustedHost</dev:code>
+        <dev:remarks>
+          <maml:para>Remove server1 trusted host record from trusted host list (one by one)</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3241,14 +4128,14 @@ HostName      HostKeyName Fingerprint
           </dev:type>
           <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3486,14 +4373,14 @@ HostName      HostKeyName Fingerprint
           </dev:type>
           <dev:defaultValue>10</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>KnownHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+          <maml:name>TrustedHostStore</maml:name>
           <maml:description>
-            <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+            <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
           <dev:type>
-            <maml:name>IStore</maml:name>
+            <maml:name>ITrustedHostStore</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -3741,14 +4628,14 @@ HostName      HostKeyName Fingerprint
         </dev:type>
         <dev:defaultValue>10</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>KnownHost</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="KnownHostStore">
+        <maml:name>TrustedHostStore</maml:name>
         <maml:description>
-          <maml:para>Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.</maml:para>
+          <maml:para>Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">IStore</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">ITrustedHostStore</command:parameterValue>
         <dev:type>
-          <maml:name>IStore</maml:name>
+          <maml:name>ITrustedHostStore</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>

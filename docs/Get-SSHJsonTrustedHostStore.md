@@ -5,21 +5,21 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHJsonKnownHost
+# Get-SSHJsonTrustedHostStore
 
 ## SYNOPSIS
-Get known hosts stored in a JSON file created by Posh-SSH.
+Get Trusted Hosts stored in a JSON file created by Posh-SSH.
 If a file is not specified it will default to $HOME\.poshssh\hosts.json.
 If the file specified is not present it will be created.
 
 ## SYNTAX
 
 ```
-Get-SSHJsonKnownHost [[-LocalFile] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SSHJsonTrustedHostStore [[-LocalFile] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get known hosts stored in a JSON file created by Posh-SSH.
+Get Trusted Hosts stored in a JSON file created by Posh-SSH.
 If a file is not specified it will default to $HOME\.poshssh\hosts.json.
 If the file specified is not present it will be created.
 
@@ -37,7 +37,7 @@ HostName    HostKeyName Fingerprint
 192.168.1.1 Router      12:f8:7e:78:61:b4:bf:e2:de:24:15:96:4e:d4:72:53
 ```
 
-Create a JSON Known Host Store object and using its methods add a new entry.
+Create a JSON Trusted Host Store object and using its methods add a new entry.
 
 ## PARAMETERS
 

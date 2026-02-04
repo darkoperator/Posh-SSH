@@ -1,11 +1,11 @@
 ---
-external help file: PoshSSH.dll-Help.xml
+external help file: PoshSSH.dll-help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHTrustedHost
+# Add-SSHTrustedHost
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,43 +13,67 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-SSHTrustedHost [[-HostName] <String[]>] [-TrustedHostStore <ITrustedHostStore>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Add-SSHTrustedHost [-HostName] <String> [-Fingerprint] <String> [[-HostKeyName] <String>]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get Trusted Host record from KnownHostStore
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
 ```
-PS C:\> Get-SSHTrustedHost -HostName 'server1'
-```
-
-Get Trusted Host record for server1 from default KnownHostStore
-
-### EXAMPLE 2
-```
-PS C:\> Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)
+PS C:\> Add-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:ea:49:d5:3a:1b:97:45:a5:69' -HostKeyName 'rsa'
 ```
 
-Get Trusted Host record for server1 from registry(deprecated) KnownHostStore
+Add server1 trusted host
 
 ## PARAMETERS
+
+### -Fingerprint
+Fingerprint of hostkey for remote host
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -HostKeyName
+HostKeyName (cipher name) of hostkey for remote host
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: KeyCipherName
+Accepted values: ssh-ed25519, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, ecdsa-sha2-nistp521, rsa-sha2-512, rsa-sha2-256, ssh-rsa, ssh-dss
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -HostName
 FQDN or IP Address of host
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
 Aliases: ComputerName, IPAddress
 
-Required: False
+Required: True
 Position: 0
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -59,12 +83,12 @@ Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SS
 ```yaml
 Type: ITrustedHostStore
 Parameter Sets: (All)
-Aliases:
+Aliases: KnownHostStore
 
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -88,7 +112,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### SSH.Stores.ITrustedHostStore
+### System.String
 ## OUTPUTS
 
 ### System.Object

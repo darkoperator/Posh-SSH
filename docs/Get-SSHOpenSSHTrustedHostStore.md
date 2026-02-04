@@ -5,7 +5,7 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHOpenSSHKnownHost
+# Get-SSHOpenSSHTrustedHostStore
 
 ## SYNOPSIS
 Get known_hosts stored in a OpenSSH file.
@@ -15,7 +15,8 @@ If the file specified is not present it will be created.
 ## SYNTAX
 
 ```
-Get-SSHOpenSSHKnownHost [[-LocalFile] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-SSHOpenSSHTrustedHostStore [[-LocalFile] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION

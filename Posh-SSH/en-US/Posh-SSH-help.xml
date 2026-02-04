@@ -2,9 +2,9 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Convert-SSHRegistryToJSonKnownHost</command:name>
+      <command:name>Convert-SSHRegistryToJSonTrustedHost</command:name>
       <command:verb>Convert</command:verb>
-      <command:noun>SSHRegistryToJSonKnownHost</command:noun>
+      <command:noun>SSHRegistryToJSonTrustedHost</command:noun>
       <maml:description>
         <maml:para>Convert windows registry key storage to Json</maml:para>
       </maml:description>
@@ -14,7 +14,7 @@
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Convert-SSHRegistryToJSonKnownHost</maml:name>
+        <maml:name>Convert-SSHRegistryToJSonTrustedHost</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -38,19 +38,19 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-SSHRegistryKnownHost</command:name>
+      <command:name>Get-SSHRegistryTrustedHostStore</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>SSHRegistryKnownHost</command:noun>
+      <command:noun>SSHRegistryTrustedHostStore</command:noun>
       <maml:description>
-        <maml:para>Get KnownHosts from registry (readonly)</maml:para>
+        <maml:para>Get TrustedHosts from registry (readonly)</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Get KnownHosts from registry (readonly) It is windows-only compatibility cmdlet</maml:para>
+      <maml:para>Get TrustedHosts from registry (readonly) It is windows-only compatibility cmdlet</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-SSHRegistryKnownHost</maml:name>
+        <maml:name>Get-SSHRegistryTrustedHostStore</maml:name>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
@@ -63,10 +63,10 @@
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SSHRegistryTrustedHostStore</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

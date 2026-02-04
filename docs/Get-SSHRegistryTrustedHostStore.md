@@ -5,29 +5,27 @@ online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
 ---
 
-# Get-SSHRegistryKnownHost
+# Get-SSHRegistryTrustedHostStore
 
 ## SYNOPSIS
-Get KnownHosts from registry (readonly)
+Get TrustedHosts from registry (readonly)
 
 ## SYNTAX
 
 ```
-Get-SSHRegistryKnownHost
+Get-SSHRegistryTrustedHostStore
 ```
 
 ## DESCRIPTION
-Get KnownHosts from registry (readonly)
+Get TrustedHosts from registry (readonly)
 It is windows-only compatibility cmdlet
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
 ```
-
-{{ Add example description here }}
+Get-SSHRegistryTrustedHostStore
+```
 
 ## PARAMETERS
 

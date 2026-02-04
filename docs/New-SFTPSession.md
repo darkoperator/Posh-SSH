@@ -17,7 +17,7 @@ Creates an SSH Session against a SSH Server
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
  [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Key
@@ -25,7 +25,8 @@ New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### KeyString
@@ -33,7 +34,8 @@ New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -279,13 +281,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnownHost
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: IStore
+Type: ITrustedHostStore
 Parameter Sets: (All)
-Aliases:
+Aliases: KnownHostStore
 
 Required: False
 Position: Named

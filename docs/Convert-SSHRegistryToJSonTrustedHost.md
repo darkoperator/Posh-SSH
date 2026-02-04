@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Convert-SSHRegistryToJSonKnownHost
+# Convert-SSHRegistryToJSonTrustedHost
 
 ## SYNOPSIS
 Convert windows registry key storage to Json
@@ -13,7 +13,7 @@ Convert windows registry key storage to Json
 ## SYNTAX
 
 ```
-Convert-SSHRegistryToJSonKnownHost
+Convert-SSHRegistryToJSonTrustedHost
 ```
 
 ## DESCRIPTION

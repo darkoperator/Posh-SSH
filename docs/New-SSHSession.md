@@ -17,7 +17,7 @@ By default it will store known host fingerprints in $HOME\.poshss\hosts.json.
 ```
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -26,7 +26,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
  [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### KeyString
@@ -34,7 +34,7 @@ New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <I
 New-SSHSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
  [-ConnectionTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -264,13 +264,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnownHost
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: IStore
+Type: ITrustedHostStore
 Parameter Sets: (All)
-Aliases:
+Aliases: KnownHostStore
 
 Required: False
 Position: Named

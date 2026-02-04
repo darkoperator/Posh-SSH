@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: PoshSSH.dll-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,19 +8,13 @@ schema: 2.0.0
 # New-SSHTrustedHost
 
 ## SYNOPSIS
+Add new trusted host record to KnownHost store
 
 ## SYNTAX
 
-### Local (Default)
 ```
-New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### Store
-```
-New-SSHTrustedHost [-HostName] <Object> [-FingerPrint] <Object> [[-HostKeyName] <String>]
- -KnownHostStore <IStore> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+New-SSHTrustedHost [-HostName] <String> [-Fingerprint] <String> [[-HostKeyName] <String>]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,20 +29,13 @@ PS C:\> New-SSHTrustedHost -HostName server1 -FingerPrint '53:68:e0:18:b9:13:8a:
 
 Add new Trusted Host record for server1
 
-### Example 2
-```
-PS C:\> Get-SSHHostKey -ComputerName server2 | New-SSHTrustedHost
-```
-
-Add new Trusted Host record for server2 from scanned one
-
 ## PARAMETERS
 
-### -HostName
-IP Address of FQDN of host to add to trusted list.
+### -Fingerprint
+Fingerprint of hostkey for remote host
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -59,46 +46,46 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -FingerPrint
-SSH Server Fingerprint.
-(md5 of host public key)
+### -HostKeyName
+HostKeyName (cipher name) of hostkey for remote host
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: KeyCipherName
+Accepted values: ssh-ed25519, ecdsa-sha2-nistp256, ecdsa-sha2-nistp384, ecdsa-sha2-nistp521, rsa-sha2-512, rsa-sha2-256, ssh-rsa, ssh-dss
 
-Required: True
+Required: False
 Position: 2
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -HostKeyName
-This is the hostkey cipher name.
+### -HostName
+FQDN or IP Address of host
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: KeyCipherName
+Aliases: ComputerName, IPAddress
 
-Required: False
-Position: 3
+Required: True
+Position: 0
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnownHostStore
-Known Host Store
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: IStore
-Parameter Sets: Store
-Aliases: KnowHostStore
+Type: ITrustedHostStore
+Parameter Sets: (All)
+Aliases: KnownHostStore
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -125,8 +112,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### System.String
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

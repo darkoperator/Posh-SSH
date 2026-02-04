@@ -21,7 +21,7 @@ Get-SSHHostKey [-ComputerName] <String[]> [-Port <Int32>] [-ProxyServer <String>
 ## DESCRIPTION
 Returns a host key entry.
 The command attempts to connect to a host and returns the first host key.
-The command can be used to scan multiple hosts and add their keys to the known hosts file.
+The command can be used to scan multiple hosts and add their keys to the TrustedHosts store.
 
 ## EXAMPLES
 

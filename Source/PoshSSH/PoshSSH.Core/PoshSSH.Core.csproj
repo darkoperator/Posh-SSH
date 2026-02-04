@@ -26,14 +26,21 @@
     <Compile Include="..\PoshSSH\SetSftpItem.cs" Link="SetSftpItem.cs" />
     <Compile Include="..\PoshSSH\SshModHelper.cs" Link="SshModHelper.cs" />
 
-    <Compile Include="..\PoshSSH\Stores\IStore.cs" Link="Stores\IStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\MemoryStore.cs" Link="Stores\MemoryStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\JsonStore.cs" Link="Stores\JsonStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\OpenSSHStore.cs" Link="Stores\OpenSSHStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\ITrustedHostStore.cs" Link="Stores\ITrustedHostStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\MemoryTrustedHostStore.cs" Link="Stores\MemoryTrustedHostStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\JsonTrustedHostStore.cs" Link="Stores\JsonTrustedHostStore.cs" />
+    <Compile Include="..\PoshSSH\Stores\OpenSSHTrustedHostStore.cs" Link="Stores\OpenSSHTrustedHostStore.cs" />
 
     <Compile Include="..\PoshSSH\NewMemoryStore.cs" Link="NewMemoryStore.cs" />
     <Compile Include="..\PoshSSH\NewSshJsonStore.cs" Link="NewSshJsonStore.cs" />
     <Compile Include="..\PoshSSH\NewSshOpenSSHStore.cs" Link="NewSshOpenSSHStore.cs" />
+
+
+    <Compile Include="..\PoshSSH\TrustedHost\GetSshTrustedHost.cs" Link="TrustedHost\GetSshTrustedHost.cs" />
+    <Compile Include="..\PoshSSH\TrustedHost\RemoveSshTrustedHost.cs" Link="TrustedHost\RemoveSshTrustedHost.cs" />
+    <Compile Include="..\PoshSSH\TrustedHost\SetSshTrustedHost.cs" Link="TrustedHost\SetSshTrustedHost.cs" />
+    <Compile Include="..\PoshSSH\TrustedHost\AddSshTrustedHost.cs" Link="TrustedHost\AddSshTrustedHost.cs" />
+    <Compile Include="..\PoshSSH\TrustedHost\NewSshTrustedHost.cs" Link="TrustedHost\NewSshTrustedHost.cs" />
   </ItemGroup>
 
   <ItemGroup>

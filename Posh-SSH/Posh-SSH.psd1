@@ -75,7 +75,6 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Get-SFTPSession',
                     'Get-SSHPortForward',
                     'Get-SSHSession',
-                    'Get-SSHTrustedHost',
                     'Invoke-SSHCommand',
                     'Invoke-SSHCommandStream',
                     'Invoke-SSHStreamExpectAction',
@@ -89,11 +88,9 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'New-SSHLocalPortForward',
                     'New-SSHRemotePortForward',
                     'New-SSHShellStream',
-                    'New-SSHTrustedHost',
                     'Remove-SFTPItem',
                     'Remove-SFTPSession',
                     'Remove-SSHSession',
-                    'Remove-SSHTrustedHost',
                     'Rename-SFTPFile',
                     'Set-SFTPContent',
                     'Set-SFTPLocation',
@@ -101,8 +98,9 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
                     'Test-SFTPPath',
-                    'Convert-SSHRegistryToJsonKnownHost',
-                    'Get-SSHRegistryKnownHost')
+                    'Convert-SSHRegistryToJsonTrustedHost',
+                    'Get-SSHRegistryTrustedHostStore'
+)
 
 # Cmdlets to export from this module
 CmdletsToExport = @('Get-SCPItem',
@@ -111,10 +109,15 @@ CmdletsToExport = @('Get-SCPItem',
                   'New-SSHSession',
                   'Set-SCPItem',
                   'Set-SFTPItem',
-                  'New-SSHMemoryKnownHost',
-                  'Get-SSHJsonKnownHost',
-                  'Get-SSHOpenSSHKnownHost',
-                  'Get-SSHHostKey')
+                  'New-SSHMemoryTrustedHostStore',
+                  'Get-SSHJsonTrustedHostStore',
+                  'Get-SSHOpenSSHTrustedHostStore',
+                  'Get-SSHHostKey',
+                  'New-SSHTrustedHost',
+                  'Add-SSHTrustedHost',
+                  'Get-SSHTrustedHost',
+                  'Remove-SSHTrustedHost'
+)
 
 # Variables to export from this module
 VariablesToExport = '*'

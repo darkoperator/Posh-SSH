@@ -158,21 +158,22 @@ namespace SSH
         /// Place where fingerprint can persist
         /// </summary>
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false,
-             HelpMessage = "Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.")]
+             HelpMessage = "Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.")]
         [ValidateNotNullOrEmpty]
-        public IStore KnownHost { get; set; }
+        [Alias("KnownHostStore")]
+        public ITrustedHostStore TrustedHostStore { get; set; }
 
         protected override void BeginProcessing()
         {
             // no need to validate keys if the force parameter is selected.
             if (!Force)
             {
-                // check is a IStore was specified.
-                bool storeSpecified = MyInvocation.BoundParameters.ContainsKey("KnownHost");
+                // check is a ITrustedHostStore was specified.
+                bool storeSpecified = MyInvocation.BoundParameters.ContainsKey(nameof(TrustedHostStore));
 
                 if (storeSpecified)
                 {
-                    // Collect host/fingerprint information from the IStore specified.
+                    // Collect host/fingerprint information from the ITrustedHostStore specified.
                     base.BeginProcessing();
                 }
                 else
@@ -183,7 +184,7 @@ namespace SSH
                     {
                         Directory.CreateDirectory(Path.GetDirectoryName(configPath));
                     }
-                    KnownHost = new Stores.JsonStore(configPath);
+                    TrustedHostStore = new Stores.JsonTrustedHostStore(configPath);
                     base.BeginProcessing();
                 }
             }
@@ -293,19 +294,27 @@ namespace SSH
             }
             else
             {
-                var savedHostKey = KnownHost.GetKey(computer);
-                // filter out unsupported hostkeynames
-                if (savedHostKey != default && !string.IsNullOrEmpty(savedHostKey.HostKeyName))
+                var computer1 = computer;
+                if (Port != 22)
                 {
-                    foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
-                    {
-                        if (keyName != savedHostKey.HostKeyName)
+                    computer1 = computer1 + ':' + Port.ToString();
+                }
+                var savedHostKeys = TrustedHostStore.GetKeys(computer1).ToArray();
+                // filter out unsupported hostkeynames
+                if (savedHostKeys.Length > 0)
+                {
+                    var hostKeyTypes = savedHostKeys.Select(hk => hk.HostKeyName).ToArray();
+                    if (hostKeyTypes.Length > 0 && !hostKeyTypes.Contains("")) {
+                        foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
                         {
-                            connectInfo.HostKeyAlgorithms.Remove(keyName);
+                            if (!hostKeyTypes.Contains(keyName))
+                            {
+                                connectInfo.HostKeyAlgorithms.Remove(keyName);
+                            }
                         }
                     }
                 }
-                var computer1 = computer;
+                computer1 = computer;
                 client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                 {
                     var sb = new StringBuilder();
@@ -313,19 +322,31 @@ namespace SSH
                     {
                         sb.AppendFormat("{0:x}:", b);
                     }
-                    var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
+                    var legacyFingerprint = sb.ToString().Remove(sb.ToString().Length - 1);
 
                     if (isVerboseEnabled)
                     {
-                        Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + fingerPrint);
+                        Host.UI.WriteVerboseLine(e.HostKeyName + " Fingerprint for " + computer1 + ": " + e.FingerPrintSHA256);
                     }
 
-                    if (savedHostKey != default)
+                    if (savedHostKeys.Length > 0)
                     {
-                        e.CanTrust = savedHostKey.Fingerprint == fingerPrint && (savedHostKey.HostKeyName == e.HostKeyName || savedHostKey.HostKeyName == string.Empty);
+                        var hostKeyFound = savedHostKeys.Where(hk =>
+                                string.IsNullOrEmpty(hk.HostKeyName) || (hk.HostKeyName == e.HostKeyName) &&
+                                (hk.Fingerprint == e.FingerPrintSHA256 || hk.Fingerprint == legacyFingerprint)
+                        );
+                        e.CanTrust = hostKeyFound.Any();
+                        //e.CanTrust = savedHostKey.Fingerprint == fingerprintMD5 && (savedHostKey.HostKeyType == e.HostKeyName || savedHostKey.HostKeyType == string.Empty);
+
                         if (isVerboseEnabled)
                         {
-                            Host.UI.WriteVerboseLine("Fingerprint " + (e.CanTrust ? "" : "not ") + "matched trusted " + savedHostKey.HostKeyName + " fingerprint for host " + computer1);
+                            if (e.CanTrust) {
+                                Host.UI.WriteVerboseLine("Fingerprint matched trusted " + hostKeyFound.FirstOrDefault()?.HostKeyName + " fingerprint for host " + computer1);
+                            }
+                            else
+                            {
+                                Host.UI.WriteVerboseLine("Fingerprint not matched trusted " + string.Join(", ", savedHostKeys.Select(h => h.HostKeyName)) + " fingerprints for host " + computer1);
+                            }
                         }
                     }
                     else
@@ -343,7 +364,7 @@ namespace SSH
                                         new ChoiceDescription("Y"),
                                         new ChoiceDescription("N")
                                     };
-                                e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + fingerPrint, choices, 1);
+                                e.CanTrust = 0 == Host.UI.PromptForChoice("Server SSH Fingerprint", "Do you want to trust the fingerprint " + e.FingerPrintSHA256, choices, 1);
                             }
                             else // User specified he would accept the key so we can just add it to our list.
                             {
@@ -351,18 +372,21 @@ namespace SSH
                             }
                             if (e.CanTrust)
                             {
-                                bool keySaved = KnownHost.SetKey(computer1, e.HostKeyName, fingerPrint);
+                                if (Port != 22)
+                                {
+                                    computer1 = computer1 + ':' + Port.ToString();
+                                }
+                                bool keySaved = TrustedHostStore.SetKey(computer1, e.HostKeyName, e.FingerPrintSHA256, false);
                                 if (isVerboseEnabled) {
                                     Host.UI.WriteVerboseLine(
                                         string.Format("Host key for {0} ({1}) {2} to store",
                                             computer1,
-                                            fingerPrint,
+                                            e.FingerPrintSHA256,
                                             (keySaved) ? "saved" : "not saved"
                                         )
                                     );
                                 }
                             }
-
                         }
                     }
                 };

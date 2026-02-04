@@ -7,7 +7,8 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.Get, "SSHOpenSSHKnownHost")]
+    [Cmdlet(VerbsCommon.Get, "SSHOpenSSHTrustedHostStore")]
+    [Alias("Get-SSHOpenSSHKnownHost")]
     public class SshOpenSSHStore : PSCmdlet
     { 
         /// <summary>
@@ -36,7 +37,7 @@ namespace SSH
             {
                 _localfile = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
             }
-            var store = new Stores.OpenSSHStore(_localfile);
+            var store = new Stores.OpenSSHTrustedHostStore(_localfile);
 
             WriteObject(store);
         }

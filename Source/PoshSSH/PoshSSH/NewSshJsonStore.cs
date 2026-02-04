@@ -4,8 +4,8 @@ using System.Management.Automation;
 
 namespace SSH
 {
-    [Cmdlet(VerbsCommon.Get, "SSHJsonKnownHost")]
-    [Alias("Get-SSHJsonKnowHost")]
+    [Cmdlet(VerbsCommon.Get, "SSHJsonTrustedHostStore")]
+    [Alias("Get-SSHJsonKnownHost")]
     public class SSHJsonStore : PSCmdlet
     { 
         /// <summary>
@@ -33,7 +33,7 @@ namespace SSH
             {
                 _localfile = this.SessionState.Path.GetUnresolvedProviderPathFromPSPath(_localfile);
             }
-            var store = new Stores.JsonStore(_localfile);
+            var store = new Stores.JsonTrustedHostStore(_localfile);
 
             WriteObject(store);
         }

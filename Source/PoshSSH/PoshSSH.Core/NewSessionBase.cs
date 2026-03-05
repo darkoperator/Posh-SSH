@@ -48,7 +48,6 @@ namespace SSH
             HelpMessage = "SSH TCP Port number to use for the SSH connection.")]
         public Int32 Port { get; set; } = 22;
 
-
         /// <summary>
         /// Proxy Server to use
         /// </summary>
@@ -103,6 +102,20 @@ namespace SSH
             ParameterSetName = "KeyString",
             HelpMessage = "String array of the content of a OpenSSH key file.")]
         public string[] KeyString { get; set; } = new string[] { };
+
+        /// <summary>
+        /// Credentials for Connection
+        /// </summary>
+        [ValidateNotNullOrEmpty]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "Key",
+            HelpMessage = "Passphrase for the SSH Key.")]
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            ParameterSetName = "KeyString",
+            HelpMessage = "Passphrase for the SSH Key.")]
+        public System.Security.SecureString Passphrase { get; set; }
 
         /// <summary>
         /// ConnectionTimeout Parameter
@@ -230,7 +243,7 @@ namespace SSH
                     {
                         foreach (var prompt in e.Prompts)
                         {
-                            if (prompt.Request.Contains("Password") || prompt.Request.Contains("PASSCODE") || prompt.Request.Contains("password"))
+                            if (prompt.Request.Contains(":"))
                                 prompt.Response = Credential.GetNetworkCredential().Password;
                         }
                     };
@@ -245,6 +258,7 @@ namespace SSH
                         Port,
                         localfullPath,
                         Credential,
+                        Passphrase,
                         ProxyServer,
                         ProxyType,
                         ProxyPort,
@@ -257,6 +271,7 @@ namespace SSH
                         Port,
                         KeyString,
                         Credential,
+                        Passphrase,
                         ProxyServer,
                         ProxyType,
                         ProxyPort,

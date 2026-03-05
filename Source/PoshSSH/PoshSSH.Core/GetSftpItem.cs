@@ -135,9 +135,7 @@ namespace SSH
         {
             // check if the path specified actually exists.
             // Resolve the path even if a relative one is given for PowerShell.
-            ProviderInfo provider;
-            var pathinfo = GetResolvedProviderPathFromPSPath(_localpath, out provider);
-            var localfullPath = pathinfo[0];
+            var localfullPath = GetUnresolvedProviderPathFromPSPath(_localpath);
 
             if (Directory.Exists(@localfullPath))
             {

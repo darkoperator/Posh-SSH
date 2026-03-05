@@ -128,9 +128,8 @@ namespace SSH
                 // Resolve the path even if a relative one is given.
                 foreach (var localitem in _localItem)
                 {
-                    ProviderInfo provider;
-                    var pathinfo = GetResolvedProviderPathFromPSPath(localitem, out provider);
-                    var localfullPath = pathinfo[0];
+                    var localfullPath = GetUnresolvedProviderPathFromPSPath(localitem);
+
                     var filePresent = File.Exists(@localfullPath);
                     var dirPresent = Directory.Exists(@localfullPath);
 

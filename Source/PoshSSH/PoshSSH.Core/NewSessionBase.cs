@@ -118,6 +118,14 @@ namespace SSH
         public System.Security.SecureString Passphrase { get; set; }
 
         /// <summary>
+        /// Place where fingerprint can persist
+        /// </summary>
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false,
+             HelpMessage = "Connection encoding")]
+        [ValidateNotNullOrEmpty]
+        public Encoding Encoding { get; set; }
+
+        /// <summary>
         /// ConnectionTimeout Parameter
         /// </summary>
         [Parameter(Mandatory = false,
@@ -157,7 +165,6 @@ namespace SSH
             ValueFromPipelineByPropertyName = true,
             HelpMessage = "Do not check the remote host fingerprint.")]
         public SwitchParameter Force { get; set; } = false;
-
 
         /// <summary>
         /// Automatically error if key is not trusted.
@@ -282,7 +289,9 @@ namespace SSH
                     break;
             }
 
-            
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Encoding)))
+                connectInfo.Encoding = Encoding;
+
             //Create instance of SSH Client with connection info
             BaseClient client;
             switch (Protocol)

@@ -6,42 +6,11 @@
     <RootNamespace>SSH</RootNamespace>
     <AssemblyName>PoshSSH</AssemblyName>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <AssemblyVersion>3.1.2.0</AssemblyVersion>
-    <FileVersion>3.1.2.0</FileVersion>
-    <Version>3.1.2</Version>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
+    <Version>4.0.0</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\PoshSSH\ConnectionInfoGenerator.cs" Link="ConnectionInfoGenerator.cs" />
-    <Compile Include="..\PoshSSH\GetScpItem.cs" Link="GetScpItem.cs" />
-    <Compile Include="..\PoshSSH\GetSftpItem.cs" Link="GetSftpItem.cs" />
-    <Compile Include="..\PoshSSH\NewSessionBase.cs" Link="NewSessionBase.cs" />
-    <Compile Include="..\PoshSSH\NewSftpSession.cs" Link="NewSftpSession.cs" />
-    <Compile Include="..\PoshSSH\NewSSHSession.cs" Link="NewSSHSession.cs" />
-    <Compile Include="..\PoshSSH\OperationProgressHelper.cs" Link="OperationProgressHelper.cs" />
-    <Compile Include="..\PoshSSH\PoshSessionType.cs" Link="PoshSessionType.cs" />
-    <Compile Include="..\PoshSSH\SessionObject.cs" Link="SessionObject.cs" />
-    <Compile Include="..\PoshSSH\SetScpItem.cs" Link="SetScpItem.cs" />
-    <Compile Include="..\PoshSSH\SetSftpItem.cs" Link="SetSftpItem.cs" />
-    <Compile Include="..\PoshSSH\SshModHelper.cs" Link="SshModHelper.cs" />
-
-    <Compile Include="..\PoshSSH\Stores\ITrustedHostStore.cs" Link="Stores\ITrustedHostStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\MemoryTrustedHostStore.cs" Link="Stores\MemoryTrustedHostStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\JsonTrustedHostStore.cs" Link="Stores\JsonTrustedHostStore.cs" />
-    <Compile Include="..\PoshSSH\Stores\OpenSSHTrustedHostStore.cs" Link="Stores\OpenSSHTrustedHostStore.cs" />
-
-    <Compile Include="..\PoshSSH\NewMemoryStore.cs" Link="NewMemoryStore.cs" />
-    <Compile Include="..\PoshSSH\NewSshJsonStore.cs" Link="NewSshJsonStore.cs" />
-    <Compile Include="..\PoshSSH\NewSshOpenSSHStore.cs" Link="NewSshOpenSSHStore.cs" />
-
-
-    <Compile Include="..\PoshSSH\TrustedHost\GetSshTrustedHost.cs" Link="TrustedHost\GetSshTrustedHost.cs" />
-    <Compile Include="..\PoshSSH\TrustedHost\RemoveSshTrustedHost.cs" Link="TrustedHost\RemoveSshTrustedHost.cs" />
-    <Compile Include="..\PoshSSH\TrustedHost\SetSshTrustedHost.cs" Link="TrustedHost\SetSshTrustedHost.cs" />
-    <Compile Include="..\PoshSSH\TrustedHost\AddSshTrustedHost.cs" Link="TrustedHost\AddSshTrustedHost.cs" />
-    <Compile Include="..\PoshSSH\TrustedHost\NewSshTrustedHost.cs" Link="TrustedHost\NewSshTrustedHost.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SSH.NET" Version="2025.1.0" />

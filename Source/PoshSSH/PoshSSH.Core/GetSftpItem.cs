@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
+using System.Runtime.InteropServices;
 
 namespace SSH
 {
@@ -100,6 +101,7 @@ namespace SSH
         private bool _skipsymlink;
 
         private List<SftpSession> ToProcess { get; set; }
+        private bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
         protected override void BeginProcessing()
         {
@@ -314,6 +316,8 @@ namespace SSH
                 {
                     Directory.CreateDirectory(localDirectory); // Ensure the directory exists
                     var localFullPath = System.IO.Path.Combine(localDirectory, file.Name);
+                    if (isWindows)
+                        localFullPath = localFullPath.Replace('*', '_').Replace(':', '_');
                     // Setup Action object for showing download progress.
                     var progressHelper = new OperationProgressHelper(this, "Download", file.Name, file.Length, 1);
                     using (Stream fileStream = File.Create(localFullPath))

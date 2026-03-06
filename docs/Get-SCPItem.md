@@ -1,5 +1,5 @@
 ---
-external help file: PoshSSH.dll-help.xml
+external help file: PoshSSH.dll-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -17,8 +17,9 @@ Download from a remote server via SCP a file or directory.
 Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Encoding <Encoding>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
+ [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### Key
@@ -26,9 +27,9 @@ Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <S
 Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
- [-KeyFile <String>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [-KeyFile <String>] [-Passphrase <SecureString>] [-Encoding <Encoding>] [-ConnectionTimeout <Int32>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### KeyString
@@ -36,9 +37,9 @@ Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <S
 Get-SCPItem -Destination <String> -Path <String> -PathType <String> [-NewName <String>]
  [-PathTransformation <String>] [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>]
  [-ProxyServer <String>] [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>]
- [-KeyString <String[]>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>]
- [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [-KeyString <String[]>] [-Passphrase <SecureString>] [-Encoding <Encoding>] [-ConnectionTimeout <Int32>]
+ [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
+ [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -352,11 +353,11 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnownHost
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+### -PathTransformation
+Remote Path transormation to use.
 
 ```yaml
-Type: IStore
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -367,13 +368,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PathTransformation
-Remote Path transormation to use.
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: String
+Type: ITrustedHostStore
 Parameter Sets: (All)
-Aliases:
+Aliases: KnownHostStore
 
 Required: False
 Position: Named
@@ -394,6 +395,36 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Encoding
+Connection encoding
+
+```yaml
+Type: Encoding
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Passphrase
+Passphrase for the SSH Key.
+
+```yaml
+Type: SecureString
+Parameter Sets: Key, KeyString
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

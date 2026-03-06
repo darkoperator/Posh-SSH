@@ -1,0 +1,66 @@
+---
+external help file: PoshSSH.dll-Help.xml
+Module Name: Posh-SSH
+online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
+schema: 2.0.0
+---
+
+# New-SSHMemoryTrustedHostStore
+
+## SYNOPSIS
+Creates a new in-memory Trusted Host ITrustedHostStore for temporary use when creating new SSH and SFTP Sessions.
+
+## SYNTAX
+
+```
+New-SSHMemoryTrustedHostStore [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Creates a new in-memory Trusted Host ITrustedHostStore for temporary use when creating new SSH and SFTP Sessions.
+
+## EXAMPLES
+
+### Example 1
+```
+PS C:\> $inmem = New-SSHMemoryTrustedHostStore
+PS C:\> New-SSHTrustedHost -TrustedHostStore $inmem -HostName 192.168.1.165 -FingerPrint 3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4 -Name Pi
+True
+PS C:\> $inmem.GetAllKeys()
+
+HostName      HostKeyName Fingerprint
+--------      ----------- -----------
+192.168.1.165 Pi          3c:bf:26:9f:d9:63:d7:48:b8:fc:7b:32:e8:f9:5a:b4
+```
+
+Create and in-memory trusted host store and add a entry to it.
+
+## PARAMETERS
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+### None
+## OUTPUTS
+
+### System.Object
+## NOTES
+
+## RELATED LINKS

@@ -1,5 +1,5 @@
 ---
-external help file: Posh-SSH.psm1-Help.xml
+external help file: PoshSSH.dll-Help.xml
 Module Name: Posh-SSH
 online version: https://github.com/darkoperator/Posh-SSH/tree/master/docs
 schema: 2.0.0
@@ -8,18 +8,13 @@ schema: 2.0.0
 # Get-SSHTrustedHost
 
 ## SYNOPSIS
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
-### Local (Default)
 ```
-Get-SSHTrustedHost [[-HostName] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### Store
-```
-Get-SSHTrustedHost [-KnownHostStore] <IStore> [[-HostName] <String>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-SSHTrustedHost [[-HostName] <String[]>] [-TrustedHostStore <ITrustedHostStore>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,14 +22,14 @@ Get Trusted Host record from KnownHostStore
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```
 PS C:\> Get-SSHTrustedHost -HostName 'server1'
 ```
 
 Get Trusted Host record for server1 from default KnownHostStore
 
-### Example 2
+### EXAMPLE 2
 ```
 PS C:\> Get-SSHTrustedHost -HostName 'server1' -KnownHostStore (Get-SSHRegistryKnownHost)
 ```
@@ -43,33 +38,33 @@ Get Trusted Host record for server1 from registry(deprecated) KnownHostStore
 
 ## PARAMETERS
 
-### -KnownHostStore
-Known Host Store
+### -HostName
+FQDN or IP Address of host
 
 ```yaml
-Type: IStore
-Parameter Sets: Store
-Aliases: KnowHostStore
+Type: String[]
+Parameter Sets: (All)
+Aliases: ComputerName, IPAddress
 
-Required: True
-Position: 2
+Required: False
+Position: 0
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -HostName
-Host name the key fingerprint is associated with.
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: String
+Type: ITrustedHostStore
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -93,9 +88,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### SSH.Stores.ITrustedHostStore
 ## OUTPUTS
 
-### SSH.Stores.KnownHostRecord
+### System.Object
 ## NOTES
 
 ## RELATED LINKS

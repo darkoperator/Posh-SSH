@@ -15,25 +15,28 @@ Creates an SSH Session against a SSH Server
 ### NoKey (Default)
 ```
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
- [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-ConnectionTimeout <Int32>]
- [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted]
- [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-Encoding <Encoding>]
+ [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
+ [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### Key
 ```
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyFile <String>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Passphrase <SecureString>] [-Encoding <Encoding>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### KeyString
 ```
 New-SFTPSession [-ComputerName] <String[]> [-Credential] <PSCredential> [-Port <Int32>] [-ProxyServer <String>]
  [-ProxyPort <Int32>] [-ProxyCredential <PSCredential>] [-ProxyType <String>] [-KeyString <String[]>]
- [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>] [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force]
- [-ErrorOnUntrusted] [-KnownHost <IStore>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Passphrase <SecureString>] [-Encoding <Encoding>] [-ConnectionTimeout <Int32>] [-OperationTimeout <Int32>]
+ [-KeepAliveInterval <Int32>] [-AcceptKey] [-Force] [-ErrorOnUntrusted] [-TrustedHostStore <ITrustedHostStore>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -279,13 +282,13 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -KnownHost
-Known Host IStore either from New-SSHMemoryKnownHost, Get-SSHJsonKnownHost or Get-SSHOpenSSHKnownHost.
+### -TrustedHostStore
+Trusted Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.
 
 ```yaml
-Type: IStore
+Type: ITrustedHostStore
 Parameter Sets: (All)
-Aliases:
+Aliases: KnownHostStore
 
 Required: False
 Position: Named
@@ -306,6 +309,36 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Encoding
+Connection encoding
+
+```yaml
+Type: Encoding
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Passphrase
+Passphrase for the SSH Key.
+
+```yaml
+Type: SecureString
+Parameter Sets: Key, KeyString
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

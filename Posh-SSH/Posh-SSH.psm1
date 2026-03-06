@@ -16,8 +16,6 @@ if (!(Test-Path variable:Global:SFTPSessions ))
     $global:SFTPSessions = New-Object System.Collections.ArrayList
 }
 
-New-Alias -Name 'Get-SSHJsonKnowHost' -Value 'Get-SSHJsonKnownHost' -Force
-
 # SSH Functions
 ##############################################################################################
 
@@ -366,7 +364,7 @@ function Invoke-SSHCommand
                 }
 
                 $cmd = $Connection.session.CreateCommand($Command)
-                $cmd.CommandTimeout = [timespan]::FromMilliseconds(50) #New-TimeSpan -Seconds $TimeOut
+                $cmd.CommandTimeout = [timespan]::FromSeconds($TimeOut)
 
                 # start asynchronious execution of the command.
                 $Duration = [System.Diagnostics.Stopwatch]::StartNew()
@@ -1951,7 +1949,7 @@ function Set-SFTPPathAttribute
 function Get-SFTPPathInformation
 {
     [CmdletBinding()]
-    [OutputType([Renci.SshNet.Sftp.SftpFileSytemInformation])]
+    [OutputType([Renci.SshNet.Sftp.SftpFileSystemInformation])]
     Param
     (
         [Parameter(Mandatory=$true,
@@ -3142,171 +3140,17 @@ function Start-SSHPortForward
     End{}
 }
 
-# .ExternalHelp Posh-SSH.psm1-Help.xml
-function Get-SSHTrustedHost
-{
-    [CmdletBinding(DefaultParameterSetName = "Local")]
-    [OutputType("SSH.Stores.KnownHostRecord")]
-    Param(
-        # Known Host Store
-        [Parameter(Mandatory = $true,
-           ParameterSetName = "Store",
-           ValueFromPipeline = $true,
-           Position = 1)]
-        [Alias('KnowHostStore')]
-        [SSH.Stores.IStore]
-        $KnownHostStore,
-
-        # Host name the key fingerprint is associated with.
-        [Parameter(Mandatory = $false,
-           Position = 0)
-        ]
-        [String]
-        $HostName
-    )
-
-    Begin{
-        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-    }
-    Process
-    {
-       if ($PSCmdlet.ParameterSetName -eq "Local") {
-           $Store = Get-SSHJsonKnownHost
-            if (-not (Test-Path -PathType Leaf $Default)) {
-                Write-Warning -Message "No known host file found, $($Default)"
-            }
-       } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-            $Store = $KnownHostStore
-       }
-
-       if ($PSBoundParameters.Keys -contains "HostName") {
-            $k = $Store.GetKey($HostName)
-            if ($k) {
-                $k | Add-Member -Force -MemberType NoteProperty -Name "HostName" -Value $HostName -TypeName "SSH.Stores.KnownHostRecord" -PassThru
-            }
-       } else {
-            $Store.GetAllKeys() 
-       }
-    }
-    End
-    {}
-}
-
-
-# .ExternalHelp Posh-SSH.psm1-Help.xml
- function New-SSHTrustedHost
- {
-    [CmdletBinding(DefaultParameterSetName = "Local")]
-     Param
-     (
-         # IP Address of FQDN of host to add to trusted list.
-         [Parameter(Mandatory=$true,
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=0)]
-         $HostName,
-
-         # SSH Server Fingerprint. (md5 of host public key)
-         [Parameter(Mandatory=$true,
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=1)]
-         $FingerPrint,
-
-         # This is the hostkey cipher name.
-         [ValidateSet(
-                    "ssh-ed25519",
-                    "ecdsa-sha2-nistp256",
-                    "ecdsa-sha2-nistp384",
-                    "ecdsa-sha2-nistp521",
-                    "rsa-sha2-512",
-                    "rsa-sha2-256",
-                    "ssh-rsa",
-                    "ssh-dss"
-         )]
-         [Parameter(
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=2)]
-         [string]
-         [Alias('KeyCipherName')]
-         $HostKeyName = "",
-
-         # Known Host Store
-        [Parameter(Mandatory = $true,
-        ParameterSetName = "Store")]
-        [Alias('KnowHostStore')]
-        [SSH.Stores.IStore]
-        $KnownHostStore
-     )
-
-    Begin{
-        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-    }
-     Process
-     {
-        if ($PSCmdlet.ParameterSetName -eq "Local") {
-            $Store = Get-SSHJsonKnownHost
-            if (-not (Test-Path -PathType Leaf $Default)) {
-                Write-Warning -Message "No known host file found, $($Default)"
-            }
-        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-             $Store = $KnownHostStore
-        }
- 
-        $Store.SetKey($HostName, $HostKeyName, $FingerPrint)
-     }
-     End {}
- }
-
-# .ExternalHelp Posh-SSH.psm1-Help.xml
- function Remove-SSHTrustedHost
- {
-    [CmdletBinding(DefaultParameterSetName = "Local")]
-    Param(
-        # IP Address of FQDN of host to add to trusted list.
-        [Parameter(Mandatory=$true,
-                   ValueFromPipelineByPropertyName=$true,
-                   Position=0)]
-        [string]
-        $HostName,
-
-        # Known Host Store
-        [Parameter(Mandatory = $true,
-        ParameterSetName = "Store")]
-        [Alias('KnowHostStore')]
-        [SSH.Stores.IStore]
-        $KnownHostStore
-     )
-
-    Begin{
-        $Default = [IO.Path]::Combine($Home,".poshssh", "hosts.json")
-    }
-     Process{
-        if ($PSCmdlet.ParameterSetName -eq "Local") {
-            $Store = Get-SSHJsonKnownHost
-            if (-not (Test-Path -PathType Leaf $Default)) {
-                Write-Warning -Message "No known host file found, $($Default)"
-            }
-        } elseif ($PSCmdlet.ParameterSetName -eq "Store") {
-            if ($KnownHostStore -isnot [SSH.Stores.OpenSSHStore]) {
-                $Store = $KnownHostStore
-            } else {
-                Write-Error -Message "SSH.Stores.OpenSSHStore are a Read Only store." -ErrorAction Stop 
-            }
-        }
- 
-        $Store.RemoveByHost($HostName)
-     }
-     End{}
- }
-
- <#
+<#
     .SYNOPSIS
-       Get KnownHosts from registry (readonly)
+       Get TrustedHosts from registry (readonly)
     .DESCRIPTION
-       Get KnownHosts from registry (readonly)
+       Get TrustedHosts from registry (readonly)
        It is windows-only compatibility cmdlet
+    .EXAMPLE
+       PS C:\> Get-SSHRegistryTrustedHostStore
 #>
-function Get-SSHRegistryKnownHost {
-    class SSHRegistryKeyStore: SSH.Stores.MemoryStore {
+function Get-SSHRegistryTrustedHostStore {
+    class SSHRegistryKeyStore: SSH.Stores.MemoryTrustedHostStore {
           [void] OnGetKeys() {
               $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
               $HostKeys = $this.HostKeys
@@ -3314,18 +3158,8 @@ function Get-SSHRegistryKnownHost {
               Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
               ForEach-Object {
                  $name = $_.Name
-                 $hostData = [SSH.Stores.KnownHostValue]@{ HostKeyName='ssh-rsa'; Fingerprint=$p.$name }
-                 $HostKeys.AddOrUpdate($name, $hostData, { return $hostData } )
+                 $this.SetKey($name, 'ssh-rsa', $p.$name, $true)
               }
-          }
-          [bool]SetKey([string]$HostName, [string]$KeyType, [string]$Fingerprint) {
-             return $false
-          }
-          [bool]RemoveByHost([string] $HostName) {
-              return $false
-          }
-          [bool]RemoveByFingerprint([string] $Fingerprint) {
-              return $false
           }
     }
 
@@ -3339,14 +3173,14 @@ function Get-SSHRegistryKnownHost {
        Convert windows registry key storage to Json
        It is windows-only compatibility cmdlet
 #>
-function Convert-SSHRegistryToJSonKnownHost {
-    $JsonStore = Get-SSHJsonKnownHost
+function Convert-SSHRegistryToJSonTrustedHost {
+    $JsonStore = Get-SSHJsonTrustedHostStore
     $p = Get-ItemProperty HKCU:\SOFTWARE\PoshSSH
     $p | Get-Member -MemberType NoteProperty |
     Where-Object { $_.Name -notin 'PSPath', 'PSParentPath', 'PSChildName', 'PSDrive', 'PSProvider' } |
     ForEach-Object {
         $name = $_.Name
         Write-Host "Save ssh-rsa key for $name"
-        [void]$JsonStore.SetKey($name, 'ssh-rsa', $p.$name)
+        [void]$JsonStore.SetKey($name, 'ssh-rsa', $p.$name, $true)
     }
 }

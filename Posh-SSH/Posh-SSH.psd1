@@ -12,7 +12,7 @@
 #RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '3.2.7'
+ModuleVersion = '4.0.0'
 
 # ID used to uniquely identify this module
 GUID = 'f5c99306-7b5a-4fca-a052-f79ad1e48fbf'
@@ -75,7 +75,6 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Get-SFTPSession',
                     'Get-SSHPortForward',
                     'Get-SSHSession',
-                    'Get-SSHTrustedHost',
                     'Invoke-SSHCommand',
                     'Invoke-SSHCommandStream',
                     'Invoke-SSHStreamExpectAction',
@@ -89,11 +88,9 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'New-SSHLocalPortForward',
                     'New-SSHRemotePortForward',
                     'New-SSHShellStream',
-                    'New-SSHTrustedHost',
                     'Remove-SFTPItem',
                     'Remove-SFTPSession',
                     'Remove-SSHSession',
-                    'Remove-SSHTrustedHost',
                     'Rename-SFTPFile',
                     'Set-SFTPContent',
                     'Set-SFTPLocation',
@@ -101,8 +98,9 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
                     'Start-SSHPortForward',
                     'Stop-SSHPortForward',
                     'Test-SFTPPath',
-                    'Convert-SSHRegistryToJsonKnownHost',
-                    'Get-SSHRegistryKnownHost')
+                    'Convert-SSHRegistryToJsonTrustedHost',
+                    'Get-SSHRegistryTrustedHostStore'
+)
 
 # Cmdlets to export from this module
 CmdletsToExport = @('Get-SCPItem',
@@ -111,10 +109,15 @@ CmdletsToExport = @('Get-SCPItem',
                   'New-SSHSession',
                   'Set-SCPItem',
                   'Set-SFTPItem',
-                  'New-SSHMemoryKnownHost',
-                  'Get-SSHJsonKnownHost',
-                  'Get-SSHOpenSSHKnownHost',
-                  'Get-SSHHostKey')
+                  'New-SSHMemoryTrustedHostStore',
+                  'Get-SSHJsonTrustedHostStore',
+                  'Get-SSHOpenSSHTrustedHostStore',
+                  'Get-SSHHostKey',
+                  'New-SSHTrustedHost',
+                  'Add-SSHTrustedHost',
+                  'Get-SSHTrustedHost',
+                  'Remove-SSHTrustedHost'
+)
 
 # Variables to export from this module
 VariablesToExport = '*'
@@ -131,7 +134,7 @@ FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembl
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
     PSData = @{
-       #Prerelease = 'beta1'
+       Prerelease = 'beta1'
        ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
     }
 }

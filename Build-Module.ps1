@@ -1,350 +1,151 @@
+#requires -Version 5.1
 <#
 .SYNOPSIS
-    Build script for Posh-SSH module.
+    Build and package the Posh-SSH module.
 
 .DESCRIPTION
-    This script:
-    1. Compiles the C# binary module (PoshSSH.dll) using MSBuild
-    2. Copies the netstandard2.0 version to the module directory
-    3. Creates a clean distribution package (ZIP file) without source code
-    4. Validates the module can be loaded
+    Compiles the netstandard2.0 binary module from Source/PoshSSH/PoshSSH.Core,
+    drops the resulting PoshSSH.dll into Posh-SSH/, verifies the module loads
+    and exposes the documented cmdlets, then bundles Posh-SSH/ into a distribution
+    zip and reports its SHA256.
 
 .PARAMETER Configuration
-    Build configuration (Debug or Release). Default: Release
+    Build configuration. Defaults to Release.
 
 .PARAMETER SkipBuild
-    Skip the compilation step and only create the package from existing binaries.
-
-.PARAMETER SkipTests
-    Skip module loading tests.
+    Skip the dotnet build step (use the existing PoshSSH.dll for packaging).
 
 .PARAMETER OutputPath
-    Path where the ZIP file will be created. Default: repository root
-
-.EXAMPLE
-    .\Build-Module.ps1
-
-.EXAMPLE
-    .\Build-Module.ps1 -Configuration Debug
-
-.EXAMPLE
-    .\Build-Module.ps1 -SkipBuild -OutputPath "C:\Releases"
+    Directory where the distribution zip is written. Defaults to the repo root.
 #>
-
 [CmdletBinding()]
 param(
-    [Parameter(Mandatory=$false)]
-    [ValidateSet('Debug', 'Release')]
+    [ValidateSet('Release','Debug')]
     [string]$Configuration = 'Release',
 
-    [Parameter(Mandatory=$false)]
     [switch]$SkipBuild,
 
-    [Parameter(Mandatory=$false)]
-    [switch]$SkipTests,
-
-    [Parameter(Mandatory=$false)]
     [string]$OutputPath
 )
 
 $ErrorActionPreference = 'Stop'
+Set-StrictMode -Version Latest
 
-#region Helper Functions
+$repoRoot   = $PSScriptRoot
+$coreProj   = Join-Path $repoRoot 'Source/PoshSSH/PoshSSH.Core/PoshSSH.Core.csproj'
+$moduleDir  = Join-Path $repoRoot 'Posh-SSH'
+$manifest   = Join-Path $moduleDir 'Posh-SSH.psd1'
+$dllTarget  = Join-Path $moduleDir 'PoshSSH.dll'
+if (-not $OutputPath) { $OutputPath = $repoRoot }
 
-function Write-Step {
-    param([string]$Message)
-    Write-Host "`n===================================================" -ForegroundColor Cyan
-    Write-Host $Message -ForegroundColor Cyan
-    Write-Host "===================================================`n" -ForegroundColor Cyan
+function Step([string]$msg) { Write-Host "==> $msg" -ForegroundColor Cyan }
+
+# --- preflight ---------------------------------------------------------------
+
+Step "preflight"
+foreach ($path in $coreProj, $manifest) {
+    if (-not (Test-Path $path)) { throw "missing required path: $path" }
+}
+$dotnet = (Get-Command dotnet -ErrorAction SilentlyContinue)
+if (-not $dotnet -and -not $SkipBuild) { throw "dotnet SDK not found in PATH" }
+
+# --- build -------------------------------------------------------------------
+
+if ($SkipBuild) {
+    Step "skipping build (--SkipBuild)"
+} else {
+    Step "dotnet build -c $Configuration"
+    & dotnet build $coreProj -c $Configuration --nologo
+    if ($LASTEXITCODE -ne 0) { throw "dotnet build failed (exit $LASTEXITCODE)" }
+
+    $built = Join-Path $repoRoot "Source/PoshSSH/PoshSSH.Core/bin/$Configuration/netstandard2.0/PoshSSH.dll"
+    if (-not (Test-Path $built)) { throw "build output missing: $built" }
+
+    Step "copying $built -> $dllTarget"
+    Copy-Item $built $dllTarget -Force
 }
 
-function Write-Success {
-    param([string]$Message)
-    Write-Host "[OK] $Message" -ForegroundColor Green
+if (-not (Test-Path $dllTarget)) { throw "no PoshSSH.dll at $dllTarget" }
+
+# --- module load + cmdlet verification --------------------------------------
+
+Step "parsing manifest"
+$info = Test-ModuleManifest $manifest
+# Cmdlets expected to load are derived from the manifest's own CmdletsToExport
+# so renames in the manifest don't drift from this script.
+$expectedCmdlets = @($info.ExportedCmdlets.Keys)
+Write-Host "  manifest declares $($expectedCmdlets.Count) cmdlets"
+
+Step "verifying module loads and exposes those cmdlets"
+$verifyScript = @"
+`$ErrorActionPreference = 'Stop'
+Import-Module '$manifest' -Force
+Get-Command -Module Posh-SSH -CommandType Cmdlet | Select-Object -ExpandProperty Name
+"@
+# run in a fresh pwsh/powershell so cached assemblies don't mask regressions
+$ps = if (Get-Command pwsh -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
+$output = & $ps -NoProfile -NonInteractive -Command $verifyScript 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ($output -join "`n") -ForegroundColor Red
+    throw "module failed to import"
+}
+$loaded = $output | Where-Object { $_ -is [string] -and $_.Trim() } | ForEach-Object { $_.Trim() }
+$missing = $expectedCmdlets | Where-Object { $loaded -notcontains $_ }
+if ($missing) { throw "cmdlets declared in manifest but missing from built module: $($missing -join ', ')" }
+$unexpected = $loaded | Where-Object { $expectedCmdlets -notcontains $_ }
+if ($unexpected) { Write-Host "  WARNING: module exports cmdlets not in manifest: $($unexpected -join ', ')" -ForegroundColor Yellow }
+Write-Host "  loaded cmdlets: $($loaded.Count)" -ForegroundColor Green
+
+# --- manifest file declarations ---------------------------------------------
+
+Step "validating RequiredAssemblies and FileList exist on disk"
+
+function Resolve-ManifestPath([string]$p) {
+    if ([System.IO.Path]::IsPathRooted($p)) { $p } else { Join-Path $moduleDir $p }
 }
 
-function Write-Info {
-    param([string]$Message)
-    Write-Host "[INFO] $Message" -ForegroundColor Yellow
+$declared = @()
+foreach ($a in @($info.RequiredAssemblies)) { if ($a) { $declared += @{ Kind = 'RequiredAssemblies'; Path = $a } } }
+foreach ($f in @($info.FileList))           { if ($f) { $declared += @{ Kind = 'FileList';           Path = $f } } }
+
+$absent = @()
+foreach ($d in $declared) {
+    $resolved = Resolve-ManifestPath $d.Path
+    if (-not (Test-Path $resolved)) { $absent += "$($d.Kind): $($d.Path)" }
 }
-
-function Write-ErrorMessage {
-    param([string]$Message)
-    Write-Host "[ERROR] $Message" -ForegroundColor Red
+if ($absent) {
+    Write-Host "  files declared by the manifest but missing on disk:" -ForegroundColor Red
+    $absent | ForEach-Object { Write-Host "    - $_" -ForegroundColor Red }
+    throw "manifest declares files that are not in the module tree"
 }
+Write-Host "  validated $($declared.Count) manifest-declared files" -ForegroundColor Green
 
-function Find-MSBuild {
-    # Try to find MSBuild in common locations
-    $msbuildPaths = @(
-        "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe",
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe"
-    )
+# --- version + zip -----------------------------------------------------------
 
-    foreach ($path in $msbuildPaths) {
-        if (Test-Path $path) {
-            return $path
-        }
-    }
+Step "reading version from $manifest"
+$version = $info.Version.ToString()
+$prerelease = $info.PrivateData.PSData.Prerelease
+$fullVersion = if ($prerelease) { "$version-$prerelease" } else { $version }
+$zipName = "Posh-SSH-$fullVersion.zip"
+$zipPath = Join-Path $OutputPath $zipName
 
-    # Try to find via vswhere
-    $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    if (Test-Path $vswhere) {
-        $vsPath = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
-        if ($vsPath) {
-            $msbuildPath = Join-Path $vsPath "MSBuild\Current\Bin\MSBuild.exe"
-            if (Test-Path $msbuildPath) {
-                return $msbuildPath
-            }
-        }
-    }
+Step "packaging $zipName"
+if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+# Zip the entire Posh-SSH/ module directory. Source code is at Source/ (outside
+# Posh-SSH/) so it's automatically excluded.
+Compress-Archive -Path (Join-Path $moduleDir '*') -DestinationPath $zipPath -CompressionLevel Optimal
 
-    throw "MSBuild not found. Please install Visual Studio or Visual Studio Build Tools."
-}
+$hash = (Get-FileHash $zipPath -Algorithm SHA256).Hash
+$sizeKB = [math]::Round((Get-Item $zipPath).Length / 1KB, 1)
 
-#endregion
+# --- summary -----------------------------------------------------------------
 
-#region Main Script
-
-try {
-    $scriptRoot = $PSScriptRoot
-    $sourceDir = Join-Path $scriptRoot "Source\PoshSSH"
-    $moduleDir = Join-Path $scriptRoot "Posh-SSH"
-    $solutionFile = Join-Path $sourceDir "PoshSSH.sln"
-    $coreProjectDir = Join-Path $sourceDir "PoshSSH.Core"
-    $netStandardDll = Join-Path $coreProjectDir "bin\$Configuration\netstandard2.0\PoshSSH.dll"
-    $targetDll = Join-Path $moduleDir "PoshSSH.dll"
-
-    # Set output path
-    if (-not $OutputPath) {
-        $OutputPath = $scriptRoot
-    }
-
-    # Read version from manifest
-    $manifestPath = Join-Path $moduleDir "Posh-SSH.psd1"
-    $manifest = Import-PowerShellDataFile -Path $manifestPath
-    $version = $manifest.ModuleVersion
-
-    Write-Host "`nPosh-SSH Build Script" -ForegroundColor Magenta
-    Write-Host "Version: $version" -ForegroundColor Magenta
-    Write-Host "Configuration: $Configuration" -ForegroundColor Magenta
-    Write-Host "Repository: $scriptRoot`n" -ForegroundColor Magenta
-
-    #region Build Binary Module
-
-    if (-not $SkipBuild) {
-        Write-Step "Step 1: Compiling C# Binary Module"
-
-        # Find MSBuild
-        Write-Info "Locating MSBuild..."
-        $msbuildPath = Find-MSBuild
-        Write-Success "Found MSBuild: $msbuildPath"
-
-        # Check if solution exists
-        if (-not (Test-Path $solutionFile)) {
-            throw "Solution file not found: $solutionFile"
-        }
-
-        # Clean previous builds
-        Write-Info "Cleaning previous builds..."
-        & $msbuildPath $solutionFile /t:Clean /p:Configuration=$Configuration /v:minimal /nologo
-        if ($LASTEXITCODE -ne 0) {
-            throw "Clean failed with exit code $LASTEXITCODE"
-        }
-
-        # Build solution
-        Write-Info "Building solution ($Configuration)..."
-        & $msbuildPath $solutionFile /t:Build /p:Configuration=$Configuration /v:minimal /nologo
-        if ($LASTEXITCODE -ne 0) {
-            throw "Build failed with exit code $LASTEXITCODE"
-        }
-
-        # Verify DLL was created
-        if (-not (Test-Path $netStandardDll)) {
-            throw "Build succeeded but DLL not found: $netStandardDll"
-        }
-
-        $dllSize = (Get-Item $netStandardDll).Length
-        Write-Success "Build completed successfully (DLL size: $([math]::Round($dllSize/1KB, 2)) KB)"
-
-        # Copy DLL to module directory
-        Write-Info "Copying netstandard2.0 DLL to module directory..."
-        Copy-Item -Path $netStandardDll -Destination $targetDll -Force
-        Write-Success "DLL copied to: $targetDll"
-
-        # Copy dependencies to Assembly directory to ensure version compatibility
-        Write-Info "Copying dependencies to Assembly directory..."
-        $buildOutputDir = Join-Path $coreProjectDir "bin\$Configuration\netstandard2.0"
-        $assemblyDir = Join-Path $moduleDir "Assembly"
-
-        # Ensure Assembly directory exists
-        if (-not (Test-Path $assemblyDir)) {
-            New-Item -ItemType Directory -Path $assemblyDir -Force | Out-Null
-        }
-
-        # Copy dependency DLLs (exclude PoshSSH.dll as it goes to module root)
-        $dependencyFiles = Get-ChildItem -Path $buildOutputDir -Filter "*.dll" |
-            Where-Object { $_.Name -ne "PoshSSH.dll" -and $_.Name -ne "System.Management.Automation.dll" }
-
-        foreach ($file in $dependencyFiles) {
-            Copy-Item -Path $file.FullName -Destination $assemblyDir -Force
-            Write-Info "  Copied: $($file.Name)"
-        }
-
-        Write-Success "Dependencies synchronized with build output"
-    }
-    else {
-        Write-Step "Step 1: Skipping Build (using existing binaries)"
-
-        if (-not (Test-Path $targetDll)) {
-            throw "Module DLL not found: $targetDll. Cannot skip build."
-        }
-        Write-Success "Using existing DLL: $targetDll"
-    }
-
-    #endregion
-
-    #region Test Module Loading
-
-    if (-not $SkipTests) {
-        Write-Step "Step 2: Testing Module Loading"
-
-        Write-Info "Removing any loaded Posh-SSH module..."
-        Remove-Module -Name Posh-SSH -ErrorAction SilentlyContinue
-
-        Write-Info "Importing module..."
-        Import-Module $manifestPath -Force -ErrorAction Stop
-
-        $loadedModule = Get-Module -Name Posh-SSH
-        if (-not $loadedModule) {
-            throw "Module failed to load"
-        }
-
-        Write-Success "Module loaded: Version $($loadedModule.Version)"
-
-        # Verify cmdlets
-        $cmdlets = Get-Command -Module Posh-SSH -CommandType Cmdlet
-        Write-Success "Binary cmdlets loaded: $($cmdlets.Count)"
-
-        $functions = Get-Command -Module Posh-SSH -CommandType Function
-        Write-Success "PowerShell functions loaded: $($functions.Count)"
-
-        # Verify key cmdlets exist
-        $keyCmdlets = @('New-SSHSession', 'New-SFTPSession', 'Get-SCPItem', 'Set-SCPItem')
-        foreach ($cmdlet in $keyCmdlets) {
-            $cmd = Get-Command -Name $cmdlet -ErrorAction SilentlyContinue
-            if (-not $cmd) {
-                throw "Key cmdlet not found: $cmdlet"
-            }
-        }
-        Write-Success "All key cmdlets verified"
-
-        # Clean up
-        Remove-Module -Name Posh-SSH -ErrorAction SilentlyContinue
-    }
-    else {
-        Write-Step "Step 2: Skipping Module Tests"
-    }
-
-    #endregion
-
-    #region Create Distribution Package
-
-    Write-Step "Step 3: Creating Distribution Package"
-
-    # Create temporary directory for clean module
-    $tempDir = Join-Path $env:TEMP "Posh-SSH-Build-$([guid]::NewGuid().ToString('N').Substring(0,8))"
-    $tempModuleDir = Join-Path $tempDir "Posh-SSH"
-
-    Write-Info "Creating temporary directory: $tempDir"
-    New-Item -ItemType Directory -Path $tempModuleDir -Force | Out-Null
-
-    # Copy module files (excluding source code, tests, etc.)
-    Write-Info "Copying module files..."
-
-    $itemsToCopy = @(
-        @{Path = "$moduleDir\*.psd1"; Destination = $tempModuleDir},
-        @{Path = "$moduleDir\*.psm1"; Destination = $tempModuleDir},
-        @{Path = "$moduleDir\*.ps1"; Destination = $tempModuleDir},
-        @{Path = "$moduleDir\*.dll"; Destination = $tempModuleDir},
-        @{Path = "$moduleDir\Assembly"; Destination = "$tempModuleDir\Assembly"},
-        @{Path = "$moduleDir\en-US"; Destination = "$tempModuleDir\en-US"},
-        @{Path = "$moduleDir\Format"; Destination = "$tempModuleDir\Format"}
-    )
-
-    foreach ($item in $itemsToCopy) {
-        if (Test-Path $item.Path) {
-            Copy-Item -Path $item.Path -Destination $item.Destination -Recurse -Force
-            Write-Info "  Copied: $(Split-Path $item.Path -Leaf)"
-        }
-    }
-
-    # Copy root documentation files
-    $docFiles = @("README.md", "License.md", "CHANGELOG.md")
-    foreach ($doc in $docFiles) {
-        $docPath = Join-Path $scriptRoot $doc
-        if (Test-Path $docPath) {
-            Copy-Item -Path $docPath -Destination $tempDir -Force
-            Write-Info "  Copied: $doc"
-        }
-    }
-
-    Write-Success "Module files copied"
-
-    # Create ZIP file
-    $zipFileName = "Posh-SSH-$version.zip"
-    $zipPath = Join-Path $OutputPath $zipFileName
-
-    # Remove existing ZIP if it exists
-    if (Test-Path $zipPath) {
-        Write-Info "Removing existing ZIP file..."
-        Remove-Item -Path $zipPath -Force
-    }
-
-    Write-Info "Creating ZIP archive..."
-    Compress-Archive -Path "$tempDir\*" -DestinationPath $zipPath -CompressionLevel Optimal -Force
-
-    $zipSize = (Get-Item $zipPath).Length
-    Write-Success "ZIP created: $zipPath ($([math]::Round($zipSize/1MB, 2)) MB)"
-
-    # Clean up temporary directory
-    Write-Info "Cleaning up temporary files..."
-    Remove-Item -Path $tempDir -Recurse -Force
-
-    #endregion
-
-    #region Summary
-
-    Write-Step "Build Complete!"
-
-    Write-Host "Summary:" -ForegroundColor White
-    Write-Host "  Version:        $version" -ForegroundColor White
-    Write-Host "  Configuration:  $Configuration" -ForegroundColor White
-    Write-Host "  Package:        $zipPath" -ForegroundColor White
-    Write-Host "  Package Size:   $([math]::Round($zipSize/1MB, 2)) MB" -ForegroundColor White
-    Write-Host ""
-
-    # Calculate hash for verification
-    Write-Info "Calculating package hash..."
-    $hash = Get-FileHash -Path $zipPath -Algorithm SHA256
-    Write-Host "  SHA256:         $($hash.Hash)" -ForegroundColor Gray
-    Write-Host ""
-
-    Write-Success "Build completed successfully!"
-
-    #endregion
-
-}
-catch {
-    Write-Host ""
-    Write-ErrorMessage "Build failed: $_"
-    Write-Host ""
-    Write-Host $_.ScriptStackTrace -ForegroundColor Red
-    exit 1
-}
-
-#endregion
+Write-Host ""
+Write-Host "============================================================" -ForegroundColor Green
+Write-Host "  Build complete" -ForegroundColor Green
+Write-Host "============================================================" -ForegroundColor Green
+Write-Host ("  Version : {0}" -f $fullVersion)
+Write-Host ("  DLL     : {0}" -f $dllTarget)
+Write-Host ("  Package : {0} ({1} KB)" -f $zipPath, $sizeKB)
+Write-Host ("  SHA256  : {0}" -f $hash)
+Write-Host ""

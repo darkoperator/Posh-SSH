@@ -431,6 +431,15 @@ namespace SSH
             catch (SshConnectionException e)
             {
                 ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
+                // A failed algorithm negotiation says only which category had no match, which
+                // is not enough to act on. Attach what this build of the library supports.
+                // ErrorDetails overrides the displayed text without altering the exception, so
+                // anything catching or matching on the original error is unaffected.
+                var details = NegotiationFailureDetails(e, computer, connectInfo);
+                if (details != null)
+                {
+                    erec.ErrorDetails = details;
+                }
                 WriteError(erec);
             }
             catch (SshOperationTimeoutException e)
@@ -453,6 +462,69 @@ namespace SSH
             // Renci.SshNet.Common.SshOperationTimeoutException when host is not alive or connection times out.
             // Renci.SshNet.Common.SshConnectionException when fingerprint mismatched
             // Renci.SshNet.Common.SshAuthenticationException Bad password
+        }
+
+        /// <summary>
+        /// Builds guidance for an algorithm negotiation failure, or null if the exception is
+        /// something else. SSH.NET reports these as "&lt;side&gt; &lt;category&gt; algorithm not found".
+        /// </summary>
+        private ErrorDetails NegotiationFailureDetails(Exception e, string computer, ConnectionInfo connectInfo)
+        {
+            var message = e.Message ?? "";
+            if (message.IndexOf("algorithm not found", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                return null;
+            }
+
+            string category = null;
+            string[] supported = null;
+            if (message.IndexOf("encryption", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                category = "encryption";
+                supported = connectInfo.Encryptions.Keys.ToArray();
+            }
+            else if (message.IndexOf("key exchange", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                category = "key exchange";
+                supported = connectInfo.KeyExchangeAlgorithms.Keys.ToArray();
+            }
+            else if (message.IndexOf("host key", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                category = "host key";
+                supported = connectInfo.HostKeyAlgorithms.Keys.ToArray();
+            }
+            else if (message.IndexOf("mac", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                     message.IndexOf("message authentication", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                category = "MAC";
+                supported = connectInfo.HmacAlgorithms.Keys.ToArray();
+            }
+            else if (message.IndexOf("compression", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                category = "compression";
+                supported = connectInfo.CompressionAlgorithms.Keys.ToArray();
+            }
+
+            var libraryVersion = typeof(ConnectionInfo).Assembly.GetName().Version;
+            var text = new StringBuilder(message);
+            text.Append(Environment.NewLine);
+            text.AppendFormat("The client and the server share no {0} algorithm.", category ?? "negotiated");
+            text.Append(Environment.NewLine);
+            text.AppendFormat("Renci.SshNet {0} in use by this module supports", libraryVersion);
+            if (category != null && supported != null)
+            {
+                text.AppendFormat(" ({0}): {1}", category, string.Join(", ", supported));
+            }
+            else
+            {
+                text.Append(" a limited set of algorithms.");
+            }
+
+            var probe = string.Format("Run 'Get-SSHAlgorithm -ComputerName {0}{1}' to see what the server offers and where the overlap is missing.",
+                computer,
+                (Port != 22) ? " -Port " + Port : "");
+
+            return new ErrorDetails(text.ToString()) { RecommendedAction = probe };
         }
 
         protected override void ProcessRecord()

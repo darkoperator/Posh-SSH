@@ -1,5 +1,20 @@
 # ChangeLog
 
+## Version 4.0.0-beta3
+
+### Diagnostics
+
+* **New cmdlet `Get-SSHAlgorithm`.** Reports the key exchange, host key, encryption, MAC and compression algorithms the bundled SSH.NET library supports, along with the library version. Given `-ComputerName` it also reads the algorithms the remote host advertises and reports, per category, what the two sides have in common — so `Get-SSHAlgorithm -ComputerName host | Where-Object { -not $_.HasCommon }` names the category responsible for a failed negotiation.
+  * Requires no credentials. A server advertises its algorithms before authentication, so the probe works against hosts you have no account on. No key exchange is performed, nothing is authenticated, and nothing is written to the trusted host store.
+  * `Common` is ordered by client preference, so its first entry is the algorithm that would actually be negotiated (RFC 4253 section 7.1).
+  * A category is reported once as `Direction = Both` when the server offers the same list in each direction, and twice (`ClientToServer`, `ServerToClient`) when the lists differ.
+* Algorithm negotiation failures from the session cmdlets now attach the client-supported list for the failing category and point at `Get-SSHAlgorithm`. This is applied through `ErrorRecord.ErrorDetails`, so the exception type, message and `FullyQualifiedErrorId` are unchanged and existing error handling is unaffected. Addresses the diagnosis problem behind #632.
+
+### Build
+
+* `Build-Module.ps1` now copies `Renci.SshNet.dll` from the restore output into `Posh-SSH/Assembly/`, making the csproj `PackageReference` the single source of truth for the bundled library.
+* The build fails if the bundled `Renci.SshNet.dll` does not match the version `PoshSSH.dll` was compiled against. The manifest loads that assembly from disk via `RequiredAssemblies`, so the two could previously drift apart unnoticed — which is what produced the 3.2.6 and 3.2.7 mismatches.
+
 ## Version 4.0.0-beta2
 
 Major release built on community contributions, especially from @MVKozlov for the multi-key trusted host work and the SSH.NET 2025 migration. The "known host" terminology is retired in favour of "trusted host store", reflecting the cleaner abstraction that now backs all three storage backends.

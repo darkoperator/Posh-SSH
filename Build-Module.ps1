@@ -48,6 +48,8 @@ foreach ($path in $coreProj, $manifest) {
 }
 $dotnet = (Get-Command dotnet -ErrorAction SilentlyContinue)
 if (-not $dotnet -and -not $SkipBuild) { throw "dotnet SDK not found in PATH" }
+# used for any check that must run in a fresh shell so cached assemblies don't mask a problem
+$ps = if (Get-Command pwsh -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
 
 # --- build -------------------------------------------------------------------
 
@@ -67,6 +69,45 @@ if ($SkipBuild) {
 
 if (-not (Test-Path $dllTarget)) { throw "no PoshSSH.dll at $dllTarget" }
 
+# --- bundled SSH.NET assembly ------------------------------------------------
+#
+# The manifest loads Assembly\Renci.SshNet.dll from disk via RequiredAssemblies, so the
+# PackageReference in the csproj only governs compilation. Those two drifted apart in 3.2.6
+# and again in 3.2.7 (see issue #632), each time invisibly. Sync the bundled copy from the
+# restore output so the csproj is the single source of truth, then assert the result.
+
+$renciTarget = Join-Path $moduleDir 'Assembly/Renci.SshNet.dll'
+
+if (-not $SkipBuild) {
+    $builtRenci = Join-Path $repoRoot "Source/PoshSSH/PoshSSH.Core/bin/$Configuration/netstandard2.0/Renci.SshNet.dll"
+    if (-not (Test-Path $builtRenci)) { throw "restore output missing: $builtRenci" }
+    Step "syncing bundled Renci.SshNet.dll from the restore output"
+    Copy-Item $builtRenci $renciTarget -Force
+}
+
+if (-not (Test-Path $renciTarget)) { throw "no Renci.SshNet.dll at $renciTarget" }
+
+Step "verifying bundled Renci.SshNet matches what PoshSSH.dll was compiled against"
+$refScript = @"
+`$ErrorActionPreference = 'Stop'
+`$asm = [System.Reflection.Assembly]::LoadFrom('$dllTarget')
+(`$asm.GetReferencedAssemblies() | Where-Object { `$_.Name -eq 'Renci.SshNet' } | Select-Object -First 1).Version.ToString()
+"@
+$refOutput = & $ps -NoProfile -NonInteractive -Command $refScript 2>&1
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ($refOutput -join "`n") -ForegroundColor Red
+    throw "could not read the Renci.SshNet reference from $dllTarget"
+}
+$referencedVersion = ($refOutput | Where-Object { $_ -is [string] -and $_.Trim() } | Select-Object -Last 1).Trim()
+$bundledVersion = [System.Reflection.AssemblyName]::GetAssemblyName($renciTarget).Version.ToString()
+
+if ($referencedVersion -ne $bundledVersion) {
+    Write-Host "  PoshSSH.dll references Renci.SshNet $referencedVersion" -ForegroundColor Red
+    Write-Host "  Assembly\Renci.SshNet.dll on disk is  $bundledVersion" -ForegroundColor Red
+    throw "bundled Renci.SshNet.dll does not match the version PoshSSH.dll was compiled against"
+}
+Write-Host "  Renci.SshNet $bundledVersion (compiled against and bundled)" -ForegroundColor Green
+
 # --- module load + cmdlet verification --------------------------------------
 
 Step "parsing manifest"
@@ -83,7 +124,6 @@ Import-Module '$manifest' -Force
 Get-Command -Module Posh-SSH -CommandType Cmdlet | Select-Object -ExpandProperty Name
 "@
 # run in a fresh pwsh/powershell so cached assemblies don't mask regressions
-$ps = if (Get-Command pwsh -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
 $output = & $ps -NoProfile -NonInteractive -Command $verifyScript 2>&1
 if ($LASTEXITCODE -ne 0) {
     Write-Host ($output -join "`n") -ForegroundColor Red

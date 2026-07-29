@@ -1366,6 +1366,209 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-SSHAlgorithm</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SSHAlgorithm</command:noun>
+      <maml:description>
+        <maml:para>Report the SSH algorithms this module supports, and optionally compare them against those a remote host offers.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Reports the key exchange, host key, encryption, MAC and compression algorithms supported by the Renci.SshNet library bundled with this module, together with that library's version.</maml:para>
+      <maml:para>When a computer name is given the cmdlet also reads the algorithms the remote host advertises and reports, for each category, which algorithms the two sides have in common. A connection that fails with a message such as `Client encryption algorithm not found` means one category has no algorithm in common; this cmdlet identifies which one.</maml:para>
+      <maml:para>No credentials are required. A SSH server advertises its algorithms before authentication, so the probe works against hosts you have no account on. The cmdlet performs no key exchange, does not authenticate, and does not add anything to the trusted host store.</maml:para>
+      <maml:para>The algorithms in the Common property are listed in client preference order. RFC 4253 selects the first algorithm on the client's list that the server also offers, so the first entry is the algorithm that would actually be negotiated.</maml:para>
+      <maml:para>Note that the HostKey row reports every host key algorithm the library supports. A real session may offer fewer, because `New-SSHSession` and the other session cmdlets narrow that list to the key types already recorded for the host in the trusted host store.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SSHAlgorithm</maml:name>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-SSHAlgorithm</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="HostName, Computer, IPAddress, Host">
+          <maml:name>ComputerName</maml:name>
+          <maml:description>
+            <maml:para>FQDN or IP Address of the host whose offered algorithms should be read.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>ConnectionTimeout</maml:name>
+          <maml:description>
+            <maml:para>Connection timeout interval in seconds.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>10</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Port</maml:name>
+          <maml:description>
+            <maml:para>SSH TCP Port number to use for the probe.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>22</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="0" aliases="HostName, Computer, IPAddress, Host">
+        <maml:name>ComputerName</maml:name>
+        <maml:description>
+          <maml:para>FQDN or IP Address of the host whose offered algorithms should be read.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>ConnectionTimeout</maml:name>
+        <maml:description>
+          <maml:para>Connection timeout interval in seconds.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>10</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>Port</maml:name>
+        <maml:description>
+          <maml:para>SSH TCP Port number to use for the probe.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>22</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.String[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>System.Int32</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>SSH.AlgorithmComparison</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>One object per algorithm category. Categories are KeyExchange, HostKey, Encryption, Mac and Compression.</maml:para>
+          <maml:para>Direction is Both when the server offers the same list in each direction, which is almost always the case. When a server offers different ciphers, MACs or compression for each direction, that category is reported twice, as ClientToServer and ServerToClient.</maml:para>
+          <maml:para>In the default parameter set, where no host is contacted, ServerOffered and Common are empty and HasCommon is null.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHAlgorithm</dev:code>
+        <dev:remarks>
+          <maml:para>List the algorithms supported by the bundled library, and the library version, without connecting to anything.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHAlgorithm -ComputerName 192.168.1.169</dev:code>
+        <dev:remarks>
+          <maml:para>Compare the algorithms supported locally against those offered by the host.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHAlgorithm -ComputerName sftp.example.com | Where-Object { -not $_.HasCommon }</dev:code>
+        <dev:remarks>
+          <maml:para>Show only the categories where the client and the server have no algorithm in common. This is the quickest way to explain a connection that fails during algorithm negotiation.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 4 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-SSHAlgorithm -ComputerName 192.168.1.169 -Port 2222 |
+          Select-Object Category, Direction, @{n='Negotiated';e={$_.Common | Select-Object -First 1}}</dev:code>
+        <dev:remarks>
+          <maml:para>Show which algorithm would be selected in each category.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/darkoperator/Posh-SSH/tree/master/docs</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>New-SSHSession</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>New-SFTPSession</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-SSHHostKey</command:name>
       <command:verb>Get</command:verb>
       <command:noun>SSHHostKey</command:noun>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+<ViewDefinitions>
+<View>
+    <Name>AlgorithmComparisonTable</Name>
+    <ViewSelectedBy>
+        <TypeName>SSH.AlgorithmComparison</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+        <TableHeaders>
+            <TableColumnHeader>
+                <Label>Category</Label>
+                <Width>12</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+                <Label>Direction</Label>
+                <Width>15</Width>
+            </TableColumnHeader>
+            <TableColumnHeader>
+                <Label>HasCommon</Label>
+                <Width>10</Width>
+                <Alignment>Center</Alignment>
+            </TableColumnHeader>
+            <TableColumnHeader>
+                <Label>Common</Label>
+            </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+            <TableRowEntry>
+                <TableColumnItems>
+                    <TableColumnItem>
+                        <PropertyName>Category</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>Direction</PropertyName>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <PropertyName>HasCommon</PropertyName>
+                        <Alignment>Center</Alignment>
+                    </TableColumnItem>
+                    <TableColumnItem>
+                        <ScriptBlock>if ($_.HasCommon -eq $null) { $_.ClientSupported -join ', ' } elseif ($_.Common.Count -eq 0) { '&lt;none&gt;' } else { $_.Common -join ', ' }</ScriptBlock>
+                    </TableColumnItem>
+                </TableColumnItems>
+            </TableRowEntry>
+         </TableRowEntries>
+    </TableControl>
+</View>
+<View>
+    <Name>AlgorithmComparisonList</Name>
+    <ViewSelectedBy>
+        <TypeName>SSH.AlgorithmComparison</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+        <ListEntries>
+            <ListEntry>
+                <ListItems>
+                    <ListItem>
+                        <PropertyName>ComputerName</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>Port</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>ServerVersion</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>LibraryVersion</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>Category</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>Direction</PropertyName>
+                    </ListItem>
+                    <ListItem>
+                        <Label>ServerOffered</Label>
+                        <ScriptBlock>$_.ServerOffered -join ', '</ScriptBlock>
+                    </ListItem>
+                    <ListItem>
+                        <Label>ClientSupported</Label>
+                        <ScriptBlock>$_.ClientSupported -join ', '</ScriptBlock>
+                    </ListItem>
+                    <ListItem>
+                        <Label>Common</Label>
+                        <ScriptBlock>$_.Common -join ', '</ScriptBlock>
+                    </ListItem>
+                    <ListItem>
+                        <PropertyName>HasCommon</PropertyName>
+                    </ListItem>
+                </ListItems>
+            </ListEntry>
+        </ListEntries>
+    </ListControl>
+</View>
+</ViewDefinitions>
+</Configuration>

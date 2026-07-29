@@ -60,7 +60,7 @@ RequiredAssemblies = @('Assembly\Renci.SshNet.dll', 'Assembly\BouncyCastle.Crypt
 # TypesToProcess = @('SSHSession.Format.ps1xml')
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = @('Format\SSHSession.Format.ps1xml','Format\SFTPSession.Format.ps1xml','Format\Renci.SshNet.SshCommand.Format.ps1xml','Format\Renci.SshNet.Sftp.SftpFile.Format.ps1xml')
+FormatsToProcess = @('Format\SSHSession.Format.ps1xml','Format\SFTPSession.Format.ps1xml','Format\Renci.SshNet.SshCommand.Format.ps1xml','Format\Renci.SshNet.Sftp.SftpFile.Format.ps1xml','Format\SSH.AlgorithmComparison.Format.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 NestedModules = @('PoshSSH.dll','Posh-SSH.psm1')
@@ -105,6 +105,7 @@ FunctionsToExport = @('Get-PoshSSHModVersion',
 # Cmdlets to export from this module
 CmdletsToExport = @('Get-SCPItem',
                   'Get-SFTPItem',
+                  'Get-SSHAlgorithm',
                   'New-SFTPSession',
                   'New-SSHSession',
                   'Set-SCPItem',
@@ -129,12 +130,12 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # List of all files packaged with this module
-FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembly\BouncyCastle.Cryptography.dll')
+FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembly\BouncyCastle.Cryptography.dll','Format\SSH.AlgorithmComparison.Format.ps1xml')
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
     PSData = @{
-       Prerelease = 'beta2'
+       Prerelease = 'beta3'
        ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
     }
 }

@@ -22,6 +22,16 @@
 * `Build-Module.ps1` now copies `Renci.SshNet.dll` from the restore output into `Posh-SSH/Assembly/`, making the csproj `PackageReference` the single source of truth for the bundled library.
 * The build fails if the bundled `Renci.SshNet.dll` does not match the version `PoshSSH.dll` was compiled against. The manifest loads that assembly from disk via `RequiredAssemblies`, so the two could previously drift apart unnoticed — which is what produced the 3.2.6 and 3.2.7 mismatches.
 
+### Testing
+
+The whole suite now requires **Pester 5 or later**, and passes with nothing skipped.
+
+* `Get-SSHSession.Tests.ps1` and `Remove-SSHSession.Tests.ps1` rewritten. They used Pester 3/4 syntax and failed outright under Pester 5, and they imported the module by a path only valid from inside the module directory — so from the repository root the import silently failed and the commands under test resolved to whatever Posh-SSH was already installed. The import is now anchored to `$PSScriptRoot`. Coverage was extended to selection by id, by the `Index` alias, by wildcard and exact host name, several ids at once, and removing one session among many.
+* New `Get-SSHAlgorithm.Tests.ps1`, plus `tests/Fixtures/FakeSshServer.ps1`, a loopback server that serves a single crafted `SSH_MSG_KEXINIT`. This tests algorithm comparison, the empty-intersection case behind #632, the per-direction split, and the probe's handling of malformed input without needing a real SSH server.
+* The integration suite assigned sessions to `$script:` variables inside `It` blocks and read them from later contexts, which Pester 5 does not guarantee. A single failed connection therefore cascaded into dozens of failures pointing at SFTP and port forwarding rather than at the connection. Sessions are established in `BeforeAll` now, and `tests/README.md` records the rule for anyone adding tests.
+* The integration suite gained an Algorithm Discovery section, including a check that the overlap `Get-SSHAlgorithm` reports contains the algorithms an established session actually negotiated.
+* "Should move file to test directory" is no longer skipped. Its comment attributed the failure to server-specific behaviour; it was the `Move-SFTPItem` bug fixed above.
+
 ## Version 4.0.0-beta2
 
 Major release built on community contributions, especially from @MVKozlov for the multi-key trusted host work and the SSH.NET 2025 migration. The "known host" terminology is retired in favour of "trusted host store", reflecting the cleaner abstraction that now backs all three storage backends.

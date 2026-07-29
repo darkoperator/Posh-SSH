@@ -427,51 +427,70 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
 
     Context "Algorithm Discovery" {
 
+        # Everything this context needs is established here rather than in an It block, and
+        # it opens its own session rather than reusing one from an earlier context. Pester 5
+        # and later only guarantee that variables set in BeforeAll reach the It blocks of the
+        # same container.
+        BeforeAll {
+            $Algorithms = @(Get-SSHAlgorithm -ComputerName $ComputerName -Port $Port)
+
+            if ($AuthMethod -eq 'Key') {
+                $AlgoSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -KeyFile $KeyPath -Port $Port -AcceptKey
+            } else {
+                $AlgoSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -Port $Port -AcceptKey
+            }
+            $AlgoConnectionInfo = $AlgoSession.Session.ConnectionInfo
+        }
+
+        AfterAll {
+            if ($AlgoSession) {
+                Remove-SSHSession -SessionId $AlgoSession.SessionId -ErrorAction SilentlyContinue | Out-Null
+            }
+        }
+
         It "Should read the algorithms offered by the server without credentials" {
             # the probe reads SSH_MSG_KEXINIT, which the server sends before authentication
-            $script:Algorithms = @(Get-SSHAlgorithm -ComputerName $ComputerName -Port $Port)
-            $script:Algorithms | Should -Not -BeNullOrEmpty
+            $Algorithms | Should -Not -BeNullOrEmpty
         }
 
         It "Should report every algorithm category" {
-            ($script:Algorithms.Category | Sort-Object -Unique) |
+            ($Algorithms.Category | Sort-Object -Unique) |
                 Should -Be @('Compression','Encryption','HostKey','KeyExchange','Mac')
         }
 
         It "Should capture the server identification string" {
-            $script:Algorithms[0].ServerVersion | Should -Match '^SSH-'
+            $Algorithms[0].ServerVersion | Should -Match '^SSH-'
         }
 
         It "Should record the host and port probed" {
-            $script:Algorithms[0].ComputerName | Should -Be $ComputerName
-            $script:Algorithms[0].Port | Should -Be $Port
+            $Algorithms[0].ComputerName | Should -Be $ComputerName
+            $Algorithms[0].Port | Should -Be $Port
         }
 
         It "Should report the bundled library version" {
-            $script:Algorithms[0].LibraryVersion | Should -Match '^\d+\.\d+\.\d+'
+            $Algorithms[0].LibraryVersion | Should -Match '^\d+\.\d+\.\d+'
         }
 
-        It "Should find common algorithms in every category, since the session cmdlets connect" {
-            # every earlier context in this run connected successfully, so by definition the
-            # client and this server share an algorithm in each category
-            foreach ($row in $script:Algorithms) {
-                $row.HasCommon | Should -BeTrue -Because "$($row.Category) must have an overlap for the connections above to have worked"
+        It "Should find common algorithms in every category, since a session connects" {
+            # this context opened a session successfully, so by definition the client and
+            # this server share an algorithm in every category
+            foreach ($row in $Algorithms) {
+                $row.HasCommon | Should -BeTrue -Because "$($row.Category) must have an overlap for the session to have opened"
                 $row.Common.Count | Should -BeGreaterThan 0
             }
         }
 
         It "Should agree with what the live session actually negotiated" {
-            # reuse the session opened earlier in this run rather than opening another
-            $connectionInfo = $script:SSHSession.Session.ConnectionInfo
+            $AlgoConnectionInfo | Should -Not -BeNullOrEmpty
 
-            $encryption = $script:Algorithms | Where-Object { $_.Category -eq 'Encryption' -and $_.Direction -in @('Both','ServerToClient') }
-            $encryption.Common | Should -Contain $connectionInfo.CurrentServerEncryption
+            $encryption = $Algorithms | Where-Object { $_.Category -eq 'Encryption' -and $_.Direction -in @('Both','ServerToClient') }
+            $encryption.Common | Should -Contain $AlgoConnectionInfo.CurrentServerEncryption
 
-            $kex = $script:Algorithms | Where-Object { $_.Category -eq 'KeyExchange' }
-            $kex.Common | Should -Contain $connectionInfo.CurrentKeyExchangeAlgorithm
+            $kex = $Algorithms | Where-Object { $_.Category -eq 'KeyExchange' }
+            $kex.Common | Should -Contain $AlgoConnectionInfo.CurrentKeyExchangeAlgorithm
 
-            $hostKey = $script:Algorithms | Where-Object { $_.Category -eq 'HostKey' }
-            $hostKey.ServerOffered | Should -Contain $connectionInfo.CurrentHostKeyAlgorithm
+            $hostKey = $Algorithms | Where-Object { $_.Category -eq 'HostKey' }
+            $hostKey.ServerOffered | Should -Contain $AlgoConnectionInfo.CurrentHostKeyAlgorithm
         }
 
         It "Should list local library support without contacting anything" {

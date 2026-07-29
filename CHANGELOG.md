@@ -1,5 +1,59 @@
 # ChangeLog
 
+## Version 4.0.0-beta2
+
+Major release built on community contributions, especially from @MVKozlov for the multi-key trusted host work and the SSH.NET 2025 migration. The "known host" terminology is retired in favour of "trusted host store", reflecting the cleaner abstraction that now backs all three storage backends.
+
+### Library
+
+* Upgraded SSH.NET from 2024.0.0 to 2025.1.0. The forked `Renci.SshNetDev.dll` (Cisco-device patch from https://github.com/sshnet/SSH.NET/pull/972) is no longer required and has been dropped.
+* New runtime dependency `BouncyCastle.Cryptography.dll` ships in `Assembly/` (transitive from SSH.NET 2025).
+
+### Trusted host store (was: known host)
+
+* Renamed all `*KnownHost*` cmdlets and types to `*TrustedHostStore*` / `*TrustedHost*`.
+* Multiple host keys per host are now supported — a single hostname can hold multiple key fingerprints (key rotation, multiple algorithms).
+* `MemoryTrustedHostStore` is now the base class for `JsonTrustedHostStore` and `OpenSSHTrustedHostStore`; the persistent stores override only the `OnKeyUpdated()` hook. Eliminates the triplicated CRUD logic from v3.x.
+* Default host-key display switched from MD5 to SHA256.
+* `~/.poshssh/hosts.json` schema changed for multi-key support and is **not backward compatible** with v3.x. Back up your `hosts.json` before upgrading.
+
+### New cmdlets (binary / C#)
+
+* `New-SSHTrustedHost`, `Add-SSHTrustedHost`, `Get-SSHTrustedHost`, `Remove-SSHTrustedHost` — were PowerShell functions in v3.x, now C# binary cmdlets.
+
+### Renamed cmdlets
+
+* `New-SSHMemoryKnownHost` → `New-SSHMemoryTrustedHostStore`
+* `Get-SSHJsonKnownHost` → `Get-SSHJsonTrustedHostStore`
+* `Get-SSHOpenSSHKnownHost` → `Get-SSHOpenSSHTrustedHostStore`
+* `Get-SSHRegistryKnownHost` → `Get-SSHRegistryTrustedHostStore`
+* `Convert-SSHRegistryToJsonKnownHost` → `Convert-SSHRegistryToJSonTrustedHost`
+
+### Authentication and connection
+
+* Support for multiple authentication methods on a single session (backward-compatible) — a password and a key can be supplied together and SSH.NET will try each.
+* New `-Encoding` parameter on session and command cmdlets so non-ASCII output is decoded correctly.
+
+### Bug fixes
+
+* Fix #604 and #533 — command/operation timeout behaviour in `Invoke-SSHCommand`.
+* Fix #496 and #381 — long-standing edge cases.
+* Wildcard `*` and `:` characters in remote filenames are now replaced with `_` so SCP/SFTP file operations don't fail on Windows-incompatible names.
+
+### Project structure
+
+* Removed the legacy .NET Framework 4.7.2 `PoshSSH.csproj` and the dual-solution layout. A single SDK-style `PoshSSH.Core/PoshSSH.Core.csproj` targets `netstandard2.0` and ships cross-platform (Windows PowerShell 5.1, PowerShell 7.x on Windows/Linux/macOS).
+* Source files moved directly into `Source/PoshSSH/PoshSSH.Core/` — no more `<Compile Link>` indirection from a legacy project.
+* Deleted dead `Get-/Set-SCPFile`, `Get-/Set-SCPFolder`, `Get-/Set-SFTPFile`, `Set-SFTPFolder` source files (already unexported in v3.x).
+* Removed `bin/` build artifacts from version control.
+
+### Build and test tooling
+
+* `Build-Module.ps1` automates the release pipeline: `dotnet build`, manifest-driven cmdlet verification in a fresh shell, validation that every `RequiredAssemblies` and `FileList` entry exists on disk, and `Posh-SSH-{version}.zip` packaging with SHA256.
+* `tests/Posh-SSH.Integration.Tests.ps1` plus `tests/Run-IntegrationTests.ps1` — full Pester integration suite covering password auth, key auth, encrypted key auth, SFTP file operations, SCP up/download, port forwarding, and session cleanup.
+* `tests/Setup-LinuxTestVm.sh` — root-runnable Linux VM provisioning script that creates 12 SSH test accounts covering the full auth matrix: password, RSA 2048/4096, RSA with passphrase, RSA PKCS#1 PEM, Ed25519 ±passphrase, ECDSA P-256/P-384/P-521, multi-factor `AuthenticationMethods publickey,password`, and forced keyboard-interactive.
+* `tests/README.md` documents the suite.
+
 ## Version 3.2.7
 
 * Fixed assembly version mismatch - corrected distribution to include compatible Renci.SshNet.dll version (2024.0.0.0) matching the compiled PoshSSH.dll binary.

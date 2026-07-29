@@ -278,7 +278,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Do not check the remote host fingerprint. When downloading if a file already exists it will overwrite the file.</maml:para>
+            <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>             <maml:para>It does not exist to control overwriting the destination. Use -Overwrite for that. For backward compatibility supplying -Force still permits an existing destination file to be overwritten, including when it is supplied as -Force:$false.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -321,6 +321,18 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Overwrite</maml:name>
+          <maml:description>
+            <maml:para>Overwrite the item on the destination path if it already exists. Without this switch a destination file that already exists produces a non-terminating error and the file is left untouched.</maml:para>
+            <maml:para>This switch only controls clobbering the destination. It has no effect on host key verification.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
@@ -539,7 +551,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Do not check the remote host fingerprint. When downloading if a file already exists it will overwrite the file.</maml:para>
+            <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>             <maml:para>It does not exist to control overwriting the destination. Use -Overwrite for that. For backward compatibility supplying -Force still permits an existing destination file to be overwritten, including when it is supplied as -Force:$false.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -582,6 +594,18 @@
             <maml:uri />
           </dev:type>
           <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Overwrite</maml:name>
+          <maml:description>
+            <maml:para>Overwrite the item on the destination path if it already exists. Without this switch a destination file that already exists produces a non-terminating error and the file is left untouched.</maml:para>
+            <maml:para>This switch only controls clobbering the destination. It has no effect on host key verification.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Path</maml:name>
@@ -802,7 +826,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Force</maml:name>
         <maml:description>
-          <maml:para>Do not check the remote host fingerprint. When downloading if a file already exists it will overwrite the file.</maml:para>
+          <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>           <maml:para>It does not exist to control overwriting the destination. Use -Overwrite for that. For backward compatibility supplying -Force still permits an existing destination file to be overwritten, including when it is supplied as -Force:$false.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -858,6 +882,19 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>Overwrite</maml:name>
+        <maml:description>
+          <maml:para>Overwrite the item on the destination path if it already exists. Without this switch a destination file that already exists produces a non-terminating error and the file is left untouched.</maml:para>
+          <maml:para>This switch only controls clobbering the destination. It has no effect on host key verification.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Path</maml:name>
@@ -4007,7 +4044,7 @@ HostName      HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Do not check the remote host fingerprint.</maml:para>
+            <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>             <maml:para>It has no bearing on the destination. SCP uploads always overwrite an existing file on the remote host, so there is no -Overwrite switch on this cmdlet.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -4252,7 +4289,7 @@ HostName      HostKeyName Fingerprint
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Do not check the remote host fingerprint.</maml:para>
+            <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>             <maml:para>It has no bearing on the destination. SCP uploads always overwrite an existing file on the remote host, so there is no -Overwrite switch on this cmdlet.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -4487,7 +4524,7 @@ HostName      HostKeyName Fingerprint
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Force</maml:name>
         <maml:description>
-          <maml:para>Do not check the remote host fingerprint.</maml:para>
+          <maml:para>Do not check the remote host fingerprint. This disables host key verification for the connection and should be used with care.</maml:para>           <maml:para>It has no bearing on the destination. SCP uploads always overwrite an existing file on the remote host, so there is no -Overwrite switch on this cmdlet.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>

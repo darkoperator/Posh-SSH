@@ -314,7 +314,7 @@ namespace SSH
             // Handle host key
             if (Force)
             {
-                WriteWarning("Host key is not being verified since Force switch is used.");
+                WriteWarning("Host key for " + computer + " is not being verified since the Force switch was used.");
             }
             else
             {

@@ -155,6 +155,11 @@ Accept wildcard characters: False
 
 ### -Force
 Do not check the remote host fingerprint.
+This disables host key verification for the connection and should be used with care.
+
+It has no bearing on the destination.
+SCP uploads always overwrite an existing file on the remote host, so there is no -Overwrite switch
+on this cmdlet.
 
 ```yaml
 Type: SwitchParameter

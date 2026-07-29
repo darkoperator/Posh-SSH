@@ -69,6 +69,17 @@ namespace SSH
             set { _newname = value; }
         }
 
+        // Allow an existing item at the destination to be overwritten.
+        private SwitchParameter _overwrite = false;
+        [Parameter(Mandatory = false,
+            ValueFromPipelineByPropertyName = true,
+            HelpMessage = "Overwrite the item on the destination path if it already exists.")]
+        public SwitchParameter Overwrite
+        {
+            get { return _overwrite; }
+            set { _overwrite = value; }
+        }
+
         private string _pathTransformation = "none";
         [Parameter(Mandatory = false,
             ValueFromPipelineByPropertyName = false,
@@ -144,7 +155,13 @@ namespace SSH
 
                             var fil = new FileInfo(@destinationpath);
 
-                            if (fil.Exists && !this.MyInvocation.BoundParameters.ContainsKey("Force"))
+                            // Force is still honored so scripts written before Overwrite existed keep working.
+                            // It is tested for being bound and not for its value since -Force:$false has always
+                            // allowed the destination to be overwritten.
+                            var overwriteAllowed = _overwrite.IsPresent ||
+                                this.MyInvocation.BoundParameters.ContainsKey("Force");
+
+                            if (fil.Exists && !overwriteAllowed)
                             {
                                 var e = new IOException("File " + localname + " already exists.");
                                 ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.InvalidOperation, client);
@@ -154,12 +171,53 @@ namespace SSH
                             {
                                 if (fil.Exists)
                                 {
-                                    WriteWarning("Overwritting " + destinationpath);
-                                    File.Delete(destinationpath);
+                                    WriteVerbose("Overwriting " + destinationpath);
                                 }
-                                // Download the file
-                                client.Download(_remotepath, fil);
-                                progressHelper.Complete();
+
+                                // Download in to a temporary file next to the destination so that a transfer
+                                // that fails does not leave the caller without the file already in place.
+                                var temppath = destinationpath + "." + Guid.NewGuid().ToString("N").Substring(0, 8) + ".partial";
+                                try
+                                {
+                                    // Download the file
+                                    client.Download(_remotepath, new FileInfo(@temppath));
+                                    progressHelper.Complete();
+
+                                    if (fil.Exists)
+                                    {
+                                        try
+                                        {
+                                            File.Replace(temppath, destinationpath, null);
+                                        }
+                                        catch (Exception)
+                                        {
+                                            // File.Replace is not supported on every file system, fall back
+                                            // to the delete and move it replaces.
+                                            File.Delete(destinationpath);
+                                            File.Move(temppath, destinationpath);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        File.Move(temppath, destinationpath);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    progressHelper.Complete();
+                                    try
+                                    {
+                                        if (File.Exists(temppath))
+                                        {
+                                            File.Delete(temppath);
+                                        }
+                                    }
+                                    catch (Exception)
+                                    {
+                                        WriteVerbose("Unable to remove the temporary file " + temppath);
+                                    }
+                                    throw;
+                                }
                             }
                         }
                         else

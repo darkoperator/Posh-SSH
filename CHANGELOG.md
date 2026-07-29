@@ -34,6 +34,15 @@ Major release built on community contributions, especially from @MVKozlov for th
 * Support for multiple authentication methods on a single session (backward-compatible) — a password and a key can be supplied together and SSH.NET will try each.
 * New `-Encoding` parameter on session and command cmdlets so non-ASCII output is decoded correctly.
 
+### SCP and host key handling
+
+* **New `-Overwrite` switch on `Get-SCPItem`.** Overwriting an existing destination file no longer requires `-Force`. Previously `-Force` was overloaded to mean both "do not verify the remote host fingerprint" and "clobber the destination", so anyone scripting a download that replaces a local file was forced to disable host key verification.
+* `-Force` on `Get-SCPItem` and `Set-SCPItem` now documents as host key verification only. On `Get-SCPItem` it is still accepted as an overwrite gate for backward compatibility, including the long-standing quirk where `-Force:$false` permits overwriting while leaving verification switched on. No existing invocation changes behaviour.
+* `Set-SCPItem` deliberately gains no `-Overwrite` switch: SCP uploads always replace the remote file, and SSH.NET exposes no pre-existence check on an `ScpClient`.
+* Fix #633 — the overwrite notice on `Get-SCPItem` is now emitted with `WriteVerbose` instead of `WriteWarning`, and is spelled "Overwriting". Explicitly asking to overwrite is not a warning condition. The non-terminating error raised when the destination exists and neither switch was supplied is unchanged.
+* Fix #582 — `Get-SCPItem -PathType File` no longer deletes the destination before the download starts. The transfer now lands in a temporary `.partial` file alongside the destination and is moved over it (`File.Replace`, falling back to delete-and-move on file systems that do not support it) only once the download succeeds; the temporary file is cleaned up on failure. A missing or unreadable remote source previously left the caller with neither file.
+* Fix #174 — the host key warning now names the host: `Host key for <computer> is not being verified since the Force switch was used.` It is emitted from `NewSessionBase`, so the wording is now identical across every cmdlet that accepts `-Force` (`New-SSHSession`, `New-SFTPSession`, `Get-/Set-SCPItem`, `Get-/Set-SFTPItem`, `Get-SSHHostKey`). Scripts matching on the old warning text will need updating.
+
 ### Bug fixes
 
 * Fix #604 and #533 — command/operation timeout behaviour in `Invoke-SSHCommand`.

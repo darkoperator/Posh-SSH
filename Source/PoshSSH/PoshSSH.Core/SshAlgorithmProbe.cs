@@ -166,7 +166,22 @@ namespace SSH
             var offset = 0;
             while (offset < count)
             {
-                var read = stream.Read(buffer, offset, count - offset);
+                int read;
+                try
+                {
+                    read = stream.Read(buffer, offset, count - offset);
+                }
+                catch (IOException e)
+                {
+                    // A read timeout and a connection reset both surface as IOException here,
+                    // and neither says what was being read. Distinguish them.
+                    var socketError = e.InnerException as SocketException;
+                    if (socketError != null && socketError.SocketErrorCode == SocketError.TimedOut)
+                    {
+                        throw new IOException("Timed out reading from the server after " + offset + " of " + count + " expected bytes.", e);
+                    }
+                    throw new IOException("The connection was closed after " + offset + " of " + count + " expected bytes (" + e.Message + ").", e);
+                }
                 if (read <= 0)
                 {
                     throw new IOException("The connection was closed after " + offset + " of " + count + " expected bytes.");

@@ -425,6 +425,65 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
         }
     }
 
+    Context "Algorithm Discovery" {
+
+        It "Should read the algorithms offered by the server without credentials" {
+            # the probe reads SSH_MSG_KEXINIT, which the server sends before authentication
+            $script:Algorithms = @(Get-SSHAlgorithm -ComputerName $ComputerName -Port $Port)
+            $script:Algorithms | Should -Not -BeNullOrEmpty
+        }
+
+        It "Should report every algorithm category" {
+            ($script:Algorithms.Category | Sort-Object -Unique) |
+                Should -Be @('Compression','Encryption','HostKey','KeyExchange','Mac')
+        }
+
+        It "Should capture the server identification string" {
+            $script:Algorithms[0].ServerVersion | Should -Match '^SSH-'
+        }
+
+        It "Should record the host and port probed" {
+            $script:Algorithms[0].ComputerName | Should -Be $ComputerName
+            $script:Algorithms[0].Port | Should -Be $Port
+        }
+
+        It "Should report the bundled library version" {
+            $script:Algorithms[0].LibraryVersion | Should -Match '^\d+\.\d+\.\d+'
+        }
+
+        It "Should find common algorithms in every category, since the session cmdlets connect" {
+            # every earlier context in this run connected successfully, so by definition the
+            # client and this server share an algorithm in each category
+            foreach ($row in $script:Algorithms) {
+                $row.HasCommon | Should -BeTrue -Because "$($row.Category) must have an overlap for the connections above to have worked"
+                $row.Common.Count | Should -BeGreaterThan 0
+            }
+        }
+
+        It "Should agree with what the live session actually negotiated" {
+            # reuse the session opened earlier in this run rather than opening another
+            $connectionInfo = $script:SSHSession.Session.ConnectionInfo
+
+            $encryption = $script:Algorithms | Where-Object { $_.Category -eq 'Encryption' -and $_.Direction -in @('Both','ServerToClient') }
+            $encryption.Common | Should -Contain $connectionInfo.CurrentServerEncryption
+
+            $kex = $script:Algorithms | Where-Object { $_.Category -eq 'KeyExchange' }
+            $kex.Common | Should -Contain $connectionInfo.CurrentKeyExchangeAlgorithm
+
+            $hostKey = $script:Algorithms | Where-Object { $_.Category -eq 'HostKey' }
+            $hostKey.ServerOffered | Should -Contain $connectionInfo.CurrentHostKeyAlgorithm
+        }
+
+        It "Should list local library support without contacting anything" {
+            $local = @(Get-SSHAlgorithm)
+            $local.Count | Should -Be 5
+            foreach ($row in $local) {
+                $row.ComputerName | Should -BeNullOrEmpty
+                ($null -eq $row.HasCommon) | Should -BeTrue
+            }
+        }
+    }
+
     Context "Session Cleanup" {
 
         It "Should remove SFTP session" {

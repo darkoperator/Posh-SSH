@@ -7,9 +7,20 @@ This directory contains tests for the Posh-SSH module.
 ### Unit Tests
 - `Get-SSHSession.Tests.ps1` - Unit tests for Get-SSHSession function
 - `Remove-SSHSession.Tests.ps1` - Unit tests for Remove-SSHSession function
+- `Get-SSHAlgorithm.Tests.ps1` - Unit tests for Get-SSHAlgorithm, requires Pester 5 or later
 
 ### Integration Tests
 - `Posh-SSH.Integration.Tests.ps1` - Comprehensive integration tests against a live SSH server
+
+### Fixtures
+- `Fixtures/FakeSshServer.ps1` - A minimal loopback server that serves a single crafted
+  `SSH_MSG_KEXINIT`. Used by `Get-SSHAlgorithm.Tests.ps1` to test algorithm comparison, the
+  directional split, and the probe's handling of malformed input without needing a real SSH
+  server. It never implements key exchange or authentication.
+
+**Note**: `Get-SSHSession.Tests.ps1` and `Remove-SSHSession.Tests.ps1` are written against
+Pester 3/4 syntax (`should be`, `should not throw`) and fail under Pester 5 and later. They
+need updating; this is unrelated to the code they cover.
 
 ## Running Unit Tests
 
@@ -91,6 +102,11 @@ The integration test suite validates the following functionality:
 ### SCP Operations
 - File upload (Set-SCPItem)
 - File download (Get-SCPItem)
+
+### Algorithm Discovery
+- Reading the algorithms a live server offers (Get-SSHAlgorithm)
+- Agreement between the reported overlap and what the live session negotiated
+- Local library reporting with no host contacted
 
 ## Test Environment
 

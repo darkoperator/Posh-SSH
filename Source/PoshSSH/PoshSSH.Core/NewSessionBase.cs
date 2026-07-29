@@ -311,6 +311,14 @@ namespace SSH
                     break;
             }
 
+            // Captured by the HostKeyReceived handler so a rejected key can be explained after
+            // the connection attempt throws. Without these the caller only sees "Host key could
+            // not be verified", which does not say what was presented or what was expected.
+            SSH.Stores.TrustedHostValue[] rejectedAgainstKeys = null;
+            string rejectedHostKeyName = null;
+            string rejectedFingerprint = null;
+            var hostKeyWasRejected = false;
+
             // Handle host key
             if (Force)
             {
@@ -347,6 +355,10 @@ namespace SSH
                         sb.AppendFormat("{0:x}:", b);
                     }
                     var legacyFingerprint = sb.ToString().Remove(sb.ToString().Length - 1);
+
+                    rejectedHostKeyName = e.HostKeyName;
+                    rejectedFingerprint = e.FingerPrintSHA256;
+                    rejectedAgainstKeys = savedHostKeys;
 
                     if (isVerboseEnabled)
                     {
@@ -413,6 +425,8 @@ namespace SSH
                             }
                         }
                     }
+
+                    hostKeyWasRejected = !e.CanTrust;
                 };
             }
             try
@@ -431,11 +445,15 @@ namespace SSH
             catch (SshConnectionException e)
             {
                 ErrorRecord erec = new ErrorRecord(e, null, ErrorCategory.SecurityError, client);
-                // A failed algorithm negotiation says only which category had no match, which
-                // is not enough to act on. Attach what this build of the library supports.
+                // A failed negotiation or a rejected host key say only that something did not
+                // match, which is not enough to act on. Attach the detail the caller needs.
                 // ErrorDetails overrides the displayed text without altering the exception, so
                 // anything catching or matching on the original error is unaffected.
                 var details = NegotiationFailureDetails(e, computer, connectInfo);
+                if (details == null && hostKeyWasRejected)
+                {
+                    details = HostKeyRejectedDetails(e, computer, rejectedHostKeyName, rejectedFingerprint, rejectedAgainstKeys);
+                }
                 if (details != null)
                 {
                     erec.ErrorDetails = details;
@@ -525,6 +543,49 @@ namespace SSH
                 (Port != 22) ? " -Port " + Port : "");
 
             return new ErrorDetails(text.ToString()) { RecommendedAction = probe };
+        }
+
+        /// <summary>
+        /// Builds guidance for a host key the trusted host store would not accept. The bare
+        /// error does not say what the server presented, what was expected, or that AcceptKey
+        /// is deliberately ignored once a key is already recorded for the host.
+        /// </summary>
+        private ErrorDetails HostKeyRejectedDetails(Exception e, string computer, string hostKeyName,
+            string fingerprint, SSH.Stores.TrustedHostValue[] storedKeys)
+        {
+            var host = (Port != 22) ? computer + ":" + Port : computer;
+            var text = new StringBuilder(e.Message ?? "Host key could not be verified.");
+            text.Append(Environment.NewLine);
+            text.AppendFormat("{0} presented a {1} host key with fingerprint {2}.", host, hostKeyName, fingerprint);
+            text.Append(Environment.NewLine);
+
+            if (storedKeys != null && storedKeys.Length > 0)
+            {
+                text.AppendFormat("The trusted host store already holds {0} key(s) for this host, none of which match:",
+                    storedKeys.Length);
+                foreach (var key in storedKeys)
+                {
+                    text.Append(Environment.NewLine);
+                    text.AppendFormat("  {0} {1}",
+                        string.IsNullOrEmpty(key.HostKeyName) ? "(any)" : key.HostKeyName,
+                        key.Fingerprint);
+                }
+                text.Append(Environment.NewLine);
+                text.Append("AcceptKey does not override a recorded key. Either the host key changed, or the stored entry is stale.");
+
+                return new ErrorDetails(text.ToString())
+                {
+                    RecommendedAction = string.Format(
+                        "Verify the fingerprint out of band. If the change is expected, run 'Remove-SSHTrustedHost -HostName {0} -Confirm:$false' and connect again with -AcceptKey.",
+                        host)
+                };
+            }
+
+            text.Append("No key is recorded for this host, so the key was not trusted.");
+            return new ErrorDetails(text.ToString())
+            {
+                RecommendedAction = "Connect with -AcceptKey to record this fingerprint, or add it with Add-SSHTrustedHost."
+            };
         }
 
         protected override void ProcessRecord()

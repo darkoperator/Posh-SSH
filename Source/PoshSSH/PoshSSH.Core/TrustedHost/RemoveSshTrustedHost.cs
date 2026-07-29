@@ -8,8 +8,13 @@ using SSH.Stores;
 
 namespace SSH
 {
+    // ConfirmImpact is Medium rather than High so the cmdlet does not prompt by default.
+    // A High impact prompted on every call, which fails in any non-interactive session
+    // (scripts, CI, pwsh -File) with an opaque error unless -Confirm:$false was passed.
+    // Removing a trusted host entry is recoverable, and no other cmdlet in this module
+    // prompts. -Confirm and -WhatIf still work for callers who want them.
     [Cmdlet(VerbsCommon.Remove, "SSHTrustedHost",
-        DefaultParameterSetName = "Host", ConfirmImpact = ConfirmImpact.High, SupportsShouldProcess = true
+        DefaultParameterSetName = "Host", ConfirmImpact = ConfirmImpact.Medium, SupportsShouldProcess = true
     )]
     public class RemoveSSHTrustedHost : PSCmdlet
     { 

@@ -10,6 +10,12 @@
   * A category is reported once as `Direction = Both` when the server offers the same list in each direction, and twice (`ClientToServer`, `ServerToClient`) when the lists differ.
 * Algorithm negotiation failures from the session cmdlets now attach the client-supported list for the failing category and point at `Get-SSHAlgorithm`. This is applied through `ErrorRecord.ErrorDetails`, so the exception type, message and `FullyQualifiedErrorId` are unchanged and existing error handling is unaffected. Addresses the diagnosis problem behind #632.
 
+### Bug fixes
+
+* **`Get-SFTPItem` could not download to an absolute Windows path.** The replacement of `*` and `:` with `_`, added in beta2 so remote names containing Windows-illegal characters could be written, was applied to the whole combined destination path rather than just the file name. That rewrote the drive letter in `C:\folder` to `C_\folder`, turning an absolute path into a relative one and writing the file somewhere under the current directory, or failing outright. Only the remote file name is sanitized now.
+* `Remove-SSHTrustedHost` no longer prompts by default. It declared `ConfirmImpact.High`, which meant every call raised a confirmation, and in a non-interactive session (a script, CI, or `pwsh -File`) that surfaced as an opaque `NullReferenceException` unless `-Confirm:$false` was passed. Impact is now `Medium`; `-Confirm` and `-WhatIf` still work.
+* A rejected host key now explains itself. The error reported only "Host key could not be verified", saying nothing about what the server presented or what was expected. It now names the host key type and fingerprint offered, lists the fingerprints already recorded for that host, states that `-AcceptKey` deliberately does not override a recorded key, and recommends the command to run once the change has been verified out of band. Delivered through `ErrorRecord.ErrorDetails`, so the exception itself is unchanged.
+
 ### Build
 
 * `Build-Module.ps1` now copies `Renci.SshNet.dll` from the restore output into `Posh-SSH/Assembly/`, making the csproj `PackageReference` the single source of truth for the bundled library.

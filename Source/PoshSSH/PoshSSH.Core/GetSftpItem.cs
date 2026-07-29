@@ -315,9 +315,13 @@ namespace SSH
                 try
                 {
                     Directory.CreateDirectory(localDirectory); // Ensure the directory exists
-                    var localFullPath = System.IO.Path.Combine(localDirectory, file.Name);
+                    // Only the remote file name can carry characters Windows rejects. Sanitizing
+                    // the combined path instead would rewrite the drive letter colon in
+                    // C:\folder to C_\folder and turn an absolute path into a relative one.
+                    var localName = file.Name;
                     if (isWindows)
-                        localFullPath = localFullPath.Replace('*', '_').Replace(':', '_');
+                        localName = localName.Replace('*', '_').Replace(':', '_');
+                    var localFullPath = System.IO.Path.Combine(localDirectory, localName);
                     // Setup Action object for showing download progress.
                     var progressHelper = new OperationProgressHelper(this, "Download", file.Name, file.Length, 1);
                     using (Stream fileStream = File.Create(localFullPath))

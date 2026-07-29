@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Comprehensive integration tests for Posh-SSH module.
 
@@ -88,10 +88,22 @@ $RemoteTestDir = "/tmp/posh-ssh-test-dir"
 
 Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
 
+    # Sessions are established here rather than inside It blocks. Pester 5 and later only
+    # guarantee that variables set in BeforeAll reach the It blocks of the same and nested
+    # containers; a session assigned inside an It is not reliably visible to later contexts,
+    # which previously made one failed connection cascade into dozens of misleading failures.
     BeforeAll {
         # Create local test file
         Set-Content -Path $LocalTestFile -Value $TestFileContent
         Write-Host "Testing against: $ComputerName as $UserName using $AuthMethod authentication" -ForegroundColor Cyan
+
+        if ($AuthMethod -eq 'Key') {
+            $SSHSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -KeyFile $KeyPath -Port $Port -AcceptKey
+            $SFTPSession = New-SFTPSession -ComputerName $ComputerName -Credential $Credential -KeyFile $KeyPath -Port $Port -AcceptKey
+        } else {
+            $SSHSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -Port $Port -AcceptKey
+            $SFTPSession = New-SFTPSession -ComputerName $ComputerName -Credential $Credential -Port $Port -AcceptKey
+        }
     }
 
     AfterAll {
@@ -107,15 +119,9 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
 
     Context "SSH Session Management" {
 
-        It "Should create a new SSH session with $AuthMethod" {
-            if ($AuthMethod -eq 'Key') {
-                $script:SSHSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -KeyFile $KeyPath -Port $Port -AcceptKey
-            } else {
-                $script:SSHSession = New-SSHSession -ComputerName $ComputerName -Credential $Credential -Port $Port -AcceptKey
-            }
-
-            $script:SSHSession | Should -Not -BeNullOrEmpty
-            $script:SSHSession.Connected | Should -Be $true
+        It "Should have created a new SSH session with $AuthMethod" {
+            $SSHSession | Should -Not -BeNullOrEmpty
+            $SSHSession.Connected | Should -Be $true
         }
 
         It "Should retrieve the SSH session" {
@@ -125,9 +131,9 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
         }
 
         It "Should retrieve SSH session by SessionId" {
-            $session = Get-SSHSession -SessionId $script:SSHSession.SessionId
+            $session = Get-SSHSession -SessionId $SSHSession.SessionId
             $session | Should -Not -BeNullOrEmpty
-            $session.SessionId | Should -Be $script:SSHSession.SessionId
+            $session.SessionId | Should -Be $SSHSession.SessionId
         }
 
         It "Should retrieve SSH session by ComputerName" {
@@ -139,60 +145,57 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
     Context "SSH Command Execution" {
 
         It "Should execute a simple command" {
-            $result = Invoke-SSHCommand -SessionId $script:SSHSession.SessionId -Command "echo 'Hello from Posh-SSH'"
+            $result = Invoke-SSHCommand -SessionId $SSHSession.SessionId -Command "echo 'Hello from Posh-SSH'"
             $result | Should -Not -BeNullOrEmpty
             $result.Output | Should -Match "Hello from Posh-SSH"
             $result.ExitStatus | Should -Be 0
         }
 
         It "Should execute whoami command" {
-            $result = Invoke-SSHCommand -SessionId $script:SSHSession.SessionId -Command "whoami"
+            $result = Invoke-SSHCommand -SessionId $SSHSession.SessionId -Command "whoami"
             $result.Output | Should -Match $UserName
             $result.ExitStatus | Should -Be 0
         }
 
         It "Should execute pwd command" {
-            $result = Invoke-SSHCommand -SessionId $script:SSHSession.SessionId -Command "pwd"
+            $result = Invoke-SSHCommand -SessionId $SSHSession.SessionId -Command "pwd"
             $result.Output | Should -Not -BeNullOrEmpty
             $result.ExitStatus | Should -Be 0
         }
 
         It "Should execute command and get proper exit code for failure" {
-            $result = Invoke-SSHCommand -SessionId $script:SSHSession.SessionId -Command "ls /nonexistent-directory-12345"
+            $result = Invoke-SSHCommand -SessionId $SSHSession.SessionId -Command "ls /nonexistent-directory-12345"
             $result.ExitStatus | Should -Not -Be 0
         }
 
         It "Should execute command with timeout" {
-            $result = Invoke-SSHCommand -SessionId $script:SSHSession.SessionId -Command "echo 'test'" -TimeOut 30
+            $result = Invoke-SSHCommand -SessionId $SSHSession.SessionId -Command "echo 'test'" -TimeOut 30
             $result.Output | Should -Match "test"
         }
     }
 
     Context "SSH Shell Stream" {
 
-        It "Should create a new SSH shell stream" {
-            $script:ShellStream = New-SSHShellStream -SessionId $script:SSHSession.SessionId
-            $script:ShellStream | Should -Not -BeNullOrEmpty
+        BeforeAll {
+            $ShellStream = New-SSHShellStream -SessionId $SSHSession.SessionId
+        }
+
+        It "Should have created a new SSH shell stream" {
+            $ShellStream | Should -Not -BeNullOrEmpty
         }
 
         It "Should execute command in shell stream" {
             Start-Sleep -Seconds 1  # Allow shell to initialize
-            $result = Invoke-SSHStreamShellCommand -ShellStream $script:ShellStream -Command "echo 'Shell test'"
+            $result = Invoke-SSHStreamShellCommand -ShellStream $ShellStream -Command "echo 'Shell test'"
             $result | Should -Match "Shell test"
         }
     }
 
     Context "SFTP Session Management" {
 
-        It "Should create a new SFTP session with $AuthMethod" {
-            if ($AuthMethod -eq 'Key') {
-                $script:SFTPSession = New-SFTPSession -ComputerName $ComputerName -Credential $Credential -KeyFile $KeyPath -Port $Port -AcceptKey
-            } else {
-                $script:SFTPSession = New-SFTPSession -ComputerName $ComputerName -Credential $Credential -Port $Port -AcceptKey
-            }
-
-            $script:SFTPSession | Should -Not -BeNullOrEmpty
-            $script:SFTPSession.Connected | Should -Be $true
+        It "Should have created a new SFTP session with $AuthMethod" {
+            $SFTPSession | Should -Not -BeNullOrEmpty
+            $SFTPSession.Connected | Should -Be $true
         }
 
         It "Should retrieve the SFTP session" {
@@ -202,43 +205,43 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
         }
 
         It "Should retrieve SFTP session by SessionId" {
-            $session = Get-SFTPSession -SessionId $script:SFTPSession.SessionId
+            $session = Get-SFTPSession -SessionId $SFTPSession.SessionId
             $session | Should -Not -BeNullOrEmpty
-            $session.SessionId | Should -Be $script:SFTPSession.SessionId
+            $session.SessionId | Should -Be $SFTPSession.SessionId
         }
     }
 
     Context "SFTP Directory Operations" {
 
         It "Should test if /tmp path exists" {
-            $result = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path "/tmp"
+            $result = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path "/tmp"
             $result | Should -Be $true
         }
 
         It "Should get current SFTP location" {
-            $location = Get-SFTPLocation -SessionId $script:SFTPSession.SessionId
+            $location = Get-SFTPLocation -SessionId $SFTPSession.SessionId
             $location | Should -Not -BeNullOrEmpty
         }
 
         It "Should set SFTP location to /tmp" {
-            Set-SFTPLocation -SessionId $script:SFTPSession.SessionId -Path "/tmp"
-            $location = Get-SFTPLocation -SessionId $script:SFTPSession.SessionId
+            Set-SFTPLocation -SessionId $SFTPSession.SessionId -Path "/tmp"
+            $location = Get-SFTPLocation -SessionId $SFTPSession.SessionId
             $location | Should -Be "/tmp"
         }
 
         It "Should list files in /tmp directory" {
-            $items = Get-SFTPChildItem -SessionId $script:SFTPSession.SessionId -Path "/tmp"
+            $items = Get-SFTPChildItem -SessionId $SFTPSession.SessionId -Path "/tmp"
             $items | Should -Not -BeNullOrEmpty
         }
 
         It "Should create a new directory in /tmp" {
-            New-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $RemoteTestDir -ItemType Directory
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $RemoteTestDir
+            New-SFTPItem -SessionId $SFTPSession.SessionId -Path $RemoteTestDir -ItemType Directory
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $RemoteTestDir
             $exists | Should -Be $true
         }
 
         It "Should get attributes of created directory" {
-            $attrs = Get-SFTPPathAttribute -SessionId $script:SFTPSession.SessionId -Path $RemoteTestDir
+            $attrs = Get-SFTPPathAttribute -SessionId $SFTPSession.SessionId -Path $RemoteTestDir
             $attrs | Should -Not -BeNullOrEmpty
             $attrs.IsDirectory | Should -Be $true
         }
@@ -247,25 +250,25 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
     Context "SFTP File Upload Operations" {
 
         It "Should upload file using Set-SFTPItem" {
-            Set-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $LocalTestFile -Destination "/tmp" -Force
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath
+            Set-SFTPItem -SessionId $SFTPSession.SessionId -Path $LocalTestFile -Destination "/tmp" -Force
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $RemoteTestPath
             $exists | Should -Be $true
         }
 
         It "Should verify uploaded file exists" {
-            $files = Get-SFTPChildItem -SessionId $script:SFTPSession.SessionId -Path "/tmp"
+            $files = Get-SFTPChildItem -SessionId $SFTPSession.SessionId -Path "/tmp"
             $file = $files | Where-Object { $_.Name -eq $TestFileName }
             $file | Should -Not -BeNullOrEmpty
             $file.Name | Should -Be $TestFileName
         }
 
         It "Should get content of uploaded file" {
-            $content = Get-SFTPContent -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath
+            $content = Get-SFTPContent -SessionId $SFTPSession.SessionId -Path $RemoteTestPath
             $content | Should -Match "test file for Posh-SSH"
         }
 
         It "Should get attributes of uploaded file" {
-            $attrs = Get-SFTPPathAttribute -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath
+            $attrs = Get-SFTPPathAttribute -SessionId $SFTPSession.SessionId -Path $RemoteTestPath
             $attrs | Should -Not -BeNullOrEmpty
             $attrs.IsRegularFile | Should -Be $true
         }
@@ -275,33 +278,32 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
 
         It "Should rename the uploaded file" {
             $newName = "/tmp/posh-ssh-renamed.txt"
-            Rename-SFTPFile -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath -NewName "posh-ssh-renamed.txt"
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $newName
+            Rename-SFTPFile -SessionId $SFTPSession.SessionId -Path $RemoteTestPath -NewName "posh-ssh-renamed.txt"
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $newName
             $exists | Should -Be $true
 
             # Rename back for other tests
-            Rename-SFTPFile -SessionId $script:SFTPSession.SessionId -Path $newName -NewName $TestFileName
+            Rename-SFTPFile -SessionId $SFTPSession.SessionId -Path $newName -NewName $TestFileName
         }
 
-        It "Should move file to test directory" -Skip {
-            # Note: Move-SFTPItem may fail on some SFTP servers due to file deletion issues
+        It "Should move file to test directory" {
             # Create a separate test file for moving
             $moveTestFile = "/tmp/move-test-file.txt"
-            Set-SFTPContent -SessionId $script:SFTPSession.SessionId -Path $moveTestFile -Value "Test file for move operation"
+            Set-SFTPContent -SessionId $SFTPSession.SessionId -Path $moveTestFile -Value "Test file for move operation"
 
             $movedPath = "$RemoteTestDir/move-test-file.txt"
-            Move-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $moveTestFile -Destination $RemoteTestDir -Force
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $movedPath
+            Move-SFTPItem -SessionId $SFTPSession.SessionId -Path $moveTestFile -Destination $RemoteTestDir -Force
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $movedPath
             $exists | Should -Be $true
 
             # Cleanup moved file
-            Remove-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $movedPath
+            Remove-SFTPItem -SessionId $SFTPSession.SessionId -Path $movedPath
         }
 
         It "Should set content to a file" {
             $newContent = "Updated content at $(Get-Date)"
-            Set-SFTPContent -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath -Value $newContent
-            $content = Get-SFTPContent -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath
+            Set-SFTPContent -SessionId $SFTPSession.SessionId -Path $RemoteTestPath -Value $newContent
+            $content = Get-SFTPContent -SessionId $SFTPSession.SessionId -Path $RemoteTestPath
             $content | Should -Match "Updated content"
         }
     }
@@ -316,7 +318,7 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
                 Remove-Item $downloadPath -Force
             }
 
-            Get-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath -Destination $env:TEMP -Force
+            Get-SFTPItem -SessionId $SFTPSession.SessionId -Path $RemoteTestPath -Destination $env:TEMP -Force
 
             # Check if file was downloaded
             $downloadedFile = Get-Item $downloadPath -ErrorAction SilentlyContinue
@@ -349,7 +351,7 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
             }
 
             # Verify using SFTP
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $script:SCPRemotePath
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $script:SCPRemotePath
             $exists | Should -Be $true
         }
 
@@ -377,20 +379,20 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
     Context "SFTP Cleanup Operations" {
 
         It "Should remove uploaded test file" {
-            Remove-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath -Force
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $RemoteTestPath
+            Remove-SFTPItem -SessionId $SFTPSession.SessionId -Path $RemoteTestPath -Force
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $RemoteTestPath
             $exists | Should -Be $false
         }
 
         It "Should remove SCP test file" {
-            Remove-SFTPItem -SessionId $script:SFTPSession.SessionId -Path "/tmp/scp-test-file.txt" -Force
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path "/tmp/scp-test-file.txt"
+            Remove-SFTPItem -SessionId $SFTPSession.SessionId -Path "/tmp/scp-test-file.txt" -Force
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path "/tmp/scp-test-file.txt"
             $exists | Should -Be $false
         }
 
         It "Should remove test directory" {
-            Remove-SFTPItem -SessionId $script:SFTPSession.SessionId -Path $RemoteTestDir -Force
-            $exists = Test-SFTPPath -SessionId $script:SFTPSession.SessionId -Path $RemoteTestDir
+            Remove-SFTPItem -SessionId $SFTPSession.SessionId -Path $RemoteTestDir -Force
+            $exists = Test-SFTPPath -SessionId $SFTPSession.SessionId -Path $RemoteTestDir
             $exists | Should -Be $false
         }
     }
@@ -398,30 +400,30 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
     Context "Port Forwarding" {
 
         It "Should create local port forward" {
-            New-SSHLocalPortForward -SessionId $script:SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081 -RemoteAddress "127.0.0.1" -RemotePort 80
+            New-SSHLocalPortForward -SessionId $SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081 -RemoteAddress "127.0.0.1" -RemotePort 80
             # Verify it was created by checking for it
-            $forwards = Get-SSHPortForward -SessionId $script:SSHSession.SessionId
+            $forwards = Get-SSHPortForward -SessionId $SSHSession.SessionId
             $forwards | Should -Not -BeNullOrEmpty
         }
 
         It "Should get port forward information" {
-            $forwards = Get-SSHPortForward -SessionId $script:SSHSession.SessionId
+            $forwards = Get-SSHPortForward -SessionId $SSHSession.SessionId
             $forwards | Should -Not -BeNullOrEmpty
         }
 
         It "Should stop port forward" {
-            Stop-SSHPortForward -SessionId $script:SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
+            Stop-SSHPortForward -SessionId $SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
             # Give it a moment to stop
             Start-Sleep -Seconds 1
         }
 
         It "Should start port forward" {
-            Start-SSHPortForward -SessionId $script:SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
+            Start-SSHPortForward -SessionId $SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
             # Give it a moment to start
             Start-Sleep -Seconds 1
 
             # Stop it again for cleanup
-            Stop-SSHPortForward -SessionId $script:SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
+            Stop-SSHPortForward -SessionId $SSHSession.SessionId -BoundHost "127.0.0.1" -BoundPort 8081
         }
     }
 
@@ -506,14 +508,14 @@ Describe "Posh-SSH Integration Tests - $AuthMethod Authentication" {
     Context "Session Cleanup" {
 
         It "Should remove SFTP session" {
-            Remove-SFTPSession -SessionId $script:SFTPSession.SessionId
-            $session = Get-SFTPSession -SessionId $script:SFTPSession.SessionId
+            Remove-SFTPSession -SessionId $SFTPSession.SessionId
+            $session = Get-SFTPSession -SessionId $SFTPSession.SessionId
             $session | Should -BeNullOrEmpty
         }
 
         It "Should remove SSH session" {
-            Remove-SSHSession -SessionId $script:SSHSession.SessionId
-            $session = Get-SSHSession -SessionId $script:SSHSession.SessionId
+            Remove-SSHSession -SessionId $SSHSession.SessionId
+            $session = Get-SSHSession -SessionId $SSHSession.SessionId
             $session | Should -BeNullOrEmpty
         }
 

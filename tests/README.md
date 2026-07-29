@@ -18,9 +18,13 @@ This directory contains tests for the Posh-SSH module.
   directional split, and the probe's handling of malformed input without needing a real SSH
   server. It never implements key exchange or authentication.
 
-**Note**: `Get-SSHSession.Tests.ps1` and `Remove-SSHSession.Tests.ps1` are written against
-Pester 3/4 syntax (`should be`, `should not throw`) and fail under Pester 5 and later. They
-need updating; this is unrelated to the code they cover.
+All test files require **Pester 5 or later**.
+
+**Writing tests for this suite**: establish shared state such as sessions in `BeforeAll`, not
+inside an `It`. Pester 5 and later only guarantee that variables set in `BeforeAll` reach the
+`It` blocks of the same and nested containers. Assigning a session inside an `It` and reading
+it from a later context leaves it null, which turns a single failed connection into dozens of
+unrelated-looking failures.
 
 ## Running Unit Tests
 

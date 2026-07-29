@@ -1425,28 +1425,43 @@ function Move-SFTPItem
             if (Test-SFTPPath -SFTPSession $session -Path $Path)
             {
                 $itemInfo = $session.Session.Get($Path)
-                
-                # Check if destination exists
-                if ($session.Session.Exists($Destination))
+
+                # When the destination is an existing directory, move into it rather than onto
+                # it. Without this the directory itself is treated as the target file, so -Force
+                # tried to DeleteFile a directory and the move could never succeed.
+                $targetPath = $Destination
+                if ($session.Session.Exists($Destination) -and $session.Session.Get($Destination).IsDirectory)
                 {
+                    $targetPath = ($Destination.TrimEnd('/')) + '/' + $itemInfo.Name
+                    Write-Verbose "Destination is a directory. Moving to $targetPath"
+                }
+
+                # Check if the resolved destination exists
+                if ($session.Session.Exists($targetPath))
+                {
+                    if ($session.Session.Get($targetPath).IsDirectory)
+                    {
+                        throw "Destination $targetPath already exists and is a directory."
+                    }
+
                     if ($Force)
                     {
-                        if ($PSCmdlet.ShouldProcess($Destination, "Delete existing file"))
+                        if ($PSCmdlet.ShouldProcess($targetPath, "Delete existing file"))
                         {
-                            Write-Verbose "Destination file exists. Deleting $Destination"
-                            $session.Session.DeleteFile($Destination)
+                            Write-Verbose "Destination file exists. Deleting $targetPath"
+                            $session.Session.DeleteFile($targetPath)
                         }
                     }
                     else
                     {
-                        throw "Destination file $Destination already exists. Use -Force to overwrite."
+                        throw "Destination file $targetPath already exists. Use -Force to overwrite."
                     }
                 }
 
-                if ($PSCmdlet.ShouldProcess($Path, "Move to $Destination"))
+                if ($PSCmdlet.ShouldProcess($Path, "Move to $targetPath"))
                 {
-                    Write-Verbose "Moving $Path to $Destination"
-                    $itemInfo.MoveTo($Destination)
+                    Write-Verbose "Moving $Path to $targetPath"
+                    $itemInfo.MoveTo($targetPath)
                 }
             }
             else

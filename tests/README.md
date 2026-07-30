@@ -8,6 +8,8 @@ This directory contains tests for the Posh-SSH module.
 - `Get-SSHSession.Tests.ps1` - Unit tests for Get-SSHSession function
 - `Remove-SSHSession.Tests.ps1` - Unit tests for Remove-SSHSession function
 - `Get-SSHAlgorithm.Tests.ps1` - Unit tests for Get-SSHAlgorithm, requires Pester 5 or later
+- `HostKeyMatcher.Tests.ps1` - Unit tests for the host key trust rule (`SSH.HostKeyMatcher`),
+  covering RFC 8332 RSA algorithm equivalence and, importantly, the cases that must be refused
 
 ### Integration Tests
 - `Posh-SSH.Integration.Tests.ps1` - Comprehensive integration tests against a live SSH server

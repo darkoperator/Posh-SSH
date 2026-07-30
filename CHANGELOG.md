@@ -10,6 +10,16 @@
   * A category is reported once as `Direction = Both` when the server offers the same list in each direction, and twice (`ClientToServer`, `ServerToClient`) when the lists differ.
 * Algorithm negotiation failures from the session cmdlets now attach the client-supported list for the failing category and point at `Get-SSHAlgorithm`. This is applied through `ErrorRecord.ErrorDetails`, so the exception type, message and `FullyQualifiedErrorId` are unchanged and existing error handling is unaffected. Addresses the diagnosis problem behind #632.
 
+### Host key verification
+
+* **Security: a trusted host entry with a blank host key name bypassed fingerprint checking entirely.** The match was written as `IsNullOrEmpty(name) || name == presented && fingerprint == presented`, and because `&&` binds tighter than `||` a blank name short-circuited to trusted before the fingerprint was ever compared — so such an entry accepted *any* host key for that host. A blank name is meant to be a key *type* wildcard only, which is how v3.x behaved. The fingerprint is now always required. Reported indirectly via #632.
+* **An `ssh-rsa` known host entry now matches a server that negotiates `rsa-sha2-256` or `rsa-sha2-512`** (#632). RFC 8332 section 3 defines those as signature algorithms over the existing `ssh-rsa` key format, deliberately leaving the encoded key and its fingerprint unchanged, so `known_hosts` records `ssh-rsa` and nothing else. Posh-SSH compared the names literally, which both stripped `rsa-sha2-*` from the offered host key algorithms and failed the fingerprint match. Connecting to a server that offers only `rsa-sha2-*` — the common configuration since OpenSSH 8.8 disabled `ssh-rsa` — failed with "No matching host key algorithm" even though the key was trusted. This affected v3.x too; it only became reachable in v4.0 because the cipher gap in the bundled SSH.NET failed those connections earlier.
+* The matching rule now lives in `SSH.HostKeyMatcher`, separate from the connection code, so it can be tested directly.
+
+### Breaking changes
+
+* **Known host entries are now looked up per port.** Connecting to a non-default port looks for the host as `host:port`, matching the OpenSSH `known_hosts` convention of `[host]:port`; v3.x ignored the port and matched on the bare host name. This is correct — OpenSSH treats a different port as a different host, since the service there may legitimately present a different key — but it means an entry recorded under a bare host name stops being found once you connect on a non-standard port. Re-accept the key with `-AcceptKey`, or for the OpenSSH store add a `[host]:port` entry. Raised in #632.
+
 ### Bug fixes
 
 * **`Get-SFTPItem` could not download to an absolute Windows path.** The replacement of `*` and `:` with `_`, added in beta2 so remote names containing Windows-illegal characters could be written, was applied to the whole combined destination path rather than just the file name. That rewrote the drive letter in `C:\folder` to `C_\folder`, turning an absolute path into a relative one and writing the file somewhere under the current directory, or failing outright. Only the remote file name is sanitized now.

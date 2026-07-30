@@ -339,7 +339,7 @@ namespace SSH
                     if (hostKeyTypes.Length > 0 && !hostKeyTypes.Contains("")) {
                         foreach (var keyName in connectInfo.HostKeyAlgorithms.Keys.ToArray())
                         {
-                            if (!hostKeyTypes.Contains(keyName))
+                            if (!hostKeyTypes.Any(stored => HostKeyMatcher.NameMatches(stored, keyName)))
                             {
                                 connectInfo.HostKeyAlgorithms.Remove(keyName);
                             }
@@ -368,11 +368,9 @@ namespace SSH
                     if (savedHostKeys.Length > 0)
                     {
                         var hostKeyFound = savedHostKeys.Where(hk =>
-                                string.IsNullOrEmpty(hk.HostKeyName) || (hk.HostKeyName == e.HostKeyName) &&
-                                (hk.Fingerprint == e.FingerPrintSHA256 || hk.Fingerprint == legacyFingerprint)
-                        );
+                                HostKeyMatcher.IsTrusted(new[] { hk }, e.HostKeyName, e.FingerPrintSHA256, legacyFingerprint)
+                        ).ToArray();
                         e.CanTrust = hostKeyFound.Any();
-                        //e.CanTrust = savedHostKey.Fingerprint == fingerprintMD5 && (savedHostKey.HostKeyType == e.HostKeyName || savedHostKey.HostKeyType == string.Empty);
 
                         if (isVerboseEnabled)
                         {

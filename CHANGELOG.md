@@ -1,5 +1,120 @@
 # ChangeLog
 
+## Version 4.0.0
+
+### Diagnostics
+
+* **New cmdlet `Get-SSHAlgorithm`.** Reports the key exchange, host key, encryption, MAC and compression algorithms the bundled SSH.NET library supports, along with the library version. Given `-ComputerName` it also reads the algorithms the remote host advertises and reports, per category, what the two sides have in common — so `Get-SSHAlgorithm -ComputerName host | Where-Object { -not $_.HasCommon }` names the category responsible for a failed negotiation.
+  * Requires no credentials. A server advertises its algorithms before authentication, so the probe works against hosts you have no account on. No key exchange is performed, nothing is authenticated, and nothing is written to the trusted host store.
+  * `Common` is ordered by client preference, so its first entry is the algorithm that would actually be negotiated (RFC 4253 section 7.1).
+  * A category is reported once as `Direction = Both` when the server offers the same list in each direction, and twice (`ClientToServer`, `ServerToClient`) when the lists differ.
+* Algorithm negotiation failures from the session cmdlets now attach the client-supported list for the failing category and point at `Get-SSHAlgorithm`. This is applied through `ErrorRecord.ErrorDetails`, so the exception type, message and `FullyQualifiedErrorId` are unchanged and existing error handling is unaffected. Addresses the diagnosis problem behind #632.
+
+### Host key verification
+
+* **Security: a trusted host entry with a blank host key name bypassed fingerprint checking entirely.** The match was written as `IsNullOrEmpty(name) || name == presented && fingerprint == presented`, and because `&&` binds tighter than `||` a blank name short-circuited to trusted before the fingerprint was ever compared — so such an entry accepted *any* host key for that host. A blank name is meant to be a key *type* wildcard only, which is how v3.x behaved. The fingerprint is now always required. Reported indirectly via #632.
+* **An `ssh-rsa` known host entry now matches a server that negotiates `rsa-sha2-256` or `rsa-sha2-512`** (#632). RFC 8332 section 3 defines those as signature algorithms over the existing `ssh-rsa` key format, deliberately leaving the encoded key and its fingerprint unchanged, so `known_hosts` records `ssh-rsa` and nothing else. Posh-SSH compared the names literally, which both stripped `rsa-sha2-*` from the offered host key algorithms and failed the fingerprint match. Connecting to a server that offers only `rsa-sha2-*` — the common configuration since OpenSSH 8.8 disabled `ssh-rsa` — failed with "No matching host key algorithm" even though the key was trusted. This affected v3.x too; it only became reachable in v4.0 because the cipher gap in the bundled SSH.NET failed those connections earlier.
+* The matching rule now lives in `SSH.HostKeyMatcher`, separate from the connection code, so it can be tested directly.
+
+### Breaking changes
+
+* **Known host entries are now looked up per port.** Connecting to a non-default port looks for the host as `host:port`, matching the OpenSSH `known_hosts` convention of `[host]:port`; v3.x ignored the port and matched on the bare host name. This is correct — OpenSSH treats a different port as a different host, since the service there may legitimately present a different key — but it means an entry recorded under a bare host name stops being found once you connect on a non-standard port. Re-accept the key with `-AcceptKey`, or for the OpenSSH store add a `[host]:port` entry. Raised in #632.
+
+### v3.x script compatibility
+
+Every v3.2.7 command and parameter was diffed against this build by loading both modules side by side. Scripts written for v3 now bind unchanged; the gaps found were closed with aliases, so nothing was removed to fix them.
+
+* `-KnownHost` on `New-SSHSession`, `New-SFTPSession`, `Get-SCPItem` and `Set-SCPItem` is now an explicit alias of `-TrustedHostStore`. It previously worked only because PowerShell resolved it as an abbreviation of the `KnownHostStore` alias, which any future parameter starting with `KnownHost` would have broken.
+* `Get-SSHTrustedHost` and `Remove-SSHTrustedHost` accept `-KnownHostStore` and `-KnowHostStore` again, and `New-SSHTrustedHost` / `Add-SSHTrustedHost` accept `-KnowHostStore`. These failed with "A parameter cannot be found" in earlier v4 betas.
+* `Get-SSHTrustedHost` takes the store positionally again (`Get-SSHTrustedHost server1 $store`), as the v3 function did.
+* The `Get-SSHJsonKnowHost` alias from v3 is restored.
+* A v3 `hosts.json` is read without changes. It is rewritten in the multi-key schema the first time the store is saved, and from then on v3 cannot read it — back it up if you may need to downgrade.
+
+### Bug fixes
+
+* **`Get-SFTPItem` could not download to an absolute Windows path.** The replacement of `*` and `:` with `_`, added in beta2 so remote names containing Windows-illegal characters could be written, was applied to the whole combined destination path rather than just the file name. That rewrote the drive letter in `C:\folder` to `C_\folder`, turning an absolute path into a relative one and writing the file somewhere under the current directory, or failing outright. Only the remote file name is sanitized now.
+* `Remove-SSHTrustedHost` no longer prompts by default. It declared `ConfirmImpact.High`, which meant every call raised a confirmation, and in a non-interactive session (a script, CI, or `pwsh -File`) that surfaced as an opaque `NullReferenceException` unless `-Confirm:$false` was passed. Impact is now `Medium`; `-Confirm` and `-WhatIf` still work.
+* **`Move-SFTPItem` could not move an item into a directory.** `-Destination` was always treated as the target file path, so an existing destination directory made `-Force` call `DeleteFile` on the directory (which the server rejects), and without `-Force` it reported the directory as an existing file. When the destination is an existing directory the item's name is now appended to it; passing a file path still renames as before, and a destination that resolves to a directory is reported clearly instead of being deleted.
+* A rejected host key now explains itself. The error reported only "Host key could not be verified", saying nothing about what the server presented or what was expected. It now names the host key type and fingerprint offered, lists the fingerprints already recorded for that host, states that `-AcceptKey` deliberately does not override a recorded key, and recommends the command to run once the change has been verified out of band. Delivered through `ErrorRecord.ErrorDetails`, so the exception itself is unchanged.
+
+### Build
+
+* `Build-Module.ps1` now copies `Renci.SshNet.dll` from the restore output into `Posh-SSH/Assembly/`, making the csproj `PackageReference` the single source of truth for the bundled library.
+* The build fails if the bundled `Renci.SshNet.dll` does not match the version `PoshSSH.dll` was compiled against. The manifest loads that assembly from disk via `RequiredAssemblies`, so the two could previously drift apart unnoticed — which is what produced the 3.2.6 and 3.2.7 mismatches.
+
+### Testing
+
+The whole suite now requires **Pester 5 or later**, and passes with nothing skipped.
+
+* `Get-SSHSession.Tests.ps1` and `Remove-SSHSession.Tests.ps1` rewritten. They used Pester 3/4 syntax and failed outright under Pester 5, and they imported the module by a path only valid from inside the module directory — so from the repository root the import silently failed and the commands under test resolved to whatever Posh-SSH was already installed. The import is now anchored to `$PSScriptRoot`. Coverage was extended to selection by id, by the `Index` alias, by wildcard and exact host name, several ids at once, and removing one session among many.
+* New `Get-SSHAlgorithm.Tests.ps1`, plus `tests/Fixtures/FakeSshServer.ps1`, a loopback server that serves a single crafted `SSH_MSG_KEXINIT`. This tests algorithm comparison, the empty-intersection case behind #632, the per-direction split, and the probe's handling of malformed input without needing a real SSH server.
+* The integration suite assigned sessions to `$script:` variables inside `It` blocks and read them from later contexts, which Pester 5 does not guarantee. A single failed connection therefore cascaded into dozens of failures pointing at SFTP and port forwarding rather than at the connection. Sessions are established in `BeforeAll` now, and `tests/README.md` records the rule for anyone adding tests.
+* The integration suite gained an Algorithm Discovery section, including a check that the overlap `Get-SSHAlgorithm` reports contains the algorithms an established session actually negotiated.
+* "Should move file to test directory" is no longer skipped. Its comment attributed the failure to server-specific behaviour; it was the `Move-SFTPItem` bug fixed above.
+
+## Version 4.0.0-beta2
+
+Major release built on community contributions, especially from @MVKozlov for the multi-key trusted host work and the SSH.NET 2025 migration. The "known host" terminology is retired in favour of "trusted host store", reflecting the cleaner abstraction that now backs all three storage backends.
+
+### Library
+
+* Upgraded SSH.NET from 2024.0.0 to 2025.1.0. The forked `Renci.SshNetDev.dll` (Cisco-device patch from https://github.com/sshnet/SSH.NET/pull/972) is no longer required and has been dropped.
+* New runtime dependency `BouncyCastle.Cryptography.dll` ships in `Assembly/` (transitive from SSH.NET 2025).
+
+### Trusted host store (was: known host)
+
+* Renamed all `*KnownHost*` cmdlets and types to `*TrustedHostStore*` / `*TrustedHost*`.
+* Multiple host keys per host are now supported — a single hostname can hold multiple key fingerprints (key rotation, multiple algorithms).
+* `MemoryTrustedHostStore` is now the base class for `JsonTrustedHostStore` and `OpenSSHTrustedHostStore`; the persistent stores override only the `OnKeyUpdated()` hook. Eliminates the triplicated CRUD logic from v3.x.
+* Default host-key display switched from MD5 to SHA256.
+* `~/.poshssh/hosts.json` schema changed for multi-key support and is **not backward compatible** with v3.x. Back up your `hosts.json` before upgrading.
+
+### New cmdlets (binary / C#)
+
+* `New-SSHTrustedHost`, `Add-SSHTrustedHost`, `Get-SSHTrustedHost`, `Remove-SSHTrustedHost` — were PowerShell functions in v3.x, now C# binary cmdlets.
+
+### Renamed cmdlets
+
+* `New-SSHMemoryKnownHost` → `New-SSHMemoryTrustedHostStore`
+* `Get-SSHJsonKnownHost` → `Get-SSHJsonTrustedHostStore`
+* `Get-SSHOpenSSHKnownHost` → `Get-SSHOpenSSHTrustedHostStore`
+* `Get-SSHRegistryKnownHost` → `Get-SSHRegistryTrustedHostStore`
+* `Convert-SSHRegistryToJsonKnownHost` → `Convert-SSHRegistryToJSonTrustedHost`
+
+### Authentication and connection
+
+* Support for multiple authentication methods on a single session (backward-compatible) — a password and a key can be supplied together and SSH.NET will try each.
+* New `-Encoding` parameter on session and command cmdlets so non-ASCII output is decoded correctly.
+
+### SCP and host key handling
+
+* **New `-Overwrite` switch on `Get-SCPItem`.** Overwriting an existing destination file no longer requires `-Force`. Previously `-Force` was overloaded to mean both "do not verify the remote host fingerprint" and "clobber the destination", so anyone scripting a download that replaces a local file was forced to disable host key verification.
+* `-Force` on `Get-SCPItem` and `Set-SCPItem` now documents as host key verification only. On `Get-SCPItem` it is still accepted as an overwrite gate for backward compatibility, including the long-standing quirk where `-Force:$false` permits overwriting while leaving verification switched on. No existing invocation changes behaviour.
+* `Set-SCPItem` deliberately gains no `-Overwrite` switch: SCP uploads always replace the remote file, and SSH.NET exposes no pre-existence check on an `ScpClient`.
+* Fix #633 — the overwrite notice on `Get-SCPItem` is now emitted with `WriteVerbose` instead of `WriteWarning`, and is spelled "Overwriting". Explicitly asking to overwrite is not a warning condition. The non-terminating error raised when the destination exists and neither switch was supplied is unchanged.
+* Fix #582 — `Get-SCPItem -PathType File` no longer deletes the destination before the download starts. The transfer now lands in a temporary `.partial` file alongside the destination and is moved over it (`File.Replace`, falling back to delete-and-move on file systems that do not support it) only once the download succeeds; the temporary file is cleaned up on failure. A missing or unreadable remote source previously left the caller with neither file.
+* Fix #174 — the host key warning now names the host: `Host key for <computer> is not being verified since the Force switch was used.` It is emitted from `NewSessionBase`, so the wording is now identical across every cmdlet that accepts `-Force` (`New-SSHSession`, `New-SFTPSession`, `Get-/Set-SCPItem`, `Get-/Set-SFTPItem`, `Get-SSHHostKey`). Scripts matching on the old warning text will need updating.
+
+### Bug fixes
+
+* Fix #604 and #533 — command/operation timeout behaviour in `Invoke-SSHCommand`.
+* Fix #496 and #381 — long-standing edge cases.
+* Wildcard `*` and `:` characters in remote filenames are now replaced with `_` so SCP/SFTP file operations don't fail on Windows-incompatible names.
+
+### Project structure
+
+* Removed the legacy .NET Framework 4.7.2 `PoshSSH.csproj` and the dual-solution layout. A single SDK-style `PoshSSH.Core/PoshSSH.Core.csproj` targets `netstandard2.0` and ships cross-platform (Windows PowerShell 5.1, PowerShell 7.x on Windows/Linux/macOS).
+* Source files moved directly into `Source/PoshSSH/PoshSSH.Core/` — no more `<Compile Link>` indirection from a legacy project.
+* Deleted dead `Get-/Set-SCPFile`, `Get-/Set-SCPFolder`, `Get-/Set-SFTPFile`, `Set-SFTPFolder` source files (already unexported in v3.x).
+* Removed `bin/` build artifacts from version control.
+
+### Build and test tooling
+
+* `Build-Module.ps1` automates the release pipeline: `dotnet build`, manifest-driven cmdlet verification in a fresh shell, validation that every `RequiredAssemblies` and `FileList` entry exists on disk, and `Posh-SSH-{version}.zip` packaging with SHA256.
+* `tests/Posh-SSH.Integration.Tests.ps1` plus `tests/Run-IntegrationTests.ps1` — full Pester integration suite covering password auth, key auth, encrypted key auth, SFTP file operations, SCP up/download, port forwarding, and session cleanup.
+* `tests/Setup-LinuxTestVm.sh` — root-runnable Linux VM provisioning script that creates 12 SSH test accounts covering the full auth matrix: password, RSA 2048/4096, RSA with passphrase, RSA PKCS#1 PEM, Ed25519 ±passphrase, ECDSA P-256/P-384/P-521, multi-factor `AuthenticationMethods publickey,password`, and forced keyboard-interactive.
+* `tests/README.md` documents the suite.
+
 ## Version 3.2.7
 
 * Fixed assembly version mismatch - corrected distribution to include compatible Renci.SshNet.dll version (2024.0.0.0) matching the compiled PoshSSH.dll binary.

@@ -7,9 +7,26 @@ This directory contains tests for the Posh-SSH module.
 ### Unit Tests
 - `Get-SSHSession.Tests.ps1` - Unit tests for Get-SSHSession function
 - `Remove-SSHSession.Tests.ps1` - Unit tests for Remove-SSHSession function
+- `Get-SSHAlgorithm.Tests.ps1` - Unit tests for Get-SSHAlgorithm, requires Pester 5 or later
+- `HostKeyMatcher.Tests.ps1` - Unit tests for the host key trust rule (`SSH.HostKeyMatcher`),
+  covering RFC 8332 RSA algorithm equivalence and, importantly, the cases that must be refused
 
 ### Integration Tests
 - `Posh-SSH.Integration.Tests.ps1` - Comprehensive integration tests against a live SSH server
+
+### Fixtures
+- `Fixtures/FakeSshServer.ps1` - A minimal loopback server that serves a single crafted
+  `SSH_MSG_KEXINIT`. Used by `Get-SSHAlgorithm.Tests.ps1` to test algorithm comparison, the
+  directional split, and the probe's handling of malformed input without needing a real SSH
+  server. It never implements key exchange or authentication.
+
+All test files require **Pester 5 or later**.
+
+**Writing tests for this suite**: establish shared state such as sessions in `BeforeAll`, not
+inside an `It`. Pester 5 and later only guarantee that variables set in `BeforeAll` reach the
+`It` blocks of the same and nested containers. Assigning a session inside an `It` and reading
+it from a later context leaves it null, which turns a single failed connection into dozens of
+unrelated-looking failures.
 
 ## Running Unit Tests
 
@@ -91,6 +108,11 @@ The integration test suite validates the following functionality:
 ### SCP Operations
 - File upload (Set-SCPItem)
 - File download (Get-SCPItem)
+
+### Algorithm Discovery
+- Reading the algorithms a live server offers (Get-SSHAlgorithm)
+- Agreement between the reported overlap and what the live session negotiated
+- Local library reporting with no host contacted
 
 ## Test Environment
 

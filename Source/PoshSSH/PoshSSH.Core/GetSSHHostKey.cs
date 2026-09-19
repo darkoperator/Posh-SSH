@@ -84,21 +84,15 @@ namespace SSH
                            kIconnectInfo);
                 var client = new SshClient(connectInfo);
 
-                KnownHostRecord record = null;
+                TrustedHostRecord record = null;
                 ErrorRecord erec = null;
                 client.HostKeyReceived += delegate (object sender, HostKeyEventArgs e)
                 {
-                    var sb = new StringBuilder();
-                    foreach (var b in e.FingerPrint)
+                    record = new TrustedHostRecord()
                     {
-                        sb.AppendFormat("{0:x}:", b);
-                    }
-                    var fingerPrint = sb.ToString().Remove(sb.ToString().Length - 1);
-                    record = new KnownHostRecord()
-                    {
-                        HostName = computer,
+                        HostName = (Port == 22) ? computer : computer + ':' + Port.ToString(),
                         HostKeyName = e.HostKeyName,
-                        Fingerprint = fingerPrint,
+                        Fingerprint = e.FingerPrintSHA256,
                     };
                     e.CanTrust = false;
                 };

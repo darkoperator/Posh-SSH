@@ -49,7 +49,7 @@ namespace SSH
         [Parameter(Mandatory = false,
             HelpMessage = "Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.")]
         [ValidateNotNullOrEmpty]
-        [Alias("KnownHostStore")]
+        [Alias("KnownHostStore", "KnowHostStore")]
         public ITrustedHostStore TrustedHostStore { get; set; }
 
         protected bool _appendMode = false;

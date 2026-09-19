@@ -180,7 +180,7 @@ namespace SSH
         [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = false,
              HelpMessage = "Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.")]
         [ValidateNotNullOrEmpty]
-        [Alias("KnownHostStore")]
+        [Alias("KnownHostStore", "KnownHost")]
         public ITrustedHostStore TrustedHostStore { get; set; }
 
         protected override void BeginProcessing()

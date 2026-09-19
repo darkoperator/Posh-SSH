@@ -23,8 +23,10 @@ namespace SSH
         /// </summary>
         [Parameter(Mandatory = false,
             ValueFromPipeline = true,
+            Position = 1,
             HelpMessage = "Known Host ITrustedHostStore either from New-SSHMemoryTrustedHostStore, Get-SSHJsonTrustedHostStore or Get-SSHOpenSSHTrustedHostStore.")]
         [ValidateNotNullOrEmpty]
+        [Alias("KnownHostStore", "KnowHostStore")]
         public ITrustedHostStore TrustedHostStore { get; set; }
 
         protected override void BeginProcessing()

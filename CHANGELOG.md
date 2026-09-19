@@ -20,6 +20,16 @@
 
 * **Known host entries are now looked up per port.** Connecting to a non-default port looks for the host as `host:port`, matching the OpenSSH `known_hosts` convention of `[host]:port`; v3.x ignored the port and matched on the bare host name. This is correct — OpenSSH treats a different port as a different host, since the service there may legitimately present a different key — but it means an entry recorded under a bare host name stops being found once you connect on a non-standard port. Re-accept the key with `-AcceptKey`, or for the OpenSSH store add a `[host]:port` entry. Raised in #632.
 
+### v3.x script compatibility
+
+Every v3.2.7 command and parameter was diffed against this build by loading both modules side by side. Scripts written for v3 now bind unchanged; the gaps found were closed with aliases, so nothing was removed to fix them.
+
+* `-KnownHost` on `New-SSHSession`, `New-SFTPSession`, `Get-SCPItem` and `Set-SCPItem` is now an explicit alias of `-TrustedHostStore`. It previously worked only because PowerShell resolved it as an abbreviation of the `KnownHostStore` alias, which any future parameter starting with `KnownHost` would have broken.
+* `Get-SSHTrustedHost` and `Remove-SSHTrustedHost` accept `-KnownHostStore` and `-KnowHostStore` again, and `New-SSHTrustedHost` / `Add-SSHTrustedHost` accept `-KnowHostStore`. These failed with "A parameter cannot be found" in earlier v4 betas.
+* `Get-SSHTrustedHost` takes the store positionally again (`Get-SSHTrustedHost server1 $store`), as the v3 function did.
+* The `Get-SSHJsonKnowHost` alias from v3 is restored.
+* A v3 `hosts.json` is read without changes. It is rewritten in the multi-key schema the first time the store is saved, and from then on v3 cannot read it — back it up if you may need to downgrade.
+
 ### Bug fixes
 
 * **`Get-SFTPItem` could not download to an absolute Windows path.** The replacement of `*` and `:` with `_`, added in beta2 so remote names containing Windows-illegal characters could be written, was applied to the whole combined destination path rather than just the file name. That rewrote the drive letter in `C:\folder` to `C_\folder`, turning an absolute path into a relative one and writing the file somewhere under the current directory, or failing outright. Only the remote file name is sanitized now.

@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace SSH
 {
     [Cmdlet(VerbsCommon.Get, "SSHJsonTrustedHostStore")]
-    [Alias("Get-SSHJsonKnownHost")]
+    [Alias("Get-SSHJsonKnownHost", "Get-SSHJsonKnowHost")]
     public class SSHJsonStore : PSCmdlet
     { 
         /// <summary>

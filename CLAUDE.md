@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Posh-SSH is a PowerShell module providing SSH, SFTP, and SCP functionality for Windows PowerShell 5.1 and PowerShell 7.x. It wraps the SSH.NET library to enable SSH automation against Linux/Unix servers from Windows, Linux, and macOS hosts.
 
-Current version: **4.0.0-beta1** (see `Posh-SSH/Posh-SSH.psd1`). The v4.0 line is built against vanilla **SSH.NET 2025.1.0** from NuGet — the legacy Cisco-patched `Renci.SshNetDev.dll` HintPath and the .NET Framework 4.7.2 project have both been removed.
+Current version: **4.0.0** (see `Posh-SSH/Posh-SSH.psd1`). The v4.0 line is built against vanilla **SSH.NET 2025.1.0** from NuGet — the legacy Cisco-patched `Renci.SshNetDev.dll` HintPath and the .NET Framework 4.7.2 project have both been removed.
 
 ## Architecture
 
@@ -45,7 +45,7 @@ Trusted host management (C# rewrites from v3.x PowerShell originals):
 `Posh-SSH/Posh-SSH.psd1`:
 - `RequiredAssemblies = @('Assembly\Renci.SshNet.dll', 'Assembly\BouncyCastle.Cryptography.dll')`
 - `NestedModules = @('PoshSSH.dll','Posh-SSH.psm1')`
-- `Prerelease = 'beta1'` → full SemVer is `4.0.0-beta1`
+- `Prerelease` is unset for stable releases; set it (e.g. `'beta1'`) to publish a prerelease such as `4.0.0-beta1`
 
 ### Session Management
 

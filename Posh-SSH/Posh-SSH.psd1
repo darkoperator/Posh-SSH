@@ -135,7 +135,7 @@ FileList = @('Posh-SSH.psm1','PoshSSH.dll','Assembly\Renci.SshNet.dll', 'Assembl
 # Private data to pass to the module specified in RootModule/ModuleToProcess
 PrivateData = @{
     PSData = @{
-       Prerelease = 'beta3'
+       # Prerelease = ''
        ProjectUri = 'https://github.com/darkoperator/Posh-SSH'
     }
 }

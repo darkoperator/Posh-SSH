@@ -1,6 +1,6 @@
 # ChangeLog
 
-## Version 4.0.0-beta3
+## Version 4.0.0
 
 ### Diagnostics
 

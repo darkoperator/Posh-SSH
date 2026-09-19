@@ -164,7 +164,8 @@ Write-Host "  validated $($declared.Count) manifest-declared files" -ForegroundC
 
 Step "reading version from $manifest"
 $version = $info.Version.ToString()
-$prerelease = $info.PrivateData.PSData.Prerelease
+$psData = $info.PrivateData.PSData
+$prerelease = if ($psData.ContainsKey('Prerelease')) { $psData['Prerelease'] } else { $null }
 $fullVersion = if ($prerelease) { "$version-$prerelease" } else { $version }
 $zipName = "Posh-SSH-$fullVersion.zip"
 $zipPath = Join-Path $OutputPath $zipName
